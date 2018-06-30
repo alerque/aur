@@ -6,7 +6,7 @@ pkgbase=keybase
 pkgname=('keybase' 'keybase-gui')
 pkgdesc='CLI tool for GPG with keybase.io'
 pkgver=2.1.1
-pkgrel=1
+pkgrel=2
 arch=('x86_64')
 url='https://keybase.io/'
 license=('BSD')
@@ -26,8 +26,8 @@ prepare() {
     mkdir -p "${GOPATH}"/src/github.com/keybase
     ln -sf "${PWD}" "${GOPATH}"/src/github.com/keybase/client
 
-    # Fix paths to minimal wrapper script running electron /path/to/app
-    sed -i 's@/opt/keybase/Keybase@keybase-gui@' \
+    # Fix paths to run electron /path/to/app (or our minimal wrapper script)
+    sed -i 's@/opt/keybase/Keybase@/usr/bin/electron /usr/share/keybase-app@' \
         packaging/linux/systemd/keybase.gui.service
     sed -i 's/run_keybase/keybase-gui/g' \
         packaging/linux/keybase.desktop go/install/install_unix.go
