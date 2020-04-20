@@ -1,0 +1,18 @@
+pkgbase = bibledit
+	pkgdesc = Editory for translating the Bible (Cloud release)
+	pkgver = 5.0.813
+	pkgrel = 1
+	url = https://bibledit.org/
+	arch = any
+	license = GPL3
+	makedepends = mimetic
+	depends = sword
+	depends = sqlite
+	depends = gtk3
+	depends = cairo
+	depends = at-spi2-atk
+	source = https://github.com/bibledit/cloud/releases/download/5.0.813/bibledit-5.0.813.tar.gz
+	sha256sums = 3a5612c761a1ca4cd37d159a16d2ab68094c00c150ca099a84d045c4e93bd932
+
+pkgname = bibledit
+
