@@ -1,0 +1,19 @@
+pkgbase = nodejs-less-plugin-autoprefix
+	pkgdesc = Uses autoprefixer to add prefixes to css after conversion from less
+	pkgver = 2.0.0
+	pkgrel = 4
+	url = http://lesscss.org
+	arch = any
+	license = Apache 2.0
+	makedepends = npm
+	makedepends = jq
+	makedepends = moreutils
+	depends = nodejs
+	depends = nodejs-less
+	depends = nodejs-autoprefixer
+	noextract = less-plugin-autoprefix-2.0.0.tgz
+	source = https://registry.npmjs.org/less-plugin-autoprefix/-/less-plugin-autoprefix-2.0.0.tgz
+	sha256sums = aa7edec73f63896fc4670d05d15d4344ba0e276479dec2672915a54cb5519e6f
+
+pkgname = nodejs-less-plugin-autoprefix
+
