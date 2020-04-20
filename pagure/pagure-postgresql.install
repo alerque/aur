@@ -1,0 +1,30 @@
+post_install() {
+	cat <<- EOF
+		To setup using PostreSQL, use:
+		
+		\$ sudo -u postgres psql
+		CREATE DATABASE pagure;
+		CREATE USER pagure;
+		ALTER USER pagure WITH ENCRYPTED PASSWORD '--PagureDBUserPW--';
+		GRANT ALL PRIVILEGES ON DATABASE pagure to pagure;
+		GRANT ALL PRIVILEGES ON ALL tables IN SCHEMA public TO pagure;
+		GRANT ALL PRIVILEGES ON ALL sequences IN SCHEMA public TO pagure;
+		\\q
+		
+		Configure Pagure in /etc/pagure/pagure.cfg and /etc/pagure/alembic.ini
+		
+		Once configured, populate the database:
+		
+		\$ python /usr/share/pagure/pagure_createdb.py -c /etc/pagure/pagure.cfg -i /etc/pagure/alembic.ini
+	EOF
+}
+
+post_upgrade() {
+	cat <<- EOF
+		Update Pagure database format using:
+		
+		\$ python /usr/share/pagure/pagure_createdb.py -c /etc/pagure/pagure.cfg
+	EOF
+}
+
+# vim : ts=4 sw=4 noet
