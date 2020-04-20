@@ -1,0 +1,30 @@
+pkgbase = way-cooler-git
+	pkgdesc = Customizeable Wayland compositor written in Rust
+	pkgver = 0.8.0.r661.ge50ffca0
+	pkgrel = 1
+	epoch = 1
+	url = http://way-cooler.org/
+	arch = i686
+	arch = x86_64
+	license = MIT
+	makedepends = cargo
+	makedepends = rust
+	makedepends = git
+	makedepends = meson
+	makedepends = ninja
+	depends = lua
+	depends = wlroots
+	optdepends = awesome-way-cooler: wayland compatable awesome fork
+	optdepends = weston: default terminal emulator
+	optdepends = dmenu: default launcher
+	optdepends = way-cooler-bg: draws a background for Way Cooler
+	provides = way-cooler
+	conflicts = way-cooler
+	backup = etc/way-cooler/rc.lua
+	source = way-cooler-git::git+https://github.com/Immington-Industries/way-cooler.git
+	source = 0001-wlroots-needs-to-be-dynamic.patch
+	md5sums = SKIP
+	md5sums = 0aa8ef19bbe4d66d5dd6d796498ab8e2
+
+pkgname = way-cooler-git
+
