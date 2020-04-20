@@ -1,0 +1,14 @@
+pkgbase = ttf-sbl-greek
+	pkgdesc = Society of Biblical Literature’s Greek font
+	pkgver = 1.00_Build010
+	pkgrel = 3
+	url = https://www.sbl-site.org/educational/BiblicalFonts_SBLGreek.aspx
+	arch = any
+	license = custom
+	source = https://www.sbl-site.org/Fonts/SBL_grk.ttf
+	source = LICENSE
+	sha256sums = cbf8b1a87a4a311e2aa9b5b2995f83b23159fbe0ca9ca517d3fd43b5911e925a
+	sha256sums = a788cd2cf15ddb83bcf0129e006fb77270cd72c15c3fda3c0b88558af7dcc5bb
+
+pkgname = ttf-sbl-greek
+
