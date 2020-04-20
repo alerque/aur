@@ -1,0 +1,22 @@
+pkgbase = rssowl
+	pkgdesc = A java based RSS feed reader with Google Reader synchronization
+	pkgver = 2.2.1
+	pkgrel = 5
+	url = http://rssowl.org/
+	install = rssowl.install
+	arch = x86_64
+	license = EPL
+	depends = java-runtime
+	depends = alsa-lib
+	depends = gtk2
+	depends = gconf
+	depends = hunspell
+	depends = libxt
+	depends = nss
+	source = https://github.com/rssowl/RSSOwl/releases/download/2.2.1/RSSOwl.2.2.1.Linux-x64.zip
+	source = rssowl.desktop
+	sha256sums = ca79aca7f141d30d550f46d47616e5f1d5a816d7496a4cb76dfc7a0c281975d7
+	sha256sums = 197d0f1ffc59f5046dc455f485b7535ae2143315a498338911eafbf3cc62eb42
+
+pkgname = rssowl
+
