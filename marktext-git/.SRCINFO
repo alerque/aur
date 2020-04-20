@@ -1,0 +1,21 @@
+pkgbase = marktext-git
+	pkgdesc = Next generation markdown editor
+	pkgver = r1380.65f1bef3
+	pkgrel = 1
+	url = https://marktext.app/
+	arch = x86_64
+	license = MIT
+	makedepends = python
+	makedepends = nodejs>=12
+	makedepends = npm
+	makedepends = yarn
+	depends = electron
+	provides = marktext
+	conflicts = marktext
+	source = git+https://github.com/marktext/marktext
+	source = marktext.sh
+	sha512sums = SKIP
+	sha512sums = 8927cea6815420206982263d80fa54bbcfcc37623008b6a2f25d16782cfdff70ef44c3dbc142e2c45b474df52f216e7d58cf556a525df0683bc447481ab7b27d
+
+pkgname = marktext-git
+
