@@ -1,0 +1,6 @@
+*
+!./.SRCINFO
+!./.gitignore
+!./PKGBUILD
+!./user.lua
+!./zbstudio.patch

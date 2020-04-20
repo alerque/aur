@@ -1,0 +1,30 @@
+pkgbase = zerobrane-studio
+	pkgdesc = A lightweight Lua-based IDE for Lua
+	pkgver = 1.90
+	pkgrel = 4
+	url = https://studio.zerobrane.com/
+	arch = any
+	license = MIT
+	makedepends = cmake
+	depends = hicolor-icon-theme
+	depends = lua
+	depends = lua-copas
+	depends = lua-filesystem
+	depends = lua-lpeg
+	depends = lua-sec
+	depends = lua-socket
+	depends = wxlua
+	optdepends = busted: to debug busted test specs
+	optdepends = gsl-shell: te debug GNU Scientific Library shell programs
+	optdepends = love: to debug löve programs
+	optdepends = lua51: to debug lua51 programs
+	optdepends = lua52: to debug lua52 programs
+	source = zerobrane-studio-1.90.tar.gz::https://github.com/pkulchenko/ZeroBraneStudio/archive/1.90.tar.gz
+	source = zbstudio.patch
+	source = user.lua
+	sha256sums = 62307538cb1daa8c298c838f124f7cfff13c29e4c64c4ffea72191a6f1347ff2
+	sha256sums = 44f3a18f169a571bace71c67c398917ea0ff1c163c7d22bec49aed7585bcb9b2
+	sha256sums = 475fe6e129f9469100a941fc74b90a9fe4bc5eceaca447d2899a1511212cbfcc
+
+pkgname = zerobrane-studio
+
