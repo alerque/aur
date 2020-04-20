@@ -1,0 +1,36 @@
+pkgbase = lyricue
+	pkgdesc = GNU Lyric Display System, server and client
+	pkgver = 4.0.13
+	pkgrel = 1
+	url = https://www.lyricue.org
+	arch = x86_64
+	arch = armv6h
+	license = GPL
+	makedepends = gcc
+	makedepends = intltool
+	makedepends = libmariadbclient
+	depends = clutter
+	depends = clutter-gst
+	depends = clutter-gtk
+	depends = gnome-perl
+	depends = pango-perl
+	depends = perl-class-accessor
+	depends = perl-class-accessor-lvalue
+	depends = perl-dbd-mysql
+	depends = perl-dbi
+	depends = perl-file-mimeinfo
+	depends = perl-gtk3
+	depends = perl-locale-gettext
+	depends = perl-module-pluggable
+	depends = perl-net-rendezvous-publish
+	depends = perl-uri
+	depends = perl-want
+	depends = perl-xml-simple
+	optdepends = mariadb
+	optdepends = perl-gtk3-trayicon
+	optdepends = perl-net-bonjour
+	source = https://github.com/cjd/lyricue/archive/4.0.13.tar.gz
+	sha256sums = ebe494a9c46bef42d247987f9c25e888e8b39a4f72166e6475eaf8817aefce1d
+
+pkgname = lyricue
+
