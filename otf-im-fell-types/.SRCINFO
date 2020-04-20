@@ -1,0 +1,12 @@
+pkgbase = otf-im-fell-types
+	pkgdesc = A set of free modern revival fonts digitalized by Igino Marini
+	pkgver = 20121117
+	pkgrel = 2
+	url = http://iginomarini.com/fell/
+	arch = any
+	license = OFL
+	source = otf-im-fell-types-20121117.zip::http://iginomarini.com/fell/wp-content/uploads/IMFellTypesClass.zip
+	sha256sums = b65189a8c165dafa5ba979092ebe967e0ad86a4d584b203eee40e16d010f5308
+
+pkgname = otf-im-fell-types
+
