@@ -1,0 +1,13 @@
+pkgbase = ttf-blackout
+	pkgdesc = A bad-ass, unholy-mother-shut-your-mouth stencil sans-serif
+	pkgver = 20160215
+	pkgrel = 5
+	url = http://theleagueofmoveabletype.com/blackout
+	arch = any
+	groups = lmt-fonts
+	license = OFL
+	source = ttf-blackout-20160215.zip::https://github.com/theleagueof/blackout/archive/master.zip
+	sha256sums = cfc75d15b72e558a3e87bf2cb9f69f09756b5179254e8131ac3d59437f41143b
+
+pkgname = ttf-blackout
+
