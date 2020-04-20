@@ -1,0 +1,18 @@
+pkgbase = nodejs-pandiff
+	pkgdesc = Prose diffs for any document format supported by Pandoc
+	pkgver = 0.5.0
+	pkgrel = 3
+	url = https://github.com/davidar/pandiff
+	arch = any
+	license = MIT
+	makedepends = npm
+	makedepends = jq
+	makedepends = moreutils
+	depends = nodejs
+	depends = pandoc
+	noextract = pandiff-0.5.0.tgz
+	source = https://registry.npmjs.org/pandiff/-/pandiff-0.5.0.tgz
+	sha256sums = 2ca38a951203aabdea1b198289e531562c7ee5ca00eda9e42012a4bf10a4978c
+
+pkgname = nodejs-pandiff
+
