@@ -1,0 +1,23 @@
+pkgbase = way-cooler
+	pkgdesc = Customizeable Wayland compositor written in Rust (upstream abandoned)
+	pkgver = 0.8.1
+	pkgrel = 1
+	epoch = 1
+	url = https://way-cooler.org/
+	arch = i686
+	arch = x86_64
+	license = MIT
+	makedepends = cargo
+	makedepends = rust
+	makedepends = git
+	makedepends = cairo
+	depends = wlc
+	optdepends = weston: default terminal emulator
+	optdepends = dmenu: default launcher
+	optdepends = way-cooler-bg: draws a background for Way Cooler
+	backup = etc/way-cooler/init.lua
+	source = way-cooler-0.8.1.tar.gz::https://github.com/way-cooler/way-cooler/archive/v0.8.1.tar.gz
+	sha256sums = c95e5ac960eacf79a1267aa36cb3a94d6e023d0389845424b782e5b65cc56346
+
+pkgname = way-cooler
+
