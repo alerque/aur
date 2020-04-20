@@ -1,0 +1,12 @@
+pkgbase = gnumicr
+	pkgdesc = An open-source licensed Type 1 MICR E13-B font
+	pkgver = 0.30
+	pkgrel = 2
+	url = https://sandeen.net/GnuMICR/
+	arch = any
+	license = GPL2
+	source = https://sandeen.net/GnuMICR/download/GnuMICR-0.30.tar.gz
+	sha256sums = 4c485361e07e1eb0e09524726bf3d08a0e268dc41c6810dba49a5b45cbe432db
+
+pkgname = gnumicr
+
