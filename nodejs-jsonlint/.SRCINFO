@@ -1,0 +1,17 @@
+pkgbase = nodejs-jsonlint
+	pkgdesc = Validate JSON
+	pkgver = 1.6.3
+	pkgrel = 5
+	url = https://zaa.ch/jsonlint}/
+	arch = any
+	license = MIT
+	makedepends = npm
+	makedepends = jq
+	makedepends = moreutils
+	depends = nodejs
+	noextract = jsonlint-1.6.3.tgz
+	source = https://registry.npmjs.org/jsonlint/-/jsonlint-1.6.3.tgz
+	sha256sums = 987f42f0754b7bc0c84967b81fc2b4db0ed2ebe2117ccc5a5faa59e462447723
+
+pkgname = nodejs-jsonlint
+
