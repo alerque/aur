@@ -1,0 +1,17 @@
+pkgbase = teamocil
+	pkgdesc = set up window and splits layouts for tmux using YAML configuration files
+	pkgver = 1.4.2
+	pkgrel = 2
+	url = https://github.com/remi/teamocil
+	arch = any
+	license = MIT
+	makedepends = rubygems
+	makedepends = ruby-rdoc
+	depends = ruby
+	depends = tmux
+	noextract = teamocil-1.4.2.gem
+	source = http://rubygems.org/downloads/teamocil-1.4.2.gem
+	sha256sums = 221bf0b600e0a277c98befbecea8a454ee87dbd1c7e8767a2f64dda8dc18aed0
+
+pkgname = teamocil
+
