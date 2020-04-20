@@ -1,0 +1,14 @@
+Index: configure.ac
+===================================================================
+diff --git a/trunk/configure.ac b/trunk/configure.ac
+--- a/trunk/configure.ac	(Revision 3420)
++++ b/trunk/configure.ac	(Arbeitskopie)
+@@ -225,7 +225,7 @@
+ fi
+ 
+ 
+-AM_CXXFLAGS="$AM_CXXFLAGS -ftemplate-depth-25"
++AM_CXXFLAGS="$AM_CXXFLAGS -ftemplate-depth=125"
+ 
+ if test x$enable_warnings = xyes; then
+   AM_CFLAGS="$AM_CFLAGS -Werror"
