@@ -1,0 +1,23 @@
+pkgbase = rawstudio-git
+	pkgdesc = An open-source program to read and manipulate RAW images from digital cameras (sergiomb2 fork)
+	pkgver = 2.0.r599.g574b1892
+	pkgrel = 1
+	url = https://rawstudio.org
+	arch = i686
+	arch = x86_64
+	license = GPL2
+	depends = osm-gps-map
+	depends = desktop-file-utils
+	depends = libgphoto2
+	depends = fftw
+	depends = gconf
+	depends = lcms2
+	depends = exiv2
+	depends = lensfun
+	provides = rawstudio
+	conflicts = rawstudio
+	source = git://github.com/sergiomb2/rawstudio.git#branch=devel
+	md5sums = SKIP
+
+pkgname = rawstudio-git
+
