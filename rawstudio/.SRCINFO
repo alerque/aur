@@ -1,0 +1,21 @@
+pkgbase = rawstudio
+	pkgdesc = An open source raw-image converter written in GTK+
+	pkgver = 2.0.r589
+	pkgrel = 3
+	url = https://rawstudio.org
+	arch = x86_64
+	license = GPL2
+	depends = osm-gps-map
+	depends = desktop-file-utils
+	depends = libgphoto2
+	depends = fftw
+	depends = gconf
+	depends = lcms2
+	depends = exiv2
+	depends = lensfun
+	conflicts = rawstudio-git
+	source = rawstudio-2.0.r589.tar.gz::https://github.com/rawstudio/rawstudio/archive/003dd4f33377dcfd15ae32904a7cbb0e92123607.tar.gz
+	sha256sums = 9e20399503a302e040319fbc877b614afce491891f5563fdb2725b1877eb3aab
+
+pkgname = rawstudio
+
