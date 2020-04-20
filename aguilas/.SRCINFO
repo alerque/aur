@@ -1,0 +1,20 @@
+pkgbase = aguilas
+	pkgdesc = An LDAP user manager and password self-service webaapp.
+	pkgver = 1.0.2
+	pkgrel = 0
+	url = https://github.com/LuisAlejandro/aguilas
+	arch = any
+	license = GPL3
+	makedepends = python-sphinx
+	makedepends = icoutils
+	makedepends = python-docutils
+	makedepends = imagemagick
+	source = https://github.com/LuisAlejandro/aguilas/archive/1.0.2.tar.gz
+	source = tempfile.patch
+	source = config.php
+	sha256sums = 67124886358e6badc2d747dc6b677e119a53fee1f8da56f7cc4fc8a5992a234f
+	sha256sums = 2a0037887545a327b714cc8858f074bffa75b363bfc6ba501b3890009ffee8f3
+	sha256sums = 0b9078a1efb9cef613efac93adf0ad4b9c51c1bd5f4be403f30419b710863974
+
+pkgname = aguilas
+
