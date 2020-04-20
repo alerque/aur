@@ -1,0 +1,20 @@
+pkgbase = vicious-git
+	pkgdesc = Widgets for the Awesome window manager
+	pkgver = 2.3.3.r0.gea0c5a4
+	pkgrel = 1
+	url = https://github.com/vicious-widgets/vicious
+	arch = any
+	license = GPL2
+	makedepends = git
+	depends = lua
+	optdepends = hddtemp: for the HDD Temp widget type
+	optdepends = alsa-utils: for the Volume widget type
+	optdepends = wireless_tools: for the Wireless widget type
+	optdepends = curl: for widget types accessing network resources
+	provides = vicious
+	conflicts = vicious
+	source = vicious-git::git+https://github.com/vicious-widgets/vicious.git
+	md5sums = SKIP
+
+pkgname = vicious-git
+
