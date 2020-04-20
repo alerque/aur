@@ -1,0 +1,20 @@
+pkgbase = imgv
+	pkgdesc = a feature rich image viewer including a GUI
+	pkgver = 3.1.6
+	pkgrel = 0
+	url = http://imgv.sourceforge.net/
+	arch = i686
+	arch = x86_64
+	license = GPL
+	makedepends = dos2unix
+	depends = python2-pygame
+	depends = python2-pillow
+	source = http://downloads.sourceforge.net/imgv/imgv-3.1.6-src.tar.gz
+	source = imgv.profile
+	source = imgv.sh
+	md5sums = 48e19d90000b5d17bb609c93dd74d5b8
+	md5sums = bd0daba52c3165b38ba5a7b61ec0a94d
+	md5sums = 60a287e055f6b17ba864c207cb78d9b2
+
+pkgname = imgv
+
