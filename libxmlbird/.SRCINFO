@@ -1,0 +1,19 @@
+pkgbase = libxmlbird
+	pkgdesc = XML parsing library written in Vala
+	pkgver = 1.2.11
+	pkgrel = 1
+	url = https://birdfont.org/xmlbird.php
+	arch = i686
+	arch = x86_64
+	license = LGPL3
+	makedepends = vala
+	makedepends = python
+	depends = glib2
+	source = https://birdfont.org/xmlbird-releases/libxmlbird-1.2.11.tar.xz
+	source = https://birdfont.org/xmlbird-releases/libxmlbird-1.2.11.tar.xz.sig
+	validpgpkeys = FB3BEFA59A6FF7F0E0682B68BCD31D4CCCEB9DD4
+	sha512sums = da06d6368b9f0cc91e24810ac687c3ff2c892e069821b04db8632606d5911c8c9d33fa91cf8b7974f3dce605a0ec9be85c49104bd44fdfb4ff89a5d5acef31b7
+	sha512sums = SKIP
+
+pkgname = libxmlbird
+
