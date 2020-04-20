@@ -1,0 +1,14 @@
+pkgbase = ttf-sbl-hebrew
+	pkgdesc = Society of Biblical Literature’s Hebrew font
+	pkgver = 1.56a_Build016
+	pkgrel = 2
+	url = https://www.sbl-site.org/educational/BiblicalFonts_SBLHebrew.aspx
+	arch = any
+	license = custom
+	source = https://www.sbl-site.org/Fonts/SBL_Hbrw.ttf
+	source = LICENSE
+	sha256sums = 98eca8ecc97af984e205c282d6a0e994af41612029e49a223e85677b71cf9e99
+	sha256sums = a788cd2cf15ddb83bcf0129e006fb77270cd72c15c3fda3c0b88558af7dcc5bb
+
+pkgname = ttf-sbl-hebrew
+
