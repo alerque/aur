@@ -1,0 +1,70 @@
+2018-07-13 Lucas Werkmeister <mail@lucaswerkmeister.de>
+
+	* 4.105-1 :
+	update release:
+	               - fixed feature code for figures
+	               - added Dcedilla
+	               - generated OTF, TTF, WOFF, WOFF2, EOT
+	               - fixed ascender of λ
+	               - added several top anchors to Xx and greek letters
+	               - added missing uni0258 ereversed
+	               - fixed SemiBold font name
+	               - fixed some kerning issues
+	               - added some brackets and musical bars
+	               - added some anchors to Greek lowercase
+	               - added intermediate weights “Medium” and “Extrabold” (and adjusted “SemiBold” and “Bold”)
+	               - optimised Vietnamese
+	               - added ca. 40 glyphs to support more languages
+	               - some new Greek and Latin glyphs
+	               - fixed Eng
+	               - added half brackets
+
+2017-08-15 Lucas Werkmeister <mail@lucaswerkmeister.de>
+
+	* 4.015-1 :
+	update release:
+	               - Styles with SC included for vollkorn-typeface.com
+	               - Fixed vert Metrics
+	               - Fixed Semibold Italic’s usWeightClass
+	               - Added SC Instances
+
+2017-03-02 Lucas Werkmeister <mail@lucaswerkmeister.de>
+
+	* 4.012-1 :
+	update release:
+	               - rename “Medium” to “Semibold”, “Semibold” to “Bold” and “Bold” to “Black”
+	               - add small caps
+	               - add Cyrillic and Italic Cyrillics
+	               - add localization variants for Polish, Dutch, Bulgarian, and Serbian
+	               - add Greek
+	               - add figure styles Tabular Oldstyle, Small Caps, Inferior and Superior
+	               - add/improve uppercase accents
+	               - add traditional footnotes
+	               - add currency symbols
+	               - add mathematical symbols
+
+2016-02-11 jdarch <jda -dot- cloud -plus- archlinux -at- gmail -dot- com>
+
+        * 3.005-1 : change to the PKGBUILD only, url should not be an array
+
+2014-08-19 jdarch <jda -dot- cloud -plus- archlinux -at- gmail -dot- com>
+
+        * 3.005-1 :
+        update release:
+                       - fixing of catalan l•l and L•L (3.005)
+                       - fixing of version counters and style linking (3.005)
+                       - added underlinePosition and underlineThickness (3.005)
+
+2014-02-12 jdarch <jda -dot- cloud -plus- archlinux -at- gmail -dot- com>
+
+        * 3.003-1 :
+        update release:
+                       - fix dot of j (3.003)
+                       - semibold name fix, corrected small g-commaaccent, 
+                        tidied up automatic metrics (3.002)
+
+2014-01-25 
+jdarch <jda -dot- cloud -plus- archlinux -at- gmail -dot- com>
+
+	* 3.001-1 :
+	initial release
