@@ -1,6 +1,6 @@
-# Maintainer: Nicola Squartini <tensor5@gmail.com>
+# Maintainer: Caleb Maclennan <caleb@alerque.com>
 
-pkgname=electron
+pkgname=electron8
 pkgver=8.2.5
 _commit=6c42564337697f1907627ad96b7bd4801ef5be20
 _chromiumver=80.0.3987.165
@@ -20,7 +20,7 @@ optdepends=('kde-cli-tools: file deletion support (kioclient5)'
             "xdg-utils: open URLs with desktop's default (xdg-email, xdg-open)")
 source=('git+https://github.com/electron/electron.git'
         'git+https://chromium.googlesource.com/chromium/tools/depot_tools.git'
-        'electron.desktop'
+        'electron8.desktop'
         'default_app-icon.patch'
         'use-system-libraries-in-node.patch'
         'icu67.patch'
@@ -31,7 +31,7 @@ source=('git+https://github.com/electron/electron.git'
        )
 sha256sums=('SKIP'
             'SKIP'
-            '5270db01f3f8aaa5137dec275a02caa832b7f2e37942e068cba8d28b3a29df39'
+            '92d7bf6f24b5b0a39c9e604e317491a5cffc8ee6e035d7871b08e2fe8c033151'
             '00b21418b9468064f6f275566d3cf64c6b014e596acc650100a5a46da31efbfa'
             'c7eadac877179e586d0cce7f898aa1462b4c207733e68ecc17de9754b691713a'
             '5315977307e69d20b3e856d3f8724835b08e02085a4444a5c5cefea83fd7d006'
@@ -182,23 +182,23 @@ build() {
 }
 
 package() {
-  install -dm755 "${pkgdir}/usr/lib/electron"
-  bsdtar -xf src/out/Release/dist.zip -C "${pkgdir}/usr/lib/electron"
+  install -dm755 "${pkgdir}/usr/lib/$pkgname"
+  bsdtar -xf src/out/Release/dist.zip -C "${pkgdir}/usr/lib/$pkgname"
 
-  chmod u+s "${pkgdir}/usr/lib/electron/chrome-sandbox"
+  chmod u+s "${pkgdir}/usr/lib/$pkgname/chrome-sandbox"
 
   install -dm755 "${pkgdir}/usr/share/licenses/${pkgname}"
-  for l in "${pkgdir}/usr/lib/electron"/{LICENSE,LICENSES.chromium.html}; do
+  for l in "${pkgdir}/usr/lib/$pkgname"/{LICENSE,LICENSES.chromium.html}; do
     ln -s  \
       $(realpath --relative-to="${pkgdir}/usr/share/licenses/${pkgname}" ${l}) \
       "${pkgdir}/usr/share/licenses/${pkgname}"
   done
 
   install -dm755 "${pkgdir}"/usr/bin
-  ln -s ../lib/electron/electron "${pkgdir}"/usr/bin
+  ln -s ../lib/$pkgname/electron "${pkgdir}"/usr/bin
 
   # Install .desktop and icon file (see default_app-icon.patch)
-  install -Dm644 -t "${pkgdir}/usr/share/applications" electron.desktop
+  install -Dm644 -t "${pkgdir}/usr/share/applications" $pkgname.desktop
   install -Dm644 src/electron/default_app/icon.png \
-          "${pkgdir}/usr/share/pixmaps/electron.png"  # hicolor has no 1024x1024
+          "${pkgdir}/usr/share/pixmaps/$pkgname.png"  # hicolor has no 1024x1024
 }

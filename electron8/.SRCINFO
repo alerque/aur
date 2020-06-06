@@ -1,4 +1,4 @@
-pkgbase = electron
+pkgbase = electron8
 	pkgdesc = Build cross platform desktop apps with web technologies
 	pkgver = 8.2.5
 	pkgrel = 2
@@ -40,7 +40,7 @@ pkgbase = electron
 	optdepends = xdg-utils: open URLs with desktop's default (xdg-email, xdg-open)
 	source = git+https://github.com/electron/electron.git
 	source = git+https://chromium.googlesource.com/chromium/tools/depot_tools.git
-	source = electron.desktop
+	source = electron8.desktop
 	source = default_app-icon.patch
 	source = use-system-libraries-in-node.patch
 	source = icu67.patch
@@ -50,7 +50,7 @@ pkgbase = electron
 	source = fix-shim-header-generation-when-unbundling-ICU.patch
 	sha256sums = SKIP
 	sha256sums = SKIP
-	sha256sums = 5270db01f3f8aaa5137dec275a02caa832b7f2e37942e068cba8d28b3a29df39
+	sha256sums = 92d7bf6f24b5b0a39c9e604e317491a5cffc8ee6e035d7871b08e2fe8c033151
 	sha256sums = 00b21418b9468064f6f275566d3cf64c6b014e596acc650100a5a46da31efbfa
 	sha256sums = c7eadac877179e586d0cce7f898aa1462b4c207733e68ecc17de9754b691713a
 	sha256sums = 5315977307e69d20b3e856d3f8724835b08e02085a4444a5c5cefea83fd7d006
@@ -59,5 +59,5 @@ pkgbase = electron
 	sha256sums = e530d1b39504c2ab247e16f1602359c484e9e8be4ef6d4824d68b14d29a7f60b
 	sha256sums = e477aa48a11ca4d53927f66a9593567fcd053325fb38af30ac3508465f1dd1f6
 
-pkgname = electron
+pkgname = electron8
 
