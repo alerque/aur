@@ -1,10 +1,10 @@
 # Maintainer: Caleb Maclennan <caleb@alerque.com>
 
 pkgname=electron8
-pkgver=8.2.5
-_commit=6c42564337697f1907627ad96b7bd4801ef5be20
+pkgver=8.3.1
+_commit=c8177f841827d4f1d1dd30f76396060d7c4595a5
 _chromiumver=80.0.3987.165
-pkgrel=2
+pkgrel=1
 pkgdesc='Build cross platform desktop apps with web technologies'
 arch=('x86_64')
 url='https://electronjs.org/'
