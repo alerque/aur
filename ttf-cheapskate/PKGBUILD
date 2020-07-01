@@ -3,39 +3,39 @@
 
 pkgname=ttf-cheapskate
 pkgver=2.0
-pkgrel=15
+pkgrel=16
 pkgdesc='TTF Fonts by Dustin Norlander'
 arch=('any')
 url='https://www.fontspace.com/cheapskate-fonts'
 license=('GPL')
-source=("flatline.zip::http://dl1.fontspace.com/download.ashx?guid=737c92701c004c299434e9aa9fef66d6&name=cheapskate-fonts_flatline.zip"
-        "wargames.zip::http://dl1.fontspace.com/download.ashx?guid=a67b4a43c3574b1f8e57037a86c2c586&name=cheapskate-fonts_wargames.zip"
-        "dustismo-roman.zip::http://dl1.fontspace.com/download.ashx?guid=c6cfddf7450b4ea0a9693d662d0cf4f8&name=cheapskate-fonts_dustismo-roman.zip"
-        "penguin-attack.zip::http://dl1.fontspace.com/download.ashx?guid=89e34341b643467aa150136e49574970&name=cheapskate-fonts_penguin-attack.zip"
-        "dustismo.zip::http://dl1.fontspace.com/download.ashx?guid=9b89daa27a6049c8940a8d0bd4c2f8a1&name=cheapskate-fonts_dustismo.zip"
-        "it-wasnt-me.zip::http://dl1.fontspace.com/download.ashx?guid=14582c6c73514438806349b26e372f0d&name=cheapskate-fonts_it-wasnt-me.zip"
-        "domestic-manners.zip::http://dl1.fontspace.com/download.ashx?guid=8903789762af40a19ab05a69b7f37c9b&name=cheapskate-fonts_domestic-manners.zip"
-        "balker.zip::http://dl1.fontspace.com/download.ashx?guid=7745ab9662154f03b0a8b2839b1993ff&name=cheapskate-fonts_balker.zip"
-        "junkyard.zip::http://dl1.fontspace.com/download.ashx?guid=eb3650475aec40f4913b151b2d97eefc&name=cheapskate-fonts_junkyard.zip"
-        "winks.zip::http://dl1.fontspace.com/download.ashx?guid=a85c6af870f74f2ab2dfcccd5a1a9962&name=cheapskate-fonts_winks.zip"
-        "el-abogado-loco.zip::http://dl1.fontspace.com/download.ashx?guid=d545f98dd472458db69dddc08be57b67&name=cheapskate-fonts_el-abogado-loco.zip"
-        "marked-fool.zip::http://dl1.fontspace.com/download.ashx?guid=7574e646010c437f9be745bc43e0805b&name=cheapskate-fonts_marked-fool.zip"
-        "swift.zip::http://dl1.fontspace.com/download.ashx?guid=776e156541984416a416241a973d22c4&name=cheapskate-fonts_swift.zip"
-        "progenisis.zip::http://dl1.fontspace.com/download.ashx?guid=54468611c8614b00a0c45f07e794f845&name=cheapskate-fonts_progenisis.zip")
-sha256sums=('29b3c243d50590a4af614a433cbf99f67538042f31278ce6fa8828ae53c62657'
-            'd87365b90e2a4f6fa818ef7f6df921eaf306399064994e1f1c167b310ebcb18a'
-            'd44bdd7b2ba07e398a3c216b315a8d7753af9fec5febfc7a3b667ea17379fc4d'
-            'e6b6a490fd75513bc8d7b8cc0e5468b0c574aaff1801f45b8b67caa72dce9795'
-            '93a3429649e739470b46b3cb674a10e427358874a0eac2ab568a5c99dbed5641'
-            'f07ff39d4af3185c8be2a321c00e3c3132a230be1aff75501f3e33570d94b62b'
-            'baaf374cbc3a62f1659929c2f5e188e80c97e6530241f0667c78fa7cca99ac6c'
-            '3e6c881b6d7693087d517a359b22c994abe615dc86bead983f96a87ce78673c4'
-            '5cd859b3673fa5aa53e09c3c5ac0d98c6746ff2f008edc0bd4081020076c12a0'
-            '87cf485c0e19c5bda683044ba9f394d390b3c7eef6abb019c42246eef713843a'
-            'afadefecf89fdba6a2dadd6c509e44e72312fe8932001d965db5eab67be0a488'
-            'af6a7961cefd4c7f5a75f27545d5a5a0495c60a57f36517185d850d4bdba3e81'
-            '4c082352602558aa354577bf725fa415f1c13441bb591ae4a3ee25a4b922f92e'
-            '323d3cec2984f7792afaac87234d161b75e14ebacc7529a182c4c287d26b27be')
+source=("flatline-$pkgver.zip::https://get.fontspace.co/download/family/86xp/737c92701c004c299434e9aa9fef66d6/flatline-font.zip"
+        "wargames-$pkgver.zip::https://get.fontspace.co/download/family/64le/a67b4a43c3574b1f8e57037a86c2c586/wargames-font.zip"
+        "dustismo-roman-$pkgver.zip::https://get.fontspace.co/download/family/86xp/c6cfddf7450b4ea0a9693d662d0cf4f8/dustismo-roman-font.zip"
+        "penguin-attack-$pkgver.zip::https://get.fontspace.co/download/family/86xp/89e34341b643467aa150136e49574970/penguin-attack-font.zip"
+        "dustismo-$pkgver.zip::https://get.fontspace.co/download/family/86xp/9b89daa27a6049c8940a8d0bd4c2f8a1/dustismo-font.zip"
+        "it-wasnt-me-$pkgver.zip::https://get.fontspace.co/download/family/86xp/14582c6c73514438806349b26e372f0d/it-wasnt-me-font.zip"
+        "domestic-manners-$pkgver.zip::https://get.fontspace.co/download/family/86xp/8903789762af40a19ab05a69b7f37c9b/domestic-manners-font.zip"
+        "balker-$pkgver.zip::https://get.fontspace.co/download/family/86xp/7745ab9662154f03b0a8b2839b1993ff/balker-font.zip"
+        "junkyard-$pkgver.zip::https://get.fontspace.co/download/family/86xp/eb3650475aec40f4913b151b2d97eefc/junkyard-font.zip"
+        "winks-$pkgver.zip::https://get.fontspace.co/download/family/86xp/a85c6af870f74f2ab2dfcccd5a1a9962/winks-font.zip"
+        "el-abogado-loco-$pkgver.zip::https://get.fontspace.co/download/family/86xp/d545f98dd472458db69dddc08be57b67/el-abogado-loco-font.zip"
+        "marked-fool-$pkgver.zip::https://get.fontspace.co/download/family/86xp/7574e646010c437f9be745bc43e0805b/marked-fool-font.zip"
+        "swift-$pkgver.zip::https://get.fontspace.co/download/family/86xp/776e156541984416a416241a973d22c4/swift-font.zip"
+        "progenisis-$pkgver.zip::https://get.fontspace.co/download/family/86xp/54468611c8614b00a0c45f07e794f845/progenisis-font.zip")
+sha256sums=('e8ff7f1bb0994dd630b087ce7042fffb6a42fae38734ebd99414c2181e019b1a'
+            '2e832e695acd74c1fe05c72fcca365ae70e047c175a9eb65a0bb225e26608180'
+            '707df5e87b22566a924c477931d118366793b569499e08115cae2a0f8442242b'
+            '707df5e87b22566a924c477931d118366793b569499e08115cae2a0f8442242b'
+            '5bea6b115125c4e4e0bb44479551c68a5737b9d5a827f790d7eb73fddbcc12e9'
+            '5bea6b115125c4e4e0bb44479551c68a5737b9d5a827f790d7eb73fddbcc12e9'
+            '5bea6b115125c4e4e0bb44479551c68a5737b9d5a827f790d7eb73fddbcc12e9'
+            '5bea6b115125c4e4e0bb44479551c68a5737b9d5a827f790d7eb73fddbcc12e9'
+            '4d41e0390fc48d1bdf97d9b160f81f4720abb255c84f225ff831896856def395'
+            '4d41e0390fc48d1bdf97d9b160f81f4720abb255c84f225ff831896856def395'
+            '4ee5fb3f58fda49d0579036da0e8f830e6f3ce33f75450ffe05ee88e4d900092'
+            '4ee5fb3f58fda49d0579036da0e8f830e6f3ce33f75450ffe05ee88e4d900092'
+            '4ee5fb3f58fda49d0579036da0e8f830e6f3ce33f75450ffe05ee88e4d900092'
+            'a259e93959186ba162a13edf7e89b32a2956ef88b449003a93772aa00bf643b6')
 
 package() {
     install -Dm644 -t "$pkgdir/usr/share/fonts/TTF/" *.ttf
