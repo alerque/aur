@@ -1,30 +1,20 @@
+# Maintainer: Caleb Maclennan <caleb@alerque.com>
 # Contributor: Marcos Heredia <chelqo@gmail.com>
 
-_font="raleway-dots"
-_group="impallari"
-pkgname=ttf-${_group}-${_font}
-pkgver=1.0
-pkgrel=1
-pkgdesc="A dotted version of Raleway, from Pablo Impallari"
+_font=raleway-dots
+_group=impallari
+pkgname=ttf-$_group-$_font
+pkgver=1.000
+pkgrel=2
+pkgdesc='A dotted version of Raleway, from Pablo Impallari'
 arch=(any)
-url="http://www.impallari.com/"
-license=('custom:OFL')
+url="https://fonts.google.com/specimen/Raleway+Dots"
+license=('OFL')
 groups=("${_group}-fonts")
-depends=('fontconfig' 'xorg-font-utils')
-#install=updatefont.install
-#source=("http://www.impallari.com/media/uploads/prosources/update-55-source.zip")
-source=("Raleway_Dots.zip::https://fonts.google.com/download?family=Raleway+Dots")
-md5sums=('SKIP')
+source=("$pkgname-$pkgver.zip::https://fonts.google.com/download?family=Raleway+Dots")
+sha256sums=('e807f7be45d2ac1e022124d9aca2e5f4782bb84e7e91144a9585ca291ad55845')
 
 package() {
-  cd ${srcdir}/
-
-  install -dm755 "${pkgdir}/usr/share/fonts/TTF/${_group}"
-  install -Dpm644 *.ttf "${pkgdir}/usr/share/fonts/TTF/${_group}"
-
-  install -dm755 "${pkgdir}/usr/share/licenses/${pkgname}/"
-  install -Dpm644 OFL.txt "${pkgdir}/usr/share/licenses/${pkgname}/"
-
-  #install -dm755 "${pkgdir}/usr/share/doc/${pkgname}/"
-  #install -Dpm644 FONTLOG.txt "${pkgdir}/usr/share/doc/${pkgname}/"
+  install -Dm644 -t "$pkgdir/usr/share/fonts/TTF/" *.ttf
+  install -Dm644 -t "$pkgdir/usr/share/licenses/$pkgname/" OFL.txt
 }
