@@ -1,8 +1,0 @@
-*
-!./.SRCINFO
-!./.gitignore
-!./PKGBUILD
-!./mattermost-ldflags.patch
-!./mattermost.service
-!./mattermost.sysusers
-!./mattermost.tmpfiles
