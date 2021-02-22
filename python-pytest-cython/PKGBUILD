@@ -1,7 +1,7 @@
 # Maintainer: Guillaume Horel <guillaume.horel@gmail.com>
 pkgname='python-pytest-cython'
 _pkgname='pytest-cython'
-pkgver='0.1.0'
+pkgver='0.1.1.post0'
 pkgrel=1
 pkgdesc="A plugin for testing Cython extension modules."
 url="https://github.com/lgpage/pytest-cython"
@@ -12,7 +12,7 @@ optdepends=()
 license=('MIT')
 arch=('any')
 source=("https://pypi.org/packages/source/${_pkgname:0:1}/$_pkgname/$_pkgname-$pkgver.tar.gz")
-sha256sums=('90fa7e4e619bababeb433d3ba173a80d20473cce0bf3dce2c0e6f298becf5998')
+sha256sums=('8f7c079323ccdbe214e7fff82b24c97a4bf13175edf8670259447ea2319ee15d')
 
 package() {
     cd "${srcdir}/${_pkgname}-${pkgver}"
