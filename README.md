@@ -15,7 +15,7 @@ Then add the repository configuration to your `pacman.conf` after the *[communit
 
 ```ini
 [alerque]
-https://arch.alerque.com/$arch
+Server = https://arch.alerque.com/$arch
 ```
 
 ## Credits
