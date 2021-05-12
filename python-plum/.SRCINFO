@@ -1,14 +1,14 @@
 pkgbase = python-plum
 	pkgdesc = Pack/Unpack Memory
-	pkgver = 0.4.0
+	pkgver = 0.5.0
 	pkgrel = 1
 	url = https://plum-py.readthedocs.io/en/latest/
 	arch = any
 	license = MIT
 	makedepends = python-setuptools
 	depends = python
-	source = https://gitlab.com/dangass/plum/-/archive/ffd83dadda8fd0d7f5b4c00b7e4a0496397b4437/plum-ffd83dadda8fd0d7f5b4c00b7e4a0496397b4437.tar.gz
-	sha256sums = fbaa6d55eab163f4b4c2ded76c5862a871dd1fade3cf5f911c57d679bd8c6514
+	source = https://gitlab.com/dangass/plum/-/archive/0.5.0/plum-0.5.0.tar.bz2
+	sha256sums = 81abe267a49fe95f20368725c27a43122e4db981e9ae3b3e94139e924940a54a
 
 pkgname = python-plum
 
