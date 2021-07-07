@@ -1,6 +1,6 @@
 # Caleb's AUR Packages
 
-Package sources for all the AUR packages I officially [maintain](https://aur.archlinux.org/packages/?SeB=m&K=caleb), [co-maintain](https://aur.archlinux.org/packages/?SeB=c&K=caleb), or unofficially host modified versions of.
+Package sources for all the AUR packages I officially [maintain](https://aur.archlinux.org/packages/?SeB=m&K=alerque), [co-maintain](https://aur.archlinux.org/packages/?SeB=c&K=alerque), or unofficially host modified versions of.
 
 ## Pacman Package Repository
 
