@@ -10,6 +10,7 @@ To use [my Pacman package repository](https://wiki.archlinux.org/index.php/Unoff
 pacman-key --recv-keys 63CC496475267693
 pacman-key --lsign-key 63CC496475267693
 ```
+Note if you have trouble with your default key servers not being reachable try adding `--keyserver keyserver.ubuntu.com` to the first command.
 
 Then add the following repository configuration to your `pacman.conf` after the *[community]* repository.
 
