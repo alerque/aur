@@ -54,8 +54,7 @@ package() {
 	install -Dm0755 "$pkgname.sh" "$pkgdir/usr/bin/brave"
 	install -Dm0644 -t "$pkgdir/usr/share/applications/" "brave-browser.desktop"
 	for i in 16x16 24x24 32x32 48x48 64x64 128x128 256x256; do
-		# install -Dm644 "$pkgdir/usr/lib/$pkgname/product_logo_${i/x*/}.png" "$pkgdir/usr/share/icons/hicolor/$i/apps/brave-desktop.png"
-		cp "$pkgdir/usr/lib/$pkgname/product_logo_${i/x*/}.png" "$pkgdir/usr/share/icons/hicolor/$i/apps/brave-desktop.png"
+		install -Dm644 "$pkgdir/usr/lib/$pkgname/product_logo_${i/x*/}.png" "$pkgdir/usr/share/icons/hicolor/$i/apps/brave-desktop.png"
 	done
     install -Dm0644 -t "$pkgdir/usr/share/licenses/$pkgname/" brave/LICENSE
 	rm "$pkgdir/usr/lib/$pkgname/LICENSE"
