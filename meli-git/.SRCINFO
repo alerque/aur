@@ -1,0 +1,16 @@
+pkgbase = meli-git
+	pkgdesc = Experimental terminal mail client aiming for configurability and extensibility with sane defaults.
+	pkgver = alpha.0.4.2.r232.g6ccb9d3
+	pkgrel = 1
+	url = https://meli.delivery/
+	arch = x86_64
+	license = GPL3
+	makedepends = git
+	makedepends = rust
+	provides = meli
+	conflicts = meli
+	source = git+https://git.meli.delivery/meli/meli.git
+	md5sums = SKIP
+
+pkgname = meli-git
+
