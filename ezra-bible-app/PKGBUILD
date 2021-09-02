@@ -10,9 +10,6 @@ license=(GPL3)
 depends=(electron
          icu
          nodejs)
-provides=(ezra-project)
-conflicts=(ezra-project)
-replaces=(ezra-project)
 makedepends=(git # Upstream Issue: https://github.com/ezra-bible-app/ezra-bible-app/issues/388
              jq
              moreutils
@@ -22,6 +19,9 @@ makedepends=(git # Upstream Issue: https://github.com/ezra-bible-app/ezra-bible-
              nodejs-pug-cli
              nodejs-sword-interface # run time dep but gets baked into electron asar
              npm)
+provides=(ezra-project)
+conflicts=(ezra-project)
+replaces=(ezra-project)
 source=("$pkgname-$pkgver.tar.gz::$url/archive/$pkgver.tar.gz"
         "$pkgname.sh")
 sha256sums=('11fede4cdc9654904efc8f3f515a9dc8eec86178c1eb29fddf38738081a6e348'
@@ -31,8 +31,8 @@ prepare() {
 	cd "$pkgname-$pkgver"
 	jq 'del(.dependencies["node-addon-api", "node-sword-interface"], .devDependencies["electron", "electron-osx-sign", "node-abi", "node-gyp", "pug-cli", "sequelize-cli"])' package.json |
 		sponge package.json
-    # Upstream Issue: https://github.com/ezra-bible-app/ezra-bible-app/issues/436
 	rm -rf node_modules/{node-addon-api,node-sword-interface}
+    # Upstream Issue: https://github.com/ezra-bible-app/ezra-bible-app/issues/436
 	sed -i -e '/sqlite3/s/\^//' package.json
 	npm install --cache "$srcdir/npm-cache" --no-audit --no-fund --ignore-scripts
 }
