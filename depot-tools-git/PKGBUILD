@@ -1,0 +1,74 @@
+# Maintainer: relrel <relrelbachar@gmail.com>
+# Contributor: Luis Aranguren <pizzaman@hotmail.com>
+# Contributor: Adrian Perez <aperez@igalia.com>
+# Contributor: Chih-Hsuan Yen <yan12125@gmail.com>
+# Contributor: rway <rway07@gmail.com>
+# Contributor: wabi <aschrafl@jetnet.ch>
+# Contributor: Alexander RÃ¸dseth <rodseth@gmail.com>
+# Contributor: Andreas Schrafl <aschrafl@gmail.com>
+# Contributor: piojo <aur@zwell.net>
+# Contributor: hack.augusto <hack.augusto@gmail.com>
+pkgname=depot-tools-git
+pkgver=r7308.7f3861357
+pkgrel=1
+pkgdesc="Tools for working with Chromium development"
+arch=('any')
+url="https://chromium.googlesource.com/chromium/tools/depot_tools"
+license=('custom')
+depends=(git)
+optdepends=('bash-completion: for bash completion')
+install="$pkgname.install"
+source=("git+$url")
+sha512sums=('SKIP')
+
+pkgver() {
+	cd "$srcdir/depot_tools/"
+	printf "r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
+}
+
+package() {
+	install -d "$pkgdir/opt/"
+	cp -r "$srcdir/depot_tools/" "$pkgdir/opt/depot_tools/"
+	chmod 775 "$pkgdir/opt/depot_tools/"
+
+	rm -rf "$pkgdir/opt/depot_tools/.git/"
+
+	# Make Windows files non-executable
+	chmod a-x "$pkgdir/opt/depot_tools/"*.{bat,exe}
+
+	# TODO: Consider removing unneeded files, for example:
+	# .git{ignore,attributes}
+	# *OWNERS
+	# WATCHLISTS
+	# bootstrap/
+	# infra/
+	# ninja-{mac,linux32}
+	# *.{bat,exe}
+	# testing_support/
+	# tests/
+	# win32imports.py
+	# win_toolchain/
+
+	# Install license
+	install -d "$pkgdir/usr/share/licenses/$pkgname/"
+	mv "$pkgdir/opt/depot_tools/LICENSE" "$pkgdir/usr/share/licenses/$pkgname/"
+
+	# Install man pages
+	install -d "$pkgdir/usr/share/man/"
+	mv "$pkgdir/opt/depot_tools/man/"man[0-8]/ "$pkgdir/usr/share/man/"
+
+	# Install docs
+	install -d "$pkgdir/usr/share/doc/$pkgname/"
+	mv "$pkgdir/opt/depot_tools/man/html/" "$pkgdir/usr/share/doc/$pkgname/"
+	mv "$pkgdir/opt/depot_tools/"README* "$pkgdir/usr/share/doc/$pkgname/"
+
+	# Remove man/ leftovers
+	rm -r "$pkgdir/opt/depot_tools/man/"
+
+	# Install bash completions
+	install -d "$pkgdir/usr/share/bash-completion/completions/"
+	mv "$pkgdir/opt/depot_tools/gclient_completion.sh" "$pkgdir/usr/share/bash-completion/completions/gclient"
+	mv "$pkgdir/opt/depot_tools/git_cl_completion.sh" "$pkgdir/usr/share/bash-completion/completions/git-cl"
+
+	# TODO: Install zsh-goodies/?
+}
