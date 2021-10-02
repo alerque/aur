@@ -14,7 +14,7 @@
 ## sccache for faster builds - https://github.com/brave/brave-browser/wiki/sccache-for-faster-builds
 ## Valid numbers between: 0 and 1
 ## Default is: 0 => not use sccache
-: "${USE_SCCACHE:=1}"
+: "${USE_SCCACHE:=0}"
 ##
 ## COMPONENT variable
 ## 0 -> build normal (with debug symbols)
@@ -22,10 +22,10 @@
 ## 2 -> static
 ## 3 -> debug
 ## 4 -> release with custom cflags and system libs
-: "${COMPONENT:=4}"
+: "${COMPONENT:=1}"
 
 pkgname=brave
-pkgver=1.30.86
+pkgver=1.30.87
 pkgrel=1
 pkgdesc='A web browser that stops ads and trackers by default'
 arch=(x86_64)
@@ -76,20 +76,20 @@ for _patch in "${_patches[@]}"; do
 	source+=("$_patch::https://raw.githubusercontent.com/archlinux/svntogit-packages/$_arch_revision/chromium/trunk/$_patch")
 done
 sha256sums=('SKIP'
-	'SKIP'
-	'SKIP'
-	'SKIP'
-	'SKIP'
-	'e4478c79e2eed500777117bb1d48f4be1866908dcda8d75003a5d055618dfdca'
-	'fa6ed4341e5fc092703535b8becaa3743cb33c72f683ef450edd3ef66f70d42d'
-	'213e50f48b67feb4441078d50b0fd431df34323be15be97c55302d3fdac4483a'
-	'ea3446500d22904493f41be69e54557e984a809213df56f3cdf63178d2afb49e'
-	'd3344ba39b8c6ed202334ba7f441c70d81ddf8cdb15af1aa8c16e9a3a75fbb35'
-	'd53da216538f2e741a6e048ed103964a91a98e9a3c10c27fdfa34d4692fdc455'
-	'921010cd8fab5f30be76c68b68c9b39fac9e21f4c4133bb709879592bbdf606e'
-	'dd317f85e5abfdcfc89c6f23f4c8edbcdebdd5e083dcec770e5da49ee647d150'
-	'2a97b26c3d6821b15ef4ef1369905c6fa3e9c8da4877eb9af4361452a425290b'
-	'e393174d7695d0bafed69e868c5fbfecf07aa6969f3b64596d0bae8b067e1711')
+            'SKIP'
+            'SKIP'
+            'SKIP'
+            'SKIP'
+            'e4478c79e2eed500777117bb1d48f4be1866908dcda8d75003a5d055618dfdca'
+            'fa6ed4341e5fc092703535b8becaa3743cb33c72f683ef450edd3ef66f70d42d'
+            '213e50f48b67feb4441078d50b0fd431df34323be15be97c55302d3fdac4483a'
+            'ea3446500d22904493f41be69e54557e984a809213df56f3cdf63178d2afb49e'
+            'd3344ba39b8c6ed202334ba7f441c70d81ddf8cdb15af1aa8c16e9a3a75fbb35'
+            'd53da216538f2e741a6e048ed103964a91a98e9a3c10c27fdfa34d4692fdc455'
+            '921010cd8fab5f30be76c68b68c9b39fac9e21f4c4133bb709879592bbdf606e'
+            'dd317f85e5abfdcfc89c6f23f4c8edbcdebdd5e083dcec770e5da49ee647d150'
+            '2a97b26c3d6821b15ef4ef1369905c6fa3e9c8da4877eb9af4361452a425290b'
+            'e393174d7695d0bafed69e868c5fbfecf07aa6969f3b64596d0bae8b067e1711')
 
 # Possible replacements are listed in build/linux/unbundle/replace_gn_files.py
 # Keys are the names in the above script; values are the dependencies in Arch
@@ -195,6 +195,10 @@ prepare() {
 
 	if [ "$COMPONENT" = "4" ]; then
 		_msg "Add patches for custom build"
+
+		# Allow building against system libraries in official builds
+		sed -i 's/OFFICIAL_BUILD/GOOGLE_CHROME_BUILD/' \
+			tools/generate_shim_headers/generate_shim_headers.py
 
 		./build/linux/unbundle/replace_gn_files.py \
 			--system-libraries "${!_system_libs[@]}"
