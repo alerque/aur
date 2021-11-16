@@ -1,0 +1,24 @@
+pkgbase = gitahead
+	pkgdesc = Understand your Git history!
+	pkgver = 2.6.3
+	pkgrel = 3
+	url = https://www.gitahead.com/
+	arch = x86_64
+	license = MIT
+	makedepends = cmake
+	makedepends = ninja
+	makedepends = git
+	makedepends = qt5-tools
+	makedepends = qt5-translations
+	depends = desktop-file-utils
+	depends = qt5-base
+	depends = git
+	source = git+https://github.com/gitahead/gitahead#tag=v2.6.3
+	source = gitahead.desktop
+	source = gitahead.patch
+	sha256sums = SKIP
+	sha256sums = 254b4e970a942c6ac94df177e54a6169fe7e5f5c5d0d92b6f0c0f03b7b7b2fb0
+	sha256sums = 096e8f3700d7d74884e81eae3282fa1b4fad1cfa7a179ff03f1a7d89867538a0
+
+pkgname = gitahead
+
