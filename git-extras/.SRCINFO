@@ -1,0 +1,13 @@
+pkgbase = git-extras
+	pkgdesc = GIT utilities -- repo summary, commit counting, repl, changelog population and more
+	pkgver = 6.3.0
+	pkgrel = 2
+	url = https://github.com/tj/git-extras
+	install = git-extras.install
+	arch = any
+	license = MIT
+	depends = git
+	source = git-extras-6.3.0.tar.gz::https://github.com/tj/git-extras/archive/6.3.0.tar.gz
+	b2sums = 263e192015e46da7867f131c19ae47243e60355cba02b1860b45abafdc4fc6adf916dffce58b853960d8bb22f5da067e1dca6ed0b02f108953571896d1c981c4
+
+pkgname = git-extras
