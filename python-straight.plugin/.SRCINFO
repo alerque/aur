@@ -1,7 +1,7 @@
 pkgbase = python-straight.plugin
 	pkgdesc = A simple namespaced plugin facility
 	pkgver = 1.5.0
-	pkgrel = 1
+	pkgrel = 2
 	url = https://github.com/ironfroggy/straight.plugin
 	arch = any
 	license = MIT
@@ -11,4 +11,3 @@ pkgbase = python-straight.plugin
 	sha256sums = 818a7641068932ed6436d0af0a3bb77bbbde29df0a7142c8bd1a249e7c2f0d38
 
 pkgname = python-straight.plugin
-
