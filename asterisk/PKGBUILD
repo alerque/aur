@@ -8,9 +8,9 @@
 
 pkgname=asterisk
 pkgver=19.1.0
-pkgrel=3
+pkgrel=4
 pkgdesc='A complete PBX solution'
-arch=(x86_64 i686 aarch64 armv7h)
+arch=(x86_64 aarch64 armv7h armv6h i686)
 url=https://www.asterisk.org
 license=(GPL)
 depends=(alsa-lib

@@ -1,13 +1,14 @@
 pkgbase = asterisk
 	pkgdesc = A complete PBX solution
 	pkgver = 19.1.0
-	pkgrel = 3
+	pkgrel = 4
 	url = https://www.asterisk.org
 	install = asterisk.install
 	arch = x86_64
-	arch = i686
 	arch = aarch64
 	arch = armv7h
+	arch = armv6h
+	arch = i686
 	license = GPL
 	makedepends = gsm
 	makedepends = sqlite3
