@@ -8,7 +8,7 @@
 
 pkgname=asterisk
 pkgver=19.1.0
-pkgrel=5
+pkgrel=6
 pkgdesc='A complete PBX solution'
 arch=(x86_64 aarch64 armv7h armv6h i686)
 url=https://www.asterisk.org
@@ -34,6 +34,7 @@ optdepends=(dahdi
             lua51
             openr2
             postgresql
+            python
             sqlite3
             unixodbc)
 _confs=(acl.conf
@@ -147,7 +148,6 @@ _confs=(acl.conf
         voicemail.conf
         xmpp.conf)
 backup=("${_confs[@]/#/etc/$pkgname/}")
-install=$pkgname.install
 _archive="$pkgname-$pkgver"
 source=("https://downloads.asterisk.org/pub/telephony/$pkgname/releases/$_archive.tar.gz"{,.asc}
         "$pkgname.sysusers"
@@ -156,7 +156,7 @@ source=("https://downloads.asterisk.org/pub/telephony/$pkgname/releases/$_archiv
 validpgpkeys=('F2FC93DB7587BD1FB49E045A5D984BE337191CE7')
 sha256sums=('3c2755e9c037f2b8e25e7ccee22c51e7353968bf9f845fcbf0dafef0850986dd'
             'SKIP'
-            '1d6464daaaa3b3cd30c479cb63d514738c2cce292e2299da0289775c16303661'
+            '1cbd327b198cb7056e6782f964b93aac4b91b445363cf78c1f0932990309724f'
             'caa24cfec5c6b4f8cea385269e39557362acad7e2a552994c3bc24080e3bdd4e'
             '673c0c55bce8068c297f9cdd389402c2d5d5a25e2cf84732cb071198bd6fa78a')
 
@@ -179,6 +179,10 @@ build() {
 }
 
 package(){
+	install -Dm644 "$pkgname.sysusers" "$pkgdir/usr/lib/sysusers.d/$pkgname.conf"
+	install -Dm644 "$pkgname.logrotated" "$pkgdir/etc/logrotate.d/$pkgname"
+	install -Dm644 "$pkgname.tmpfile" "$pkgdir/usr/lib/tmpfiles.d/$pkgname.conf"
+
 	cd "$_archive"
 	make DESTDIR="$pkgdir" install
 	make DESTDIR="$pkgdir" install-headers
@@ -201,9 +205,4 @@ package(){
 
 	pushd contrib/systemd
 	install -Dm644 -t "$pkgdir/usr/lib/systemd/system/" "$pkname"*.{service,socket}
-
-	pushd "$srcdir"
-	install -Dm644 "$pkgname.sysusers" "$pkgdir/usr/lib/sysusers.d/$pkgname.conf"
-	install -Dm644 "$pkgname.logrotated" "$pkgdir/etc/logrotate.d/$pkgname"
-	install -Dm644 "$pkgname.tmpfile" "$pkgdir/usr/lib/tmpfiles.d/$pkgname.conf"
 }
