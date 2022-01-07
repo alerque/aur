@@ -8,7 +8,7 @@
 
 pkgname=asterisk
 pkgver=19.1.0
-pkgrel=6
+pkgrel=7
 pkgdesc='A complete PBX solution'
 arch=(x86_64 aarch64 armv7h armv6h i686)
 url=https://www.asterisk.org
@@ -152,7 +152,7 @@ _archive="$pkgname-$pkgver"
 source=("https://downloads.asterisk.org/pub/telephony/$pkgname/releases/$_archive.tar.gz"{,.asc}
         "$pkgname.sysusers"
         "$pkgname.logrotated"
-        "$pkgname.tmpfile")
+        "$pkgname.tmpfiles")
 validpgpkeys=('F2FC93DB7587BD1FB49E045A5D984BE337191CE7')
 sha256sums=('3c2755e9c037f2b8e25e7ccee22c51e7353968bf9f845fcbf0dafef0850986dd'
             'SKIP'
@@ -181,7 +181,7 @@ build() {
 package(){
 	install -Dm644 "$pkgname.sysusers" "$pkgdir/usr/lib/sysusers.d/$pkgname.conf"
 	install -Dm644 "$pkgname.logrotated" "$pkgdir/etc/logrotate.d/$pkgname"
-	install -Dm644 "$pkgname.tmpfile" "$pkgdir/usr/lib/tmpfiles.d/$pkgname.conf"
+	install -Dm644 "$pkgname.tmpfiles" "$pkgdir/usr/lib/tmpfiles.d/$pkgname.conf"
 
 	cd "$_archive"
 	make DESTDIR="$pkgdir" install
@@ -201,8 +201,10 @@ package(){
 			<(IFS=$'\n'; echo "${_backs[*]}" | sort) &&
 		exit 1)
 
+	sed -i -e 's,/var/run,/run,' "$pkgdir/etc/asterisk/asterisk.conf"
 	install -Dm644 -t "$pkgdir/usr/share/doc/$pkgname/examples" "$pkgdir/etc/asterisk/"*
 
+	mv "$pkgdir/var/run" "$pkgdir"
 	pushd contrib/systemd
 	install -Dm644 -t "$pkgdir/usr/lib/systemd/system/" "$pkname"*.{service,socket}
 }
