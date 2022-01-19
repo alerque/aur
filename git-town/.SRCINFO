@@ -1,0 +1,13 @@
+pkgbase = git-town
+	pkgdesc = Generic, high-level Git workflow support!
+	pkgver = 7.4.0
+	pkgrel = 1
+	url = https://github.com/git-town/git-town
+	arch = x86_64
+	license = MIT
+	depends = git
+	source = git-town.tar.gz::https://github.com/git-town/git-town/releases/download/v7.4.0/git-town_7.4.0_linux_intel_64.tar.gz
+	sha256sums = 80ae7fd645be59d60689b117bde1ab363f18be2329ae92688d4b0297e272ce06
+
+pkgname = git-town
+
