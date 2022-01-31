@@ -1,6 +1,0 @@
-*
-!./.SRCINFO
-!./.gitignore
-!./PKGBUILD
-!./fix-undef-behaviour.patch
-!./handle-equals-signs.patch
