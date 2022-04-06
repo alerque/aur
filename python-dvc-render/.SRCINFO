@@ -1,7 +1,7 @@
-pkgbase = dvc-render
+pkgbase = python-dvc-render
 	pkgdesc = Library for rendering DVC plots
 	pkgver = 0.0.4
-	pkgrel = 1
+	pkgrel = 2
 	url = https://github.com/iterative/dvc-render
 	arch = any
 	license = Apache
@@ -21,4 +21,4 @@ pkgbase = dvc-render
 	source = https://files.pythonhosted.org/packages/source/d/dvc-render/dvc-render-0.0.4.tar.gz
 	sha256sums = 1cc460b05d3b26c8fbfdbf7fab642b89b53ec6461547909e3f7cf5d7e72d8364
 
-pkgname = dvc-render
+pkgname = python-dvc-render

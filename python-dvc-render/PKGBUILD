@@ -1,12 +1,13 @@
 # Maintainer: Caleb Maclennan <caleb@alerque.com>
 
-pkgname=dvc-render
+pkgname=python-dvc-render
+_pkgname=${pkgname#python-}
 pkgver=0.0.4
-pkgrel=1
+pkgrel=2
 pkgdesc='Library for rendering DVC plots'
 arch=(any)
 license=(Apache)
-url="https://github.com/iterative/${pkgname}"
+url="https://github.com/iterative/$_pkgname"
 _pydeps=(funcy
          tabulate)
 depends=(python
@@ -17,8 +18,8 @@ checkdepends=(mypy
               python-pytest-sugar
               python-pytest-mock
               python-pylint)
-_archive=("$pkgname-$pkgver")
-source=("https://files.pythonhosted.org/packages/source/${pkgname::1}/$pkgname/$_archive.tar.gz")
+_archive=("$_pkgname-$pkgver")
+source=("https://files.pythonhosted.org/packages/source/${_pkgname::1}/$_pkgname/$_archive.tar.gz")
 sha256sums=('1cc460b05d3b26c8fbfdbf7fab642b89b53ec6461547909e3f7cf5d7e72d8364')
 
 build() {
