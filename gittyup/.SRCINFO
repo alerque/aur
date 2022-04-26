@@ -1,12 +1,13 @@
 pkgbase = gittyup
 	pkgdesc = Graphical Git client (GitAhead fork)
 	pkgver = 1.0.0
-	pkgrel = 0
+	pkgrel = 1
 	url = https://github.com/Murmele/Gittyup
 	arch = x86_64
 	license = MIT
 	makedepends = cmake
 	makedepends = git
+	makedepends = expac
 	makedepends = libgnome-keyring
 	makedepends = ninja
 	makedepends = qt5-tools
@@ -19,10 +20,10 @@ pkgbase = gittyup
 	optdepends = libgnome-keyring: for GNOME Keyring for auth credentials
 	optdepends = qt5-translations: translations
 	source = gittyup::git+https://github.com/Murmele/Gittyup.git#tag=gittyup_v1.0.0
-	source = git+https://github.com/stinb/libgit2.git
-	source = git+https://github.com/git/git.git
-	source = git+https://github.com/libssh2/libssh2.git
-	source = git+https://github.com/hunspell/hunspell.git
+	source = git+https://github.com/libgit2/libgit2.git#tag=v1.4.3
+	source = git+https://github.com/git/git.git#tag=v2.36.0
+	source = git+https://github.com/libssh2/libssh2.git#tag=libssh2-1.10.0
+	source = git+https://github.com/hunspell/hunspell.git#tag=v1.7.0
 	source = gittyup.desktop
 	sha256sums = SKIP
 	sha256sums = SKIP

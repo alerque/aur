@@ -3,7 +3,7 @@
 
 pkgname=gittyup
 pkgver=1.0.0
-pkgrel=0
+pkgrel=1
 pkgdesc='Graphical Git client (GitAhead fork)'
 url="https://github.com/Murmele/${pkgname^}"
 arch=(x86_64)
@@ -14,6 +14,7 @@ depends=(cmark
          qt5-base)
 makedepends=(cmake
              git
+             expac
              libgnome-keyring
              ninja
              qt5-tools
@@ -21,11 +22,14 @@ makedepends=(cmake
 optdepends=('git-lfs: git-lfs support'
             'libgnome-keyring: for GNOME Keyring for auth credentials'
             'qt5-translations: translations')
-source=("${pkgname}::git+https://github.com/Murmele/Gittyup.git#tag=${pkgname}_v${pkgver}"
-        "git+https://github.com/stinb/libgit2.git"
-        "git+https://github.com/git/git.git"
-        "git+https://github.com/libssh2/libssh2.git"
-        "git+https://github.com/hunspell/hunspell.git"
+_archver() {
+	expac %v $1 | sed 's/^.*://;s/-.*$//'
+}
+source=("$pkgname::git+https://github.com/Murmele/Gittyup.git#tag=${pkgname}_v$pkgver"
+        "git+https://github.com/libgit2/libgit2.git#tag=v$(_archver libgit2)"
+        "git+https://github.com/git/git.git#tag=v$(_archver git)"
+        "git+https://github.com/libssh2/libssh2.git#tag=libssh2-$(_archver libssh2)"
+        "git+https://github.com/hunspell/hunspell.git#tag=v$(_archver hunspell)"
         'gittyup.desktop')
 sha256sums=('SKIP'
             'SKIP'
@@ -35,45 +39,57 @@ sha256sums=('SKIP'
             'fb900e4d101c19a5b3e1dc4c7619780e1d38fd78d0b9d951e794fbf36eebf21a')
 
 prepare() {
-    cd "${pkgname}"
-    git submodule init
-    git config 'submodule.dep/libgit2/libgit2.url' "${srcdir}/libgit2"
-    git config 'submodule.dep/git/git.url' "${srcdir}/git"
-    git config 'submodule.dep/libssh2/libssh2.url' "${srcdir}/libssh2"
-    git config 'submodule.dep/hunspell/hunspell.url' "${srcdir}/hunspell"
-    git -c submodule.dep/openssl/openssl.update=none -c submodule.dep/cmark/cmark.update=none submodule update
+	cd "$pkgname"
+	set -x
+	ls -s ../libgit2
+	ls -s ../git
+	ls -s ../libssh2
+	ls -s ../hunspell
+
+	# git submodule init
+	# git config submodule.dep/libgit2/libgit2.url "$srcdir/libgit2"
+	# git submodule set-branch v$(_archver libgit2) -- libgit2
+	# git config submodule.dep/git/git.url "$srcdir/git"
+	# git submodule set-branch v$(_archver git) -- git
+	# git config submodule.dep/libssh2/libssh2.url "$srcdir/libssh2"
+	# git submodule set-branch libssh2-$(_archver libssh2) -- libssh2
+	# git config submodule.dep/hunspell/hunspell.url "$srcdir/hunspell"
+	# git submodule set-branch v$(_archver hunspell) -- hunspell
+	# git config submodule.dep/openssl/openssl.update none
+	# git config submodule.dep/cmark/cmark.update none
+	# git submodule update
 }
 
 build() {
-    cmake \
-        -G Ninja \
-        -Wno-dev \
-        -DCMAKE_BUILD_TYPE=None \
-        -DCMAKE_INSTALL_PREFIX=/usr/lib/gittyup \
-        -DCMAKE_INSTALL_MANDIR=/usr/share/man \
-        -DENABLE_REPRODUCIBLE_BUILDS=ON \
-        -DBUILD_SHARED_LIBS=OFF \
+	cmake \
+		-G Ninja \
+		-Wno-dev \
+		-DCMAKE_BUILD_TYPE=None \
+		-DCMAKE_INSTALL_PREFIX=/usr/lib/gittyup \
+		-DCMAKE_INSTALL_MANDIR=/usr/share/man \
+		-DENABLE_REPRODUCIBLE_BUILDS=ON \
+		-DBUILD_SHARED_LIBS=OFF \
 		-B build \
-		-S "${pkgname}"
-
+		-S "$pkgname"
 	ninja -C build
 }
 
 package() {
-    cd "${srcdir}/${pkgname}"
-    DESTDIR="${pkgdir}" ninja -C ../build install
+	cd "$pkgname"
+	DESTDIR="$pkgdir" ninja -C ../build install
 
-    rm -rf "${pkgdir}/usr/lib/gittyup/"*.so.*
-    install -d "${pkgdir}/usr/bin"
-    ln -s /usr/lib/gittyup/Gittyup "${pkgdir}/usr/bin/gittyup"
+	rm -rf "$pkgdir/usr/lib/gittyup/"*.so.*
+	mv "$pkgdir/usr/"{lib/${pkgname^},bin/$pkgname}
+	# install -d "$pkgdir/usr/bin"
+	# ln -s /usr/lib/gittyup/Gittyup "$pkgdir/usr/bin/gittyup"
 
-    install -Dm644 LICENSE.md "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
-    install -Dm644 ../gittyup.desktop "${pkgdir}/usr/share/applications/gittyup.desktop"
+	install -Dm0644 -t "$pkgdir/usr/share/licenses/$pkgname/" LICENSE.md
+	install -Dm0644 -t "$pkgdir/usr/share/applications/" ../$pkgname.desktop
 
-    install -Dm644 rsrc/Gittyup.iconset/gittyup_logo.svg "${pkgdir}/usr/share/icons/hicolor/scalable/apps/gittyup.svg"
-    for s in 16x16 32x32 64x64 128x128 256x256 512x512; do
-        install -Dm0644 "rsrc/Gittyup.iconset/icon_$s.png" "icons/hicolor/$s/apps/$pkgname.png"
-    done
+	install -Dm0644 rsrc/Gittyup.iconset/gittyup_logo.svg "$pkgdir/usr/share/icons/hicolor/scalable/apps/gittyup.svg"
+	for s in 16x16 32x32 64x64 128x128 256x256 512x512; do
+		install -Dm0644 "rsrc/Gittyup.iconset/icon_$s.png" "icons/hicolor/$s/apps/$pkgname.png"
+	done
 
-    rm -rf "${pkgdir}/usr/share/man" # libssh2 man pages
+	rm -rf "$pkgdir/usr/share/man" # libssh2 man pages
 }
