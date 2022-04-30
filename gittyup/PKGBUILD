@@ -2,7 +2,7 @@
 # Contributor: Fabio 'Lolix' Loli <lolix@disroot.org>
 
 pkgname=gittyup
-pkgver=1.0.0
+pkgver=1.1.0
 pkgrel=1
 pkgdesc='Graphical Git client (GitAhead fork)'
 url="https://github.com/Murmele/${pkgname^}"
@@ -13,62 +13,91 @@ depends=(cmark
          libsecret
          qt5-base)
 makedepends=(cmake
-             git
              expac
+             git
+             hunspell
+             libgit2
              libgnome-keyring
              ninja
+             openssl
              qt5-tools
              qt5-translations)
 optdepends=('git-lfs: git-lfs support'
             'libgnome-keyring: for GNOME Keyring for auth credentials'
             'qt5-translations: translations')
-_archver() {
-	expac %v $1 | sed 's/^.*://;s/-.*$//'
-}
 source=("$pkgname::git+https://github.com/Murmele/Gittyup.git#tag=${pkgname}_v$pkgver"
-        "git+https://github.com/libgit2/libgit2.git#tag=v$(_archver libgit2)"
-        "git+https://github.com/git/git.git#tag=v$(_archver git)"
-        "git+https://github.com/libssh2/libssh2.git#tag=libssh2-$(_archver libssh2)"
-        "git+https://github.com/hunspell/hunspell.git#tag=v$(_archver hunspell)"
+        "$pkgname-cmark::git+https://github.com/commonmark/cmark.git"
+        "$pkgname-git::git+https://github.com/git/git.git"
+        "$pkgname-hunspell::git+https://github.com/hunspell/hunspell.git"
+        "$pkgname-libgit2::git+https://github.com/stinb/libgit2.git" # a fork, not the official upstream!
+        "$pkgname-libssh2::git+https://github.com/libssh2/libssh2.git"
+        "$pkgname-openssl::git+https://github.com/openssl/openssl.git"
+        "$pkgname-zip::git+https://github.com/kuba--/zip.git"
         'gittyup.desktop')
+# checkdepends=(python2)
 sha256sums=('SKIP'
+            'SKIP'
+            'SKIP'
+            'SKIP'
             'SKIP'
             'SKIP'
             'SKIP'
             'SKIP'
             'fb900e4d101c19a5b3e1dc4c7619780e1d38fd78d0b9d951e794fbf36eebf21a')
 
+# _archver() {
+#     expac %v $1 |
+#         sed 's/^.*://;s/-.*$//' |
+#         ( [[ $1 == openssl ]] && sed 's/\./_/;s/\./_/;s/\.//' || cat )
+# }
+
+# _depsrc() {
+#     local _dep="dep/$1/$1"
+#     mkdir -p "$(dirname $_dep)"
+#     rm -rf "$_dep"
+#     ln -sf "$srcdir/$pkgname-$1" "$_dep"
+#     pushd "$_dep"
+#     git checkout $2$(_archver $1)
+#     popd
+# }
+
 prepare() {
 	cd "$pkgname"
-	set -x
-	ls -s ../libgit2
-	ls -s ../git
-	ls -s ../libssh2
-	ls -s ../hunspell
-
-	# git submodule init
-	# git config submodule.dep/libgit2/libgit2.url "$srcdir/libgit2"
-	# git submodule set-branch v$(_archver libgit2) -- libgit2
-	# git config submodule.dep/git/git.url "$srcdir/git"
-	# git submodule set-branch v$(_archver git) -- git
-	# git config submodule.dep/libssh2/libssh2.url "$srcdir/libssh2"
-	# git submodule set-branch libssh2-$(_archver libssh2) -- libssh2
-	# git config submodule.dep/hunspell/hunspell.url "$srcdir/hunspell"
-	# git submodule set-branch v$(_archver hunspell) -- hunspell
+	# _depsrc cmark
+	# _depsrc git v
+	# _depsrc hunspell v
+	# _depsrc libgit2 v
+	# _depsrc openssl OpenSSL_
+	# _depsrc libssh2 libssh2-
+	git config advice.detachedHead false
+	git submodule init
+	git config submodule.test/dep/zip.url "$srcdir/$pkgname-zip"
+	# git submodule update -- test/dep/zip
+	git config submodule.dep/libgit2/libgit2.url "$srcdir/$pkgname-libgit2"
+	# git submodule set-branch --branch v$(_archver libgit2) -- dep/libgit2/libgit2
+	git config submodule.dep/git/git.url "$srcdir/$pkgname-git"
+	# git submodule set-branch --branch v$(_archver git) -- dep/git/git
+	git config submodule.dep/libssh2/libssh2.url "$srcdir/$pkgname-libssh2"
+	# git submodule set-branch --branch libssh2-$(_archver libssh2) -- dep/libssh2/libssh2
+	git config submodule.dep/hunspell/hunspell.url "$srcdir/$pkgname-hunspell"
+	# git submodule set-branch --branch v$(_archver hunspell) -- dep/hunspell/hunspell
+	git config submodule.dep/openssl/openssl.url "$srcdir/$pkgname-openssl"
 	# git config submodule.dep/openssl/openssl.update none
+	git config submodule.dep/cmark/cmark.url "$srcdir/$pkgname-cmark"
 	# git config submodule.dep/cmark/cmark.update none
-	# git submodule update
+	git submodule update
 }
 
 build() {
 	cmake \
 		-G Ninja \
-		-Wno-dev \
-		-DCMAKE_BUILD_TYPE=None \
-		-DCMAKE_INSTALL_PREFIX=/usr/lib/gittyup \
-		-DCMAKE_INSTALL_MANDIR=/usr/share/man \
-		-DENABLE_REPRODUCIBLE_BUILDS=ON \
-		-DBUILD_SHARED_LIBS=OFF \
+		-W no-dev \
+		-D CMAKE_BUILD_TYPE=None \
+		-D CMAKE_INSTALL_PREFIX=/usr/lib/gittyup \
+		-D CMAKE_INSTALL_MANDIR=/usr/share/man \
+		-D ENABLE_REPRODUCIBLE_BUILDS=ON \
+		-D BUILD_SHARED_LIBS=OFF \
+		-D BUILD_TESTS=OFF \
 		-B build \
 		-S "$pkgname"
 	ninja -C build
