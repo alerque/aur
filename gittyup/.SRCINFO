@@ -6,7 +6,6 @@ pkgbase = gittyup
 	arch = x86_64
 	license = MIT
 	makedepends = cmake
-	makedepends = expac
 	makedepends = git
 	makedepends = hunspell
 	makedepends = libgit2

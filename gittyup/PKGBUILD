@@ -14,7 +14,6 @@ depends=(cmark
          lua
          qt5-base)
 makedepends=(cmake
-             expac
              git
              hunspell
              libgit2
@@ -35,7 +34,6 @@ source=("$pkgname::git+https://github.com/Murmele/Gittyup.git#tag=${pkgname}_v$p
         "$pkgname-openssl::git+https://github.com/openssl/openssl.git"
         "$pkgname-zip::git+https://github.com/kuba--/zip.git"
         'gittyup.desktop')
-# checkdepends=(python2)
 sha256sums=('SKIP'
             'SKIP'
             'SKIP'
@@ -46,46 +44,17 @@ sha256sums=('SKIP'
             'SKIP'
             'fb900e4d101c19a5b3e1dc4c7619780e1d38fd78d0b9d951e794fbf36eebf21a')
 
-# _archver() {
-#     expac %v $1 |
-#         sed 's/^.*://;s/-.*$//' |
-#         ( [[ $1 == openssl ]] && sed 's/\./_/;s/\./_/;s/\.//' || cat )
-# }
-
-# _depsrc() {
-#     local _dep="dep/$1/$1"
-#     mkdir -p "$(dirname $_dep)"
-#     rm -rf "$_dep"
-#     ln -sf "$srcdir/$pkgname-$1" "$_dep"
-#     pushd "$_dep"
-#     git checkout $2$(_archver $1)
-#     popd
-# }
-
 prepare() {
 	cd "$pkgname"
-	# _depsrc cmark
-	# _depsrc git v
-	# _depsrc hunspell v
-	# _depsrc libgit2 v
-	# _depsrc openssl OpenSSL_
-	# _depsrc libssh2 libssh2-
 	git config advice.detachedHead false
 	git submodule init
 	git config submodule.test/dep/zip.url "$srcdir/$pkgname-zip"
-	# git submodule update -- test/dep/zip
 	git config submodule.dep/libgit2/libgit2.url "$srcdir/$pkgname-libgit2"
-	# git submodule set-branch --branch v$(_archver libgit2) -- dep/libgit2/libgit2
 	git config submodule.dep/git/git.url "$srcdir/$pkgname-git"
-	# git submodule set-branch --branch v$(_archver git) -- dep/git/git
 	git config submodule.dep/libssh2/libssh2.url "$srcdir/$pkgname-libssh2"
-	# git submodule set-branch --branch libssh2-$(_archver libssh2) -- dep/libssh2/libssh2
 	git config submodule.dep/hunspell/hunspell.url "$srcdir/$pkgname-hunspell"
-	# git submodule set-branch --branch v$(_archver hunspell) -- dep/hunspell/hunspell
 	git config submodule.dep/openssl/openssl.url "$srcdir/$pkgname-openssl"
-	# git config submodule.dep/openssl/openssl.update none
 	git config submodule.dep/cmark/cmark.url "$srcdir/$pkgname-cmark"
-	# git config submodule.dep/cmark/cmark.update none
 	git submodule update
 }
 
@@ -107,19 +76,15 @@ build() {
 package() {
 	cd "$pkgname"
 	DESTDIR="$pkgdir" ninja -C ../build install
-
 	rm -rf "$pkgdir/usr/lib/gittyup/"*.so.*
 	local _bin="$pkgdir/usr/lib/$pkgname/${pkgname^}"
 	install -Dm0755 "$_bin" "$pkgdir/usr/bin/$pkgname"
 	rm "$_bin"
-
 	install -Dm0644 -t "$pkgdir/usr/share/licenses/$pkgname/" LICENSE.md
 	install -Dm0644 -t "$pkgdir/usr/share/applications/" ../$pkgname.desktop
-
 	install -Dm0644 rsrc/Gittyup.iconset/gittyup_logo.svg "$pkgdir/usr/share/icons/hicolor/scalable/apps/gittyup.svg"
 	for s in 16x16 32x32 64x64 128x128 256x256 512x512; do
 		install -Dm0644 "rsrc/Gittyup.iconset/icon_$s.png" "icons/hicolor/$s/apps/$pkgname.png"
 	done
-
 	rm -rf "$pkgdir/usr/share/man" # libssh2 man pages
 }
