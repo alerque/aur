@@ -18,6 +18,7 @@ pkgbase = gittyup
 	depends = cmark
 	depends = libssh2
 	depends = libsecret
+	depends = lua
 	depends = qt5-base
 	optdepends = git-lfs: git-lfs support
 	optdepends = libgnome-keyring: for GNOME Keyring for auth credentials

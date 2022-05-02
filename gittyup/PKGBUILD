@@ -11,6 +11,7 @@ license=(MIT)
 depends=(cmark
          libssh2
          libsecret
+         lua
          qt5-base)
 makedepends=(cmake
              expac
@@ -108,9 +109,9 @@ package() {
 	DESTDIR="$pkgdir" ninja -C ../build install
 
 	rm -rf "$pkgdir/usr/lib/gittyup/"*.so.*
-	mv "$pkgdir/usr/"{lib/${pkgname^},bin/$pkgname}
-	# install -d "$pkgdir/usr/bin"
-	# ln -s /usr/lib/gittyup/Gittyup "$pkgdir/usr/bin/gittyup"
+	local _bin="$pkgdir/usr/lib/$pkgname/${pkgname^}"
+	install -Dm0755 "$_bin" "$pkgdir/usr/bin/$pkgname"
+	rm "$_bin"
 
 	install -Dm0644 -t "$pkgdir/usr/share/licenses/$pkgname/" LICENSE.md
 	install -Dm0644 -t "$pkgdir/usr/share/applications/" ../$pkgname.desktop
