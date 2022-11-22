@@ -311,7 +311,7 @@ build() {
   echo "brave_services_key = qjVKcxtUybh8WpKNoQ7EbgbkJTMu7omjDHKk=VrPApb8PwJyPE9eqchxedTsMEWg" > .npmrc
   echo "brave_variations_server_url = https://variations.brave.com/seed" >> .npmrc
   echo "brave_stats_updater_url = https://laptop-updates.brave.com" >> .npmrc
-  echo "brave_stats_api_key = fe033168-0ff8-4af6-9a7f-95e2cbfc" >> .npmrc
+  echo "brave_stats_api_key = fe033168-0ff8-4af6-9a7f-95e2cbfc9f4f" >> .npmrc
   echo "brave_sync_endpoint = https://sync-v2.brave.com/v2" >> .npmrc
   echo "updater_dev_endpoint = https://go-updater-dev.bravesoftware.com/extensions" >> .npmrc
   echo "updater_prod_endpoint = https://go-updater.brave.com/extensions" >> .npmrc
