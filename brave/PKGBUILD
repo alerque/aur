@@ -27,7 +27,7 @@
 : "${COMPONENT:=4}"
 
 pkgname=brave
-pkgver=1.45.127
+pkgver=1.45.131
 pkgrel=1
 pkgdesc='A web browser that stops ads and trackers by default'
 arch=(x86_64)
