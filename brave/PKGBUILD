@@ -135,6 +135,7 @@ declare -gA _system_libs=(
 _unwanted_bundled_libs=(
   "$(printf "%s\n" ${!_system_libs[@]} | sed 's/^libjpeg$/&_turbo/')"
 )
+depends+=(${_system_libs[@]})
 
 prepare() {
   cd chromium-launcher-$_launcher_ver
