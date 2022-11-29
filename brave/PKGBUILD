@@ -64,23 +64,18 @@ source=("brave-browser::git+https://github.com/brave/brave-browser.git#tag=v$pkg
         brave-1.43-brave_today-base_utf_string_conversions.patch
         brave-1.43-debounce-debounce_navigation_throttle_fix.patch
         brave-1.43-ntp_background_images-std-size_t.patch
-	"https://raw.githubusercontent.com/archlinux/svntogit-packages/master/chromium/trunk/angle-wayland-include-protocol.patch"
-	"https://raw.githubusercontent.com/archlinux/svntogit-packages/master/chromium/trunk/re-fix-TFLite-build-error-on-linux-with-system-zlib.patch"
-	"https://raw.githubusercontent.com/archlinux/svntogit-packages/master/chromium/trunk/unbundle-jsoncpp-avoid-CFI-faults-with-is_cfi-true.patch"
-	"https://raw.githubusercontent.com/archlinux/svntogit-packages/master/chromium/trunk/use-oauth2-client-switches-as-default.patch"
-	"https://raw.githubusercontent.com/archlinux/svntogit-packages/master/chromium/trunk/REVERT-enable-GlobalMediaControlsCastStartStop.patch"
-	"https://raw.githubusercontent.com/archlinux/svntogit-packages/master/chromium/trunk/REVERT-roll-src-third_party-ffmpeg-m102.patch"
-	"https://raw.githubusercontent.com/archlinux/svntogit-packages/master/chromium/trunk/REVERT-roll-src-third_party-ffmpeg-m106.patch"
 )
-#_arch_revision=bf2401407df5bcc938382eb03748fbef41e41c89
-#_patches=(unbundle-jsoncpp-avoid-CFI-faults-with-is_cfi-true.patch
-#          REVERT-enable-GlobalMediaControlsCastStartStop.patch
-#          REVERT-roll-src-third_party-ffmpeg-m102.patch
-#          REVERT-roll-src-third_party-ffmpeg-m106.patch
-#          angle-wayland-include-protocol.patch)
-#for _patch in "${_patches[@]}"; do
-#  source+=("$_patch::https://raw.githubusercontent.com/archlinux/svntogit-packages/$_arch_revision/trunk/$_patch")
-#done
+_arch_revision=c75332f03fe0674e4418a53feec180cc895d2406
+_patches=(angle-wayland-include-protocol.patch
+          re-fix-TFLite-build-error-on-linux-with-system-zlib.patch
+          unbundle-jsoncpp-avoid-CFI-faults-with-is_cfi-true.patch
+          use-oauth2-client-switches-as-default.patch
+          REVERT-enable-GlobalMediaControlsCastStartStop.patch
+          REVERT-roll-src-third_party-ffmpeg-m102.patch
+          REVERT-roll-src-third_party-ffmpeg-m106.patch)
+for _patch in "${_patches[@]}"; do
+  source+=("$_patch::https://raw.githubusercontent.com/archlinux/svntogit-packages/$_arch_revision/trunk/$_patch")
+done
 sha256sums=('SKIP'
             'SKIP'
             'SKIP'
