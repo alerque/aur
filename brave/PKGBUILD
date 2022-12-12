@@ -28,7 +28,7 @@
 
 pkgname=brave
 pkgver=1.46.140
-pkgrel=1
+pkgrel=2
 pkgdesc='A web browser that stops ads and trackers by default'
 arch=(x86_64)
 url='https://www.brave.com/download'
@@ -89,8 +89,10 @@ source=("brave-browser::git+https://github.com/brave/brave-browser.git#tag=v$pkg
         brave-1.43-debounce-debounce_navigation_throttle_fix.patch
         brave-1.43-ntp_background_images-std-size_t.patch
 )
-_arch_revision=653b55de165198395312cef1deae92f46fdcffb8
+_arch_revision=0cfb1b8e921c83e78f1909a6640b6eaa66388679
 _patches=(re-fix-TFLite-build-error-on-linux-with-system-zlib.patch
+          chromium-icu72.patch
+          v8-enhance-Date-parser-to-take-Unicode-SPACE.patch
           REVERT-roll-src-third_party-ffmpeg-m102.patch
           REVERT-roll-src-third_party-ffmpeg-m106.patch
           disable-GlobalMediaControlsCastStartStop.patch
@@ -115,6 +117,8 @@ sha256sums=('SKIP'
             '30a6a9ca2a6dd965cb2d9f02639079130948bf45d483f0c629f2cf8394a1c22f'
             'ea0cd714ccaa839baf7c71e9077264016aa19415600f16b77d5398fd49f5a70b'
             '9015b9d6d5b4c1e7248d6477a4b4b6bd6a3ebdc57225d2d8efcd79fc61790716'
+            'dabb5ab204b63be73d3c5c8b7c1fa74053105a285852ba3bbc4fb77646608572'
+            'b83406a881d66627757d9cbc05e345cbb2bd395a48b6d4c970e5e1cb3f6ed454'
             '30df59a9e2d95dcb720357ec4a83d9be51e59cc5551365da4c0073e68ccdec44'
             '4c12d31d020799d31355faa7d1fe2a5a807f7458e7f0c374adf55edb37032152'
             '7f3b1b22d6a271431c1f9fc92b6eb49c6d80b8b3f868bdee07a6a1a16630a302'
@@ -244,6 +248,8 @@ prepare() {
 
   # Upstream fixes
   patch -Np1 -i "${srcdir}/re-fix-TFLite-build-error-on-linux-with-system-zlib.patch"
+  patch -Np1 -i "${srcdir}/chromium-icu72.patch"
+  patch -Np1 -d v8 <"${srcdir}/v8-enhance-Date-parser-to-take-Unicode-SPACE.patch"
 
   # Revert ffmpeg roll requiring new channel layout API support
   # https://crbug.com/1325301
