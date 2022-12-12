@@ -27,7 +27,7 @@
 : "${COMPONENT:=4}"
 
 pkgname=brave
-pkgver=1.46.134
+pkgver=1.46.140
 pkgrel=1
 pkgdesc='A web browser that stops ads and trackers by default'
 arch=(x86_64)
@@ -66,7 +66,7 @@ makedepends=(cargo-audit
 optdepends=('pipewire: WebRTC desktop sharing under Wayland'
             'kdialog: support for native dialogs in Plasma'
             'org.freedesktop.secrets: password storage backend')
-_chromium_ver=108.0.5359.94
+_chromium_ver=108.0.5359.99
 _gcc_patchset=2
 _patchset_name="chromium-${_chromium_ver%%.*}-patchset-$_gcc_patchset"
 _launcher_ver=8
