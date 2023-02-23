@@ -1,0 +1,25 @@
+pkgbase = hledger-utils
+	pkgdesc = Utilities extending the hledger plaintextaccounting tool
+	pkgver = 1.13.2
+	pkgrel = 0
+	url = https://gitlab.com/nobodyinperson/hledger-utils
+	arch = any
+	license = GPL
+	makedepends = python-build
+	makedepends = python-installer
+	makedepends = python-wheel
+	makedepends = python-setuptools-scm
+	depends = hledger
+	depends = python
+	depends = python-asteval
+	depends = python-cycler
+	depends = python-matplotlib
+	depends = python-numpy
+	depends = python-pandas
+	depends = python-psutil
+	depends = python-rich
+	depends = python-scipy
+	source = https://files.pythonhosted.org/packages/source/h/hledger-utils/hledger-utils-1.13.2.tar.gz
+	sha256sums = 646bae1537383f1c5946323beca8be48616dcadd641acce36f1bbc95107ad548
+
+pkgname = hledger-utils
