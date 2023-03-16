@@ -1,0 +1,31 @@
+# Maintainer: Caleb Maclennan <caleb@alerque.com>
+
+pkgname=moonray-git
+_pkgname=openmoonray
+pkgver=1.0.0.0.r0.g9b629e0
+pkgrel=1
+pkgdesc='DreamWorks’ production MCRT renderer'
+arch=(x86_64)
+license=(Apache2)
+url="https://$_pkgname.org"
+_url="https://github.com/dreamworksanimation/$_pkgname"
+depends=()
+makedepends=(cmake)
+provides=("${pkgname%-git}=$pkgver")
+conflicts=(${pkgname%-git})
+source=("$_pkgname::git+$_url")
+sha256sums=('SKIP')
+
+pkgver() {
+	cd "$_pkgname"
+	git describe --long --abbrev=7 --tags --match="v*" |
+		sed 's/^v//;s/\([^-]*-g\)/r\1/;s/-/./g;s/\.\([ab]\)/\1/'
+}
+
+build() {
+	cd "$_pkgname"
+}
+
+package() {
+	cd "$_pkgname"
+}
