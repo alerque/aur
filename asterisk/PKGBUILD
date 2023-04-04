@@ -7,7 +7,7 @@
 # Contributor: Denis 'GNUtoo' Carikli <GNUtoo@cyberdimension.org>
 
 pkgname=asterisk
-pkgver=20.1.0
+pkgver=20.2.1
 pkgrel=1
 pkgdesc='A complete PBX solution'
 arch=(x86_64 aarch64 armv7h armv6h i686)
@@ -150,11 +150,25 @@ _archive="$pkgname-$pkgver"
 source=("https://downloads.asterisk.org/pub/telephony/$pkgname/releases/$_archive.tar.gz"
         "$pkgname.sysusers"
         "$pkgname.logrotated"
-        "$pkgname.tmpfiles")
-sha256sums=('4364dc762652e2fd4d3e7dc8428c83550ebae090b8a0e9d4820583e081778883'
+        "$pkgname.tmpfiles"
+        "fix-upnp.patch")
+sha256sums=('df12e47000fbac42bb780bb06172aa8bb8ac26faf77cc9f95184695b0cec69c3'
             '38a53911647fb2308482179cba605ebf12345df37eed23eb4ea67bf0bf041486'
             'b97dc10a262621c95e4b75e024834712efd58561267b59b9171c959ecd9f7164'
-            '1b6b489d4f71015bfc56ce739d92df7e9abdb349aed6f5a47dd9c18d84546c1b')
+            '1b6b489d4f71015bfc56ce739d92df7e9abdb349aed6f5a47dd9c18d84546c1b'
+            '55798baa02698de3d81c4b6e11097b3dee73b20e9dfa1e08091a7037830ad6d8')
+
+prepare() {
+	cd "$_archive"
+
+	local filename
+	for filename in "${source[@]}"; do
+		if [[ "$filename" =~ \.patch$ ]]; then
+			echo "Applying patch ${filename##*/}"
+			patch -p1 -N -i "$srcdir/${filename##*/}"
+		fi
+	done
+}
 
 build() {
 	cd "$_archive"
