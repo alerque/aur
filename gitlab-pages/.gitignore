@@ -1,7 +1,0 @@
-*
-!./.SRCINFO
-!./.gitignore
-!./PKGBUILD
-!./config.cfg
-!./gitlab-pages.service
-!./service.env
