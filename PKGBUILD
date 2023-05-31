@@ -1,15 +1,11 @@
 # Maintainer: Bruno Pagani <archange@archlinux.org>
-# Maintainer: Caleb Maclennan <caleb@alerque.com>
 
-# https://releases.electronjs.org/
-# https://github.com/stha09/chromium-patches/releases
-
-_use_suffix=1
-pkgver=23.3.2
-_commit=0eb53be29afd9fd84a7475095d51e440f71499f5
+# Remember to handle https://bugs.archlinux.org/task/74324 on major upgrades
+_use_suffix=0
+pkgver=23.3.0
+_commit=3d773ee5283bad4d5de961c07070696b21acacec
 _chromiumver=110.0.5481.208
 _gcc_patchset=4
-
 # shellcheck disable=SC2034
 pkgrel=1
 
@@ -28,7 +24,7 @@ url='https://electronjs.org/'
 # shellcheck disable=SC2034
 license=('MIT' 'custom')
 # shellcheck disable=SC2034
-depends=('c-ares' 'gtk3' 'libevent' 'nss' 'wayland')
+depends=('c-ares' 'gtk3' 'libevent' 'nss' 'libffi')
 # shellcheck disable=SC2034
 makedepends=('clang' 'git' 'gn' 'gperf' 'harfbuzz-icu' 'http-parser'
              'qt5-base' 'java-runtime-headless' 'libnotify' 'lld' 'llvm'
@@ -52,7 +48,6 @@ options=('!lto') # Electron adds its own flags for ThinLTO
 # shellcheck disable=SC2034
 source=('git+https://github.com/electron/electron.git'
         'git+https://chromium.googlesource.com/chromium/tools/depot_tools.git#branch=main'
-        "chromium::git+https://chromium.googlesource.com/chromium/src.git#tag=$_chromiumver"
         "https://github.com/stha09/chromium-patches/releases/download/chromium-${_chromiumver%%.*}-patchset-${_gcc_patchset}/chromium-${_chromiumver%%.*}-patchset-${_gcc_patchset}.tar.xz"
         "electron-launcher.sh"
         "electron.desktop"
@@ -60,11 +55,10 @@ source=('git+https://github.com/electron/electron.git'
         'jinja-python-3.10.patch'
         'use-system-libraries-in-node.patch'
         'std-vector-non-const.patch'
-        'chromium-icu72.patch'
-        'v8-enhance-Date-parser-to-take-Unicode-SPACE.patch'
+        'fix-the-way-to-handle-codecs-in-the-system-icu.patch'
+        'v8-move-the-Stack-object-from-ThreadLocalTop.patch'
         'REVERT-roll-src-third_party-ffmpeg-m102.patch'
         'REVERT-roll-src-third_party-ffmpeg-m106.patch'
-        'angle-wayland-include-protocol.patch'
        )
 # shellcheck disable=SC2034
 sha256sums=('SKIP'
@@ -76,11 +70,10 @@ sha256sums=('SKIP'
             '55dbe71dbc1f3ab60bf1fa79f7aea7ef1fe76436b1d7df48728a1f8227d2134e'
             'ff588a8a4fd2f79eb8a4f11cf1aa151298ffb895be566c57cc355d47f161f53f'
             '893bc04c7fceba2f0a7195ed48551d55f066bbc530ec934c89c55768e6f3949c'
-            'dabb5ab204b63be73d3c5c8b7c1fa74053105a285852ba3bbc4fb77646608572'
-            'b83406a881d66627757d9cbc05e345cbb2bd395a48b6d4c970e5e1cb3f6ed454'
+            'a5d5c532b0b059895bc13aaaa600d21770eab2afa726421b78cb597a78a3c7e3'
+            '49c3e599366909ddac6a50fa6f9420e01a7c0ffd029a20567a41d741a15ec9f7'
             '30df59a9e2d95dcb720357ec4a83d9be51e59cc5551365da4c0073e68ccdec44'
-            '4c12d31d020799d31355faa7d1fe2a5a807f7458e7f0c374adf55edb37032152'
-            'cd0d9d2a1d6a522d47c3c0891dabe4ad72eabbebc0fe5642b9e22efa3d5ee572')
+            '4c12d31d020799d31355faa7d1fe2a5a807f7458e7f0c374adf55edb37032152')
 
 # Possible replacements are listed in build/linux/unbundle/replace_gn_files.py
 # Keys are the names in the above script; values are the dependencies in Arch
@@ -95,7 +88,7 @@ declare -gA _system_libs=(
   [icu]=icu
   [jsoncpp]=jsoncpp
   [libaom]=aom
-  [libavif]=libavif
+  #[libavif]=libavif # https://github.com/AOMediaCodec/libavif/commit/4d2776a3
   [libdrm]=
   [libjpeg]=libjpeg
   [libpng]=libpng
@@ -141,8 +134,8 @@ EOF
   export PATH+=":$PWD/depot_tools" DEPOT_TOOLS_UPDATE=0
   export VPYTHON_BYPASS='manually managed python not supported by chrome operations'
 
-  echo "Linking chromium from sources..."
-  ln ../chromium src
+  echo "Fetching chromium..."
+  git clone -b ${_chromiumver} --depth=2 https://chromium.googlesource.com/chromium/src
 
   depot_tools/gclient.py sync -D \
       --nohooks \
@@ -181,9 +174,12 @@ EOF
 
   echo "Applying local patches..."
 
-  # Upstream fixes
-  patch -Np1 -i ../chromium-icu72.patch
-  patch -Np1 -d v8 <../v8-enhance-Date-parser-to-take-Unicode-SPACE.patch
+  patch -Np1 -i ../fix-the-way-to-handle-codecs-in-the-system-icu.patch
+
+  # https://crbug.com/v8/13630
+  # https://crrev.com/c/4200636
+  # https://github.com/nodejs/node/pull/46125#issuecomment-1407721276
+  patch -Np1 -d v8 <../v8-move-the-Stack-object-from-ThreadLocalTop.patch
 
   # Revert ffmpeg roll requiring new channel layout API support
   # https://crbug.com/1325301
@@ -191,11 +187,11 @@ EOF
   # Revert switch from AVFrame::pkt_duration to AVFrame::duration
   patch -Rp1 -i ../REVERT-roll-src-third_party-ffmpeg-m106.patch
 
-  # https://crbug.com/angleproject/7582
-  patch -Np0 -i ../angle-wayland-include-protocol.patch
-
   # Fixes for building with libstdc++ instead of libc++
   patch -Np1 -i ../patches/chromium-103-VirtualCursor-std-layout.patch
+  patch -Np1 -i ../patches/chromium-110-NativeThemeBase-fabs.patch
+  patch -Np1 -i ../patches/chromium-110-CredentialUIEntry-const.patch
+  patch -Np1 -i ../patches/chromium-110-DarkModeLABColorSpace-pow.patch
 
   # Electron specific fixes
   patch -d third_party/electron_node/tools/inspector_protocol/jinja2 \
@@ -286,8 +282,7 @@ build() {
     use_custom_libcxx = false
     use_gnome_keyring = false
     use_sysroot = false
-    use_system_libwayland = true
-    use_system_wayland_scanner = true
+    use_system_libffi = true
     icu_use_data_file = false
     is_component_ffmpeg = false
   '
