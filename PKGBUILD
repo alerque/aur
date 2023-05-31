@@ -1,11 +1,15 @@
 # Maintainer: Bruno Pagani <archange@archlinux.org>
 # Maintainer: Caleb Maclennan <caleb@alerque.com>
 
+# https://releases.electronjs.org/
+# https://github.com/stha09/chromium-patches/releases
+
 _use_suffix=1
 pkgver=23.3.2
 _commit=0eb53be29afd9fd84a7475095d51e440f71499f5
 _chromiumver=110.0.5481.208
 _gcc_patchset=4
+
 # shellcheck disable=SC2034
 pkgrel=1
 
@@ -48,6 +52,7 @@ options=('!lto') # Electron adds its own flags for ThinLTO
 # shellcheck disable=SC2034
 source=('git+https://github.com/electron/electron.git'
         'git+https://chromium.googlesource.com/chromium/tools/depot_tools.git#branch=main'
+        "chromium::git+https://chromium.googlesource.com/chromium/src.git#tag=$_chromiumver"
         "https://github.com/stha09/chromium-patches/releases/download/chromium-${_chromiumver%%.*}-patchset-${_gcc_patchset}/chromium-${_chromiumver%%.*}-patchset-${_gcc_patchset}.tar.xz"
         "electron-launcher.sh"
         "electron.desktop"
@@ -136,8 +141,8 @@ EOF
   export PATH+=":$PWD/depot_tools" DEPOT_TOOLS_UPDATE=0
   export VPYTHON_BYPASS='manually managed python not supported by chrome operations'
 
-  echo "Fetching chromium..."
-  git clone -b ${_chromiumver} --depth=2 https://chromium.googlesource.com/chromium/src
+  echo "Linking chromium from sources..."
+  ln ../chromium src
 
   depot_tools/gclient.py sync -D \
       --nohooks \
