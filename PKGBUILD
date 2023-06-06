@@ -2,9 +2,11 @@
 # Maintainer: Caleb Maclennan <caleb@alerque.com>
 # Contributor: Pascal Ernster <archlinux@hardfalcon.net>
 
+# https://releases.electronjs.org/
+# https://github.com/stha09/chromium-patches/releases
+
 _use_suffix=1
-pkgver=23.3.0
-_commit=3d773ee5283bad4d5de961c07070696b21acacec
+pkgver=23.3.5
 _chromiumver=110.0.5481.208
 _gcc_patchset=4
 # shellcheck disable=SC2034
@@ -47,7 +49,7 @@ fi
 # shellcheck disable=SC2034
 options=('!lto') # Electron adds its own flags for ThinLTO
 # shellcheck disable=SC2034
-source=("git+https://github.com/electron/electron.git#commit=$_commit"
+source=("git+https://github.com/electron/electron.git#tag=v$pkgver"
         'git+https://chromium.googlesource.com/chromium/tools/depot_tools.git#branch=main'
         "chromium-mirror::git+https://github.com/chromium/chromium.git#tag=$_chromiumver"
         "https://github.com/stha09/chromium-patches/releases/download/chromium-${_chromiumver%%.*}-patchset-${_gcc_patchset}/chromium-${_chromiumver%%.*}-patchset-${_gcc_patchset}.tar.xz"
@@ -61,6 +63,8 @@ source=("git+https://github.com/electron/electron.git#commit=$_commit"
         'v8-move-the-Stack-object-from-ThreadLocalTop.patch'
         'REVERT-roll-src-third_party-ffmpeg-m102.patch'
         'REVERT-roll-src-third_party-ffmpeg-m106.patch'
+        'random-fixes-for-gcc13.patch'
+        'more-fixes-for-gcc13.patch'
        )
 # shellcheck disable=SC2034
 sha256sums=('SKIP'
@@ -76,7 +80,9 @@ sha256sums=('SKIP'
             'a5d5c532b0b059895bc13aaaa600d21770eab2afa726421b78cb597a78a3c7e3'
             '49c3e599366909ddac6a50fa6f9420e01a7c0ffd029a20567a41d741a15ec9f7'
             '30df59a9e2d95dcb720357ec4a83d9be51e59cc5551365da4c0073e68ccdec44'
-            '4c12d31d020799d31355faa7d1fe2a5a807f7458e7f0c374adf55edb37032152')
+            '4c12d31d020799d31355faa7d1fe2a5a807f7458e7f0c374adf55edb37032152'
+            '3fb0636e9560760d99e7c9606b1c9b59eef9d91ed3419cc95b43302759f249be'
+            '9d1f69f668e12fc14b4ccbcf88cb5a3acf666df06dafa8834f037bd8110ca17f')
 
 # Possible replacements are listed in build/linux/unbundle/replace_gn_files.py
 # Keys are the names in the above script; values are the dependencies in Arch
@@ -123,7 +129,7 @@ cat >.gclient <<EOF
 solutions = [
   {
     "name": "src/electron",
-    "url": "file://${srcdir}/electron@${_commit}",
+    "url": "file://${srcdir}/electron@v$pkgver",
     "deps_file": "DEPS",
     "managed": False,
     "custom_deps": {
@@ -192,9 +198,24 @@ EOF
 
   # Fixes for building with libstdc++ instead of libc++
   patch -Np1 -i ../patches/chromium-103-VirtualCursor-std-layout.patch
+  patch -Np1 -i ../patches/chromium-110-compiler.patch
+  patch -Np1 -i ../patches/chromium-110-v8-gcc.patch
+  patch -Np1 -i ../patches/chromium-110-CanvasResourceProvider-pragma.patch
   patch -Np1 -i ../patches/chromium-110-NativeThemeBase-fabs.patch
+  patch -Np1 -i ../patches/chromium-110-kCustomizeChromeColors-type.patch
+  patch -Np1 -i ../patches/chromium-110-url_canon_internal-cast.patch
+  patch -Np1 -i ../patches/chromium-110-raw_ptr-constexpr.patch
+  patch -Np1 -i ../patches/chromium-110-InProgressDownloadManager-include.patch
+  patch -Np1 -i ../patches/chromium-110-SyncIterator-template.patch
   patch -Np1 -i ../patches/chromium-110-CredentialUIEntry-const.patch
   patch -Np1 -i ../patches/chromium-110-DarkModeLABColorSpace-pow.patch
+  patch -Np1 -i ../patches/chromium-110-Presenter-include.patch
+  patch -Np1 -i ../patches/chromium-110-StorageQueue-decltype.patch
+  patch -Np1 -i ../patches/chromium-109-glibcxx_assertions.patch
+  patch -Np1 -i ../patches/chromium-110-dpf-arm64.patch
+
+  patch -Np1 -i "${srcdir}/random-fixes-for-gcc13.patch"
+  patch -Np1 -i "${srcdir}/more-fixes-for-gcc13.patch"
 
   # Electron specific fixes
   patch -d third_party/electron_node/tools/inspector_protocol/jinja2 \
