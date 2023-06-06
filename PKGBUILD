@@ -49,7 +49,7 @@ options=('!lto') # Electron adds its own flags for ThinLTO
 # shellcheck disable=SC2034
 source=("git+https://github.com/electron/electron.git#commit=$_commit"
         'git+https://chromium.googlesource.com/chromium/tools/depot_tools.git#branch=main'
-        "chromium::git+https://chromium.googlesource.com/chromium/src.git#tag=$_chromiumver"
+        "chromium-mirror::git+https://github.com/chromium/chromium.git#tag=$_chromiumver"
         "https://github.com/stha09/chromium-patches/releases/download/chromium-${_chromiumver%%.*}-patchset-${_gcc_patchset}/chromium-${_chromiumver%%.*}-patchset-${_gcc_patchset}.tar.xz"
         "electron-launcher.sh"
         "electron.desktop"
@@ -138,7 +138,7 @@ EOF
   export VPYTHON_BYPASS='manually managed python not supported by chrome operations'
 
   echo "Linking chromium from sources..."
-  ln -s chromium src
+  ln -s chromium-mirror src
 
   depot_tools/gclient.py sync -D \
       --nohooks \
