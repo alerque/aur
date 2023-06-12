@@ -1,0 +1,12 @@
+diff --git a/components/viz/common/shared_element_resource_id.h b/components/viz/common/shared_element_resource_id.h
+index b39a2d3dc1..8d27a1bda1 100644
+--- a/components/viz/common/shared_element_resource_id.h
++++ b/components/viz/common/shared_element_resource_id.h
+@@ -7,6 +7,7 @@
+ 
+ #include <string>
+ #include <vector>
++#include <cstdint>
+ 
+ #include "components/viz/common/viz_common_export.h"
+ 
