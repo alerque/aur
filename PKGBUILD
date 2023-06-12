@@ -1,6 +1,7 @@
 # Maintainer: Bruno Pagani <archange@archlinux.org>
 # Maintainer: Caleb Maclennan <caleb@alerque.com>
 # Contributor: Pascal Ernster <archlinux@hardfalcon.net>
+# Contributor: loqs <bugs-archlinux@entropy-collector.net>
 
 # https://releases.electronjs.org/
 # https://github.com/stha09/chromium-patches/releases
@@ -32,7 +33,7 @@ depends=('c-ares' 'gtk3' 'libevent' 'nss' 'libffi')
 makedepends=('clang' 'git' 'gn' 'gperf' 'harfbuzz-icu' 'http-parser'
              'qt5-base' 'java-runtime-headless' 'libnotify' 'lld' 'llvm'
              'ninja' 'npm' 'pciutils' 'pipewire' 'python' 'python-httplib2'
-             'python-pyparsing' 'python-six' 'wget' 'yarn')
+             'python-pyparsing' 'python-six' 'wget' 'yarn' 'patchutils')
 # shellcheck disable=SC2034
 optdepends=('kde-cli-tools: file deletion support (kioclient5)'
             'libappindicator-gtk3: StatusNotifierItem support'
@@ -59,12 +60,29 @@ source=("git+https://github.com/electron/electron.git#tag=v$pkgver"
         'jinja-python-3.10.patch'
         'use-system-libraries-in-node.patch'
         'std-vector-non-const.patch'
-        'fix-the-way-to-handle-codecs-in-the-system-icu.patch'
+        'swiftshader-add-cstdint-for-uint64_t.patch'
+        'dawn-iwyu-add-cstdint-for-uint8_t.patch'
+        'iwyu-add-stdint.h-for-various-int-types-in-base.patch'
+        'iwyu-add-cstdint-for-uintptr_t-in-device.patch'
+        'iwyu-add-stdint.h-for-uint32_t-in-chrome_pdf.patch'
+        'iwyu-add-stdint.h-for-uint64_t-in-EncounteredSurface.patch'
+        'iwyu-add-stdint.h-for-integer-types-in-ui.patch'
+        'openscreen-iwyu-add-stdint.h.patch'
+        'pdfium-iwyu-add-stdint.h-for-uint32_t.patch'
+        'iwyu-add-stdint.h-for-uint32_t-in-cc.patch'
+        'add-missing-includes-causing-build-errors.patch'
+        'iwyu-add-stdint.h-for-int-types-in-gpu_feature_info.patch'
+        'iwyu-add-stdint.h-for-various-int-types-in-comp.patch'
+        'iwyu-add-stdint.h-for-various-integer-types-in-net.patch'
+        'iwyu-add-cstdint-for-int-types-in-s2cellid.patch'
+        'random-fixes-for-gcc13.patch'
+        'more-fixes-for-gcc13.patch'
+        'https://github.com/abseil/abseil-cpp/commit/2039d5dff0cef8fe3841519f0418caef6ec47d2d.patch'
+        'https://github.com/google/angle/commit/5d1ac2e0d5f61913aad62dadb65a7fea6f1b93ae.patch'
+        'dawn-tint-add-cstdint.patch'
         'v8-move-the-Stack-object-from-ThreadLocalTop.patch'
         'REVERT-roll-src-third_party-ffmpeg-m102.patch'
         'REVERT-roll-src-third_party-ffmpeg-m106.patch'
-        'random-fixes-for-gcc13.patch'
-        'more-fixes-for-gcc13.patch'
        )
 # shellcheck disable=SC2034
 sha256sums=('SKIP'
@@ -77,12 +95,29 @@ sha256sums=('SKIP'
             '55dbe71dbc1f3ab60bf1fa79f7aea7ef1fe76436b1d7df48728a1f8227d2134e'
             'ff588a8a4fd2f79eb8a4f11cf1aa151298ffb895be566c57cc355d47f161f53f'
             '893bc04c7fceba2f0a7195ed48551d55f066bbc530ec934c89c55768e6f3949c'
-            'a5d5c532b0b059895bc13aaaa600d21770eab2afa726421b78cb597a78a3c7e3'
+            '208f2ebcef5c690207e6e798ffbf9e92214e9d35f415c2f6b93efebad831b7e2'
+            '94baaaa6fbec0af6ec2e967f0b7440b4261a927e853e212d84f0aeaf56ae53f0'
+            '0003e737072f4f1b22ff932221595e85dd9bf65720ccac36f840cccb8000e3e1'
+            'ffe499d63c9c1074cbc3995c188c89b748388dbb9dccf975ce28a434c723acf7'
+            '7af466e4b5985cc9f0b33df2f3cd2e458c7cbfd7190505d105aad4401c9d072b'
+            '727588a1b42f6cfe54acf4759a0c3ad3778590d5a5cefcdcb54b579ba16b09c8'
+            '0914be53b2205b34e4da96f5a94505ac2a01e3639ff433535a23be2d0d581fa7'
+            '8c9662bed23bfd66ae76d044541f316624386ca4b3baef57a47289feb3db58a9'
+            '890b6836cea4c31513166db720b210da20d20bcd97a713545268cceffd707af5'
+            'f6a0e149ef5195883c56a875ae366ed92d9960652f2657bfb65b5408badafc65'
+            '3255477d02d49ef86d47c727b9369f46dc787319bb648bf267a68f37e2041e50'
+            '94995b4e37671dcd27968bd5a2ebcf50e67bd22659a4bb4a5d0a4f81ff54f471'
+            '6b3c296de83c333678bc3d7cac939f33bbadae94c96299566ff2e31121c46256'
+            '5dfbfd073f78c887bbffca2b644116571cc9b1196867e44e8fc0cbb40afcf1bc'
+            'd97dc00f66fa5868584e4b6d5ef817911eab2dc8022a37c75a00d063f4dac483'
+            '3fb0636e9560760d99e7c9606b1c9b59eef9d91ed3419cc95b43302759f249be'
+            '9d1f69f668e12fc14b4ccbcf88cb5a3acf666df06dafa8834f037bd8110ca17f'
+            'cfeb521f9520d8e9ea17ba2af08749b8df5ee697aa51d577a4afb92bd6632afb'
+            '48fe31d28bf17b720bb22a42a20e8e2f9a558e8c1b7e2fcc19fd14c7242dfdb8'
+            'f41215af1f98d552cdfde7e924ba6d2f77883310aad57ebba7fe73d3883f8668'
             '49c3e599366909ddac6a50fa6f9420e01a7c0ffd029a20567a41d741a15ec9f7'
             '30df59a9e2d95dcb720357ec4a83d9be51e59cc5551365da4c0073e68ccdec44'
-            '4c12d31d020799d31355faa7d1fe2a5a807f7458e7f0c374adf55edb37032152'
-            '3fb0636e9560760d99e7c9606b1c9b59eef9d91ed3419cc95b43302759f249be'
-            '9d1f69f668e12fc14b4ccbcf88cb5a3acf666df06dafa8834f037bd8110ca17f')
+            '4c12d31d020799d31355faa7d1fe2a5a807f7458e7f0c374adf55edb37032152')
 
 # Possible replacements are listed in build/linux/unbundle/replace_gn_files.py
 # Keys are the names in the above script; values are the dependencies in Arch
@@ -183,7 +218,29 @@ EOF
 
   echo "Applying local patches..."
 
-  patch -Np1 -i ../fix-the-way-to-handle-codecs-in-the-system-icu.patch
+  # GCC13 patches for chromium (https://github.com/archlinux/svntogit-packages/commit/470e5cbc7b58b4955664cdae386161d22c17d980)
+  patch -Np1 -i "${srcdir}/swiftshader-add-cstdint-for-uint64_t.patch" -d "third_party/swiftshader"
+  patch -Np1 -i "${srcdir}/dawn-iwyu-add-cstdint-for-uint8_t.patch" -d "third_party/dawn"
+  patch -Np1 -i "${srcdir}/iwyu-add-stdint.h-for-various-int-types-in-base.patch"
+  patch -Np1 -i "${srcdir}/iwyu-add-cstdint-for-uintptr_t-in-device.patch"
+  patch -Np1 -i "${srcdir}/iwyu-add-stdint.h-for-uint32_t-in-chrome_pdf.patch"
+  patch -Np1 -i "${srcdir}/iwyu-add-stdint.h-for-uint64_t-in-EncounteredSurface.patch"
+  patch -Np1 -i "${srcdir}/iwyu-add-stdint.h-for-integer-types-in-ui.patch"
+  patch -Np1 -i "${srcdir}/openscreen-iwyu-add-stdint.h.patch" -d "third_party/openscreen/src"
+  patch -Np1 -i "${srcdir}/pdfium-iwyu-add-stdint.h-for-uint32_t.patch" -d "third_party/pdfium"
+  patch -Np1 -i "${srcdir}/iwyu-add-stdint.h-for-uint32_t-in-cc.patch"
+  patch -Np1 -i "${srcdir}/add-missing-includes-causing-build-errors.patch"
+  patch -Np1 -i "${srcdir}/iwyu-add-stdint.h-for-int-types-in-gpu_feature_info.patch"
+  patch -Np1 -i "${srcdir}/iwyu-add-stdint.h-for-various-int-types-in-comp.patch"
+  patch -Np1 -i "${srcdir}/iwyu-add-stdint.h-for-various-integer-types-in-net.patch"
+  patch -Np1 -i "${srcdir}/iwyu-add-cstdint-for-int-types-in-s2cellid.patch"
+  filterdiff -p1 -x gin/time_clamper.h < ../random-fixes-for-gcc13.patch | patch -Np1
+  patch -Np1 -i "${srcdir}/more-fixes-for-gcc13.patch"
+
+  # Additional GCC13 patches
+  patch -Np1  <../2039d5dff0cef8fe3841519f0418caef6ec47d2d.patch -d third_party/abseil-cpp
+  filterdiff -p1 -x include/GLSLANG/ShaderLang.h < ../5d1ac2e0d5f61913aad62dadb65a7fea6f1b93ae.patch | patch -Np1 -d third_party/angle
+  patch -Np1  <../dawn-tint-add-cstdint.patch -d third_party/dawn
 
   # https://crbug.com/v8/13630
   # https://crrev.com/c/4200636
@@ -198,24 +255,9 @@ EOF
 
   # Fixes for building with libstdc++ instead of libc++
   patch -Np1 -i ../patches/chromium-103-VirtualCursor-std-layout.patch
-  patch -Np1 -i ../patches/chromium-110-compiler.patch
-  patch -Np1 -i ../patches/chromium-110-v8-gcc.patch
-  patch -Np1 -i ../patches/chromium-110-CanvasResourceProvider-pragma.patch
   patch -Np1 -i ../patches/chromium-110-NativeThemeBase-fabs.patch
-  patch -Np1 -i ../patches/chromium-110-kCustomizeChromeColors-type.patch
-  patch -Np1 -i ../patches/chromium-110-url_canon_internal-cast.patch
-  patch -Np1 -i ../patches/chromium-110-raw_ptr-constexpr.patch
-  patch -Np1 -i ../patches/chromium-110-InProgressDownloadManager-include.patch
-  patch -Np1 -i ../patches/chromium-110-SyncIterator-template.patch
   patch -Np1 -i ../patches/chromium-110-CredentialUIEntry-const.patch
   patch -Np1 -i ../patches/chromium-110-DarkModeLABColorSpace-pow.patch
-  patch -Np1 -i ../patches/chromium-110-Presenter-include.patch
-  patch -Np1 -i ../patches/chromium-110-StorageQueue-decltype.patch
-  patch -Np1 -i ../patches/chromium-109-glibcxx_assertions.patch
-  patch -Np1 -i ../patches/chromium-110-dpf-arm64.patch
-
-  patch -Np1 -i "${srcdir}/random-fixes-for-gcc13.patch"
-  patch -Np1 -i "${srcdir}/more-fixes-for-gcc13.patch"
 
   # Electron specific fixes
   patch -d third_party/electron_node/tools/inspector_protocol/jinja2 \
@@ -254,17 +296,10 @@ build() {
   export AR=ar
   export NM=nm
 
-  # https://github.com/webpack/webpack/issues/14532
-  export NODE_OPTIONS=--openssl-legacy-provider
-
   # Facilitate deterministic builds (taken from build/config/compiler/BUILD.gn)
   CFLAGS+='   -Wno-builtin-macro-redefined'
   CXXFLAGS+=' -Wno-builtin-macro-redefined'
   CPPFLAGS+=' -D__DATE__=  -D__TIME__=  -D__TIMESTAMP__='
-
-  # Do not warn about unknown warning options
-  CFLAGS+='   -Wno-unknown-warning-option'
-  CXXFLAGS+=' -Wno-unknown-warning-option'
 
   # Let Chromium set its own symbol level
   CFLAGS=${CFLAGS/-g }
@@ -296,7 +331,7 @@ build() {
     clang_base_path = "/usr"
     clang_use_chrome_plugins = false
     symbol_level = 0 # sufficient for backtraces on x86(_64)
-    chrome_pgo_phase = 2
+    chrome_pgo_phase = 0
     treat_warnings_as_errors = false
     disable_fieldtrial_testing_config = true
     blink_enable_generated_code_formatting = false

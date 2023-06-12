@@ -1,0 +1,12 @@
+diff --git a/src/tint/reader/spirv/namer.h b/src/tint/reader/spirv/namer.h
+index 7a20e8738b..655f69ce36 100644
+--- a/src/tint/reader/spirv/namer.h
++++ b/src/tint/reader/spirv/namer.h
+@@ -15,6 +15,7 @@
+ #ifndef SRC_TINT_READER_SPIRV_NAMER_H_
+ #define SRC_TINT_READER_SPIRV_NAMER_H_
+ 
++#include <cstdint>
+ #include <string>
+ #include <unordered_map>
+ #include <vector>
