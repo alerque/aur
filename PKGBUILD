@@ -2,9 +2,11 @@
 # Maintainer: Caleb Maclennan <caleb@alerque.com>
 # Contributor: Pascal Ernster <archlinux@hardfalcon.net>
 
+# https://releases.electronjs.org/
+# https://github.com/stha09/chromium-patches/releases
+
 _use_suffix=1
 pkgver=23.3.5
-_commit=1ba3da738b52a28eb2a930583b9d2cd1e460dfe6
 _chromiumver=110.0.5481.208
 _gcc_patchset=4
 # shellcheck disable=SC2034
@@ -47,7 +49,7 @@ fi
 # shellcheck disable=SC2034
 options=('!lto') # Electron adds its own flags for ThinLTO
 # shellcheck disable=SC2034
-source=("git+https://github.com/electron/electron.git#commit=$_commit"
+source=("git+https://github.com/electron/electron.git#tag=v$pkgver"
         'git+https://chromium.googlesource.com/chromium/tools/depot_tools.git#branch=main'
         "chromium::git+https://chromium.googlesource.com/chromium/src.git#tag=$_chromiumver"
         "https://github.com/stha09/chromium-patches/releases/download/chromium-${_chromiumver%%.*}-patchset-${_gcc_patchset}/chromium-${_chromiumver%%.*}-patchset-${_gcc_patchset}.tar.xz"
@@ -161,7 +163,7 @@ cat >.gclient <<EOF
 solutions = [
   {
     "name": "src/electron",
-    "url": "file://${srcdir}/electron@${_commit}",
+    "url": "file://${srcdir}/electron@v$pkgver",
     "deps_file": "DEPS",
     "managed": False,
     "custom_deps": {
@@ -176,7 +178,7 @@ EOF
   export VPYTHON_BYPASS='manually managed python not supported by chrome operations'
 
   echo "Linking chromium from sources..."
-  ln -s chromium src
+  ln -s chromium-mirror src
 
   depot_tools/gclient.py sync -D \
       --nohooks \
