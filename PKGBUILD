@@ -7,7 +7,7 @@
 # https://github.com/stha09/chromium-patches/releases
 
 _use_suffix=1
-pkgver=23.3.5
+pkgver=23.3.6
 _chromiumver=110.0.5481.208
 _gcc_patchset=4
 # shellcheck disable=SC2034
@@ -17,6 +17,7 @@ _major_ver=${pkgver%%.*}
 if [[ ${_use_suffix} != 0 ]]; then
   pkgname="electron${_major_ver}"
 else
+  pkgbase="electron${_major_ver}"
   pkgname=electron
 fi
 # shellcheck disable=SC2034
