@@ -1,6 +1,6 @@
 diff --git a/brave/chromium_src/brave/third_party/bitcoin-core/src/src/serialize.h b/brave/chromium_src/brave/third_party/bitcoin-core/src/src/serialize.h
 deleted file mode 100644
-index 84ed46ed35..0000000000
+index 268f01f024..0000000000
 --- a/brave/chromium_src/brave/third_party/bitcoin-core/src/src/serialize.h
 +++ /dev/null
 @@ -1,28 +0,0 @@
@@ -26,7 +26,7 @@ index 84ed46ed35..0000000000
 -#define throw CHECK(false) <<
 -#define ios_base brave
 -#define failure string
--#include "src/brave/third_party/bitcoin-core/src/src/serialize.h"
+-#include "src/brave/third_party/bitcoin-core/src/src/serialize.h"  // IWYU pragma: export
 -#undef throw
 -#undef ios_base
 -#undef string
