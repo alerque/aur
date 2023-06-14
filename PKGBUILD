@@ -11,7 +11,7 @@ pkgver=22.3.12
 _chromiumver=108.0.5359.215
 _gcc_patchset=2
 # shellcheck disable=SC2034
-pkgrel=2
+pkgrel=3
 
 _major_ver=${pkgver%%.*}
 if [[ ${_use_suffix} != 0 ]]; then
@@ -93,7 +93,7 @@ sha256sums=('SKIP'
             'SKIP'
             'SKIP'
             '40ef8af65e78901bb8554eddbbb5ebc55c0b8e7927f6ca51b2a353d1c7c50652'
-            '77817939c9833f8dda74a8c75620c15747170551ffa6f14f7c5b4071599e8831'
+            'b0ac3422a6ab04859b40d4d7c0fd5f703c893c9ec145c9894c468fbc0a4d457c'
             '4484200d90b76830b69eea3a471c103999a3ce86bb2c29e6c14c945bf4102bae'
             'dd2d248831dd4944d385ebf008426e66efe61d6fdf66f8932c963a12167947b4'
             '55dbe71dbc1f3ab60bf1fa79f7aea7ef1fe76436b1d7df48728a1f8227d2134e'
