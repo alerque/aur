@@ -6,12 +6,12 @@
 # https://releases.electronjs.org/
 # https://github.com/stha09/chromium-patches/releases
 
-_use_suffix=0
+_use_suffix=1
 pkgver=22.3.13
 _chromiumver=108.0.5359.215
 _gcc_patchset=2
 # shellcheck disable=SC2034
-pkgrel=1
+pkgrel=2
 
 _major_ver=${pkgver%%.*}
 if [[ ${_use_suffix} != 0 ]]; then
