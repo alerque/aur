@@ -24,7 +24,7 @@ source=("$_url/releases/download/v$pkgver/$_archive.tar.xz"{,.sig}
         0001-Don-t-use-electron-to-build.patch)
 sha256sums=('22e5ae4d1f951ea9f3ffc3cb74de9b9f41b828b2c8a4e5cb6401de6fbccf497b'
             'SKIP'
-            '1fd0f32b6b65927f9e0fea093e1b5cbee2f8f9a0929ae7ccb6d35741180dd01b'
+            '7459a6846ff24c2bf7e6ab1ce31880829cf2692f23ffb3bf77e455f4de7ca34e'
             '74fd7a777275bdf2128f121e27f722f692302a50d89c6c1d3ec82df1deaffee3')
 validpgpkeys=('222B85B0F90BE2D24CFEB93F47484E50656D16C7') # Keybase.io Code Signing (v1) <code@keybase.io>
 
@@ -38,7 +38,7 @@ prepare() {
 
 	# Fix paths to run electron /path/to/app (or our minimal wrapper script).
 	# Also wire up "hideWindow" when running as a service or via XDG autostart.
-	sed -i 's@/opt/keybase/Keybase@/usr/bin/electron17 /usr/share/keybase-app@' \
+	sed -i 's@/opt/keybase/Keybase@/usr/bin/electron22 /usr/share/keybase-app@' \
 		packaging/linux/systemd/keybase.gui.service
 
     # Don't let desktop launcher automatically start services on boot
@@ -109,7 +109,7 @@ package_kbfs() {
 
 package_keybase-gui() {
 	pkgdesc='GUI frontend for GPG with keybase.io'
-	depends=(electron17 keybase kbfs)
+	depends=(electron22 keybase kbfs)
 
 	cd "$_archive"
 
