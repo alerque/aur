@@ -1,4 +1,5 @@
 # Maintainer: Caleb Maclennan <caleb@alerque.com>
+# Contributor: éclairevoyant
 # Contributor: George Rawlinson <grawlinson@archlinux.org>
 # Contributor: Andy Weidenbaum <archbaum@gmail.com>
 # Contributor: Vlad M. <vlad@archlinux.net>
@@ -9,12 +10,12 @@
 pkgbase=nix-git
 pkgname=(nix-git nix-docs-git)
 _pkgname=${pkgbase%-git}
-pkgver=2.2.r7982.g60f06a1
+pkgver=2.2.r8050.ga5c88f8
 pkgrel=1
 pkgdesc='A purely functional package manager'
 arch=(x86_64 i686)
 url="https://nixos.org/$_pkgname"
-license=(LGPL2)
+license=(LGPL2.1)
 makedepends=(autoconf-archive
              aws-crt-cpp
              aws-sdk-cpp
@@ -66,14 +67,12 @@ pkgver() {
 
 build() {
 	cd "$_pkgname"
-	CXXFLAGS='-D_GLIBCXX_USE_CXX11_ABI=0' \
 	./configure \
 		--prefix=/usr \
 		--libexecdir="/usr/lib/$_pkgname" \
 		--sysconfdir=/etc \
 		--localstatedir=/nix/var \
 		--with-sandbox-shell=/usr/lib/nix/busybox \
-		--enable-static=rapidcheck \
 		--enable-gc \
 		--enable-lto
 	make
@@ -118,6 +117,7 @@ package_nix-git() {
 
 package_nix-docs-git() {
 	pkgdesc+=" (documentation)"
+	arch=(any)
 	cd "$_pkgname"
 	install -vd "$pkgdir/usr/share/doc"
 	mv nix-docs/nix "$pkgdir/usr/share/doc"
