@@ -1,0 +1,1778 @@
+From ed6e7caa51ac38937833b3ca8e3ce13d169f4802 Mon Sep 17 00:00:00 2001
+From: Martin Rodriguez Reboredo <yakoyoku@gmail.com>
+Date: Fri, 21 Jul 2023 16:38:48 -0300
+Subject: [PATCH] upgpkg: brave 1.57.49
+
+upstream release
+
+Signed-off-by: Martin Rodriguez Reboredo <yakoyoku@gmail.com>
+---
+ .SRCINFO                                      |   33 +-
+ ...n-component-and-debug-Windows-builds.patch | 1045 -----------------
+ ...uilt-toolchain-from-the-Android-team.patch |  383 ------
+ PKGBUILD                                      |   84 +-
+ system-rust-utils.patch                       |   46 -
+ 5 files changed, 48 insertions(+), 1543 deletions(-)
+ delete mode 100644 0001-Fix-Rust-linking-on-component-and-debug-Windows-builds.patch
+ delete mode 100644 0002-Remove-the-prebuilt-toolchain-from-the-Android-team.patch
+ delete mode 100644 system-rust-utils.patch
+
+diff --git a/.SRCINFO b/.SRCINFO
+index 95e1613..a94e86c 100644
+--- a/.SRCINFO
++++ b/.SRCINFO
+@@ -1,6 +1,6 @@
+ pkgbase = brave
+ 	pkgdesc = Web browser that blocks ads and trackers by default
+-	pkgver = 1.52.129
++	pkgver = 1.57.49
+ 	pkgrel = 1
+ 	url = https://www.brave.com/download
+ 	arch = x86_64
+@@ -42,7 +42,6 @@ pkgbase = brave
+ 	depends = hicolor-icon-theme
+ 	depends = fontconfig
+ 	depends = woff2
+-	depends = brotli
+ 	depends = libjpeg
+ 	depends = icu
+ 	depends = dav1d
+@@ -65,16 +64,14 @@ pkgbase = brave
+ 	optdepends = org.freedesktop.secrets: password storage backend on GNOME / Xfce
+ 	optdepends = kwallet: support for storing passwords in KWallet on Plasma
+ 	options = !lto
+-	source = brave-browser::git+https://github.com/brave/brave-browser.git#tag=v1.52.129
+-	source = brave::git+https://github.com/brave/brave-core.git#tag=v1.52.129
+-	source = chromium-mirror::git+https://github.com/chromium/chromium.git#tag=114.0.5735.198
++	source = brave-browser::git+https://github.com/brave/brave-browser.git#tag=v1.57.49
++	source = brave::git+https://github.com/brave/brave-core.git#tag=v1.57.49
++	source = chromium-mirror::git+https://github.com/chromium/chromium.git#tag=116.0.5845.96
+ 	source = depot_tools::git+https://chromium.googlesource.com/chromium/tools/depot_tools.git
++	source = https://github.com/stha09/chromium-patches/releases/download/chromium-116-patchset-2/chromium-116-patchset-2.tar.xz
+ 	source = https://github.com/foutrelis/chromium-launcher/archive/refs/tags/v8/chromium-launcher-8.tar.gz
+ 	source = chromium-launcher-electron-app.patch
+ 	source = chromium-launcher-vendor.patch
+-	source = system-rust-utils.patch
+-	source = 0001-Fix-Rust-linking-on-component-and-debug-Windows-builds.patch
+-	source = 0002-Remove-the-prebuilt-toolchain-from-the-Android-team.patch
+ 	source = brave-1.19-BUILD.gn.patch
+ 	source = brave-1.43-bitcoin-core_remove-serialize.h.patch
+ 	source = brave-1.43-debounce-debounce_navigation_throttle_fix.patch
+@@ -84,23 +81,17 @@ pkgbase = brave
+ 	source = brave-1.52-bitints-libstdcxx-bypass.patch
+ 	source = brave-1.52-missing-includes.patch
+ 	source = brave-1.52-playlist-user-agent-only-constructor.patch
+-	source = https://gitlab.archlinux.org/archlinux/packaging/packages/chromium/-/raw/fa08adba87b6222bdf9ba31aaa41579e634ec444/add-some-typename-s-that-are-required-in-C-17.patch
+-	source = https://gitlab.archlinux.org/archlinux/packaging/packages/chromium/-/raw/fa08adba87b6222bdf9ba31aaa41579e634ec444/REVERT-disable-autoupgrading-debug-info.patch
+-	source = https://gitlab.archlinux.org/archlinux/packaging/packages/chromium/-/raw/fa08adba87b6222bdf9ba31aaa41579e634ec444/download-bubble-typename.patch
+-	source = https://gitlab.archlinux.org/archlinux/packaging/packages/chromium/-/raw/fa08adba87b6222bdf9ba31aaa41579e634ec444/webauthn-variant.patch
+-	source = https://gitlab.archlinux.org/archlinux/packaging/packages/chromium/-/raw/fa08adba87b6222bdf9ba31aaa41579e634ec444/random-fixes-for-gcc13.patch
+-	source = https://gitlab.archlinux.org/archlinux/packaging/packages/chromium/-/raw/fa08adba87b6222bdf9ba31aaa41579e634ec444/disable-GlobalMediaControlsCastStartStop.patch
+-	source = https://gitlab.archlinux.org/archlinux/packaging/packages/chromium/-/raw/fa08adba87b6222bdf9ba31aaa41579e634ec444/use-oauth2-client-switches-as-default.patch
++	source = https://gitlab.archlinux.org/archlinux/packaging/packages/chromium/-/raw/116.0.5845.96-1/REVERT-disable-autoupgrading-debug-info.patch
++	source = https://gitlab.archlinux.org/archlinux/packaging/packages/chromium/-/raw/116.0.5845.96-1/random-build-fixes.patch
++	source = https://gitlab.archlinux.org/archlinux/packaging/packages/chromium/-/raw/116.0.5845.96-1/use-oauth2-client-switches-as-default.patch
+ 	sha256sums = SKIP
+ 	sha256sums = SKIP
+ 	sha256sums = SKIP
+ 	sha256sums = SKIP
++	sha256sums = 25ad7c1a5e0b7332f80ed15ccf07d7e871d8ffb4af64df7c8fef325a527859b0
+ 	sha256sums = 213e50f48b67feb4441078d50b0fd431df34323be15be97c55302d3fdac4483a
+ 	sha256sums = 9235485adc4acbfaf303605f4428a6995a7b0b3b5a95181b185afbcb9f1f6ae5
+ 	sha256sums = 404bf09df39310a1e374c5e7eb9c7311239798adf4e8cd85b7ff04fc79647f88
+-	sha256sums = dcaf12a8b2ba15cefafd6e3c053b2ec490b1b8e1c89a3309e41133c0cd183ed3
+-	sha256sums = dfb5ca39abe7dd449729d3af3724fe27208d8cda76ecc4916cc57a4ad9c8e1b1
+-	sha256sums = 01a809e8bf7eeed6e263bc7118d6e40395dca7ac8463dbe230303e13d17d673e
+ 	sha256sums = 12a3d37ffca4c0fa25f89f02efdf79d24f6412ee29ec35e8a00f9086dba4e822
+ 	sha256sums = 984bb0257ed6fe4af543c3fb803ed81bddc97ff367ccd93620404be60cb78eb3
+ 	sha256sums = 30a6a9ca2a6dd965cb2d9f02639079130948bf45d483f0c629f2cf8394a1c22f
+@@ -110,12 +101,8 @@ pkgbase = brave
+ 	sha256sums = f781d6315e4147b775350d7a36481c3ce43b582eee5ee228768e42c30d9dd9ca
+ 	sha256sums = 1654fa922d10a591d5c28159a6d22d1183bcbd3448f175d7f3e2e11879588ddd
+ 	sha256sums = 7cf8569ff905666889842c36e82d51c08d482745cd2f71e48fa1296824f09839
+-	sha256sums = 621ed210d75d0e846192c1571bb30db988721224a41572c27769c0288d361c11
+ 	sha256sums = 1b782b0f6d4f645e4e0daa8a4852d63f0c972aa0473319216ff04613a0592a69
+-	sha256sums = d464eed4be4e9bf6187b4c40a759c523b7befefa25ba34ad6401b2a07649ca2a
+-	sha256sums = 590fabbb26270947cb477378b53a9dcd17855739076b4af9983e1e54dfcab6d7
+-	sha256sums = ba4dd0a25a4fc3267ed19ccb39f28b28176ca3f97f53a4e9f5e9215280040ea0
+-	sha256sums = 7f3b1b22d6a271431c1f9fc92b6eb49c6d80b8b3f868bdee07a6a1a16630a302
++	sha256sums = e938c6ee7087eed8f0de83ffb0ca89e328575808fafa4fe3950aeb1bc58b9411
+ 	sha256sums = e393174d7695d0bafed69e868c5fbfecf07aa6969f3b64596d0bae8b067e1711
+ 
+ pkgname = brave
+diff --git a/0001-Fix-Rust-linking-on-component-and-debug-Windows-builds.patch b/0001-Fix-Rust-linking-on-component-and-debug-Windows-builds.patch
+deleted file mode 100644
+index 8bcc450..0000000
+--- a/0001-Fix-Rust-linking-on-component-and-debug-Windows-builds.patch
++++ /dev/null
+@@ -1,1045 +0,0 @@
+-From e917deabc983569acfd001b06fa71ea3471d8ff3 Mon Sep 17 00:00:00 2001
+-From: danakj <danakj@chromium.org>
+-Date: Thu, 04 May 2023 16:03:06 +0000
+-Subject: [PATCH] Fix Rust linking on component and debug Windows builds
+-
+-1. The CRT can be specified from rustc but only static/dynamic,
+-not release/debug. This is tracked upstream in
+-https://github.com/rust-lang/libs-team/issues/211
+-
+-Because of this, we must not use the CRT command line options
+-from rustc, and instead specify the library directly. This is
+-done at the same location where the CRT is chosen for C++
+-targets via the "/MD" and friends flags.
+-
+-Then, we must not have rustc try to also link the CRT and we
+-disable that by setting -Zlink-directives=false for the libc
+-crate.
+-
+-2. After the above, we have two sets of libraries that must be
+-linked when using the rust stdlib.
+-
+-Internal dependencies, which are #[link] directives from the
+-libc crate (other than the CRT), which must be linked any time
+-the rust lib is used.
+-
+-Public dependencies, which are linked automatically by rustc
+-but are not linked by C++ targets that depend on Rust targets.
+-
+-So we split these into two configs, and expose the latter on
+-the BUILD rule for C++ targets that depend on Rust.
+-
+-3. The local build of stdlib is here to stay and is always used
+-with the Chromium toolchain, so remove a bunch of configuration
+-levers around it and just hardcode the stdlib in when using the
+-Chromium toolchain. And hardcode the prebuilt stdlib path when
+-not using the Chromium toolchain. This removes a bunch of
+-branches elsewhere in our GN rules as we can simply depend on
+-the "rust stdlib target" instead of choosing between them.
+-
+-Then drop the test build target that was opting into the local
+-stdlib as all our Rust build tests do that now.
+-
+-4. Don't use  __attribute__((visibility("default"))) on Windows,
+-use __declspec(dllexport) instead.
+-
+-I don't know that this fixes anything, but that attribute doesn't
+-exist on Windows, so yeah.
+-
+-5. In the component build, C++ targets are linked with the dynamic
+-CRT. In order to have mixed targets, Rust needs to as well. Then
+-Rust build script exes are linked with the dynamic CRT and they are
+-unable to find the DLL on the bots (which don't have Visual Studio)
+-installed. The CRT DLL is placed in root_out_dir, so we move build
+-script exes to the root_out_dir in order to have them find the DLL
+-and be able to execute.
+-
+-6. Ensure the CRT DLLs are present on the bots when running the
+-tests by adding a data_deps edge to them for build_rust_tests.
+-Normally this edge comes from a dependency on //base which basically
+-everything has, but our Rust build tests don't.
+-
+-7. Disable rust_shared_library unit test on Windows component build
+-while we figure out how to get the right `data_deps` edge from the
+-test to the library so that it's included in the isolate. When
+-building a library's tests, the library itself is recompiled under
+-cfg=test as part of the test exe. So the rlib or shared library
+-itself is not used. But we still need to depend on any transitive
+-deps of that library when building the unit tests, so the unit tests
+-add a deps edge onto the library.
+-
+-For shared libraries this deps edge doesn't do anything on Linux, or
+-on Windows non-component builds. But on Windows component builds, the
+-unit test EXE acquires a dependency on the DLL (as shown by dumpbin)
+-and thus the DLL needs to be present when running the test.
+-
+-Bug: 1442273, 1434719
+-
+-Change-Id: I157a0728ec25f636d0b78973b8ab81205e7b25ef
+-Cq-Include-Trybots: luci.chromium.try:win-rust-x64-rel,win-rust-x64-dbg,linux-rust-x64-rel,linux-rust-x64-dbg,android-rust-arm64-rel,android-rust-arm64-dbg,android-rust-arm32-rel
+-Reviewed-on: https://chromium-review.googlesource.com/c/chromium/src/+/4499979
+-Reviewed-by: Bruce Dawson <brucedawson@chromium.org>
+-Commit-Queue: danakj <danakj@chromium.org>
+-Reviewed-by: Adrian Taylor <adetaylor@chromium.org>
+-Cr-Commit-Position: refs/heads/main@{#1139572}
+----
+-
+-diff --git a/build/config/BUILD.gn b/build/config/BUILD.gn
+-index 210ba0d..596bd9d 100644
+---- a/build/config/BUILD.gn
+-+++ b/build/config/BUILD.gn
+-@@ -335,7 +335,6 @@
+- 
+-   if (is_win) {
+-     configs += _windows_linker_configs
+--    configs += [ "//build/config/win:exe_flags" ]
+-   } else if (is_mac) {
+-     configs += [ "//build/config/mac:mac_dynamic_flags" ]
+-   } else if (is_ios) {
+-diff --git a/build/config/rust.gni b/build/config/rust.gni
+-index 75d236fd..c0d934c 100644
+---- a/build/config/rust.gni
+-+++ b/build/config/rust.gni
+-@@ -38,12 +38,6 @@
+-   # Use the Rust toolchain built in-tree. See //tools/rust.
+-   use_chromium_rust_toolchain = true
+- 
+--  # Build libstd locally with GN and use that instead of the prebuilts, where
+--  # applicable. If this is false the prebuilt libstd will always be used. If
+--  # true, the local build is only used with the Chromium Rust toolchain and only
+--  # on supported platforms and GN targets.
+--  enable_local_libstd = true
+--
+-   # Chromium currently has a Rust toolchain for Android and Linux, but
+-   # if you wish to experiment on more platforms you can use this
+-   # argument to specify an alternative toolchain.
+-@@ -87,13 +81,6 @@
+-   # Use a separate declare_args so these variables' defaults can depend on the
+-   # ones above.
+- 
+--  # When true, uses the locally-built std in all Rust targets.
+--  #
+--  # As an internal implementation detail this can be overridden on specific
+--  # targets (e.g. to run build.rs scripts while building std), but this
+--  # generally should not be done.
+--  use_local_std_by_default = enable_local_libstd && use_chromium_rust_toolchain
+--
+-   # Individual Rust components.
+- 
+-   # Conversions between Rust types and C++ types.
+-@@ -286,13 +273,6 @@
+-            use_unverified_rust_toolchain,
+-        "Must use Chromium Rust toolchain for LTO")
+- 
+--# Determine whether the local libstd can and should be built.
+--local_libstd_supported = enable_local_libstd && use_chromium_rust_toolchain
+--
+--# Determine whether the prebuilt libstd can be used
+--prebuilt_libstd_supported = !use_chromium_rust_toolchain ||
+--                            (target_os == "linux" && target_cpu == "x64")
+--
+- # Arguments for Rust invocation.
+- # This is common between gcc/clang, Mac and Windows toolchains so specify once,
+- # here. This is not the complete command-line: toolchains should add -o
+-diff --git a/build/config/win/BUILD.gn b/build/config/win/BUILD.gn
+-index 8a3bfbbb..ff7d345 100644
+---- a/build/config/win/BUILD.gn
+-+++ b/build/config/win/BUILD.gn
+-@@ -329,11 +329,6 @@
+-   }
+- }
+- 
+--# Flags that should be applied to building .exe files but not .dll files.
+--config("exe_flags") {
+--  rustflags = [ "-Ctarget-feature=+crt-static" ]
+--}
+--
+- config("default_cfg_compiler") {
+-   # Emit table of address-taken functions for Control-Flow Guard (CFG).
+-   # This is needed to allow functions to be called by code that is built
+-@@ -506,11 +501,25 @@
+-   if (is_debug) {
+-     # This pulls in the DLL debug CRT and defines _DEBUG
+-     cflags = [ "/MDd" ]
+-+
+-+    # /MDd specifies msvcrtd.lib as the CRT library. Rust needs to agree, so
+-+    # we specify it explicitly.
+-+    # Once https://github.com/rust-lang/rust/issues/39016 is resolved we should
+-+    # instead tell rustc which CRT to use (static/dynamic + release/debug).
+-+    rustflags = [ "-Clink-arg=msvcrtd.lib" ]
+-+
+-     if (use_custom_libcxx) {
+-       ldflags = [ "/DEFAULTLIB:msvcprtd.lib" ]
+-     }
+-   } else {
+-     cflags = [ "/MD" ]
+-+
+-+    # /MD specifies msvcrt.lib as the CRT library. Rust needs to agree, so
+-+    # we specify it explicitly.
+-+    # Once https://github.com/rust-lang/rust/issues/39016 is resolved we should
+-+    # instead tell rustc which CRT to use (static/dynamic + release/debug).
+-+    rustflags = [ "-Clink-arg=msvcrt.lib" ]
+-+
+-     if (use_custom_libcxx) {
+-       ldflags = [ "/DEFAULTLIB:msvcprt.lib" ]
+-     }
+-@@ -521,11 +530,25 @@
+-   if (is_debug) {
+-     # This pulls in the static debug CRT and defines _DEBUG
+-     cflags = [ "/MTd" ]
+-+
+-+    # /MTd specifies libcmtd.lib as the CRT library. Rust needs to agree, so
+-+    # we specify it explicitly.
+-+    # Once https://github.com/rust-lang/rust/issues/39016 is resolved we should
+-+    # instead tell rustc which CRT to use (static/dynamic + release/debug).
+-+    rustflags = [ "-Clink-arg=libcmtd.lib" ]
+-+
+-     if (use_custom_libcxx) {
+-       ldflags = [ "/DEFAULTLIB:libcpmtd.lib" ]
+-     }
+-   } else {
+-     cflags = [ "/MT" ]
+-+
+-+    # /MT specifies libcmt.lib as the CRT library. Rust needs to agree, so
+-+    # we specify it explicitly.
+-+    # Once https://github.com/rust-lang/rust/issues/39016 is resolved we should
+-+    # instead tell rustc which CRT to use (static/dynamic + release/debug).
+-+    rustflags = [ "-Clink-arg=libcmt.lib" ]
+-+
+-     if (use_custom_libcxx) {
+-       ldflags = [ "/DEFAULTLIB:libcpmt.lib" ]
+-     }
+-diff --git a/build/rust/BUILD.gn b/build/rust/BUILD.gn
+-index d7ae149..4995459 100644
+---- a/build/rust/BUILD.gn
+-+++ b/build/rust/BUILD.gn
+-@@ -37,19 +37,7 @@
+-     # Depending on the C++ bindings side of cxx then requires also depending
+-     # on the Rust bindings, since one calls the other. And the Rust bindings
+-     # require the Rust standard library.
+--    # Normally the Rust stdlib is brought in as a dependency by depending
+--    # on any first-party Rust target. But in this case, it's conceivable
+--    # that pure-C++ targets will not depend on any 1p Rust code so we'll add
+--    # the Rust stdlib explicitly.
+-     deps = [ ":cxx_rustdeps" ]
+--
+--    if (use_local_std_by_default) {
+--      deps += [ "//build/rust/std:link_local_std" ]
+--    } else {
+--      assert(prebuilt_libstd_supported,
+--             "Prebuilt Rust stdlib is not available for this target")
+--      deps += [ "//build/rust/std:link_prebuilt_std" ]
+--    }
+-   }
+- 
+-   # The required dependencies for cxx-generated bindings, that must be included
+-diff --git a/build/rust/cargo_crate.gni b/build/rust/cargo_crate.gni
+-index bca790f7..ca047c8a 100644
+---- a/build/rust/cargo_crate.gni
+-+++ b/build/rust/cargo_crate.gni
+-@@ -266,13 +266,12 @@
+-           ":${_build_script_name}($host_toolchain_no_sanitizers)"
+-       deps = [ build_script_target ]
+- 
+--      # The build script output is always in the name-specific output dir. It
+--      # may be built with a different toolchain when cross-compiling (the host
+--      # toolchain) so we must find the path relative to that.
+--      _build_script_target_out_dir =
+--          get_label_info(build_script_target, "target_out_dir")
+--      _build_script_exe =
+--          "$_build_script_target_out_dir/$_orig_target_name/$_build_script_name"
+-+      # The build script may be built with a different toolchain when
+-+      # cross-compiling (the host toolchain) so we must find the path relative
+-+      # to that.
+-+      _build_script_root_out_dir =
+-+          get_label_info(build_script_target, "root_out_dir")
+-+      _build_script_exe = "$_build_script_root_out_dir/$_build_script_name"
+-       if (is_win) {
+-         _build_script_exe = "${_build_script_exe}.exe"
+-       }
+-@@ -328,11 +327,14 @@
+-           deps = invoker.build_deps
+-         }
+- 
+--        # An rlib's build script may be built differently for tests and for
+--        # production, so they must be in a name specific to the GN target. The
+--        # ${_build_script_name}_output target looks for the exe in this
+--        # location.
+--        output_dir = "$target_out_dir/$_orig_target_name"
+-+        # The ${_build_script_name}_output target looks for the exe in this
+-+        # location. Due to how the Windows component build works, this has to
+-+        # be $root_out_dir for all EXEs. In component build, C++ links to the
+-+        # CRT as a DLL, and if Rust does not match, we can't link mixed target
+-+        # Rust EXE/DLLs, as the headers in C++ said something different than
+-+        # what Rust links. Since the CRT DLL is placed in the $root_out_dir,
+-+        # an EXE can find it if it's also placed in that dir.
+-+        output_dir = root_out_dir
+-         rustenv = _rustenv
+-         forward_variables_from(invoker,
+-                                [
+-diff --git a/build/rust/rust_target.gni b/build/rust/rust_target.gni
+-index b4d3e94..6f78f28 100644
+---- a/build/rust/rust_target.gni
+-+++ b/build/rust/rust_target.gni
+-@@ -104,11 +104,6 @@
+-     _visibility = invoker.visibility
+-   }
+- 
+--  _use_local_std = use_local_std_by_default
+--  if (defined(invoker.use_local_std)) {
+--    _use_local_std = invoker.use_local_std
+--  }
+--
+-   _rustflags = []
+-   if (defined(invoker.rustflags)) {
+-     _rustflags += invoker.rustflags
+-@@ -133,6 +128,10 @@
+-       _configs += invoker.proc_macro_configs
+-       _test_configs += [ "//build/rust:proc_macro_extern" ]
+-     }
+-+  } else if (invoker.target_type == "rust_proc_macro") {
+-+    if (defined(invoker.shared_library_configs)) {
+-+      _configs += invoker.shared_library_configs
+-+    }
+-   } else {
+-     if (defined(invoker.library_configs)) {
+-       _configs += invoker.library_configs
+-@@ -223,7 +222,6 @@
+-                  "_rustflags",
+-                  "_support_use_from_cpp",
+-                  "_testonly",
+--                 "_use_local_std",
+-                  "_visibility",
+-                ])
+-   } else {
+-@@ -262,23 +260,11 @@
+-         # target that depends on a rust target directly may need access to Cxx
+-         # as well, which means it must appear in public_deps.
+-         public_deps += [ "//build/rust:cxx_cppdeps" ]
+--
+--        # cxx_cppdeps pulls in the default libstd, so make sure the default was
+--        # not overridden.
+--        assert(
+--            _use_local_std == use_local_std_by_default,
+--            "Rust targets with cxx bindings cannot override the default libstd")
+-       } else if (!defined(invoker.no_std) || !invoker.no_std) {
+-         # If C++ depends on and links in the library, we need to make sure C++
+-         # links in the Rust stdlib. This is orthogonal to if the library exports
+-         # bindings for C++ to use.
+--        if (_use_local_std) {
+--          deps = [ "//build/rust/std:link_local_std" ]
+--        } else {
+--          assert(prebuilt_libstd_supported,
+--                 "Prebuilt Rust stdlib is not available for this target")
+--          deps = [ "//build/rust/std:link_prebuilt_std" ]
+--        }
+-+        deps = [ "//build/rust/std:stdlib_for_clang" ]
+-       }
+-     }
+- 
+-@@ -298,13 +284,7 @@
+-     }
+- 
+-     if (!defined(invoker.no_std) || !invoker.no_std) {
+--      if (_use_local_std) {
+--        _rust_deps += [ "//build/rust/std:local_std_for_rustc" ]
+--      } else {
+--        _rust_deps += [ "//build/rust/std:prebuilt_std_for_rustc" ]
+--      }
+--    } else {
+--      not_needed([ "_use_local_std" ])
+-+      _rust_deps += [ "//build/rust/std:stdlib_for_rustc" ]
+-     }
+- 
+-     # You must go through the groups above to get to these targets.
+-@@ -449,5 +429,6 @@
+- set_defaults("rust_target") {
+-   executable_configs = default_executable_configs
+-   library_configs = default_compiler_configs
+-+  shared_library_configs = default_shared_library_configs
+-   proc_macro_configs = default_rust_proc_macro_configs
+- }
+-diff --git a/build/rust/std/BUILD.gn b/build/rust/std/BUILD.gn
+-index 90cfec7..03b8943 100644
+---- a/build/rust/std/BUILD.gn
+-+++ b/build/rust/std/BUILD.gn
+-@@ -16,8 +16,8 @@
+- # * Remap some generic allocator symbols to the specific allocator symbols
+- #   in use.
+- # This file takes care of equivalent tasks for our C++ toolchains.
+--# C++ targets should depend upon either link_local_std or
+--# link_prebuilt_std to ensure that Rust code can be linked into their
+-+# C++ targets should depend upon either local_stdlib_for_clang or
+-+# prebuilt_stdlib_for_clang to ensure that Rust code can be linked into their
+- # C++ executables.
+- #
+- # This is obviously a bit fragile - rustc might do other magic in future.
+-@@ -70,16 +70,6 @@
+-     "unwind",
+-   ]
+- 
+--  if (is_win) {
+--    # Our C++ builds already link against a wide variety of Windows API import libraries,
+--    # but the Rust stdlib requires a few extra.
+--    _windows_lib_deps = [
+--      "bcrypt.lib",
+--      "ntdll.lib",
+--      "userenv.lib",
+--    ]
+--  }
+--
+-   # rlibs explicitly ignored when copying prebuilt sysroot libraries.
+-   # find_std_rlibs.py rightfully errors out if an unexpected prebuilt lib is
+-   # encountered, since it usually indicates we missed something. This ignore
+-@@ -89,7 +79,7 @@
+-   # proc_macro is special: we only run proc macros on the host, so we only want
+-   # it for our host toolchain.
+-   if (current_toolchain == host_toolchain_no_sanitizers) {
+--    # Directs the local_std_for_rustc target to depend on proc_macro, and
+-+    # Directs the local stdlib_for_rustc target to depend on proc_macro, and
+-     # includes proc_macro in the prebuilts copied in find_stdlib. Otherwise it
+-     # is not built or copied.
+-     stdlib_files += [ "proc_macro" ]
+-@@ -114,7 +104,133 @@
+-     "rustc_std_workspace_core",
+-     "rustc_std_workspace_std",
+-   ]
+--  if (prebuilt_libstd_supported) {
+-+
+-+  config("stdlib_dependent_libs") {
+-+    # TODO(crbug.com/1434092): These should really be `libs`, however that
+-+    # breaks. Normally, we specify lib files with the `.lib` suffix but
+-+    # then when rustc links an EXE, it invokes lld-link with `.lib.lib`
+-+    # instead.
+-+    #
+-+    # Omitting the `.lib` suffix breaks linking as well, when clang drives
+-+    # the linking step of a C++ EXE that depends on Rust.
+-+    if (is_win) {
+-+      # The libc crate tries to link in the Windows CRT, but we specify the CRT
+-+      # library ourselves in //build/config/win:dynamic_crt and
+-+      # //build/config/win:static_crt because Rustc does not allow us to specify
+-+      # using the debug CRT: https://github.com/rust-lang/rust/issues/39016
+-+      #
+-+      # As such, we have disabled all #[link] directives from the libc crate, and
+-+      # we need to add any non-CRT libs here.
+-+      ldflags = [ "legacy_stdio_definitions.lib" ]
+-+    }
+-+  }
+-+  config("stdlib_public_dependent_libs") {
+-+    # TODO(crbug.com/1434092): These should really be `libs`, however that
+-+    # breaks. Normally, we specify lib files with the `.lib` suffix but
+-+    # then when rustc links an EXE, it invokes lld-link with `.lib.lib`
+-+    # instead.
+-+    #
+-+    # Omitting the `.lib` suffix breaks linking as well, when clang drives
+-+    # the linking step of a C++ EXE that depends on Rust.
+-+    if (is_win) {
+-+      # These libs provide functions that are used by the stdlib. Rust crates
+-+      # will try to link them in with #[link] directives. However these don't get
+-+      # propagated to the linker if Rust isn't driving the linking (a C++ target
+-+      # that depends on a Rust rlib). So these need to be specified explicitly.
+-+      ldflags = [
+-+        "advapi32.lib",
+-+        "bcrypt.lib",
+-+        "kernel32.lib",
+-+        "ntdll.lib",
+-+        "userenv.lib",
+-+        "ws2_32.lib",
+-+      ]
+-+    }
+-+  }
+-+
+-+  # Construct sysroots for rustc invocations to better control what libraries
+-+  # are linked. We have two: one with copied prebuilt libraries, and one with
+-+  # our locally-built std. Both reside in root_out_dir: we must only have one of
+-+  # each per GN toolchain anyway.
+-+
+-+  sysroot_lib_subdir = "lib/rustlib/$rust_abi_target/lib"
+-+
+-+  if (use_chromium_rust_toolchain) {
+-+    local_rustc_sysroot = "$root_out_dir/local_rustc_sysroot"
+-+
+-+    # All std targets starting with core build with our sysroot. It starts empty
+-+    # and is incrementally built. The directory must exist at the start.
+-+    generated_file("empty_sysroot_for_std_build") {
+-+      outputs = [ "$local_rustc_sysroot/$sysroot_lib_subdir/.empty" ]
+-+      contents = ""
+-+      visibility = [ ":*" ]
+-+    }
+-+
+-+    # Target to be depended on by std build targets. Creates the initially empty
+-+    # sysroot.
+-+    group("std_build_deps") {
+-+      deps = [ ":empty_sysroot_for_std_build" ]
+-+      public_configs = [ ":local_stdlib_sysroot" ]
+-+      visibility = [ "rules:*" ]
+-+    }
+-+
+-+    profiler_builtins_crates = [
+-+      "core",
+-+      "compiler_builtins",
+-+      "profiler_builtins",
+-+    ]
+-+
+-+    # When using instrumentation, profiler_builtins and its deps must be built
+-+    # before other std crates. Other crates depend on this target so they are
+-+    # built in the right order.
+-+    group("profiler_builtins_group") {
+-+      deps = []
+-+      foreach(libname, profiler_builtins_crates) {
+-+        deps += [ "rules:$libname" ]
+-+      }
+-+      visibility = [ "rules:*" ]
+-+    }
+-+
+-+    config("local_stdlib_sysroot") {
+-+      sysroot = rebase_path(local_rustc_sysroot, root_build_dir)
+-+      rustflags = [ "--sysroot=$sysroot" ]
+-+      visibility = [ ":*" ]
+-+    }
+-+
+-+    group("local_stdlib_libs") {
+-+      assert(
+-+          enable_rust,
+-+          "Some C++ target is including Rust code even though enable_rust=false")
+-+      all_dependent_configs = [ ":stdlib_dependent_libs" ]
+-+      deps = []
+-+      foreach(libname, stdlib_files + skip_stdlib_files) {
+-+        deps += [ "rules:$libname" ]
+-+      }
+-+      visibility = [ ":*" ]
+-+    }
+-+
+-+    # Builds the stdlib and points the rustc `--sysroot` to them. Used by
+-+    # targets for which linking is driven by Rust (bins and dylibs).
+-+    group("stdlib_for_rustc") {
+-+      assert(
+-+          enable_rust,
+-+          "Some C++ target is including Rust code even though enable_rust=false")
+-+      all_dependent_configs = [ ":local_stdlib_sysroot" ]
+-+      public_deps = [ ":local_stdlib_libs" ]
+-+    }
+-+
+-+    # Builds and links against the Rust stdlib. Used by targets for which
+-+    # linking is driven by C++.
+-+    group("stdlib_for_clang") {
+-+      all_dependent_configs = [ ":stdlib_public_dependent_libs" ]
+-+      public_deps = [
+-+        ":local_stdlib_libs",
+-+        ":remap_alloc",
+-+      ]
+-+    }
+-+
+-+    not_needed([ "ignore_stdlib_files" ])
+-+  } else {
+-     action("find_stdlib") {
+-       # Collect prebuilt Rust libraries from toolchain package and copy to a known
+-       # location.
+-@@ -199,44 +315,28 @@
+-       foreach(lib, extra_sysroot_libs) {
+-         outputs += [ "$target_out_dir/$lib" ]
+-       }
+-+
+-+      visibility = [ ":*" ]
+-     }
+--  } else {
+--    not_needed([ "ignore_stdlib_files" ])
+--  }
+- 
+--  # Construct sysroots for rustc invocations to better control what libraries
+--  # are linked. We have two: one with copied prebuilt libraries, and one with
+--  # our locally-built std. Both reside in root_out_dir: we must only have one of
+--  # each per GN toolchain anyway.
+--
+--  sysroot_lib_subdir = "lib/rustlib/$rust_abi_target/lib"
+--
+--  if (prebuilt_libstd_supported) {
+-     prebuilt_rustc_sysroot = "$root_out_dir/prebuilt_rustc_sysroot"
+--    copy("prebuilt_rustc_sysroot") {
+-+    copy("prebuilt_rustc_copy_to_sysroot") {
+-       deps = [ ":find_stdlib" ]
+-       sources = get_target_outputs(":find_stdlib")
+-       outputs =
+-           [ "$prebuilt_rustc_sysroot/$sysroot_lib_subdir/{{source_file_part}}" ]
+-+
+-+      visibility = [ ":*" ]
+-     }
+- 
+--    config("prebuilt_stdlib_for_rustc") {
+--      # Match the output directory of :prebuilt_rustc_sysroot
+-+    config("prebuilt_stdlib_sysroot") {
+-+      # Match the output directory of :prebuilt_rustc_copy_to_sysroot
+-       sysroot = rebase_path(prebuilt_rustc_sysroot, root_build_dir)
+-       rustflags = [ "--sysroot=$sysroot" ]
+-+      visibility = [ ":*" ]
+-     }
+- 
+--    # Use the sysroot generated by :prebuilt_rustc_sysroot. Almost all Rust targets should depend
+--    # on this.
+--    group("prebuilt_std_for_rustc") {
+--      assert(
+--          enable_rust,
+--          "Some C++ target is including Rust code even though enable_rust=false")
+--      all_dependent_configs = [ ":prebuilt_stdlib_for_rustc" ]
+--      deps = [ ":prebuilt_rustc_sysroot" ]
+--    }
+--
+--    config("prebuilt_rust_stdlib_config") {
+-+    config("prebuilt_stdlib_libs") {
+-       ldflags = []
+-       lib_dir = rebase_path("$prebuilt_rustc_sysroot/$sysroot_lib_subdir",
+-                             root_build_dir)
+-@@ -266,80 +366,29 @@
+-         # the linking step of a C++ EXE that depends on Rust.
+-         ldflags += _windows_lib_deps
+-       }
+--    }
+--
+--    # Provides std libs to non-rustc linkers.
+--    group("link_prebuilt_std") {
+--      assert(
+--          enable_rust,
+--          "Some C++ target is including Rust code even though enable_rust=false")
+--      all_dependent_configs = [ ":prebuilt_rust_stdlib_config" ]
+--      deps = [
+--        ":prebuilt_rustc_sysroot",
+--        ":remap_alloc",
+--      ]
+--    }
+--  }
+--
+--  if (local_libstd_supported) {
+--    local_rustc_sysroot = "$root_out_dir/local_rustc_sysroot"
+--
+--    # All std targets starting with core build with our sysroot. It starts empty
+--    # and is incrementally built. The directory must exist at the start.
+--    generated_file("empty_sysroot_for_std_build") {
+--      outputs = [ "$local_rustc_sysroot/$sysroot_lib_subdir/.empty" ]
+--      contents = ""
+-     }
+- 
+--    config("local_stdlib_for_rustc") {
+--      sysroot = rebase_path(local_rustc_sysroot, root_build_dir)
+--      rustflags = [ "--sysroot=$sysroot" ]
+--    }
+--
+--    # Target to be depended on by std build targets. Creates the initially empty
+--    # sysroot.
+--    group("std_build_deps") {
+--      deps = [ ":empty_sysroot_for_std_build" ]
+--      public_configs = [ ":local_stdlib_for_rustc" ]
+--    }
+--
+--    # Use the sysroot generated by :local_rustc_sysroot, which transitively builds
+--    # std. Only for use in specific tests for now.
+--    group("local_std_for_rustc") {
+-+    # Use the sysroot generated by :prebuilt_rustc_copy_to_sysroot.
+-+    group("stdlib_for_rustc") {
+-       assert(
+-           enable_rust,
+-           "Some C++ target is including Rust code even though enable_rust=false")
+--      all_dependent_configs = [ ":local_stdlib_for_rustc" ]
+--
+--      deps = []
+--      foreach(libname, stdlib_files + skip_stdlib_files) {
+--        deps += [ "rules:$libname" ]
+--      }
+-+      all_dependent_configs = [ ":prebuilt_stdlib_sysroot" ]
+-+      deps = [ ":prebuilt_rustc_copy_to_sysroot" ]
+-     }
+- 
+--    config("local_rust_stdlib_config") {
+--      if (is_win) {
+--        # TODO(crbug.com/1434092): This should really be `libs`, however that
+--        # breaks. Normally, we specify lib files with the `.lib` suffix but
+--        # then when rustc links an EXE, it invokes lld-link with `.lib.lib`
+--        # instead.
+--        #
+--        # Omitting the `.lib` suffix breaks linking as well, when clang drives
+--        # the linking step of a C++ EXE that depends on Rust.
+--        ldflags = _windows_lib_deps
+--      }
+--    }
+--
+--    # TODO(crbug.com/1368806): rework this so when using locally-built std, we
+--    # don't link the prebuilt std as well.
+--
+--    group("link_local_std") {
+-+    # Links the Rust stdlib. Used by targets for which linking is driven by
+-+    # C++.
+-+    group("stdlib_for_clang") {
+-       assert(
+-           enable_rust,
+-           "Some C++ target is including Rust code even though enable_rust=false")
+--      all_dependent_configs = [ ":local_rust_stdlib_config" ]
+-+      all_dependent_configs = [
+-+        ":prebuilt_stdlib_libs",
+-+        ":stdlib_public_dependent_libs",
+-+      ]
+-       deps = [
+--        ":local_std_for_rustc",
+-+        ":prebuilt_rustc_copy_to_sysroot",
+-         ":remap_alloc",
+-       ]
+-     }
+-diff --git a/build/rust/std/gnrt_config.toml b/build/rust/std/gnrt_config.toml
+-index 9102ff8..76f9968b 100644
+---- a/build/rust/std/gnrt_config.toml
+-+++ b/build/rust/std/gnrt_config.toml
+-@@ -51,6 +51,11 @@
+- 'libc_non_exhaustive', 'libc_long_array', 'libc_ptr_addr_of',
+- 'libc_underscore_const_names', 'libc_const_extern_fn'
+- ]
+-+# The libc crate tries to link in the Windows CRT, but we specify the CRT
+-+# library ourselves in //build/config/win:dynamic_crt and
+-+# //build/config/win:static_crt because Rustc does not allow us to specify
+-+# using the debug CRT: https://github.com/rust-lang/rust/issues/39016
+-+rustflags = ['-Zlink-directives=false']
+- 
+- # This target is #[no_core] when included by std, which is incompatible with
+- # profiling.
+-diff --git a/build/rust/std/remap_alloc.cc b/build/rust/std/remap_alloc.cc
+-index 7f8aa1d..1a9d226 100644
+---- a/build/rust/std/remap_alloc.cc
+-+++ b/build/rust/std/remap_alloc.cc
+-@@ -65,13 +65,17 @@
+- extern "C" {
+- 
+- #ifdef COMPONENT_BUILD
+-+#if BUILDFLAG(IS_WIN)
+-+#define REMAP_ALLOC_ATTRIBUTES __declspec(dllexport) __attribute__((weak))
+-+#else
+- #define REMAP_ALLOC_ATTRIBUTES \
+-   __attribute__((visibility("default"))) __attribute__((weak))
+-+#endif
+- #else
+- #define REMAP_ALLOC_ATTRIBUTES __attribute__((weak))
+- #endif  // COMPONENT_BUILD
+- 
+--void* REMAP_ALLOC_ATTRIBUTES __rust_alloc(size_t size, size_t align) {
+-+REMAP_ALLOC_ATTRIBUTES void* __rust_alloc(size_t size, size_t align) {
+-   // This mirrors kMaxSupportedAlignment from
+-   // base/allocator/partition_allocator/partition_alloc_constants.h.
+-   // ParitionAlloc will crash if given an alignment larger than this.
+-@@ -114,11 +118,11 @@
+-   }
+- }
+- 
+--void REMAP_ALLOC_ATTRIBUTES __rust_dealloc(void* p, size_t size, size_t align) {
+-+REMAP_ALLOC_ATTRIBUTES void __rust_dealloc(void* p, size_t size, size_t align) {
+-   free(p);
+- }
+- 
+--void* REMAP_ALLOC_ATTRIBUTES __rust_realloc(void* p,
+-+REMAP_ALLOC_ATTRIBUTES void* __rust_realloc(void* p,
+-                                             size_t old_size,
+-                                             size_t align,
+-                                             size_t new_size) {
+-@@ -131,7 +135,7 @@
+-   }
+- }
+- 
+--void* REMAP_ALLOC_ATTRIBUTES __rust_alloc_zeroed(size_t size, size_t align) {
+-+REMAP_ALLOC_ATTRIBUTES void* __rust_alloc_zeroed(size_t size, size_t align) {
+-   if (align <= alignof(std::max_align_t)) {
+-     return calloc(size, 1);
+-   } else {
+-@@ -141,12 +145,12 @@
+-   }
+- }
+- 
+--void REMAP_ALLOC_ATTRIBUTES __rust_alloc_error_handler(size_t size,
+-+REMAP_ALLOC_ATTRIBUTES void __rust_alloc_error_handler(size_t size,
+-                                                        size_t align) {
+-   IMMEDIATE_CRASH();
+- }
+- 
+--extern const unsigned char REMAP_ALLOC_ATTRIBUTES
+-+REMAP_ALLOC_ATTRIBUTES extern const unsigned char
+-     __rust_alloc_error_handler_should_panic = 0;
+- 
+- }  // extern "C"
+-diff --git a/build/rust/std/rules/BUILD.gn b/build/rust/std/rules/BUILD.gn
+-index ef8d439..379809f 100644
+---- a/build/rust/std/rules/BUILD.gn
+-+++ b/build/rust/std/rules/BUILD.gn
+-@@ -362,6 +362,7 @@
+-     "--cfg=libc_ptr_addr_of",
+-     "--cfg=libc_underscore_const_names",
+-     "--cfg=libc_const_extern_fn",
+-+    "-Zlink-directives=false",
+-     "-Zforce-unstable-if-unmarked",
+-   ]
+-   output_dir =
+-diff --git a/build/rust/tests/BUILD.gn b/build/rust/tests/BUILD.gn
+-index 25e2b3f..22c74b6 100644
+---- a/build/rust/tests/BUILD.gn
+-+++ b/build/rust/tests/BUILD.gn
+-@@ -53,6 +53,7 @@
+-       deps += [
+-         "bindgen_test:bindgen_test_lib_unittests",
+-         "test_aliased_deps:test_aliased_deps_unittests",
+-+        "test_cpp_including_rust:test_cpp_including_rust_dylib_unittests",
+-         "test_cpp_including_rust:test_cpp_including_rust_unittests",
+-         "test_rlib_crate:target1_test_rlib_crate_v0_2_unittests",
+-         "test_rlib_crate:target2_test_rlib_crate_v0_2_unittests",
+-@@ -60,7 +61,6 @@
+-         "test_rust_metadata:test_rust_metadata_unittests",
+-         "test_rust_multiple_dep_versions_exe/v1:test_lib_v1_unittests",
+-         "test_rust_multiple_dep_versions_exe/v2:test_lib_v2_unittests",
+--        "test_rust_shared_library:test_rust_shared_library_unittests",
+-         "test_rust_static_library:test_rust_static_library_unittests",
+-         "test_rust_static_library_non_standard_arrangement:foo_tests",
+-         "test_rust_unittests",
+-@@ -71,6 +71,12 @@
+-         # `//build/rust/run_rs_bindings_from_cc.py`.
+-         #"test_rs_bindings_from_cc:test_rs_bindings_from_cc_unittests",
+-       ]
+-+      if (!is_win || !is_component_build) {
+-+        # TODO(crbug.com/1442273): The shared library unittest EXE ends up
+-+        # requiring the DLL to run, even though it does not use the DLL.
+-+        deps +=
+-+            [ "test_rust_shared_library:test_rust_shared_library_unittests" ]
+-+      }
+-       if (current_toolchain == host_toolchain_no_sanitizers) {
+-         # Build these proc macro tests only on toolchains where we'd build the
+-         # proc macro itself.
+-@@ -78,16 +84,6 @@
+-       }
+-     }
+- 
+--    if (local_libstd_supported) {
+--      deps += [
+--        "test_local_std",
+--        "test_local_std:test_local_std_exe",
+--      ]
+--      if (can_build_rust_unit_tests) {
+--        deps += [ "test_local_std:test_local_std_unittests" ]
+--      }
+--    }
+--
+-     if (is_win) {
+-       deps += [ "test_control_flow_guard" ]
+-     }
+-diff --git a/build/rust/tests/test_cpp_including_rust/BUILD.gn b/build/rust/tests/test_cpp_including_rust/BUILD.gn
+-index 2157b79..8464e9e1b 100644
+---- a/build/rust/tests/test_cpp_including_rust/BUILD.gn
+-+++ b/build/rust/tests/test_cpp_including_rust/BUILD.gn
+-@@ -11,7 +11,7 @@
+- }
+- 
+- test("test_cpp_including_rust_unittests") {
+--  sources = [ "unittests.cc" ]
+-+  sources = [ "static_unittests.cc" ]
+-   deps = [
+-     "//base",
+-     "//base/allocator:buildflags",
+-@@ -21,3 +21,15 @@
+-     "//testing/gtest",
+-   ]
+- }
+-+
+-+test("test_cpp_including_rust_dylib_unittests") {
+-+  sources = [ "shared_unittests.cc" ]
+-+  deps = [
+-+    "//base",
+-+    "//base/allocator:buildflags",
+-+    "//base/test:run_all_unittests",
+-+    "//build/rust/tests/test_rust_shared_library",
+-+    "//testing/gmock",
+-+    "//testing/gtest",
+-+  ]
+-+}
+-diff --git a/build/rust/tests/test_cpp_including_rust/shared_unittests.cc b/build/rust/tests/test_cpp_including_rust/shared_unittests.cc
+-new file mode 100644
+-index 0000000..b2071962
+---- /dev/null
+-+++ b/build/rust/tests/test_cpp_including_rust/shared_unittests.cc
+-@@ -0,0 +1,31 @@
+-+// Copyright 2023 The Chromium Authors
+-+// Use of this source code is governed by a BSD-style license that can be
+-+// found in the LICENSE file.
+-+
+-+#include <stdint.h>
+-+
+-+#include <memory>
+-+
+-+#include "base/allocator/buildflags.h"
+-+#include "base/allocator/partition_allocator/address_pool_manager_bitmap.h"
+-+#include "base/allocator/partition_allocator/partition_address_space.h"
+-+#include "build/build_config.h"
+-+#include "build/buildflag.h"
+-+#include "testing/gtest/include/gtest/gtest.h"
+-+
+-+#include "build/rust/tests/test_rust_shared_library/src/lib.rs.h"
+-+
+-+TEST(RustSharedTest, CppCallingIntoRust_BasicFFI) {
+-+  EXPECT_EQ(7, add_two_ints_via_rust(3, 4));
+-+}
+-+
+-+TEST(RustSharedTest, RustComponentUsesPartitionAlloc) {
+-+  // Verify that PartitionAlloc is consistently used in C++ and Rust.
+-+  auto cpp_allocated_int = std::make_unique<int>();
+-+  SomeStruct* rust_allocated_ptr = allocate_via_rust().into_raw();
+-+  EXPECT_EQ(partition_alloc::IsManagedByPartitionAlloc(
+-+                reinterpret_cast<uintptr_t>(rust_allocated_ptr)),
+-+            partition_alloc::IsManagedByPartitionAlloc(
+-+                reinterpret_cast<uintptr_t>(cpp_allocated_int.get())));
+-+  rust::Box<SomeStruct>::from_raw(rust_allocated_ptr);
+-+}
+-diff --git a/build/rust/tests/test_cpp_including_rust/static_unittests.cc b/build/rust/tests/test_cpp_including_rust/static_unittests.cc
+-new file mode 100644
+-index 0000000..77efd8d
+---- /dev/null
+-+++ b/build/rust/tests/test_cpp_including_rust/static_unittests.cc
+-@@ -0,0 +1,31 @@
+-+// Copyright 2023 The Chromium Authors
+-+// Use of this source code is governed by a BSD-style license that can be
+-+// found in the LICENSE file.
+-+
+-+#include <stdint.h>
+-+
+-+#include <memory>
+-+
+-+#include "base/allocator/buildflags.h"
+-+#include "base/allocator/partition_allocator/address_pool_manager_bitmap.h"
+-+#include "base/allocator/partition_allocator/partition_address_space.h"
+-+#include "build/build_config.h"
+-+#include "build/buildflag.h"
+-+#include "testing/gtest/include/gtest/gtest.h"
+-+
+-+#include "build/rust/tests/test_rust_static_library/src/lib.rs.h"
+-+
+-+TEST(RustStaticTest, CppCallingIntoRust_BasicFFI) {
+-+  EXPECT_EQ(7, add_two_ints_via_rust(3, 4));
+-+}
+-+
+-+TEST(RustStaticTest, RustComponentUsesPartitionAlloc) {
+-+  // Verify that PartitionAlloc is consistently used in C++ and Rust.
+-+  auto cpp_allocated_int = std::make_unique<int>();
+-+  SomeStruct* rust_allocated_ptr = allocate_via_rust().into_raw();
+-+  EXPECT_EQ(partition_alloc::IsManagedByPartitionAlloc(
+-+                reinterpret_cast<uintptr_t>(rust_allocated_ptr)),
+-+            partition_alloc::IsManagedByPartitionAlloc(
+-+                reinterpret_cast<uintptr_t>(cpp_allocated_int.get())));
+-+  rust::Box<SomeStruct>::from_raw(rust_allocated_ptr);
+-+}
+-diff --git a/build/rust/tests/test_cpp_including_rust/unittests.cc b/build/rust/tests/test_cpp_including_rust/unittests.cc
+-deleted file mode 100644
+-index f3b65ad..0000000
+---- a/build/rust/tests/test_cpp_including_rust/unittests.cc
+-+++ /dev/null
+-@@ -1,31 +0,0 @@
+--// Copyright 2021 The Chromium Authors
+--// Use of this source code is governed by a BSD-style license that can be
+--// found in the LICENSE file.
+--
+--#include <stdint.h>
+--
+--#include <memory>
+--
+--#include "base/allocator/buildflags.h"
+--#include "base/allocator/partition_allocator/address_pool_manager_bitmap.h"
+--#include "base/allocator/partition_allocator/partition_address_space.h"
+--#include "build/build_config.h"
+--#include "build/buildflag.h"
+--#include "testing/gtest/include/gtest/gtest.h"
+--
+--#include "build/rust/tests/test_rust_static_library/src/lib.rs.h"
+--
+--TEST(RustTest, CppCallingIntoRust_BasicFFI) {
+--  EXPECT_EQ(7, add_two_ints_via_rust(3, 4));
+--}
+--
+--TEST(RustTest, RustComponentUsesPartitionAlloc) {
+--  // Verify that PartitionAlloc is consistently used in C++ and Rust.
+--  auto cpp_allocated_int = std::make_unique<int>();
+--  SomeStruct* rust_allocated_ptr = allocate_via_rust().into_raw();
+--  EXPECT_EQ(partition_alloc::IsManagedByPartitionAlloc(
+--                reinterpret_cast<uintptr_t>(rust_allocated_ptr)),
+--            partition_alloc::IsManagedByPartitionAlloc(
+--                reinterpret_cast<uintptr_t>(cpp_allocated_int.get())));
+--  rust::Box<SomeStruct>::from_raw(rust_allocated_ptr);
+--}
+-diff --git a/build/rust/tests/test_local_std/BUILD.gn b/build/rust/tests/test_local_std/BUILD.gn
+-deleted file mode 100644
+-index 499aebd..0000000
+---- a/build/rust/tests/test_local_std/BUILD.gn
+-+++ /dev/null
+-@@ -1,23 +0,0 @@
+--# Copyright 2023 The Chromium Authors
+--# Use of this source code is governed by a BSD-style license that can be
+--# found in the LICENSE file.
+--
+--import("//build/config/rust.gni")
+--import("//build/rust/rust_executable.gni")
+--import("//build/rust/rust_static_library.gni")
+--
+--assert(local_libstd_supported)
+--
+--rust_static_library("test_local_std") {
+--  sources = [ "lib.rs" ]
+--  crate_root = "lib.rs"
+--  build_native_rust_unit_tests = true
+--  use_local_std = true
+--}
+--
+--rust_executable("test_local_std_exe") {
+--  sources = [ "main.rs" ]
+--  crate_root = "main.rs"
+--  deps = [ ":test_local_std" ]
+--  use_local_std = true
+--}
+-diff --git a/build/rust/tests/test_local_std/lib.rs b/build/rust/tests/test_local_std/lib.rs
+-deleted file mode 100644
+-index 6328cf41..0000000
+---- a/build/rust/tests/test_local_std/lib.rs
+-+++ /dev/null
+-@@ -1,8 +0,0 @@
+--// Copyright 2023 The Chromium Authors
+--// Use of this source code is governed by a BSD-style license that can be
+--// found in the LICENSE file.
+--
+--#[test]
+--fn test_test() {
+--    assert_eq!(1, 1);
+--}
+-diff --git a/build/rust/tests/test_local_std/main.rs b/build/rust/tests/test_local_std/main.rs
+-deleted file mode 100644
+-index 746e021..0000000
+---- a/build/rust/tests/test_local_std/main.rs
+-+++ /dev/null
+-@@ -1,7 +0,0 @@
+--// Copyright 2023 The Chromium Authors
+--// Use of this source code is governed by a BSD-style license that can be
+--// found in the LICENSE file.
+--
+--fn main() {
+--    println!("hello world");
+--}
+-diff --git a/build/rust/tests/test_rust_shared_library/src/lib.rs b/build/rust/tests/test_rust_shared_library/src/lib.rs
+-index eabfa27..2fa77c3 100644
+---- a/build/rust/tests/test_rust_shared_library/src/lib.rs
+-+++ b/build/rust/tests/test_rust_shared_library/src/lib.rs
+-@@ -34,8 +34,8 @@
+-     x + y
+- }
+- 
+--// The next function is used from the
+--// AllocatorTest.RustComponentUsesPartitionAlloc unit test.
+-+// The next function is used from the RustComponentUsesPartitionAlloc unit
+-+// tests.
+- pub fn allocate_via_rust() -> Box<ffi::SomeStruct> {
+-     Box::new(ffi::SomeStruct { a: 43 })
+- }
+-diff --git a/build/rust/tests/test_simple_rust_exe/BUILD.gn b/build/rust/tests/test_simple_rust_exe/BUILD.gn
+-index a800720..9e94819f 100644
+---- a/build/rust/tests/test_simple_rust_exe/BUILD.gn
+-+++ b/build/rust/tests/test_simple_rust_exe/BUILD.gn
+-@@ -8,5 +8,5 @@
+- # //build/rust/rust_executable.gni.
+- executable("test_simple_rust_exe") {
+-   crate_root = "main.rs"
+--  deps = [ "//build/rust/std:local_std_for_rustc" ]
+-+  deps = [ "//build/rust/std:stdlib_for_rustc" ]
+- }
+diff --git a/0002-Remove-the-prebuilt-toolchain-from-the-Android-team.patch b/0002-Remove-the-prebuilt-toolchain-from-the-Android-team.patch
+deleted file mode 100644
+index 036be1c..0000000
+--- a/0002-Remove-the-prebuilt-toolchain-from-the-Android-team.patch
++++ /dev/null
+@@ -1,383 +0,0 @@
+-From 635f82e7dd5802b338a5a404f92672b1ed878df1 Mon Sep 17 00:00:00 2001
+-From: danakj <danakj@chromium.org>
+-Date: Thu, 4 May 2023 16:33:48 +0000
+-Subject: [PATCH] Remove the prebuilt toolchain from the Android team
+-
+-We build our own compiler and stdlib for Chrome unconditionally now, so
+-this is no longer used.
+-
+-These paths were broken while fixing the Windows build, so time for
+-them to go.
+-
+-Bug: 1292038
+-Change-Id: I9d43875671245e5be08fa63aff06f13c0b2243d9
+-Cq-Include-Trybots: luci.chromium.try:android-rust-arm32-rel,android-rust-arm64-dbg,android-rust-arm64-rel,linux-rust-x64-rel,linux-rust-x64-dbg,win-rust-x64-rel,win-rust-x64-dbg
+-Reviewed-on: https://chromium-review.googlesource.com/c/chromium/src/+/4500460
+-Reviewed-by: Adrian Taylor <adetaylor@chromium.org>
+-Commit-Queue: danakj <danakj@chromium.org>
+-Reviewed-by: Ben Pastene <bpastene@chromium.org>
+-Cr-Commit-Position: refs/heads/main@{#1139597}
+----
+- DEPS                                          | 13 ----
+- build/config/rust.gni                         | 75 +++++++------------
+- build/rust/std/BUILD.gn                       | 57 ++++----------
+- build/rust/std/find_std_rlibs.py              | 32 --------
+- .../ci/android-rust-arm32-rel/properties.json |  3 +-
+- .../ci/android-rust-arm64-dbg/properties.json |  3 +-
+- .../ci/android-rust-arm64-rel/properties.json |  3 +-
+- .../android-rust-arm32-rel/properties.json    |  3 +-
+- .../android-rust-arm64-dbg/properties.json    |  3 +-
+- .../android-rust-arm64-rel/properties.json    |  3 +-
+- .../chromium/ci/chromium.rust.star            |  3 -
+- 11 files changed, 47 insertions(+), 151 deletions(-)
+-
+-diff --git a/DEPS b/DEPS
+-index 98d20c55e07a5..9606cafe4c800 100644
+---- a/DEPS
+-+++ b/DEPS
+-@@ -241,9 +241,6 @@ vars = {
+-   # Fetch Rust toolchain.
+-   'checkout_rust': 'host_os == "linux"',
+- 
+--  # Fetch the Android team's Rust toolchain.
+--  'fetch_android_chromium_rust_toolchain': False,
+--
+-   # See //docs/testing/regression-test-selection.md
+-   # for info on RTS
+-   'checkout_rts_model': False,
+-@@ -560,16 +557,6 @@ deps = {
+-     ],
+-     'dep_type': 'cipd',
+-   },
+--  'src/third_party/android_rust_toolchain/toolchain': {
+--    'packages': [
+--      {
+--        'package': 'chromium/third_party/android_rust_toolchain/linux-amd64',
+--        'version': 'version:2@1.64.0.cr2',
+--      },
+--    ],
+--    'dep_type': 'cipd',
+--    'condition': 'fetch_android_chromium_rust_toolchain',
+--  },
+- 
+-   # We don't know target_cpu at deps time. At least until there's a universal
+-   # binary of httpd-php, pull both intel and arm versions in DEPS and then pick
+-diff --git a/build/config/rust.gni b/build/config/rust.gni
+-index c0d934ce193f2..544ca33a8e036 100644
+---- a/build/config/rust.gni
+-+++ b/build/config/rust.gni
+-@@ -35,19 +35,18 @@ declare_args() {
+-   # all Rust features enabled.
+-   enable_all_rust_features = false
+- 
+--  # Use the Rust toolchain built in-tree. See //tools/rust.
+--  use_chromium_rust_toolchain = true
+--
+--  # Chromium currently has a Rust toolchain for Android and Linux, but
+--  # if you wish to experiment on more platforms you can use this
+--  # argument to specify an alternative toolchain.
+--  # This should be an absolute path to a directory
+--  # containing a 'bin' directory and others. Commonly
+-+  # Chromium provides a Rust toolchain in //third_party/rust-toolchain when
+-+  # checkout_rust is True (which is being rolled out by default over time).
+-+  #
+-+  # To use a custom toolchain instead, specify an absolute path to the root of
+-+  # a Rust sysroot, which will have a 'bin' directory and others. Commonly
+-   # <home dir>/.rustup/toolchains/nightly-<something>-<something>
+-   rust_sysroot_absolute = ""
+- 
+--  # If you're using an external Rust toolchain, set this to a Rust
+--  # the output of rustc -V.
+-+  # If you're using a Rust toolchain as specified by rust_sysroot_absolute,
+-+  # set this to the output of `rustc -V`. Changing this string will cause all
+-+  # Rust targets to be rebuilt, which allows you to update your toolchain and
+-+  # not break incremental builds.
+-   rustc_version = ""
+- 
+-   # If you're using a Rust toolchain as specified by rust_sysroot_absolute,
+-@@ -77,10 +76,9 @@ declare_args() {
+-   host_toolchain_no_sanitizers = host_toolchain
+- }
+- 
+-+# Use a separate declare_args so these variables' defaults can depend on the
+-+# ones above.
+- declare_args() {
+--  # Use a separate declare_args so these variables' defaults can depend on the
+--  # ones above.
+--
+-   # Individual Rust components.
+- 
+-   # Conversions between Rust types and C++ types.
+-@@ -105,36 +103,33 @@ declare_args() {
+-   enable_rust_boringssl = enable_all_rust_features
+- }
+- 
+--# Platform support for "official" toolchains (Android or Chromium)
+--android_toolchain_supports_platform =
+--    (!is_nacl &&
+--     (is_android && (current_cpu == "arm" || current_cpu == "arm64" ||
+--                     current_cpu == "x64" || current_cpu == "x86"))) ||
+--    (is_linux && current_cpu == "x64")
+-+# Use the Rust toolchain built in-tree. When false, we use the prebuilt Rust
+-+# stdlibs that come with the specified custom toolchain.
+-+use_chromium_rust_toolchain = rust_sysroot_absolute == ""
+-+
+-+# Platform support for the Rust toolchain.
+- chromium_toolchain_supports_platform = !is_nacl
+- custom_toolchain_supports_platform = !is_nacl || rust_toolchain_supports_nacl
+- 
+--toolchain_has_rust =
+--    enable_rust &&
+--    ((use_chromium_rust_toolchain && chromium_toolchain_supports_platform) ||
+--     (!use_chromium_rust_toolchain && android_toolchain_supports_platform) ||
+--     (rust_sysroot_absolute != "" && custom_toolchain_supports_platform))
+-+# Not all target triples (GN toolchains) are supported by the Rust compiler.
+-+# Define if we support the current GN toolchain.
+-+toolchain_has_rust = false
+- 
+- # The rustc_revision is used to introduce a dependency on the toolchain version
+- # (so e.g. rust targets are rebuilt, and the standard library is re-copied when
+- # the toolchain changes). It is left empty for custom toolchains.
+- rustc_revision = ""
+--if (toolchain_has_rust) {
+-+
+-+if (enable_rust) {
+-   if (use_chromium_rust_toolchain) {
+-+    toolchain_has_rust = chromium_toolchain_supports_platform
+-     update_rust_args = [ "--print-package-version" ]
+-     rustc_revision = exec_script("//tools/rust/update_rust.py",
+-                                  update_rust_args,
+-                                  "trim string")
+--  } else if (rust_sysroot_absolute != "") {
+--    rustc_revision = rustc_version
+-   } else {
+--    # Android toolchain version.
+--    rustc_revision = "rustc 1.64.0-dev (Android Rust Toolchain version 9099361)"
+-+    toolchain_has_rust = custom_toolchain_supports_platform
+-+    rustc_revision = rustc_version
+-   }
+- }
+- 
+-@@ -150,21 +145,10 @@ build_rust_crash = toolchain_has_rust && enable_rust_crash
+- # portability. In practice if an external toolchain was specified, it might
+- # be an absolute path, but we'll do our best.
+- if (enable_rust) {
+--  if (rust_sysroot_absolute != "") {
+--    rust_sysroot = get_path_info(rust_sysroot_absolute, "abspath")
+--    use_unverified_rust_toolchain = true
+--  } else if (use_chromium_rust_toolchain) {
+-+  if (use_chromium_rust_toolchain) {
+-     rust_sysroot = "//third_party/rust-toolchain"
+--    use_unverified_rust_toolchain = false
+-   } else {
+--    if (host_os != "linux") {
+--      assert(false,
+--             "Attempt to use Android Rust toolchain on an unsupported platform")
+--    }
+--
+--    rust_sysroot = "//third_party/android_rust_toolchain/toolchain"
+--    use_unverified_rust_toolchain = false
+--    extra_sysroot_libs += [ "libunwind.a" ]
+-+    rust_sysroot = get_path_info(rust_sysroot_absolute, "abspath")
+-   }
+- }
+- 
+-@@ -266,13 +250,6 @@ if (current_cpu == "x86") {
+- 
+- assert(!toolchain_has_rust || rust_target_arch != "")
+- 
+--# Must use Chromium Rust toolchain to get precisely matching LLVM versions
+--# in order to enable LTO. Some say that LTO probably works if LLVM is "close
+--# enough", but we don't want to take that risk.
+--assert(!use_thin_lto || !enable_rust || use_chromium_rust_toolchain ||
+--           use_unverified_rust_toolchain,
+--       "Must use Chromium Rust toolchain for LTO")
+--
+- # Arguments for Rust invocation.
+- # This is common between gcc/clang, Mac and Windows toolchains so specify once,
+- # here. This is not the complete command-line: toolchains should add -o
+-diff --git a/build/rust/std/BUILD.gn b/build/rust/std/BUILD.gn
+-index 03b894327c0d0..60aea480a42a1 100644
+---- a/build/rust/std/BUILD.gn
+-+++ b/build/rust/std/BUILD.gn
+-@@ -70,12 +70,6 @@ if (toolchain_has_rust) {
+-     "unwind",
+-   ]
+- 
+--  # rlibs explicitly ignored when copying prebuilt sysroot libraries.
+--  # find_std_rlibs.py rightfully errors out if an unexpected prebuilt lib is
+--  # encountered, since it usually indicates we missed something. This ignore
+--  # list is also passed to it. This has no effect on the local std build.
+--  ignore_stdlib_files = []
+--
+-   # proc_macro is special: we only run proc macros on the host, so we only want
+-   # it for our host toolchain.
+-   if (current_toolchain == host_toolchain_no_sanitizers) {
+-@@ -83,10 +77,6 @@ if (toolchain_has_rust) {
+-     # includes proc_macro in the prebuilts copied in find_stdlib. Otherwise it
+-     # is not built or copied.
+-     stdlib_files += [ "proc_macro" ]
+--  } else {
+--    # Explicitly ignore it from the prebuilts. Nothing needs to be done for the
+--    # local std build.
+--    ignore_stdlib_files += [ "proc_macro" ]
+-   }
+- 
+-   # Different Rust toolchains may add or remove files relative to the above
+-@@ -198,9 +188,11 @@ if (toolchain_has_rust) {
+-     }
+- 
+-     group("local_stdlib_libs") {
+--      assert(
+--          enable_rust,
+--          "Some C++ target is including Rust code even though enable_rust=false")
+-+      assert(toolchain_has_rust,
+-+             "Some C++ target is depending on Rust code even though " +
+-+                 "toolchain_has_rust=false. Usually this would mean" +
+-+                 "a NaCl target is depending on Rust, as there's no Rust " +
+-+                 "toolchain targetting NaCl.")
+-       all_dependent_configs = [ ":stdlib_dependent_libs" ]
+-       deps = []
+-       foreach(libname, stdlib_files + skip_stdlib_files) {
+-@@ -212,9 +204,6 @@ if (toolchain_has_rust) {
+-     # Builds the stdlib and points the rustc `--sysroot` to them. Used by
+-     # targets for which linking is driven by Rust (bins and dylibs).
+-     group("stdlib_for_rustc") {
+--      assert(
+--          enable_rust,
+--          "Some C++ target is including Rust code even though enable_rust=false")
+-       all_dependent_configs = [ ":local_stdlib_sysroot" ]
+-       public_deps = [ ":local_stdlib_libs" ]
+-     }
+-@@ -228,27 +217,25 @@ if (toolchain_has_rust) {
+-         ":remap_alloc",
+-       ]
+-     }
+--
+--    not_needed([ "ignore_stdlib_files" ])
+-   } else {
+-     action("find_stdlib") {
+--      # Collect prebuilt Rust libraries from toolchain package and copy to a known
+--      # location.
+-+      # Collect prebuilt Rust libraries from toolchain package and copy to a
+-+      # known location.
+-       #
+-       # The Rust toolchain contains prebuilt rlibs for the standard library and
+-       # its dependencies. However, they have unstable names: an unpredictable
+-       # metadata hash is appended to the known crate name.
+-       #
+-       # We must depend on these rlibs explicitly when rustc is not in charge of
+--      # linking. However, it is difficult to construct GN rules to do so when the
+--      # names can't be known statically.
+-+      # linking. However, it is difficult to construct GN rules to do so when
+-+      # the names can't be known statically.
+-       #
+-       # This action copies the prebuilt rlibs to a known location, removing the
+-       # metadata part of the name. In the process it verifies we have all the
+--      # libraries we expect and none that we don't. A depfile is generated so this
+--      # step is re-run when any libraries change. The action script additionally
+--      # verifies rustc matches the expected version, which is unrelated but this
+--      # is a convenient place to do so.
+-+      # libraries we expect and none that we don't. A depfile is generated so
+-+      # this step is re-run when any libraries change. The action script
+-+      # additionally verifies rustc matches the expected version, which is
+-+      # unrelated but this is a convenient place to do so.
+-       #
+-       # The action refers to `stdlib_files`, `skip_stdlib_files`, and the
+-       # associated //build/config/rust.gni vars `removed_rust_stdlib_libs` and
+-@@ -259,8 +246,8 @@ if (toolchain_has_rust) {
+-       out_libdir = rebase_path(target_out_dir, root_build_dir)
+-       out_depfile = rebase_path(depfile, root_build_dir)
+- 
+--      # For the rustc sysroot we must include even the rlibs we don't pass to the
+--      # C++ linker.
+-+      # For the rustc sysroot we must include even the rlibs we don't pass to
+-+      # the C++ linker.
+-       all_stdlibs_to_copy = stdlib_files + skip_stdlib_files
+-       args = [
+-         "--rust-bin-dir",
+-@@ -282,20 +269,6 @@ if (toolchain_has_rust) {
+-         rustc_revision,
+-       ]
+- 
+--      if (!use_unverified_rust_toolchain) {
+--        args += [
+--          "--stdlibs",
+--          string_join(",", all_stdlibs_to_copy),
+--        ]
+--
+--        if (ignore_stdlib_files != []) {
+--          args += [
+--            "--ignore-stdlibs",
+--            string_join(",", ignore_stdlib_files),
+--          ]
+--        }
+--      }
+--
+-       if (extra_sysroot_libs != []) {
+-         args += [
+-           "--extra-libs",
+-diff --git a/build/rust/std/find_std_rlibs.py b/build/rust/std/find_std_rlibs.py
+-index 85ab477a9450c..386258f890c01 100755
+---- a/build/rust/std/find_std_rlibs.py
+-+++ b/build/rust/std/find_std_rlibs.py
+-@@ -33,10 +33,6 @@ def main():
+-   parser.add_argument("--depfile-target",
+-                       help="Target to key depfile around",
+-                       required=True)
+--  parser.add_argument("--stdlibs",
+--                      help="Expected list of standard library libraries")
+--  parser.add_argument("--ignore-stdlibs",
+--                      help="List of sysroot libraries to ignore")
+-   parser.add_argument("--extra-libs",
+-                       help="List of extra non-libstd sysroot libraries")
+-   parser.add_argument("--rustc-revision",
+-@@ -44,24 +40,6 @@ def main():
+-                       " on the rustc version.")
+-   args = parser.parse_args()
+- 
+--  # Expected rlibs by concise name (the crate name, plus a disambiguating suffix
+--  # e.g. "-2" when necessary).
+--  if args.stdlibs:
+--    rlibs_expected = set()
+--    for lib in args.stdlibs.split(','):
+--      # The version is only included if there's more than one of `name`, and
+--      # even then is only included for the 2nd onward.
+--      (name, version) = EXPECTED_STDLIB_INPUT_REGEX.match(lib).group(1, 2)
+--      if version is None:
+--        rlibs_expected.add(name)
+--      else:
+--        rlibs_expected.add(f"{name}-{version}")
+--    ignore_rlibs = set()
+--    if args.ignore_stdlibs is not None:
+--      ignore_rlibs = set(args.ignore_stdlibs.split(','))
+--  else:
+--    rlibs_expected = None
+--
+-   extra_libs = set()
+-   if args.extra_libs:
+-     for lib in args.extra_libs.split(','):
+-@@ -138,13 +116,6 @@ def copy_file(infile, outfile):
+- 
+-       output_filename = f"lib{concise_name}.rlib"
+- 
+--      if rlibs_expected is not None:
+--        if concise_name in ignore_rlibs:
+--          continue
+--        if concise_name not in rlibs_expected:
+--          raise Exception("Found stdlib rlib that wasn't expected: %s" % f)
+--        rlibs_expected.remove(concise_name)
+--
+-       infile = os.path.join(rustlib_dir, f)
+-       outfile = os.path.join(args.output, output_filename)
+-       copy_file(infile, outfile)
+-@@ -155,9 +126,6 @@ def copy_file(infile, outfile):
+-       copy_file(infile, outfile)
+- 
+-     depfile.write("\n")
+--    if rlibs_expected:
+--      raise Exception("We failed to find all expected stdlib rlibs: %s" %
+--                      ','.join(rlibs_expected))
+- 
+- 
+- if __name__ == '__main__':
+diff --git a/PKGBUILD b/PKGBUILD
+index a642491..b6112d5 100644
+--- a/PKGBUILD
++++ b/PKGBUILD
+@@ -28,7 +28,7 @@
+ : "${COMPONENT:=4}"
+ 
+ pkgname=brave
+-pkgver=1.52.129
++pkgver=1.57.49
+ pkgrel=1
+ pkgdesc='Web browser that blocks ads and trackers by default'
+ arch=(x86_64)
+@@ -46,18 +46,18 @@ optdepends=('pipewire: WebRTC desktop sharing under Wayland'
+             'org.freedesktop.secrets: password storage backend on GNOME / Xfce'
+             'kwallet: support for storing passwords in KWallet on Plasma')
+ options=('!lto') # Chromium adds its own flags for ThinLTO
+-_chromium_ver=114.0.5735.198
++_chromium_ver=116.0.5845.96
+ _launcher_ver=8
++_gcc_patchset=2
++_chromium_patchset=chromium-${_chromium_ver%%.*}-patchset-$_gcc_patchset
+ source=("brave-browser::git+https://github.com/brave/brave-browser.git#tag=v$pkgver"
+         "brave::git+https://github.com/brave/brave-core.git#tag=v$pkgver"
+         "chromium-mirror::git+https://github.com/chromium/chromium.git#tag=$_chromium_ver"
+         'depot_tools::git+https://chromium.googlesource.com/chromium/tools/depot_tools.git'
++        "https://github.com/stha09/chromium-patches/releases/download/${_chromium_patchset}/${_chromium_patchset}.tar.xz"
+         "https://github.com/foutrelis/chromium-launcher/archive/refs/tags/v$_launcher_ver/chromium-launcher-$_launcher_ver.tar.gz"
+         chromium-launcher-electron-app.patch
+         chromium-launcher-vendor.patch
+-        system-rust-utils.patch
+-        0001-Fix-Rust-linking-on-component-and-debug-Windows-builds.patch
+-        0002-Remove-the-prebuilt-toolchain-from-the-Android-team.patch
+         brave-1.19-BUILD.gn.patch
+         brave-1.43-bitcoin-core_remove-serialize.h.patch
+         brave-1.43-debounce-debounce_navigation_throttle_fix.patch
+@@ -67,27 +67,21 @@ source=("brave-browser::git+https://github.com/brave/brave-browser.git#tag=v$pkg
+         brave-1.52-bitints-libstdcxx-bypass.patch
+         brave-1.52-missing-includes.patch
+         brave-1.52-playlist-user-agent-only-constructor.patch)
+-_arch_revision=fa08adba87b6222bdf9ba31aaa41579e634ec444
+-_patches=(add-some-typename-s-that-are-required-in-C-17.patch
+-          REVERT-disable-autoupgrading-debug-info.patch
+-          download-bubble-typename.patch
+-          webauthn-variant.patch
+-          random-fixes-for-gcc13.patch
+-          disable-GlobalMediaControlsCastStartStop.patch
++_arch_revision=1
++_patches=(REVERT-disable-autoupgrading-debug-info.patch
++          random-build-fixes.patch
+           use-oauth2-client-switches-as-default.patch)
+ for _patch in "${_patches[@]}"; do
+-  source+=("https://gitlab.archlinux.org/archlinux/packaging/packages/chromium/-/raw/$_arch_revision/$_patch")
++  source+=("https://gitlab.archlinux.org/archlinux/packaging/packages/chromium/-/raw/$_chromium_ver-$_arch_revision/$_patch")
+ done
+ sha256sums=('SKIP'
+             'SKIP'
+             'SKIP'
+             'SKIP'
++            '25ad7c1a5e0b7332f80ed15ccf07d7e871d8ffb4af64df7c8fef325a527859b0'
+             '213e50f48b67feb4441078d50b0fd431df34323be15be97c55302d3fdac4483a'
+             '9235485adc4acbfaf303605f4428a6995a7b0b3b5a95181b185afbcb9f1f6ae5'
+             '404bf09df39310a1e374c5e7eb9c7311239798adf4e8cd85b7ff04fc79647f88'
+-            'dcaf12a8b2ba15cefafd6e3c053b2ec490b1b8e1c89a3309e41133c0cd183ed3'
+-            'dfb5ca39abe7dd449729d3af3724fe27208d8cda76ecc4916cc57a4ad9c8e1b1'
+-            '01a809e8bf7eeed6e263bc7118d6e40395dca7ac8463dbe230303e13d17d673e'
+             '12a3d37ffca4c0fa25f89f02efdf79d24f6412ee29ec35e8a00f9086dba4e822'
+             '984bb0257ed6fe4af543c3fb803ed81bddc97ff367ccd93620404be60cb78eb3'
+             '30a6a9ca2a6dd965cb2d9f02639079130948bf45d483f0c629f2cf8394a1c22f'
+@@ -97,18 +91,14 @@ sha256sums=('SKIP'
+             'f781d6315e4147b775350d7a36481c3ce43b582eee5ee228768e42c30d9dd9ca'
+             '1654fa922d10a591d5c28159a6d22d1183bcbd3448f175d7f3e2e11879588ddd'
+             '7cf8569ff905666889842c36e82d51c08d482745cd2f71e48fa1296824f09839'
+-            '621ed210d75d0e846192c1571bb30db988721224a41572c27769c0288d361c11'
+             '1b782b0f6d4f645e4e0daa8a4852d63f0c972aa0473319216ff04613a0592a69'
+-            'd464eed4be4e9bf6187b4c40a759c523b7befefa25ba34ad6401b2a07649ca2a'
+-            '590fabbb26270947cb477378b53a9dcd17855739076b4af9983e1e54dfcab6d7'
+-            'ba4dd0a25a4fc3267ed19ccb39f28b28176ca3f97f53a4e9f5e9215280040ea0'
+-            '7f3b1b22d6a271431c1f9fc92b6eb49c6d80b8b3f868bdee07a6a1a16630a302'
++            'e938c6ee7087eed8f0de83ffb0ca89e328575808fafa4fe3950aeb1bc58b9411'
+             'e393174d7695d0bafed69e868c5fbfecf07aa6969f3b64596d0bae8b067e1711')
+ 
+ # Possible replacements are listed in build/linux/unbundle/replace_gn_files.py
+ # Keys are the names in the above script; values are the dependencies in Arch
+ declare -gA _system_libs=(
+-    [brotli]=brotli
++    #[brotli]=brotli
+     [dav1d]=dav1d
+     [ffmpeg]=ffmpeg
+     [flac]=flac
+@@ -159,10 +149,6 @@ prepare() {
+ 
+   cd src/brave || exit
+ 
+-  if [ "$COMPONENT" = "4" ]; then
+-    patch -Np1 -i "${srcdir}/system-rust-utils.patch"
+-  fi
+-
+   jq ".config.projects.chrome.repository.url = \"file://${srcdir}/chromium-mirror@${_chromium_ver}\"" package.json > tmp.json
+   mv {tmp,package}.json
+ 
+@@ -227,23 +213,19 @@ prepare() {
+   patch -Np1 -i "${srcdir}/use-oauth2-client-switches-as-default.patch"
+ 
+   # Upstream fixes
+-  patch -Np1 -i "${srcdir}/add-some-typename-s-that-are-required-in-C-17.patch"
+ 
+   # Revert addition of compiler flag that needs newer clang
+   patch -Rp1 -i "${srcdir}/REVERT-disable-autoupgrading-debug-info.patch"
+ 
+-  # Disable kGlobalMediaControlsCastStartStop by default
+-  # https://crbug.com/1314342
+-  patch -Np1 -i "${srcdir}/disable-GlobalMediaControlsCastStartStop.patch"
+-
+   # Build fixes
+-  patch -Np1 -i "${srcdir}/download-bubble-typename.patch"
+-  patch -Np1 -i "${srcdir}/webauthn-variant.patch"
+-  patch -Np1 -i "${srcdir}/random-fixes-for-gcc13.patch"
++  patch -Np1 -i "${srcdir}/random-build-fixes.patch"
+ 
+-  # Rust fixes
+-  patch -Np1 -i "${srcdir}/0001-Fix-Rust-linking-on-component-and-debug-Windows-builds.patch"
+-  patch -Np1 -i "${srcdir}/0002-Remove-the-prebuilt-toolchain-from-the-Android-team.patch"
++  # Fixes for building with libstdc++ instead of libc++
++  patch -Np1 -i "${srcdir}/patches/chromium-114-maldoca-include.patch"
++  patch -Np1 -i "${srcdir}/patches/chromium-114-ruy-include.patch"
++  patch -Np1 -i "${srcdir}/patches/chromium-114-vk_mem_alloc-include.patch"
++  patch -Np1 -i "${srcdir}/patches/chromium-116-object_paint_properties_sparse-include.patch"
++  patch -Np1 -i "${srcdir}/patches/chromium-116-profile_view_utils-include.patch"
+ 
+   # Hacky patching
+   sed -e 's/\(enable_distro_version_check =\) true/\1 false/g' -i chrome/installer/linux/BUILD.gn
+@@ -309,14 +291,6 @@ build() {
+   echo "rewards_grant_dev_endpoint = https://grant.rewards.brave.com" >> .npmrc
+   echo "rewards_grant_staging_endpoint = https://grant.rewards.brave.com" >> .npmrc
+   echo "rewards_grant_prod_endpoint = https://grant.rewards.brave.com" >> .npmrc
+-  echo "uphold_client_id = 6d8d9473ed20be627f71ed46e207f40c004c5b1a" >> .npmrc
+-  echo "uphold_client_secret = xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" >> .npmrc
+-  echo "uphold_staging_client_id = 4c2b665ca060d912fec5c735c734859a06118cc8" >> .npmrc
+-  echo "uphold_staging_client_secret = xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" >> .npmrc
+-  echo "gemini_api_url = https://api.gemini.com/v1" >> .npmrc
+-  echo "gemini_oauth_url = https://api.gemini.com/v1/oauth" >> .npmrc
+-  echo "gemini_wallet_client_id = 6d8d9473ed20be627f71ed46e207f40c004c5b1a" >> .npmrc
+-  echo "gemini_wallet_client_secret = xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" >> .npmrc
+   echo "sardine_client_id = 7ca8433c-7e61-4e25-b76e-25aa2da68df1" >> .npmrc
+   echo "sardine_client_secret = 7ca8433c-7e61-4e25-b76e-25aa2da68df1" >> .npmrc
+   echo "brave_zero_ex_api_key = xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx" >> .npmrc
+@@ -325,6 +299,25 @@ build() {
+   echo "p3a_constellation_upload_url = https://example.com" >> .npmrc
+   echo "p2a_json_upload_url = https://example.com" >> .npmrc
+   echo "star_randomness_host = https://example.com" >> .npmrc
++  echo "brave_ai_chat_endpoint = https://example.com" >> .npmrc
++  echo "bitflyer_production_client_id = xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx" >>.npmrc
++  echo "bitflyer_production_client_secret = xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx" >>.npmrc
++  echo "bitflyer_production_fee_address = https://example.com" >>.npmrc
++  echo "bitflyer_production_url = https://example.com" >>.npmrc
++  echo "gemini_production_api_url = https://api.gemini.com/v1" >> .npmrc
++  echo "gemini_production_client_id = 6d8d9473ed20be627f71ed46e207f40c004c5b1a" >> .npmrc
++  echo "gemini_production_client_secret = xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" >> .npmrc
++  echo "gemini_production_fee_address = https://example.com" >>.npmrc
++  echo "gemini_production_oauth_url = https://api.gemini.com/v1/oauth" >> .npmrc
++  echo "uphold_production_api_url = https://example.com" >> .npmrc
++  echo "uphold_production_client_id = 6d8d9473ed20be627f71ed46e207f40c004c5b1a" >> .npmrc
++  echo "uphold_production_client_secret = xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" >> .npmrc
++  echo "uphold_production_fee_address = https://example.com" >>.npmrc
++  echo "uphold_production_oauth_url = https://example.com" >> .npmrc
++  echo "zebpay_production_api_url = https://example.com" >>.npmrc
++  echo "zebpay_production_client_id = xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx" >>.npmrc
++  echo "zebpay_production_client_secret = xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx" >>.npmrc
++  echo "zebpay_production_oauth_url = https://example.com" >>.npmrc
+ 
+   npm_args=()
+   if [ "$COMPONENT" = "4" ]; then
+@@ -345,7 +338,6 @@ build() {
+       'proprietary_codecs=true'
+       'rtc_use_pipewire=true'
+       'link_pulseaudio=true'
+-      'use_gnome_keyring=false'
+       'use_sysroot=false'
+       'use_system_libffi=true'
+       'use_custom_libcxx=false'
+diff --git a/system-rust-utils.patch b/system-rust-utils.patch
+deleted file mode 100644
+index 64c41c6..0000000
+--- a/system-rust-utils.patch
++++ /dev/null
+@@ -1,46 +0,0 @@
+-diff --git a/script/cargo.py b/script/cargo.py
+-index 0766c5f118..8ed8893272 100755
+---- a/script/cargo.py
+-+++ b/script/cargo.py
+-@@ -16,8 +16,8 @@ def run_cargo(command, args):
+-     env = os.environ.copy()
+- 
+-     rustup_home = args.rustup_home
+--    env['RUSTUP_HOME'] = rustup_home
+--    env['CARGO_HOME'] = rustup_home
+-+    # env['RUSTUP_HOME'] = rustup_home
+-+    # env['CARGO_HOME'] = rustup_home
+-     # Enable experimental features in non-nightly builds
+-     env['RUSTC_BOOTSTRAP'] = '1'
+- 
+-diff --git a/script/cargo_cbindgen.py b/script/cargo_cbindgen.py
+-index db28fd013e..78a9dd9481 100755
+---- a/script/cargo_cbindgen.py
+-+++ b/script/cargo_cbindgen.py
+-@@ -15,10 +15,10 @@ def run(args):
+-     env = os.environ.copy()
+- 
+-     rustup_home = args.rustup_home
+--    env["RUSTUP_HOME"] = rustup_home
+-+    # env["RUSTUP_HOME"] = rustup_home
+- 
+-     cargo_home = args.cargo_home
+--    env["CARGO_HOME"] = cargo_home
+-+    # env["CARGO_HOME"] = cargo_home
+- 
+-     rustup_bin = os.path.abspath(os.path.join(rustup_home, "bin"))
+-     cbindgen_bin = os.path.join(
+-diff --git a/script/download_rust_deps.py b/script/download_rust_deps.py
+-index 60ff491eb9..94521879c6 100755
+---- a/script/download_rust_deps.py
+-+++ b/script/download_rust_deps.py
+-@@ -203,7 +203,8 @@ def main():
+-         "features": "vendored-openssl",
+-     }]
+-     for tool in tools:
+--        cargo_install(tool, rustup_home)
+-+        if shutil.which(tool["name"]) is None:
+-+            cargo_install(tool, rustup_home)
+- 
+-     return 0
+- 
+-- 
+2.41.0
+
