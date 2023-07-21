@@ -28,7 +28,7 @@
 : "${COMPONENT:=4}"
 
 pkgname=brave
-pkgver=1.52.129
+pkgver=1.57.49
 pkgrel=1
 pkgdesc='Web browser that blocks ads and trackers by default'
 arch=(x86_64)
@@ -46,18 +46,18 @@ optdepends=('pipewire: WebRTC desktop sharing under Wayland'
             'org.freedesktop.secrets: password storage backend on GNOME / Xfce'
             'kwallet: support for storing passwords in KWallet on Plasma')
 options=('!lto') # Chromium adds its own flags for ThinLTO
-_chromium_ver=114.0.5735.198
+_chromium_ver=116.0.5845.96
 _launcher_ver=8
+_gcc_patchset=2
+_chromium_patchset=chromium-${_chromium_ver%%.*}-patchset-$_gcc_patchset
 source=("brave-browser::git+https://github.com/brave/brave-browser.git#tag=v$pkgver"
         "brave::git+https://github.com/brave/brave-core.git#tag=v$pkgver"
         "chromium-mirror::git+https://github.com/chromium/chromium.git#tag=$_chromium_ver"
         'depot_tools::git+https://chromium.googlesource.com/chromium/tools/depot_tools.git'
+        "https://github.com/stha09/chromium-patches/releases/download/${_chromium_patchset}/${_chromium_patchset}.tar.xz"
         "https://github.com/foutrelis/chromium-launcher/archive/refs/tags/v$_launcher_ver/chromium-launcher-$_launcher_ver.tar.gz"
         chromium-launcher-electron-app.patch
         chromium-launcher-vendor.patch
-        system-rust-utils.patch
-        0001-Fix-Rust-linking-on-component-and-debug-Windows-builds.patch
-        0002-Remove-the-prebuilt-toolchain-from-the-Android-team.patch
         brave-1.19-BUILD.gn.patch
         brave-1.43-bitcoin-core_remove-serialize.h.patch
         brave-1.43-debounce-debounce_navigation_throttle_fix.patch
@@ -67,27 +67,21 @@ source=("brave-browser::git+https://github.com/brave/brave-browser.git#tag=v$pkg
         brave-1.52-bitints-libstdcxx-bypass.patch
         brave-1.52-missing-includes.patch
         brave-1.52-playlist-user-agent-only-constructor.patch)
-_arch_revision=fa08adba87b6222bdf9ba31aaa41579e634ec444
-_patches=(add-some-typename-s-that-are-required-in-C-17.patch
-          REVERT-disable-autoupgrading-debug-info.patch
-          download-bubble-typename.patch
-          webauthn-variant.patch
-          random-fixes-for-gcc13.patch
-          disable-GlobalMediaControlsCastStartStop.patch
+_arch_revision=1
+_patches=(REVERT-disable-autoupgrading-debug-info.patch
+          random-build-fixes.patch
           use-oauth2-client-switches-as-default.patch)
 for _patch in "${_patches[@]}"; do
-  source+=("https://gitlab.archlinux.org/archlinux/packaging/packages/chromium/-/raw/$_arch_revision/$_patch")
+  source+=("https://gitlab.archlinux.org/archlinux/packaging/packages/chromium/-/raw/$_chromium_ver-$_arch_revision/$_patch")
 done
 sha256sums=('SKIP'
             'SKIP'
             'SKIP'
             'SKIP'
+            '25ad7c1a5e0b7332f80ed15ccf07d7e871d8ffb4af64df7c8fef325a527859b0'
             '213e50f48b67feb4441078d50b0fd431df34323be15be97c55302d3fdac4483a'
             '9235485adc4acbfaf303605f4428a6995a7b0b3b5a95181b185afbcb9f1f6ae5'
             '404bf09df39310a1e374c5e7eb9c7311239798adf4e8cd85b7ff04fc79647f88'
-            'dcaf12a8b2ba15cefafd6e3c053b2ec490b1b8e1c89a3309e41133c0cd183ed3'
-            'dfb5ca39abe7dd449729d3af3724fe27208d8cda76ecc4916cc57a4ad9c8e1b1'
-            '01a809e8bf7eeed6e263bc7118d6e40395dca7ac8463dbe230303e13d17d673e'
             '12a3d37ffca4c0fa25f89f02efdf79d24f6412ee29ec35e8a00f9086dba4e822'
             '984bb0257ed6fe4af543c3fb803ed81bddc97ff367ccd93620404be60cb78eb3'
             '30a6a9ca2a6dd965cb2d9f02639079130948bf45d483f0c629f2cf8394a1c22f'
@@ -97,18 +91,14 @@ sha256sums=('SKIP'
             'f781d6315e4147b775350d7a36481c3ce43b582eee5ee228768e42c30d9dd9ca'
             '1654fa922d10a591d5c28159a6d22d1183bcbd3448f175d7f3e2e11879588ddd'
             '7cf8569ff905666889842c36e82d51c08d482745cd2f71e48fa1296824f09839'
-            '621ed210d75d0e846192c1571bb30db988721224a41572c27769c0288d361c11'
             '1b782b0f6d4f645e4e0daa8a4852d63f0c972aa0473319216ff04613a0592a69'
-            'd464eed4be4e9bf6187b4c40a759c523b7befefa25ba34ad6401b2a07649ca2a'
-            '590fabbb26270947cb477378b53a9dcd17855739076b4af9983e1e54dfcab6d7'
-            'ba4dd0a25a4fc3267ed19ccb39f28b28176ca3f97f53a4e9f5e9215280040ea0'
-            '7f3b1b22d6a271431c1f9fc92b6eb49c6d80b8b3f868bdee07a6a1a16630a302'
+            'e938c6ee7087eed8f0de83ffb0ca89e328575808fafa4fe3950aeb1bc58b9411'
             'e393174d7695d0bafed69e868c5fbfecf07aa6969f3b64596d0bae8b067e1711')
 
 # Possible replacements are listed in build/linux/unbundle/replace_gn_files.py
 # Keys are the names in the above script; values are the dependencies in Arch
 declare -gA _system_libs=(
-    [brotli]=brotli
+    #[brotli]=brotli
     [dav1d]=dav1d
     [ffmpeg]=ffmpeg
     [flac]=flac
@@ -158,10 +148,6 @@ prepare() {
   cp -r ../depot_tools src/brave/vendor
 
   cd src/brave || exit
-
-  if [ "$COMPONENT" = "4" ]; then
-    patch -Np1 -i "${srcdir}/system-rust-utils.patch"
-  fi
 
   jq ".config.projects.chrome.repository.url = \"file://${srcdir}/chromium-mirror@${_chromium_ver}\"" package.json > tmp.json
   mv {tmp,package}.json
@@ -227,23 +213,19 @@ prepare() {
   patch -Np1 -i "${srcdir}/use-oauth2-client-switches-as-default.patch"
 
   # Upstream fixes
-  patch -Np1 -i "${srcdir}/add-some-typename-s-that-are-required-in-C-17.patch"
 
   # Revert addition of compiler flag that needs newer clang
   patch -Rp1 -i "${srcdir}/REVERT-disable-autoupgrading-debug-info.patch"
 
-  # Disable kGlobalMediaControlsCastStartStop by default
-  # https://crbug.com/1314342
-  patch -Np1 -i "${srcdir}/disable-GlobalMediaControlsCastStartStop.patch"
-
   # Build fixes
-  patch -Np1 -i "${srcdir}/download-bubble-typename.patch"
-  patch -Np1 -i "${srcdir}/webauthn-variant.patch"
-  patch -Np1 -i "${srcdir}/random-fixes-for-gcc13.patch"
+  patch -Np1 -i "${srcdir}/random-build-fixes.patch"
 
-  # Rust fixes
-  patch -Np1 -i "${srcdir}/0001-Fix-Rust-linking-on-component-and-debug-Windows-builds.patch"
-  patch -Np1 -i "${srcdir}/0002-Remove-the-prebuilt-toolchain-from-the-Android-team.patch"
+  # Fixes for building with libstdc++ instead of libc++
+  patch -Np1 -i "${srcdir}/patches/chromium-114-maldoca-include.patch"
+  patch -Np1 -i "${srcdir}/patches/chromium-114-ruy-include.patch"
+  patch -Np1 -i "${srcdir}/patches/chromium-114-vk_mem_alloc-include.patch"
+  patch -Np1 -i "${srcdir}/patches/chromium-116-object_paint_properties_sparse-include.patch"
+  patch -Np1 -i "${srcdir}/patches/chromium-116-profile_view_utils-include.patch"
 
   # Hacky patching
   sed -e 's/\(enable_distro_version_check =\) true/\1 false/g' -i chrome/installer/linux/BUILD.gn
@@ -309,14 +291,6 @@ build() {
   echo "rewards_grant_dev_endpoint = https://grant.rewards.brave.com" >> .npmrc
   echo "rewards_grant_staging_endpoint = https://grant.rewards.brave.com" >> .npmrc
   echo "rewards_grant_prod_endpoint = https://grant.rewards.brave.com" >> .npmrc
-  echo "uphold_client_id = 6d8d9473ed20be627f71ed46e207f40c004c5b1a" >> .npmrc
-  echo "uphold_client_secret = xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" >> .npmrc
-  echo "uphold_staging_client_id = 4c2b665ca060d912fec5c735c734859a06118cc8" >> .npmrc
-  echo "uphold_staging_client_secret = xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" >> .npmrc
-  echo "gemini_api_url = https://api.gemini.com/v1" >> .npmrc
-  echo "gemini_oauth_url = https://api.gemini.com/v1/oauth" >> .npmrc
-  echo "gemini_wallet_client_id = 6d8d9473ed20be627f71ed46e207f40c004c5b1a" >> .npmrc
-  echo "gemini_wallet_client_secret = xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" >> .npmrc
   echo "sardine_client_id = 7ca8433c-7e61-4e25-b76e-25aa2da68df1" >> .npmrc
   echo "sardine_client_secret = 7ca8433c-7e61-4e25-b76e-25aa2da68df1" >> .npmrc
   echo "brave_zero_ex_api_key = xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx" >> .npmrc
@@ -325,6 +299,25 @@ build() {
   echo "p3a_constellation_upload_url = https://example.com" >> .npmrc
   echo "p2a_json_upload_url = https://example.com" >> .npmrc
   echo "star_randomness_host = https://example.com" >> .npmrc
+  echo "brave_ai_chat_endpoint = https://example.com" >> .npmrc
+  echo "bitflyer_production_client_id = xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx" >>.npmrc
+  echo "bitflyer_production_client_secret = xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx" >>.npmrc
+  echo "bitflyer_production_fee_address = https://example.com" >>.npmrc
+  echo "bitflyer_production_url = https://example.com" >>.npmrc
+  echo "gemini_production_api_url = https://api.gemini.com/v1" >> .npmrc
+  echo "gemini_production_client_id = 6d8d9473ed20be627f71ed46e207f40c004c5b1a" >> .npmrc
+  echo "gemini_production_client_secret = xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" >> .npmrc
+  echo "gemini_production_fee_address = https://example.com" >>.npmrc
+  echo "gemini_production_oauth_url = https://api.gemini.com/v1/oauth" >> .npmrc
+  echo "uphold_production_api_url = https://example.com" >> .npmrc
+  echo "uphold_production_client_id = 6d8d9473ed20be627f71ed46e207f40c004c5b1a" >> .npmrc
+  echo "uphold_production_client_secret = xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" >> .npmrc
+  echo "uphold_production_fee_address = https://example.com" >>.npmrc
+  echo "uphold_production_oauth_url = https://example.com" >> .npmrc
+  echo "zebpay_production_api_url = https://example.com" >>.npmrc
+  echo "zebpay_production_client_id = xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx" >>.npmrc
+  echo "zebpay_production_client_secret = xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx" >>.npmrc
+  echo "zebpay_production_oauth_url = https://example.com" >>.npmrc
 
   npm_args=()
   if [ "$COMPONENT" = "4" ]; then
@@ -345,7 +338,6 @@ build() {
       'proprietary_codecs=true'
       'rtc_use_pipewire=true'
       'link_pulseaudio=true'
-      'use_gnome_keyring=false'
       'use_sysroot=false'
       'use_system_libffi=true'
       'use_custom_libcxx=false'
