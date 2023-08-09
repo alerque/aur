@@ -11,7 +11,7 @@ pkgver=22.3.18
 _chromiumver=108.0.5359.215
 _gcc_patchset=2
 # shellcheck disable=SC2034
-pkgrel=1
+pkgrel=2
 
 _major_ver=${pkgver%%.*}
 if [[ ${_use_suffix} != 0 ]]; then
@@ -34,7 +34,8 @@ depends=('c-ares' 'gtk3' 'libevent' 'nss' 'wayland')
 makedepends=('clang' 'git' 'gn' 'gperf' 'harfbuzz-icu' 'http-parser'
              'qt5-base' 'java-runtime-headless' 'libnotify' 'lld' 'llvm'
              'ninja' 'npm' 'pciutils' 'pipewire' 'python' 'python-httplib2'
-             'python-pyparsing' 'python-six' 'wget' 'yarn' 'patchutils')
+             'python-requests' 'python-pyparsing' 'python-six' 'wget' 'yarn'
+             'patchutils')
 # shellcheck disable=SC2034
 optdepends=('kde-cli-tools: file deletion support (kioclient5)'
             'libappindicator-gtk3: StatusNotifierItem support'
@@ -148,7 +149,7 @@ declare -gA _system_libs=(
   [libxml]=libxml2
   [libxslt]=libxslt
   [opus]=opus
-  [re2]=re2
+  #[re2]=re2
   [snappy]=snappy
   [woff2]=woff2
   [zlib]=minizip
