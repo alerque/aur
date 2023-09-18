@@ -1,0 +1,47 @@
+{
+    "version": 4,
+    "configurePresets": [
+        {
+            "name": "arch-environment",
+            "hidden": false,
+            "environment": {
+                "DEPS_ROOT"                     : "/usr",
+                "BUILD_DIR"                     : "build",
+                "CPPUNIT_ROOT"                  : "$env{DEPS_ROOT}",
+                "ISPC"                          : "$env{DEPS_ROOT}/bin/ispc",
+                "JSONCPP_ROOT"                  : "$env{DEPS_ROOT}",
+                "LIBCURL_ROOT"                  : "/usr",
+                "LIBUNWIND_ROOT"                : "/usr",
+                "LOG4CPLUS_ROOT"                : "$env{DEPS_ROOT}",
+                "LUA_DIR"                       : "$env{DEPS_ROOT}",
+                "OPENSUBDIV_ROOT"               : "$env{DEPS_ROOT}",
+                "OPENVDB_ROOT"                  : "$env{DEPS_ROOT}",
+                "OPTIX_ROOT"                    : "/opt/optix",
+                "PXR_USD_LOCATION"              : "$env{DEPS_ROOT}/share/usd",
+                "PXR_INCLUDE_DIRS"              : "$env{DEPS_ROOT}/include",
+                "RANDOM123_ROOT"                : "$env{DEPS_ROOT}",
+                "ZLIB_ROOT"                     : "/usr",
+                "pxr_ROOT"                      : "$env{DEPS_ROOT}/share/usd",
+                "TBB_ROOT"                      : "$env{DEPS_ROOT}"
+            },
+            "cacheVariables": {
+                "CMAKE_PREFIX_PATH": "$env{DEPS_ROOT}"
+            }
+        },
+        {
+            "name": "arch-package",
+            "displayName": "Arch Linux Release",
+            "inherits": "arch-environment",
+            "binaryDir": "${sourceParentDir}/build-release/${sourceDirName}",
+            "cacheVariables": { "CMAKE_BUILD_TYPE": "Release" },
+            "generator": "Unix Makefiles"
+        }
+    ],
+    "buildPresets": [
+        {
+            "name": "arch-package",
+            "displayName": "Package for Arch Linux",
+            "configurePreset": "arch-package"
+        }
+    ]
+}
