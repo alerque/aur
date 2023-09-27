@@ -7,7 +7,7 @@
 # https://github.com/stha09/chromium-patches/releases
 
 _use_suffix=1
-pkgver=22.3.22
+pkgver=22.3.24
 _chromiumver=108.0.5359.215
 _gcc_patchset=2
 # shellcheck disable=SC2034
@@ -306,6 +306,9 @@ build() {
 
   # https://github.com/webpack/webpack/issues/14532
   export NODE_OPTIONS=--openssl-legacy-provider
+
+  # https://bugs.chromium.org/p/chromium/issues/detail?id=1374347
+  LDFLAGS+=' -Wl,--undefined-version'
 
   # Facilitate deterministic builds (taken from build/config/compiler/BUILD.gn)
   CFLAGS+='   -Wno-builtin-macro-redefined'
