@@ -1,7 +1,7 @@
 pkgbase = gittyup
 	pkgdesc = Graphical Git client (GitAhead fork)
 	pkgver = 1.3.0
-	pkgrel = 1
+	pkgrel = 2
 	url = https://murmele.github.io/Gittyup
 	arch = x86_64
 	license = MIT
@@ -21,15 +21,15 @@ pkgbase = gittyup
 	optdepends = git-lfs: git-lfs support
 	optdepends = libgnome-keyring: for GNOME Keyring for auth credentials
 	optdepends = qt5-translations: translations
-	source = git+https://github.com/Murmele/Gittyup.git#tag=gittyup_v1.3.0
-	source = gittyup-libgit2::git+https://github.com/stinb/libgit2.git
-	source = gittyup-scintillua::git+https://github.com/orbitalquark/scintillua.git
-	source = gittyup-lexilla::git+https://github.com/ScintillaOrg/lexilla.git
-	source = gittyup-zip::git+https://github.com/kuba--/zip.git
-	sha256sums = SKIP
-	sha256sums = SKIP
-	sha256sums = SKIP
-	sha256sums = SKIP
-	sha256sums = SKIP
+	source = https://github.com/Murmele/Gittyup/archive/refs/tags/gittyup_v1.3.0.tar.gz
+	source = gittyup-libgit2-7861f401ea25e1ceaf7323c1585de4d633e0ec39.tar.gz::https://github.com/stinb/libgit2/archive/7861f401ea25e1ceaf7323c1585de4d633e0ec39.tar.gz
+	source = gittyup-lexilla-82b21cd1348366a7dc25d57c6de532968da40541.tar.gz::https://github.com/ScintillaOrg/lexilla/archive/82b21cd1348366a7dc25d57c6de532968da40541.tar.gz
+	source = gittyup-scintillua-33d0e3433a2046c1077f6b33fc801caf6bfac7a9.tar.gz::https://github.com/orbitalquark/scintillua/archive/33d0e3433a2046c1077f6b33fc801caf6bfac7a9.tar.gz
+	source = gittyup-zip-96825016edb6e63698ec2314349daeae345ad2fe.tar.gz::https://github.com/kuba--/zip/archive/96825016edb6e63698ec2314349daeae345ad2fe.tar.gz
+	sha256sums = a7cd9610b1af68e7202825522b7641aca83189fa275e95926fbbae457214f16b
+	sha256sums = 8d53e1debb07f37ae5b326b3cc282d7119393be359be197c53fdeafb3fbd3845
+	sha256sums = 4bb82032b05f9a7864c515e0f28acdff4606f47d1c26863f62c3471b69bbe522
+	sha256sums = 12217f2f1a7437ca577e33c458f5290e0dd2ee73185c94cba0a5c4e49636a2e3
+	sha256sums = 3e36e81ef524b2de8e66c39187e4e5b7384d7227009d927caf417fad8e52ca63
 
 pkgname = gittyup
