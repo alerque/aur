@@ -11,7 +11,7 @@ pkgver=22.3.27
 _chromiumver=108.0.5359.215
 _gcc_patchset=2
 # shellcheck disable=SC2034
-pkgrel=2
+pkgrel=3
 
 _major_ver=${pkgver%%.*}
 if [[ ${_use_suffix} != 0 ]]; then
@@ -89,6 +89,7 @@ source=("git+https://github.com/electron/electron.git#tag=v$pkgver"
         'REVERT-roll-src-third_party-ffmpeg-m106.patch'
         'angle-wayland-include-protocol.patch'
         'libxml2-2.12.patch'
+        'icu-74.patch'
        )
 # shellcheck disable=SC2034
 sha256sums=('SKIP'
@@ -127,7 +128,8 @@ sha256sums=('SKIP'
             '30df59a9e2d95dcb720357ec4a83d9be51e59cc5551365da4c0073e68ccdec44'
             '4c12d31d020799d31355faa7d1fe2a5a807f7458e7f0c374adf55edb37032152'
             'cd0d9d2a1d6a522d47c3c0891dabe4ad72eabbebc0fe5642b9e22efa3d5ee572'
-            'bfae9e773edfd0ddbc617777fdd4c0609cba2b048be7afe40f97768e4eb6117e')
+            'bfae9e773edfd0ddbc617777fdd4c0609cba2b048be7afe40f97768e4eb6117e'
+            '547e092f6a20ebd15e486b31111145bc94b8709ec230da89c591963001378845')
 
 # Possible replacements are listed in build/linux/unbundle/replace_gn_files.py
 # Keys are the names in the above script; values are the dependencies in Arch
@@ -276,7 +278,10 @@ EOF
   patch -Np1 -i ../default_app-icon.patch  # Icon from .desktop file
 
   # Fix build with libxml2 2.12
-  patch -d chromium-mirror -Np1 -i ../libxml2-2.12.patch
+  patch -Np1 -i ../libxml2-2.12.patch
+
+  # Fix build with ICU 74
+  patch -Np1 -i ../icu-74.patch
 
   # Allow building against system libraries in official builds
   echo "Patching Chromium for using system libraries..."
