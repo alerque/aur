@@ -11,7 +11,7 @@ pkgver=22.3.27
 _chromiumver=108.0.5359.215
 _gcc_patchset=2
 # shellcheck disable=SC2034
-pkgrel=1
+pkgrel=2
 
 _major_ver=${pkgver%%.*}
 if [[ ${_use_suffix} != 0 ]]; then
@@ -88,6 +88,7 @@ source=("git+https://github.com/electron/electron.git#tag=v$pkgver"
         'REVERT-roll-src-third_party-ffmpeg-m102.patch'
         'REVERT-roll-src-third_party-ffmpeg-m106.patch'
         'angle-wayland-include-protocol.patch'
+        'libxml2-2.12.patch'
        )
 # shellcheck disable=SC2034
 sha256sums=('SKIP'
@@ -125,7 +126,8 @@ sha256sums=('SKIP'
             'bfafedebd915e1824562329a3afc8589401342eff87dba53c78502b869023b7e'
             '30df59a9e2d95dcb720357ec4a83d9be51e59cc5551365da4c0073e68ccdec44'
             '4c12d31d020799d31355faa7d1fe2a5a807f7458e7f0c374adf55edb37032152'
-            'cd0d9d2a1d6a522d47c3c0891dabe4ad72eabbebc0fe5642b9e22efa3d5ee572')
+            'cd0d9d2a1d6a522d47c3c0891dabe4ad72eabbebc0fe5642b9e22efa3d5ee572'
+            'bfae9e773edfd0ddbc617777fdd4c0609cba2b048be7afe40f97768e4eb6117e')
 
 # Possible replacements are listed in build/linux/unbundle/replace_gn_files.py
 # Keys are the names in the above script; values are the dependencies in Arch
@@ -272,6 +274,9 @@ EOF
     -Np1 -i ../../../../../../jinja-python-3.10.patch
   patch -Np1 -i ../use-system-libraries-in-node.patch
   patch -Np1 -i ../default_app-icon.patch  # Icon from .desktop file
+
+  # Fix build with libxml2 2.12
+  patch -d chromium-mirror -Np1 -i ../libxml2-2.12.patch
 
   # Allow building against system libraries in official builds
   echo "Patching Chromium for using system libraries..."
