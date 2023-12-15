@@ -11,7 +11,7 @@ pkgver=23.3.13
 _chromiumver=110.0.5481.208
 _gcc_patchset=4
 # shellcheck disable=SC2034
-pkgrel=2
+pkgrel=3
 
 _major_ver=${pkgver%%.*}
 if [[ ${_use_suffix} != 0 ]]; then
@@ -85,6 +85,8 @@ source=("git+https://github.com/electron/electron.git#tag=v$pkgver"
         'v8-move-the-Stack-object-from-ThreadLocalTop.patch'
         'REVERT-roll-src-third_party-ffmpeg-m102.patch'
         'REVERT-roll-src-third_party-ffmpeg-m106.patch'
+        'libxml2-2.12.patch'
+        'icu-74.patch'
        )
 # shellcheck disable=SC2034
 sha256sums=('SKIP'
@@ -119,7 +121,9 @@ sha256sums=('SKIP'
             'f41215af1f98d552cdfde7e924ba6d2f77883310aad57ebba7fe73d3883f8668'
             '49c3e599366909ddac6a50fa6f9420e01a7c0ffd029a20567a41d741a15ec9f7'
             '30df59a9e2d95dcb720357ec4a83d9be51e59cc5551365da4c0073e68ccdec44'
-            '4c12d31d020799d31355faa7d1fe2a5a807f7458e7f0c374adf55edb37032152')
+            '4c12d31d020799d31355faa7d1fe2a5a807f7458e7f0c374adf55edb37032152'
+            'bfae9e773edfd0ddbc617777fdd4c0609cba2b048be7afe40f97768e4eb6117e'
+            '547e092f6a20ebd15e486b31111145bc94b8709ec230da89c591963001378845')
 
 # Possible replacements are listed in build/linux/unbundle/replace_gn_files.py
 # Keys are the names in the above script; values are the dependencies in Arch
@@ -266,6 +270,12 @@ EOF
     -Np1 -i ../../../../../../jinja-python-3.10.patch
   patch -Np1 -i ../use-system-libraries-in-node.patch
   patch -Np1 -i ../default_app-icon.patch  # Icon from .desktop file
+
+  # Fix build with libxml2 2.12
+  patch -Np1 -i ../libxml2-2.12.patch
+
+  # Fix build with ICU 74
+  patch -Np1 -i ../icu-74.patch
 
   # Allow building against system libraries in official builds
   echo "Patching Chromium for using system libraries..."
