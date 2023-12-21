@@ -6,7 +6,7 @@
 # Contributor: Angelo Theodorou <encelo@gmail.com>
 
 pkgname=gitahead
-pkgver=2.7.0
+pkgver=2.7.1
 pkgrel=1
 pkgdesc='Understand your Git history!'
 url='https://www.gitahead.com/'

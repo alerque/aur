@@ -1,6 +1,6 @@
 pkgbase = gitahead
 	pkgdesc = Understand your Git history!
-	pkgver = 2.7.0
+	pkgver = 2.7.1
 	pkgrel = 1
 	url = https://www.gitahead.com/
 	arch = x86_64
@@ -14,7 +14,7 @@ pkgbase = gitahead
 	depends = org.freedesktop.secrets
 	depends = qt6-5compat
 	depends = qt6-base
-	source = git+https://github.com/gitahead/gitahead#tag=v2.7.0
+	source = git+https://github.com/gitahead/gitahead#tag=v2.7.1
 	source = gitahead.desktop
 	source = gitahead.patch
 	sha256sums = SKIP
