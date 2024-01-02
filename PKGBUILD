@@ -21,16 +21,21 @@ makedepends=(git
 _archive="$pkgbase-v$pkgver"
 source=("$_url/releases/download/v$pkgver/$_archive.tar.xz"{,.sig}
         keybase-gui
-        0001-Don-t-use-electron-to-build.patch)
+        0001-Don-t-use-electron-to-build.patch
+        https://github.com/keybase/client/commit/fbebbc9f1ba29e21ae6d3ee2edc21a7703d0019f.patch)
 sha256sums=('22e5ae4d1f951ea9f3ffc3cb74de9b9f41b828b2c8a4e5cb6401de6fbccf497b'
             'SKIP'
             '7459a6846ff24c2bf7e6ab1ce31880829cf2692f23ffb3bf77e455f4de7ca34e'
-            '74fd7a777275bdf2128f121e27f722f692302a50d89c6c1d3ec82df1deaffee3')
+            '74fd7a777275bdf2128f121e27f722f692302a50d89c6c1d3ec82df1deaffee3'
+            '5a46d9433efb4244509d26fdf04340fb628de1d19a4dff6944510f9bba69d378')
 validpgpkeys=('222B85B0F90BE2D24CFEB93F47484E50656D16C7') # Keybase.io Code Signing (v1) <code@keybase.io>
 
 prepare() {
 	ln -sf "${_archive/$pkgbase/client}" "$_archive"
 	cd "$_archive"
+
+	# update API certificate authority key
+	patch -p1 -i ../fbebbc9f1ba29e21ae6d3ee2edc21a7703d0019f.patch
 
 	export GOPATH="$srcdir/.gopath"
 	mkdir -p "$GOPATH"/src/github.com/keybase
