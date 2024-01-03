@@ -1,6 +1,6 @@
-pkgbase = electron27
+pkgbase = electron28
 	pkgdesc = Build cross platform desktop apps with web technologies
-	pkgver = 27.2.0
+	pkgver = 28.1.0
 	pkgrel = 1
 	url = https://electronjs.org
 	arch = x86_64
@@ -14,6 +14,8 @@ pkgbase = electron27
 	makedepends = http-parser
 	makedepends = java-runtime-headless
 	makedepends = libnotify
+	makedepends = libpulse
+	makedepends = libva
 	makedepends = lld
 	makedepends = llvm
 	makedepends = ninja
@@ -34,57 +36,48 @@ pkgbase = electron27
 	depends = libffi
 	depends = nss
 	depends = fontconfig
-	depends = woff2
 	depends = libjpeg
 	depends = icu
 	depends = dav1d
 	depends = flac
-	depends = snappy
 	depends = libxml2
-	depends = ffmpeg
 	depends = libwebp
 	depends = minizip
 	depends = opus
 	depends = harfbuzz
-	depends = re2
-	depends = libavif
-	depends = jsoncpp
 	depends = libxslt
 	depends = libpng
 	depends = freetype2
 	optdepends = kde-cli-tools: file deletion support (kioclient5)
 	optdepends = pipewire: WebRTC desktop sharing under Wayland
 	optdepends = qt5-base: enable Qt5 with --enable-features=AllowQt
+	optdepends = gtk4: for --gtk-version=4 (GTK4 IME might work better on Wayland)
 	optdepends = trash-cli: file deletion support (trash-put)
 	optdepends = xdg-utils: open URLs with desktop’s default (xdg-email, xdg-open)
 	options = !lto
-	source = git+https://github.com/electron/electron.git#tag=v27.2.0
+	source = git+https://github.com/electron/electron.git#tag=v28.1.0
 	source = git+https://chromium.googlesource.com/chromium/tools/depot_tools.git#branch=main
-	source = chromium-mirror::git+https://github.com/chromium/chromium.git#tag=118.0.5993.159
-	source = https://gitlab.com/Matt.Jolly/chromium-patches/-/archive/118-2/chromium-patches-118-2.tar.bz2
-	source = free-the-X11-pixmap-in-the-NativePixmapEGLX11Bind.patch
-	source = REVERT-disable-autoupgrading-debug-info.patch
+	source = chromium-mirror::git+https://github.com/chromium/chromium.git#tag=120.0.6099.109
+	source = https://gitlab.com/Matt.Jolly/chromium-patches/-/archive/120/chromium-patches-120.tar.bz2
 	source = default_app-icon.patch
 	source = electron-launcher.sh
 	source = electron.desktop
 	source = icu-74.patch
+	source = drop-flags-unsupported-by-clang16.patch
 	source = jinja-python-3.10.patch
 	source = libxml2-2.12.patch
-	source = std-vector-non-const.patch
 	source = use-system-libraries-in-node.patch
 	sha256sums = SKIP
 	sha256sums = SKIP
 	sha256sums = SKIP
-	sha256sums = 774be6af18350934a89a86ef62d97e3d5dabe89504a708bcb1bbd01134936ac7
-	sha256sums = ab1eb107ec1c915065dc59cf4832da27e17d60eb29038e2aec633daeb946cc6a
-	sha256sums = 1b782b0f6d4f645e4e0daa8a4852d63f0c972aa0473319216ff04613a0592a69
+	sha256sums = ffee1082fbe3d0c9e79dacb8405d5a0e1aa94d6745089a30b093f647354894d2
 	sha256sums = dd2d248831dd4944d385ebf008426e66efe61d6fdf66f8932c963a12167947b4
 	sha256sums = b0ac3422a6ab04859b40d4d7c0fd5f703c893c9ec145c9894c468fbc0a4d457c
 	sha256sums = 4484200d90b76830b69eea3a471c103999a3ce86bb2c29e6c14c945bf4102bae
 	sha256sums = ff9ebd86b0010e1c604d47303ab209b1d76c3e888c423166779cefbc22de297f
+	sha256sums = 8d1cdf3ddd8ff98f302c90c13953f39cd804b3479b13b69b8ef138ac57c83556
 	sha256sums = 55dbe71dbc1f3ab60bf1fa79f7aea7ef1fe76436b1d7df48728a1f8227d2134e
 	sha256sums = 1808df5ba4d1e2f9efa07ac6b510bec866fa6d60e44505d82aea3f6072105a71
-	sha256sums = 893bc04c7fceba2f0a7195ed48551d55f066bbc530ec934c89c55768e6f3949c
 	sha256sums = ff588a8a4fd2f79eb8a4f11cf1aa151298ffb895be566c57cc355d47f161f53f
 
-pkgname = electron27
+pkgname = electron28

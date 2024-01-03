@@ -61,7 +61,6 @@ source=("git+https://github.com/electron/electron.git#tag=v$pkgver"
         drop-flags-unsupported-by-clang16.patch
         jinja-python-3.10.patch
         libxml2-2.12.patch
-        std-vector-non-const.patch
         use-system-libraries-in-node.patch)
 sha256sums=('SKIP'
             'SKIP'
@@ -74,7 +73,6 @@ sha256sums=('SKIP'
             '8d1cdf3ddd8ff98f302c90c13953f39cd804b3479b13b69b8ef138ac57c83556'
             '55dbe71dbc1f3ab60bf1fa79f7aea7ef1fe76436b1d7df48728a1f8227d2134e'
             '1808df5ba4d1e2f9efa07ac6b510bec866fa6d60e44505d82aea3f6072105a71'
-            '893bc04c7fceba2f0a7195ed48551d55f066bbc530ec934c89c55768e6f3949c'
             'ff588a8a4fd2f79eb8a4f11cf1aa151298ffb895be566c57cc355d47f161f53f')
 
 
@@ -157,8 +155,6 @@ EOF
     --gs-url-base=chromium-optimization-profiles/pgo_profiles
   depot_tools/download_from_google_storage.py --no_resume --extract --no_auth \
     --bucket chromium-nodejs -s src/third_party/node/node_modules.tar.gz.sha1
-
-  patch -Np1 -i "${srcdir}/std-vector-non-const.patch" -d src/electron
 
   src/electron/script/apply_all_patches.py \
       src/electron/patches/config.json
