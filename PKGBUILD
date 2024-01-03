@@ -4,9 +4,9 @@
 # https://releases.electronjs.org/
 # https://gitlab.com/Matt.Jolly/chromium-patches/-/tags
 
-pkgver=27.2.0
-_chromiumver=118.0.5993.159
-_gcc_patches=118-2
+pkgver=28.1.0
+_chromiumver=120.0.6099.109
+_gcc_patches=120
 pkgrel=1
 _major_ver=${pkgver%%.*}
 pkgname="electron${_major_ver}"
@@ -44,6 +44,7 @@ makedepends=(clang
 optdepends=('kde-cli-tools: file deletion support (kioclient5)'
             'pipewire: WebRTC desktop sharing under Wayland'
             'qt5-base: enable Qt5 with --enable-features=AllowQt'
+            'gtk4: for --gtk-version=4 (GTK4 IME might work better on Wayland)'
             'trash-cli: file deletion support (trash-put)'
             'xdg-utils: open URLs with desktop’s default (xdg-email, xdg-open)')
 options=('!lto') # Electron adds its own flags for ThinLTO
@@ -51,12 +52,11 @@ source=("git+https://github.com/electron/electron.git#tag=v$pkgver"
         'git+https://chromium.googlesource.com/chromium/tools/depot_tools.git#branch=main'
         "chromium-mirror::git+https://github.com/chromium/chromium.git#tag=$_chromiumver"
         https://gitlab.com/Matt.Jolly/chromium-patches/-/archive/$_gcc_patches/chromium-patches-$_gcc_patches.tar.bz2
-        free-the-X11-pixmap-in-the-NativePixmapEGLX11Bind.patch
-        REVERT-disable-autoupgrading-debug-info.patch
         default_app-icon.patch
         electron-launcher.sh
         electron.desktop
         icu-74.patch
+        drop-flags-unsupported-by-clang16.patch
         jinja-python-3.10.patch
         libxml2-2.12.patch
         std-vector-non-const.patch
@@ -64,13 +64,12 @@ source=("git+https://github.com/electron/electron.git#tag=v$pkgver"
 sha256sums=('SKIP'
             'SKIP'
             'SKIP'
-            '774be6af18350934a89a86ef62d97e3d5dabe89504a708bcb1bbd01134936ac7'
-            'ab1eb107ec1c915065dc59cf4832da27e17d60eb29038e2aec633daeb946cc6a'
-            '1b782b0f6d4f645e4e0daa8a4852d63f0c972aa0473319216ff04613a0592a69'
+            'ffee1082fbe3d0c9e79dacb8405d5a0e1aa94d6745089a30b093f647354894d2'
             'dd2d248831dd4944d385ebf008426e66efe61d6fdf66f8932c963a12167947b4'
             'b0ac3422a6ab04859b40d4d7c0fd5f703c893c9ec145c9894c468fbc0a4d457c'
             '4484200d90b76830b69eea3a471c103999a3ce86bb2c29e6c14c945bf4102bae'
             'ff9ebd86b0010e1c604d47303ab209b1d76c3e888c423166779cefbc22de297f'
+            '8d1cdf3ddd8ff98f302c90c13953f39cd804b3479b13b69b8ef138ac57c83556'
             '55dbe71dbc1f3ab60bf1fa79f7aea7ef1fe76436b1d7df48728a1f8227d2134e'
             '1808df5ba4d1e2f9efa07ac6b510bec866fa6d60e44505d82aea3f6072105a71'
             '893bc04c7fceba2f0a7195ed48551d55f066bbc530ec934c89c55768e6f3949c'
@@ -82,15 +81,15 @@ sha256sums=('SKIP'
 declare -gA _system_libs=(
   # [brotli]=brotli
   [dav1d]=dav1d
-  [ffmpeg]=ffmpeg
+  #[ffmpeg]=ffmpeg
   [flac]=flac
   [fontconfig]=fontconfig
   [freetype]=freetype2
   [harfbuzz-ng]=harfbuzz
   [icu]=icu
-  [jsoncpp]=jsoncpp
+  #[jsoncpp]=jsoncpp  # needs libstdc++
   #[libaom]=aom
-  [libavif]=libavif
+  #[libavif]=libavif  # needs https://github.com/AOMediaCodec/libavif/commit/5410b23f76
   [libdrm]=
   [libjpeg]=libjpeg
   [libpng]=libpng
@@ -99,9 +98,9 @@ declare -gA _system_libs=(
   [libxml]=libxml2
   [libxslt]=libxslt
   [opus]=opus
-  [re2]=re2
-  [snappy]=snappy
-  [woff2]=woff2
+  #[re2]=re2
+  #[snappy]=snappy
+  #[woff2]=woff2
   [zlib]=minizip
 )
 _unwanted_bundled_libs=(
@@ -178,17 +177,12 @@ EOF
   # Fix build with ICU 74
   patch -Np1 -i ../icu-74.patch
 
-  # Revert addition of compiler flag that needs newer clang
+  # Drop compiler flags that need newer clang
   patch -Rp1 -i ../REVERT-disable-autoupgrading-debug-info.patch
 
   # Fixes for building with libstdc++ instead of libc++
-  patch -Np1 -i ../chromium-patches-*/chromium-114-maldoca-include.patch
-  patch -Np1 -i ../chromium-patches-*/chromium-114-ruy-include.patch
-  patch -Np1 -i ../chromium-patches-*/chromium-114-vk_mem_alloc-include.patch
-  patch -Np1 -i ../chromium-patches-*/chromium-117-material-color-include.patch
-  patch -Np1 -i ../chromium-patches-*/chromium-118-SensorReadingField-include.patch
-  patch -Np1 -i ../chromium-patches-*/chromium-118-LightweightDetector-include.patch
-  patch -Np1 -i ../chromium-patches-*/chromium-118-system-freetype.patch
+  patch -Np1 -i ../chromium-patches-*/chromium-119-at-spi-variable-consumption.patch
+  patch -Np1 -i ../chromium-patches-*/chromium-119-clang16.patch
 
   # Link to system tools required by the build
   mkdir -p third_party/node/linux/node-linux-x64/bin
@@ -244,11 +238,11 @@ build() {
     'proprietary_codecs=true'
     'rtc_use_pipewire=true'
     'link_pulseaudio=true'
-    'use_custom_libcxx=false'
+    'use_custom_libcxx=true' # https://github.com/llvm/llvm-project/issues/61705
     'use_sysroot=false'
     'use_system_libffi=true'
     'enable_hangout_services_extension=true'
-    'enable_widevine=false'
+    'enable_widevine=true'
     'enable_nacl=false'
     'enable_rust=false'
   )
