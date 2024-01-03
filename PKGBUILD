@@ -27,6 +27,8 @@ makedepends=(clang
              http-parser
              java-runtime-headless
              libnotify
+             libpulse
+             libva
              lld
              llvm
              ninja
@@ -81,7 +83,7 @@ sha256sums=('SKIP'
 declare -gA _system_libs=(
   # [brotli]=brotli
   [dav1d]=dav1d
-  #[ffmpeg]=ffmpeg
+  #[ffmpeg]=ffmpeg    # YouTube playback stopped working in Chromium 120
   [flac]=flac
   [fontconfig]=fontconfig
   [freetype]=freetype2
@@ -98,9 +100,9 @@ declare -gA _system_libs=(
   [libxml]=libxml2
   [libxslt]=libxslt
   [opus]=opus
-  #[re2]=re2
-  #[snappy]=snappy
-  #[woff2]=woff2
+  #[re2]=re2          # needs libstdc++
+  #[snappy]=snappy    # needs libstdc++
+  #[woff2]=woff2      # needs libstdc++
   [zlib]=minizip
 )
 _unwanted_bundled_libs=(
@@ -169,7 +171,6 @@ EOF
   echo "Applying local patches..."
 
   # Upstream fixes
-  patch -Np1 -i ../free-the-X11-pixmap-in-the-NativePixmapEGLX11Bind.patch
 
   # Fix build with libxml2 2.12
   patch -Np1 -i ../libxml2-2.12.patch
@@ -178,7 +179,7 @@ EOF
   patch -Np1 -i ../icu-74.patch
 
   # Drop compiler flags that need newer clang
-  patch -Rp1 -i ../REVERT-disable-autoupgrading-debug-info.patch
+  patch -Np1 -i ../drop-flags-unsupported-by-clang16.patch
 
   # Fixes for building with libstdc++ instead of libc++
   patch -Np1 -i ../chromium-patches-*/chromium-119-at-spi-variable-consumption.patch
@@ -193,7 +194,7 @@ EOF
   # Electron specific fixes
   patch -Np1 -i "${srcdir}/jinja-python-3.10.patch" -d "third_party/electron_node/tools/inspector_protocol/jinja2"
   patch -Np1 -i "${srcdir}/use-system-libraries-in-node.patch"
-  patch -Np1 -i "${srcdir}/default_app-icon.patch"  # Icon from .desktop file
+  # patch -Np1 -i "${srcdir}/default_app-icon.patch"  # Icon from .desktop file
 
   # Allow building against system libraries in official builds
   echo "Patching Chromium for using system libraries..."
