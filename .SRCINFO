@@ -1,0 +1,40 @@
+pkgbase = keybase
+	pkgdesc = CLI tool for GPG with keybase.io
+	pkgver = 6.0.2
+	pkgrel = 4
+	url = https://keybase.io
+	arch = x86_64
+	license = BSD
+	makedepends = git
+	makedepends = go
+	makedepends = jq
+	makedepends = moreutils
+	makedepends = yarn
+	source = https://github.com/keybase/client/releases/download/v6.0.2/keybase-v6.0.2.tar.xz
+	source = https://github.com/keybase/client/releases/download/v6.0.2/keybase-v6.0.2.tar.xz.sig
+	source = keybase-gui
+	source = 0001-Don-t-use-electron-to-build.patch
+	source = https://github.com/keybase/client/commit/fbebbc9f1ba29e21ae6d3ee2edc21a7703d0019f.patch
+	validpgpkeys = 222B85B0F90BE2D24CFEB93F47484E50656D16C7
+	sha256sums = 22e5ae4d1f951ea9f3ffc3cb74de9b9f41b828b2c8a4e5cb6401de6fbccf497b
+	sha256sums = SKIP
+	sha256sums = 7459a6846ff24c2bf7e6ab1ce31880829cf2692f23ffb3bf77e455f4de7ca34e
+	sha256sums = 74fd7a777275bdf2128f121e27f722f692302a50d89c6c1d3ec82df1deaffee3
+	sha256sums = 0059b988777ecf30a07bb982a164546ff83333cc9d869b0756ab3c034065b8a7
+
+pkgname = keybase
+	depends = gnupg
+	optdepends = kbfs: for the fuse-based fileystem and the encryption subcommand
+
+pkgname = kbfs
+	pkgdesc = The Keybase filesystem
+	url = https://keybase.io/docs/kbfs
+	install = kbfs.install
+	depends = fuse
+	depends = keybase
+
+pkgname = keybase-gui
+	pkgdesc = GUI frontend for GPG with keybase.io
+	depends = electron22
+	depends = keybase
+	depends = kbfs
