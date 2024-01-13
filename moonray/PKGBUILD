@@ -15,6 +15,7 @@ depends=(optix
          python
          cuda
          usd
+	 ispc
          qt5-script
          python-pyqt5
          libmicrohttpd
