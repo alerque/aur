@@ -40,6 +40,7 @@ depends=(optix
          cppunit
          openvdb
          openexr
+         random123
          embree
          python-requests
          log4cplus
