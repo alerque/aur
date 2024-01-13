@@ -27,8 +27,7 @@ depends=(optix
          embree3
          log4cplus
          lua
-         util-linux-libs
-         onetbb-2019
+         onetbb
          lua53)
 makedepends=(boost
              curl
