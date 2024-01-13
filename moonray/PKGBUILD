@@ -63,7 +63,6 @@ source=("$_pkgname::git+$_url/$_pkgname#tag=openmoonray-$pkgver"
         "$_pkgname+moonray+scene_rdl2::git+$_url/scene_rdl2.git#commit=217f7779bc6dd07b5fba0100c9b2c9ab801c1e22"
         moonray.patch
         optix.patch
-        tbb.patch
         $pkgbase.sh
         )
 sha256sums=('SKIP'
@@ -86,9 +85,8 @@ sha256sums=('SKIP'
             'SKIP'
             'SKIP'
             'fa7e6b6b58ac274ebffb42c3c40fd6279effaf9625775deff4b843ff98c2f329'
-            '31826f021bf78da6560aebe2b1427de9eb11fafbb983ec0def94dce1718dd8c6'
-            'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855'
-            '2673c78f333d13dcfbceb59044c26be9fece0e02178ad650ff02d3e038acb65b')
+            '4f125a12cb5031ba7c5d3488bd9b6cb6a7075a5d0ba0e6aed62b746eb0bf734f'
+            '602354f937f73c3d61d5bfd38316bcaf8e502d2c0e2c18c04d303eac1cec7008')
 install=moonray.install
 
 # git submodule status | cut -c2- | awk '{s=$2; gsub("/", "+", s); gsub(".*/", "", $2); print "\"$_pkgname+" s "::git+$_url/" $2 ".git#commit=" $1 "\"" }'
@@ -116,6 +114,11 @@ build() {
 	_CMAKE_FLAGS+=(
 		-DCMAKE_INSTALL_PREFIX:PATH=/opt/"$pkgbase"
 		-DCMAKE_CXX_STANDARD=17
+		-DCMAKE_EXE_LINKER_FLAGS:STRING='-Wl,-O1,--sort-common,-z,relro,-z,now'
+		-DCMAKE_CXX_FLAGS:STRING=''
+		-DCMAKE_C_FLAGS:STRING=''
+		-DCMAKE_MODULE_LINKER_FLAGS:STRING=''
+		-DCMAKE_SHARED_LINKER_FLAGS:STRING=''
 		-DABI_VERSION=0
 		-DBUILD_QT_APPS=YES # Build moonray_gui
 	)
