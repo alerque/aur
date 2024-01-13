@@ -8,29 +8,47 @@ pkgver=1.4.0.0
 pkgrel=1
 pkgdesc='DreamWorks’ production MCRT renderer'
 arch=(x86_64)
-license=(Apache2)
+license=(Apache)
 url="https://$_pkgname.org"
 _url="https://github.com/dreamworksanimation"
 depends=(optix
+         bash
+         gcc-libs
+         libglvnd
+         libsm
+         curl
+         imath
          python
          cuda
-         usd
-	 ispc
-         qt5-script
+         glibc
+         materialx
          python-pyqt5
          libmicrohttpd
          openimageio
          libcgroup
+         opencolorio
          openimagedenoise
+         boost-libs
+         opensubdiv
+         jemalloc
          jsoncpp
+         libice
+         libxext
+         libx11
+         libjpeg-turbo
          python-setuptools
          cppunit
          openvdb
-         embree3
+         openexr
+         embree
+         python-requests
          log4cplus
+         openssl
          lua
-         onetbb
-         lua53)
+         usd
+         usd-extras
+         util-linux-libs
+         onetbb)
 makedepends=(boost
              curl
              cmake
@@ -42,8 +60,7 @@ makedepends=(boost
              git
              qt5-base
              qt5-script)
-optdepends=('usd: hydra plugins and USD geometry objects'
-            'intel-oneapi-mkl: Intel Math Kernel Library')
+optdepends=('intel-oneapi-mkl: Intel Math Kernel Library')
 source=("$_pkgname::git+$_url/$_pkgname#tag=openmoonray-$pkgver"
         "$_pkgname+arras+arras4_core::git+$_url/arras4_core.git#commit=90cbe6b30c114c63072d6b8cfd80f38131361885"
         "$_pkgname+arras+arras_render::git+$_url/arras_render.git#commit=e313b812ccb47c6576eb2a0235e974de1a260d26"
@@ -142,7 +159,10 @@ package_moonray() {
 	rm $moondir/sessions/mcrt_progressive*
 
 	mkdir -p $pkgdir/usr/bin
-	ln -s $moondir/bin/* $pkgdir/usr/bin
+	for file in $pkgdir/opt/moonray/bin/*; do
+		ln -s /opt/moonray/bin/$(basename "$file") $pkgdir/usr/bin/
+	done
+        
 	install -Dm644 ${srcdir}/$_pkgname/LICENSE $pkgdir/usr/share/licenses/$pkgbase/LICENSE
 	install -Dm644 ${srcdir}/$_pkgname/THIRD-PARTY.md $pkgdir/usr/share/licenses/$pkgbase/THIRD-PARTY.md
 
@@ -151,13 +171,18 @@ package_moonray() {
 
 package_moonray-gui() {
 	depends+=($pkgbase
-	          qt6-base)
+	          qt6-base
+	          qt5-script)
 	moondir="$srcdir"/moonray/opt/moonray
 
 	mkdir -p "$pkgdir"/opt/moonray/{bin,lib/cmake,sessions}
 
-
 	cp $moondir/bin/{arras_render,moonray_gui} "$pkgdir"/opt/moonray/bin
 	cp -r $moondir/lib/cmake/{ArrasRender-6.0.0.0,MoonrayGui-15.0.0.0} "$pkgdir"/opt/moonray/lib/cmake
 	cp $moondir/sessions/mcrt_progressive* "$pkgdir"/opt/moonray/sessions
+	
+	mkdir -p $pkgdir/usr/bin
+	for file in $pkgdir/opt/moonray/bin/*; do
+		ln -s /opt/moonray/bin/$(basename "$file") $pkgdir/usr/bin/
+	done
 }
