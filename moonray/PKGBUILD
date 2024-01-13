@@ -14,6 +14,7 @@ _url="https://github.com/dreamworksanimation"
 depends=(optix
          python
          cuda
+         usd
          qt5-script
          python-pyqt5
          libmicrohttpd
