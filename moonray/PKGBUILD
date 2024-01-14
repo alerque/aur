@@ -55,6 +55,7 @@ makedepends=(boost
              cmake
              clang
              cppunit
+             ispc
              libmicrohttpd
              openimageio
              openssl

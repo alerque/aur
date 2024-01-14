@@ -11,6 +11,7 @@ pkgbase = moonray
 	makedepends = cmake
 	makedepends = clang
 	makedepends = cppunit
+	makedepends = ispc
 	makedepends = libmicrohttpd
 	makedepends = openimageio
 	makedepends = openssl
