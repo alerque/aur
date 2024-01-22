@@ -7,7 +7,7 @@
 pkgver=28.1.4
 _chromiumver=120.0.6099.109
 _gcc_patches=120
-pkgrel=1
+pkgrel=2
 _major_ver=${pkgver%%.*}
 pkgname="electron${_major_ver}"
 pkgdesc='Build cross platform desktop apps with web technologies'
@@ -285,6 +285,9 @@ build() {
 package() {
   install -dm755 "${pkgdir:?}/usr/lib/${pkgname}"
   bsdtar -xf src/out/Release/dist.zip -C "${pkgdir}/usr/lib/${pkgname}"
+
+  # https://gitlab.archlinux.org/archlinux/packaging/packages/electron28/-/issues/1
+  echo "$pkgver" > "$pkgdir/usr/lib/$pkgname/version"
 
   chmod u+s "${pkgdir}/usr/lib/${pkgname}/chrome-sandbox"
 
