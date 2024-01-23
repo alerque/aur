@@ -18,7 +18,7 @@ pkgbase = moonray
 	makedepends = git
 	makedepends = qt5-base
 	makedepends = qt5-script
-	depends = optix
+	depends = optix>=7.6.0
 	depends = bash
 	depends = gcc-libs
 	depends = libglvnd
@@ -53,7 +53,7 @@ pkgbase = moonray
 	depends = log4cplus
 	depends = openssl
 	depends = lua
-	depends = usd
+	depends = usd>=23.11-7
 	depends = usd-extras
 	depends = util-linux-libs
 	depends = onetbb
@@ -106,7 +106,7 @@ pkgbase = moonray
 pkgname = moonray
 
 pkgname = moonray-gui
-	depends = optix
+	depends = optix>=7.6.0
 	depends = bash
 	depends = gcc-libs
 	depends = libglvnd
@@ -141,7 +141,7 @@ pkgname = moonray-gui
 	depends = log4cplus
 	depends = openssl
 	depends = lua
-	depends = usd
+	depends = usd>=23.11-7
 	depends = usd-extras
 	depends = util-linux-libs
 	depends = onetbb

@@ -11,7 +11,7 @@ arch=(x86_64)
 license=(Apache)
 url="https://$_pkgname.org"
 _url="https://github.com/dreamworksanimation"
-depends=(optix
+depends=('optix>=7.6.0' # can be built with earlier versions, but patches target this
          bash
          gcc-libs
          libglvnd
@@ -46,7 +46,7 @@ depends=(optix
          log4cplus
          openssl
          lua
-         usd
+         'usd>=23.11-7' # pkgrel 7 has MONOLITHIC=OFF which is required
          usd-extras
          util-linux-libs
          onetbb)
