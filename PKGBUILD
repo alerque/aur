@@ -4,7 +4,7 @@
 # https://releases.electronjs.org/
 # https://gitlab.com/Matt.Jolly/chromium-patches/-/tags
 
-pkgver=28.2.1
+pkgver=28.2.2
 _chromiumver=120.0.6099.109
 _gcc_patches=120
 pkgrel=1
@@ -15,10 +15,14 @@ arch=(x86_64)
 url='https://electronjs.org'
 license=(MIT custom)
 depends=(c-ares
-         gtk3
+         glibc # libc.so libm.so
+         gcc-libs # libgcc_s.so
+         gtk3 libgtk-3.so
          libevent
-         libffi
-         nss)
+         libffi libffi.so
+         libpulse libpulse.so
+         nss # libnss3.so
+         zlib libz.so)
 makedepends=(clang
              git
              gn
@@ -27,7 +31,6 @@ makedepends=(clang
              http-parser
              java-runtime-headless
              libnotify
-             libpulse
              libva
              lld
              llvm
@@ -80,28 +83,28 @@ sha256sums=('SKIP'
 # Keys are the names in the above script; values are the dependencies in Arch
 declare -gA _system_libs=(
   # [brotli]=brotli
-  [dav1d]=dav1d
-  #[ffmpeg]=ffmpeg    # YouTube playback stopped working in Chromium 120
-  [flac]=flac
-  [fontconfig]=fontconfig
-  [freetype]=freetype2
-  [harfbuzz-ng]=harfbuzz
-  [icu]=icu
-  #[jsoncpp]=jsoncpp  # needs libstdc++
+  [dav1d]="dav1d libdav1d.so"
+  # [ffmpeg]="ffmpeg libavcodec.so libavcodec.so libavformat.so libavutil.so" # YouTube playback stopped working in Chromium 120
+  [flac]="flac libFLAC.so"
+  [fontconfig]="fontconfig libfontconfig.so"
+  [freetype]="freetype2 libfreetype.so"
+  [harfbuzz-ng]="harfbuzz libharfbuzz.so libharfbuzz-subset.so"
+  [icu]="icu libicui18n.so libicuuc.so"
+  # [jsoncpp]="jsoncpp libjsoncpp.so"  # needs libstdc++
   #[libaom]=aom
-  #[libavif]=libavif  # needs https://github.com/AOMediaCodec/libavif/commit/5410b23f76
-  [libdrm]=
-  [libjpeg]=libjpeg
-  [libpng]=libpng
+  # [libavif]=libavif # libavif.so libavutil.so # needs https://github.com/AOMediaCodec/libavif/commit/5410b23f76
+  [libdrm]=libdrm # libdrm.so
+  [libjpeg]="libjpeg libjpeg.so"
+  [libpng]="libpng libpng16.so"
   #[libvpx]=libvpx
-  [libwebp]=libwebp
-  [libxml]=libxml2
-  [libxslt]=libxslt
-  [opus]=opus
-  #[re2]=re2          # needs libstdc++
-  #[snappy]=snappy    # needs libstdc++
-  #[woff2]=woff2      # needs libstdc++
-  [zlib]=minizip
+  [libwebp]="libwebp libwebpdemux.so libwebpmux.so libwebp.so"
+  [libxml]="libxml2 libxml2.so"
+  [libxslt]="libxslt libxslt.so"
+  [opus]="opus libopus.so"
+  # [re2]="re2 libre2.so" # needs libstdc++
+  # [snappy]=snappy # libsnappy.so # needs libstdc++
+  # [woff2]="woff2 libwoff2dec.so" # needs libstdc++
+  [zlib]=minizip # libminizip.so
 )
 _unwanted_bundled_libs=(
   $(printf "%s\n" ${!_system_libs[@]} | sed 's/^libjpeg$/&_turbo/')
