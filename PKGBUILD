@@ -63,7 +63,6 @@ source=("git+https://github.com/electron/electron.git#tag=v$pkgver"
         icu-74.patch
         drop-flags-unsupported-by-clang16.patch
         jinja-python-3.10.patch
-        libxml2-2.12.patch
         use-system-libraries-in-node.patch)
 sha256sums=('SKIP'
             'SKIP'
@@ -75,7 +74,6 @@ sha256sums=('SKIP'
             'ff9ebd86b0010e1c604d47303ab209b1d76c3e888c423166779cefbc22de297f'
             '8d1cdf3ddd8ff98f302c90c13953f39cd804b3479b13b69b8ef138ac57c83556'
             '55dbe71dbc1f3ab60bf1fa79f7aea7ef1fe76436b1d7df48728a1f8227d2134e'
-            '1808df5ba4d1e2f9efa07ac6b510bec866fa6d60e44505d82aea3f6072105a71'
             'ff588a8a4fd2f79eb8a4f11cf1aa151298ffb895be566c57cc355d47f161f53f')
 
 
@@ -169,10 +167,7 @@ EOF
 
   echo "Applying local patches..."
 
-  # Upstream fixes
-
-  # Fix build with libxml2 2.12
-  patch -Np1 -i ../libxml2-2.12.patch
+  ## Upstream fixes
 
   # Fix build with ICU 74
   patch -Np1 -i ../icu-74.patch

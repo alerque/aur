@@ -89,7 +89,6 @@ pkgbase = electron29
 	source = icu-74.patch
 	source = drop-flags-unsupported-by-clang16.patch
 	source = jinja-python-3.10.patch
-	source = libxml2-2.12.patch
 	source = use-system-libraries-in-node.patch
 	sha256sums = SKIP
 	sha256sums = SKIP
@@ -101,7 +100,6 @@ pkgbase = electron29
 	sha256sums = ff9ebd86b0010e1c604d47303ab209b1d76c3e888c423166779cefbc22de297f
 	sha256sums = 8d1cdf3ddd8ff98f302c90c13953f39cd804b3479b13b69b8ef138ac57c83556
 	sha256sums = 55dbe71dbc1f3ab60bf1fa79f7aea7ef1fe76436b1d7df48728a1f8227d2134e
-	sha256sums = 1808df5ba4d1e2f9efa07ac6b510bec866fa6d60e44505d82aea3f6072105a71
 	sha256sums = ff588a8a4fd2f79eb8a4f11cf1aa151298ffb895be566c57cc355d47f161f53f
 
 pkgname = electron29
