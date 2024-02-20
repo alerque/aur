@@ -1,6 +1,6 @@
-pkgbase = electron28
+pkgbase = electron29
 	pkgdesc = Build cross platform desktop apps with web technologies
-	pkgver = 28.2.3
+	pkgver = 29.0.0
 	pkgrel = 1
 	url = https://electronjs.org
 	arch = x86_64
@@ -79,10 +79,10 @@ pkgbase = electron28
 	optdepends = trash-cli: file deletion support (trash-put)
 	optdepends = xdg-utils: open URLs with desktop’s default (xdg-email, xdg-open)
 	options = !lto
-	source = git+https://github.com/electron/electron.git#tag=v28.2.3
+	source = git+https://github.com/electron/electron.git#tag=v29.0.0
 	source = git+https://chromium.googlesource.com/chromium/tools/depot_tools.git#branch=main
-	source = chromium-mirror::git+https://github.com/chromium/chromium.git#tag=120.0.6099.109
-	source = https://gitlab.com/Matt.Jolly/chromium-patches/-/archive/120/chromium-patches-120.tar.bz2
+	source = chromium-mirror::git+https://github.com/chromium/chromium.git#tag=122.0.6261.39
+	source = https://gitlab.com/Matt.Jolly/chromium-patches/-/archive/122-3/chromium-patches-122-3.tar.bz2
 	source = default_app-icon.patch
 	source = electron-launcher.sh
 	source = electron.desktop
@@ -104,4 +104,4 @@ pkgbase = electron28
 	sha256sums = 1808df5ba4d1e2f9efa07ac6b510bec866fa6d60e44505d82aea3f6072105a71
 	sha256sums = ff588a8a4fd2f79eb8a4f11cf1aa151298ffb895be566c57cc355d47f161f53f
 
-pkgname = electron28
+pkgname = electron29

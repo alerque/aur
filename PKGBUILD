@@ -4,9 +4,9 @@
 # https://releases.electronjs.org/
 # https://gitlab.com/Matt.Jolly/chromium-patches/-/tags
 
-pkgver=28.2.3
-_chromiumver=120.0.6099.109
-_gcc_patches=120
+pkgver=29.0.0
+_chromiumver=122.0.6261.39
+_gcc_patches=122-3
 pkgrel=1
 _major_ver=${pkgver%%.*}
 pkgname="electron${_major_ver}"
