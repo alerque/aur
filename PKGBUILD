@@ -43,6 +43,7 @@ makedepends=(clang
              python-pyparsing
              python-requests
              python-six
+             rust
              qt5-base
              wget
              yarn)
@@ -177,6 +178,13 @@ EOF
 
   ## Upstream fixes
 
+  # https://crbug.com/893950
+  sed -i -e 's/\<xmlMalloc\>/malloc/' -e 's/\<xmlFree\>/free/' \
+    third_party/blink/renderer/core/xml/*.cc \
+    third_party/blink/renderer/core/xml/parser/xml_document_parser.cc \
+    third_party/libxml/chromium/*.cc \
+    third_party/maldoca/src/maldoca/ole/oss_utils.h
+
   # Upstream fixes
   patch -Np1 -i ../support-ICU-74-in-LazyTextBreakIterator.patch
 
@@ -242,7 +250,7 @@ build() {
   local _flags=(
     'custom_toolchain="//build/toolchain/linux/unbundle:default"'
     'host_toolchain="//build/toolchain/linux/unbundle:default"'
-    'clang_base_path="/usr"'
+    'is_official_build=false'
     'symbol_level=0' # sufficient for backtraces on x86(_64)
     'treat_warnings_as_errors=false'
     'disable_fieldtrial_testing_config=true'
@@ -257,12 +265,30 @@ build() {
     'enable_hangout_services_extension=true'
     'enable_widevine=false'
     'enable_nacl=false'
-    'enable_rust=false'
   )
 
   if [[ -n ${_system_libs[icu]+set} ]]; then
     _flags+=('icu_use_data_file=false')
   fi
+
+  local _clang_version=$(
+    clang --version | grep -m1 version | sed 's/.* \([0-9]\+\).*/\1/')
+
+  _flags+=(
+    'clang_base_path="/usr"'
+    'clang_use_chrome_plugins=false'
+    "clang_version=\"$_clang_version\""
+    'chrome_pgo_phase=0' # needs newer clang to read the bundled PGO profile
+  )
+
+  # Allow the use of nightly features with stable Rust compiler
+  # https://github.com/ungoogled-software/ungoogled-chromium/pull/2696#issuecomment-1918173198
+  export RUSTC_BOOTSTRAP=1
+
+  _flags+=(
+    'rust_sysroot_absolute="/usr"'
+    "rustc_version=\"$(rustc --version)\""
+  )
 
   # Facilitate deterministic builds (taken from build/config/compiler/BUILD.gn)
   CFLAGS+='   -Wno-builtin-macro-redefined'

@@ -26,6 +26,7 @@ pkgbase = electron29
 	makedepends = python-pyparsing
 	makedepends = python-requests
 	makedepends = python-six
+	makedepends = rust
 	makedepends = qt5-base
 	makedepends = wget
 	makedepends = yarn
