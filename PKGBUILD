@@ -4,7 +4,7 @@
 # https://releases.electronjs.org/
 # https://gitlab.com/Matt.Jolly/chromium-patches/-/tags
 
-pkgver=29.0.0
+pkgver=29.0.1
 _chromiumver=122.0.6261.39
 _gcc_patches=122-3
 pkgrel=1
@@ -57,22 +57,30 @@ source=("git+https://github.com/electron/electron.git#tag=v$pkgver"
         'git+https://chromium.googlesource.com/chromium/tools/depot_tools.git#branch=main'
         "chromium-mirror::git+https://github.com/chromium/chromium.git#tag=$_chromiumver"
         https://gitlab.com/Matt.Jolly/chromium-patches/-/archive/$_gcc_patches/chromium-patches-$_gcc_patches.tar.bz2
+        support-ICU-74-in-LazyTextBreakIterator.patch
+        REVERT-simplify-blink-NativeValueTraitsBase.patch
+        REVERT-use-v8-Array-Iterate-for-converting-script-wrappables.patch
+        chromium-constexpr.patch
+        drop-flags-unsupported-by-clang16.patch
+        compiler-rt-16.patch
         default_app-icon.patch
         electron-launcher.sh
         electron.desktop
-        icu-74.patch
-        drop-flags-unsupported-by-clang16.patch
         jinja-python-3.10.patch
         use-system-libraries-in-node.patch)
 sha256sums=('SKIP'
             'SKIP'
             'SKIP'
             '7916b80d801bcc5c23cb9dd1ae820d939af3ef640dbcb2a3c8d6780dcf6ba7a3'
+            '8c256b2a9498a63706a6e7a55eadbeb8cc814be66a75e49aec3716c6be450c6c'
+            '318df8f8662071cebcdf953698408058e17f59f184500b7e12e01a04a4206b50'
+            '00e06b889e4face0ef41293233ce55bd52064ab040f1fdd84aa19525f8ac3601'
+            'a061f83e2b628927feb4dbc441eb54f8b8c3d81348e447cf3b90755d7cda5f54'
+            '53774fd7f807ad42f77d45cab9e5480cc2bcb0a5c5138110a434407521af9607'
+            '8a2649dcc6ff8d8f24ddbe40dc2a171824f681c6f33c39c4792b645b87c9dcab'
             'dd2d248831dd4944d385ebf008426e66efe61d6fdf66f8932c963a12167947b4'
             'b0ac3422a6ab04859b40d4d7c0fd5f703c893c9ec145c9894c468fbc0a4d457c'
             '4484200d90b76830b69eea3a471c103999a3ce86bb2c29e6c14c945bf4102bae'
-            'ff9ebd86b0010e1c604d47303ab209b1d76c3e888c423166779cefbc22de297f'
-            '8d1cdf3ddd8ff98f302c90c13953f39cd804b3479b13b69b8ef138ac57c83556'
             '55dbe71dbc1f3ab60bf1fa79f7aea7ef1fe76436b1d7df48728a1f8227d2134e'
             'ff588a8a4fd2f79eb8a4f11cf1aa151298ffb895be566c57cc355d47f161f53f')
 
@@ -89,12 +97,12 @@ declare -gA _system_libs=(
   [harfbuzz-ng]="harfbuzz libharfbuzz.so libharfbuzz-subset.so"
   [icu]="icu libicui18n.so libicuuc.so"
   # [jsoncpp]="jsoncpp libjsoncpp.so"  # needs libstdc++
-  #[libaom]=aom
+  # [libaom]=aom
   # [libavif]=libavif # libavif.so libavutil.so # needs https://github.com/AOMediaCodec/libavif/commit/5410b23f76
   [libdrm]=libdrm # libdrm.so
   [libjpeg]="libjpeg libjpeg.so"
   [libpng]="libpng libpng16.so"
-  #[libvpx]=libvpx
+  # [libvpx]=libvpx
   [libwebp]="libwebp libwebpdemux.so libwebpmux.so libwebp.so"
   [libxml]="libxml2 libxml2.so"
   [libxslt]="libxslt libxslt.so"
@@ -169,15 +177,27 @@ EOF
 
   ## Upstream fixes
 
-  # Fix build with ICU 74
-  patch -Np1 -i ../icu-74.patch
+  # Upstream fixes
+  patch -Np1 -i ../support-ICU-74-in-LazyTextBreakIterator.patch
+
+  # Fix "error: defaulted definition of equality comparison operator cannot
+  # be declared constexpr because it invokes a non-constexpr comparison
+  # function" (patch for Chromium 121 from Fedora, later extended for 122)
+  patch -Np1 -i ../chromium-constexpr.patch
+
+  # Revert usage of C++20 features which likely need newer clang
+  patch -Rp1 -i ../REVERT-use-v8-Array-Iterate-for-converting-script-wrappables.patch
+  patch -Rp1 -i ../REVERT-simplify-blink-NativeValueTraitsBase.patch
 
   # Drop compiler flags that need newer clang
   patch -Np1 -i ../drop-flags-unsupported-by-clang16.patch
 
+  # Allow libclang_rt.builtins from compiler-rt 16 to be used
+  patch -Np1 -i ../compiler-rt-16.patch
+
   # Fixes for building with libstdc++ instead of libc++
-  patch -Np1 -i ../chromium-patches-*/chromium-119-at-spi-variable-consumption.patch
-  patch -Np1 -i ../chromium-patches-*/chromium-119-clang16.patch
+  patch -Np1 -i ../chromium-patches-*/chromium-114-ruy-include.patch
+  patch -Np1 -i ../chromium-patches-*/chromium-117-material-color-include.patch
 
   # Link to system tools required by the build
   mkdir -p third_party/node/linux/node-linux-x64/bin
@@ -223,9 +243,7 @@ build() {
     'custom_toolchain="//build/toolchain/linux/unbundle:default"'
     'host_toolchain="//build/toolchain/linux/unbundle:default"'
     'clang_base_path="/usr"'
-    'clang_use_chrome_plugins=false'
     'symbol_level=0' # sufficient for backtraces on x86(_64)
-    'chrome_pgo_phase=0' # needs newer clang to read the bundled PGO profile
     'treat_warnings_as_errors=false'
     'disable_fieldtrial_testing_config=true'
     'blink_enable_generated_code_formatting=false'
