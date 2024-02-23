@@ -35,6 +35,9 @@ makedepends=(clang
              lld
              llvm
              ninja
+             # Electron ships a vendored nodejs. Meanwhile the npm dependency pulls in nodejs, is now v21. Pinning
+             # lts-iron here makes the build environment more consistent as v20 similar to the vendored copy.
+             nodejs-lts-iron
              npm
              pciutils
              pipewire

@@ -18,6 +18,7 @@ pkgbase = electron29
 	makedepends = lld
 	makedepends = llvm
 	makedepends = ninja
+	makedepends = nodejs-lts-iron
 	makedepends = npm
 	makedepends = pciutils
 	makedepends = pipewire
