@@ -1,0 +1,5 @@
+[keybase]
+source = "github"
+github = "keybase/client"
+prefix = "v"
+use_max_tag = true
