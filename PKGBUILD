@@ -4,7 +4,7 @@
 # https://releases.electronjs.org/
 # https://gitlab.com/Matt.Jolly/chromium-patches/-/tags
 
-pkgver=29.1.0
+pkgver=29.1.1
 _chromiumver=122.0.6261.39
 _gcc_patches=122-3
 pkgrel=1
