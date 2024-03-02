@@ -1,5 +1,6 @@
 # Maintainer: Caleb Maclennan <caleb@alerque.com>
 # Contributor: loqs <bugs-archlinux@entropy-collector.net>
+# Contributor: kxxt <rsworktech@outlook.com>
 
 # https://releases.electronjs.org/
 # https://gitlab.com/Matt.Jolly/chromium-patches/-/tags
@@ -7,20 +8,18 @@
 # Note: PKGBUILD source array can be updated to sources matching an exact Electron release with:
 # python makepkg-source-roller.py update v$pkgver $pkgname
 
-_use_suffix=1
 pkgver=28.2.5
 _gcc_patches=120
-# shellcheck disable=SC2034
 pkgrel=1
 _major_ver=${pkgver%%.*}
 pkgname="electron${_major_ver}"
 pkgdesc='Build cross platform desktop apps with web technologies'
 arch=(x86_64)
-url='https://electronjs.org'
-license=(MIT custom)
+url='https://electronjs.org/'
+license=(MIT BSD-3-Clause)
 depends=(c-ares
-         glibc # libc.so libm.so
          gcc-libs # libgcc_s.so
+         glibc # libc.so libm.so
          gtk3 libgtk-3.so
          libevent
          libffi libffi.so
@@ -40,6 +39,7 @@ makedepends=(clang
              llvm
              ninja
              npm
+             patchutils
              pciutils
              pipewire
              python
@@ -67,7 +67,7 @@ source=("git+https://github.com/electron/electron.git#tag=v$pkgver"
         jinja-python-3.10.patch
         libxml2-2.12.patch
         use-system-libraries-in-node.patch
-        "makepkg-source-roller.py"
+        makepkg-source-roller.py
         # BEGIN managed sources
         chromium-mirror::git+https://github.com/chromium/chromium.git#tag=120.0.6099.291
         chromium-mirror_third_party_nan::git+https://github.com/nodejs/nan.git#commit=e14bdcd1f72d62bca1d541b66da43130384ec213
@@ -385,6 +385,7 @@ sha256sums=('SKIP'
 
 # Possible replacements are listed in build/linux/unbundle/replace_gn_files.py
 # Keys are the names in the above script; values are the dependencies in Arch
+# plus any so names that are provided + linked
 declare -gA _system_libs=(
   # [brotli]=brotli
   [dav1d]="dav1d libdav1d.so"
