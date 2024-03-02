@@ -4,9 +4,13 @@
 # https://releases.electronjs.org/
 # https://gitlab.com/Matt.Jolly/chromium-patches/-/tags
 
+# Note: PKGBUILD source array can be updated to sources matching an exact Electron release with:
+# python makepkg-source-roller.py update v$pkgver $pkgname
+
+_use_suffix=1
 pkgver=28.2.5
-_chromiumver=120.0.6099.109
 _gcc_patches=120
+# shellcheck disable=SC2034
 pkgrel=1
 _major_ver=${pkgver%%.*}
 pkgname="electron${_major_ver}"
@@ -54,8 +58,6 @@ optdepends=('kde-cli-tools: file deletion support (kioclient5)'
             'xdg-utils: open URLs with desktop’s default (xdg-email, xdg-open)')
 options=('!lto') # Electron adds its own flags for ThinLTO
 source=("git+https://github.com/electron/electron.git#tag=v$pkgver"
-        'git+https://chromium.googlesource.com/chromium/tools/depot_tools.git#branch=main'
-        "chromium-mirror::git+https://github.com/chromium/chromium.git#tag=$_chromiumver"
         https://gitlab.com/Matt.Jolly/chromium-patches/-/archive/$_gcc_patches/chromium-patches-$_gcc_patches.tar.bz2
         default_app-icon.patch
         electron-launcher.sh
@@ -64,10 +66,12 @@ source=("git+https://github.com/electron/electron.git#tag=v$pkgver"
         drop-flags-unsupported-by-clang16.patch
         jinja-python-3.10.patch
         libxml2-2.12.patch
-        use-system-libraries-in-node.patch)
+        use-system-libraries-in-node.patch
+        "makepkg-source-roller.py"
+        # BEGIN managed sources
+        # END managed sources
+       )
 sha256sums=('SKIP'
-            'SKIP'
-            'SKIP'
             'ffee1082fbe3d0c9e79dacb8405d5a0e1aa94d6745089a30b093f647354894d2'
             'dd2d248831dd4944d385ebf008426e66efe61d6fdf66f8932c963a12167947b4'
             'b0ac3422a6ab04859b40d4d7c0fd5f703c893c9ec145c9894c468fbc0a4d457c'
@@ -76,8 +80,8 @@ sha256sums=('SKIP'
             '8d1cdf3ddd8ff98f302c90c13953f39cd804b3479b13b69b8ef138ac57c83556'
             '55dbe71dbc1f3ab60bf1fa79f7aea7ef1fe76436b1d7df48728a1f8227d2134e'
             '1808df5ba4d1e2f9efa07ac6b510bec866fa6d60e44505d82aea3f6072105a71'
-            'ff588a8a4fd2f79eb8a4f11cf1aa151298ffb895be566c57cc355d47f161f53f')
-
+            'ff588a8a4fd2f79eb8a4f11cf1aa151298ffb895be566c57cc355d47f161f53f'
+            '1eebf52f298ffb0a5525fa64b28039a6a0b5d83c07c3457262c88e9cc4bb0451')
 
 # Possible replacements are listed in build/linux/unbundle/replace_gn_files.py
 # Keys are the names in the above script; values are the dependencies in Arch
@@ -116,33 +120,15 @@ prepare() {
   sed -i "s|@ELECTRON@|${pkgname}|" electron.desktop
   sed -i "s|@ELECTRON_NAME@|Electron ${_major_ver}|" electron.desktop
 
-  sed --in-place "/'chromium_version':/{n;s/'[0-9.]\+',/'${_chromiumver}',/}" "${srcdir}/electron/DEPS"
-
-cat >.gclient <<EOF
-solutions = [
-  {
-    "name": "src/electron",
-    "url": "file://${srcdir}/electron@v$pkgver",
-    "deps_file": "DEPS",
-    "managed": False,
-    "custom_deps": {
-      "src": None,
-    },
-    "custom_vars": {},
-  },
-]
-EOF
-
+  cp -r chromium-mirror_third_party_depot_tools depot_tools
   export PATH+=":$PWD/depot_tools" DEPOT_TOOLS_UPDATE=0
   export VPYTHON_BYPASS='manually managed python not supported by chrome operations'
 
-  echo "Linking chromium from sources..."
-  ln -sfn chromium-mirror src
-
-  depot_tools/gclient.py sync -D \
-      --nohooks \
-      --with_branch_heads \
-      --with_tags
+  echo "Putting together electron sources"
+  # Generate gclient gn args file and prepare-electron-source-tree.sh
+  python makepkg-source-roller.py generate electron/DEPS $pkgname
+  bash prepare-electron-source-tree.sh "$CARCH"
+  mv electron src/electron
 
   echo "Running hooks..."
   # depot_tools/gclient.py runhooks
@@ -187,6 +173,7 @@ EOF
   # Link to system tools required by the build
   mkdir -p third_party/node/linux/node-linux-x64/bin
   ln -sfn /usr/bin/node third_party/node/linux/node-linux-x64/bin/
+  mkdir -p third_party/jdk/current/bin
   ln -sfn /usr/bin/java third_party/jdk/current/bin/
   ln -sfn /usr/bin/clang-format buildtools/linux64
 
