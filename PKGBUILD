@@ -11,7 +11,7 @@
 
 pkgver=22.3.27
 _gcc_patches=108-patchset-2
-pkgrel=3
+pkgrel=4
 
 _major_ver=${pkgver%%.*}
 pkgname="electron${_major_ver}"
