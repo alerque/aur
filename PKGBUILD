@@ -39,7 +39,7 @@ makedepends=(clang
              llvm
              ninja
              npm
-             patchutils)
+             patchutils
              pciutils
              pipewire
              python
@@ -49,7 +49,7 @@ makedepends=(clang
              python-six
              qt5-base
              wget
-             yarn
+             yarn)
 optdepends=('kde-cli-tools: file deletion support (kioclient5)'
             'libappindicator-gtk3: StatusNotifierItem support'
             'pipewire: WebRTC desktop sharing under Wayland'
