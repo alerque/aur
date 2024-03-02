@@ -6,9 +6,12 @@
 # https://releases.electronjs.org/
 # https://github.com/stha09/chromium-patches/releases
 
+# Note: PKGBUILD source array can be updated to sources matching an exact Electron release with:
+# python makepkg-source-roller.py update v$pkgver $pkgname
+
 _use_suffix=1
 pkgver=23.3.13
-_chromiumver=110.0.5481.208
+_chromium_major_ver=110
 _gcc_patchset=4
 # shellcheck disable=SC2034
 pkgrel=3
@@ -53,9 +56,7 @@ fi
 options=('!lto') # Electron adds its own flags for ThinLTO
 # shellcheck disable=SC2034
 source=("git+https://github.com/electron/electron.git#tag=v$pkgver"
-        'git+https://chromium.googlesource.com/chromium/tools/depot_tools.git#branch=main'
-        "chromium-mirror::git+https://github.com/chromium/chromium.git#tag=$_chromiumver"
-        "https://github.com/stha09/chromium-patches/releases/download/chromium-${_chromiumver%%.*}-patchset-${_gcc_patchset}/chromium-${_chromiumver%%.*}-patchset-${_gcc_patchset}.tar.xz"
+        "https://github.com/stha09/chromium-patches/releases/download/chromium-${_chromium_major_ver}-patchset-${_gcc_patchset}/chromium-${_chromium_major_ver}-patchset-${_gcc_patchset}.tar.xz"
         "electron-launcher.sh"
         "electron.desktop"
         'default_app-icon.patch'
@@ -87,11 +88,12 @@ source=("git+https://github.com/electron/electron.git#tag=v$pkgver"
         'REVERT-roll-src-third_party-ffmpeg-m106.patch'
         'libxml2-2.12.patch'
         'icu-74.patch'
+        "makepkg-source-roller.py"
+        # BEGIN managed sources
+        # END managed sources
        )
 # shellcheck disable=SC2034
 sha256sums=('SKIP'
-            'SKIP'
-            'SKIP'
             '8c7f93037cc236024cc8be815b2c2bd84f6dc9e32685299e31d4c6c42efde8b7'
             'b0ac3422a6ab04859b40d4d7c0fd5f703c893c9ec145c9894c468fbc0a4d457c'
             '4484200d90b76830b69eea3a471c103999a3ce86bb2c29e6c14c945bf4102bae'
@@ -123,7 +125,8 @@ sha256sums=('SKIP'
             '30df59a9e2d95dcb720357ec4a83d9be51e59cc5551365da4c0073e68ccdec44'
             '4c12d31d020799d31355faa7d1fe2a5a807f7458e7f0c374adf55edb37032152'
             'bfae9e773edfd0ddbc617777fdd4c0609cba2b048be7afe40f97768e4eb6117e'
-            '547e092f6a20ebd15e486b31111145bc94b8709ec230da89c591963001378845')
+            '547e092f6a20ebd15e486b31111145bc94b8709ec230da89c591963001378845'
+            '1eebf52f298ffb0a5525fa64b28039a6a0b5d83c07c3457262c88e9cc4bb0451')
 
 # Possible replacements are listed in build/linux/unbundle/replace_gn_files.py
 # Keys are the names in the above script; values are the dependencies in Arch
@@ -166,31 +169,15 @@ prepare() {
     sed -i "s|@ELECTRON_NAME@|Electron|" electron.desktop
   fi
 
-cat >.gclient <<EOF
-solutions = [
-  {
-    "name": "src/electron",
-    "url": "file://${srcdir}/electron@v$pkgver",
-    "deps_file": "DEPS",
-    "managed": False,
-    "custom_deps": {
-      "src": None,
-    },
-    "custom_vars": {},
-  },
-]
-EOF
-
+  cp -r chromium-mirror_third_party_depot_tools depot_tools
   export PATH+=":$PWD/depot_tools" DEPOT_TOOLS_UPDATE=0
   export VPYTHON_BYPASS='manually managed python not supported by chrome operations'
 
-  echo "Linking chromium from sources..."
-  ln -s chromium-mirror src
-
-  depot_tools/gclient.py sync -D \
-      --nohooks \
-      --with_branch_heads \
-      --with_tags
+  echo "Putting together electron sources"
+  # Generate gclient gn args file and prepare-electron-source-tree.sh
+  python makepkg-source-roller.py generate electron/DEPS $pkgname
+  bash prepare-electron-source-tree.sh "$CARCH"
+  mv electron src/electron
 
   (
     cd src/electron || exit
@@ -216,6 +203,9 @@ EOF
   # Create sysmlink to system Node.js
   mkdir -p src/third_party/node/linux/node-linux-x64/bin
   ln -sf /usr/bin/node src/third_party/node/linux/node-linux-x64/bin
+  # Use system java
+  mkdir -p src/third_party/jdk/current/bin
+  ln -sfn /usr/bin/java src/third_party/jdk/current/bin/
   src/electron/script/apply_all_patches.py \
       src/electron/patches/config.json
   cd src/electron || exit
