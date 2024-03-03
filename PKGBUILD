@@ -539,6 +539,8 @@ prepare() {
 
   # Fix build with ICU 74
   patch -Np1 -i ../icu-74.patch
+  # Fix crash with system ICU: https://chromium-review.googlesource.com/c/chromium/src/+/4154277
+  git cherry-pick -n 4885090741554be61cb2ed10194cefb29bf8be64
 
   # Allow building against system libraries in official builds
   echo "Patching Chromium for using system libraries..."
