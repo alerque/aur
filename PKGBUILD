@@ -5,6 +5,9 @@
 # https://releases.electronjs.org/
 # https://gitlab.com/Matt.Jolly/chromium-patches/-/tags
 
+# Note: source array can be synced with an Electron release after updating $pkgver with:
+# bash -c 'source PKGBUILD; _update_sources'
+
 pkgver=29.1.0
 _gcc_patches=122-3
 pkgrel=2
@@ -394,7 +397,6 @@ sha256sums=('SKIP'
             'SKIP'
             'SKIP')
 
-
 # Possible replacements are listed in build/linux/unbundle/replace_gn_files.py
 # Keys are the names in the above script; values are the dependencies in Arch
 # plus any so names that are provided + linked
@@ -427,6 +429,11 @@ _unwanted_bundled_libs=(
   $(printf "%s\n" ${!_system_libs[@]} | sed 's/^libjpeg$/&_turbo/')
 )
 depends+=(${_system_libs[@]})
+
+_update_sources() {
+  python makepkg-source-roller.py update "v$pkgver" "$pkgname"
+  updpkgsums
+}
 
 prepare() {
   sed -i "s|@ELECTRON@|${pkgname}|" electron-launcher.sh
