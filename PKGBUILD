@@ -5,8 +5,8 @@
 # https://releases.electronjs.org/
 # https://gitlab.com/Matt.Jolly/chromium-patches/-/tags
 
-# Note: PKGBUILD source array can be updated to sources matching an exact Electron release with:
-# python makepkg-source-roller.py update v$pkgver $pkgname
+# Note: source array can be synced with an Electron release after updating $pkgver with:
+# bash -c 'source PKGBUILD; _update_sources'
 
 pkgver=28.2.5
 _gcc_patches=120
@@ -421,6 +421,11 @@ _unwanted_bundled_libs=(
   $(printf "%s\n" ${!_system_libs[@]} | sed 's/^libjpeg$/&_turbo/')
 )
 depends+=(${_system_libs[@]})
+
+_update_sources() {
+  python makepkg-source-roller.py update "v$pkgver" "$pkgname"
+  updpkgsums
+}
 
 prepare() {
   sed -i "s|@ELECTRON@|${pkgname}|" electron-launcher.sh
