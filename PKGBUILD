@@ -10,12 +10,12 @@
 
 pkgver=28.2.5
 _gcc_patches=120
-pkgrel=1
+pkgrel=2
 _major_ver=${pkgver%%.*}
 pkgname="electron${_major_ver}"
 pkgdesc='Build cross platform desktop apps with web technologies'
 arch=(x86_64)
-url='https://electronjs.org/'
+url='https://electronjs.org'
 license=(MIT BSD-3-Clause)
 depends=(c-ares
          gcc-libs # libgcc_s.so
@@ -60,10 +60,10 @@ options=('!lto') # Electron adds its own flags for ThinLTO
 source=("git+https://github.com/electron/electron.git#tag=v$pkgver"
         https://gitlab.com/Matt.Jolly/chromium-patches/-/archive/$_gcc_patches/chromium-patches-$_gcc_patches.tar.bz2
         default_app-icon.patch
+        drop-flags-unsupported-by-clang16.patch
         electron-launcher.sh
         electron.desktop
         icu-74.patch
-        drop-flags-unsupported-by-clang16.patch
         jinja-python-3.10.patch
         libxml2-2.12.patch
         use-system-libraries-in-node.patch
@@ -224,10 +224,10 @@ source=("git+https://github.com/electron/electron.git#tag=v$pkgver"
 sha256sums=('SKIP'
             'ffee1082fbe3d0c9e79dacb8405d5a0e1aa94d6745089a30b093f647354894d2'
             'dd2d248831dd4944d385ebf008426e66efe61d6fdf66f8932c963a12167947b4'
+            '8d1cdf3ddd8ff98f302c90c13953f39cd804b3479b13b69b8ef138ac57c83556'
             'b0ac3422a6ab04859b40d4d7c0fd5f703c893c9ec145c9894c468fbc0a4d457c'
             '4484200d90b76830b69eea3a471c103999a3ce86bb2c29e6c14c945bf4102bae'
             'ff9ebd86b0010e1c604d47303ab209b1d76c3e888c423166779cefbc22de297f'
-            '8d1cdf3ddd8ff98f302c90c13953f39cd804b3479b13b69b8ef138ac57c83556'
             '55dbe71dbc1f3ab60bf1fa79f7aea7ef1fe76436b1d7df48728a1f8227d2134e'
             '1808df5ba4d1e2f9efa07ac6b510bec866fa6d60e44505d82aea3f6072105a71'
             'ff588a8a4fd2f79eb8a4f11cf1aa151298ffb895be566c57cc355d47f161f53f'
@@ -456,7 +456,7 @@ prepare() {
 
   echo "Applying local patches..."
 
-  # Upstream fixes
+  ## Upstream fixes
 
   # Fix build with libxml2 2.12
   patch -Np1 -i ../libxml2-2.12.patch
