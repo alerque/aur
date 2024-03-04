@@ -10,7 +10,7 @@
 
 pkgver=28.2.5
 _gcc_patches=120
-pkgrel=2
+pkgrel=3
 _major_ver=${pkgver%%.*}
 pkgname="electron${_major_ver}"
 pkgdesc='Build cross platform desktop apps with web technologies'
@@ -38,6 +38,9 @@ makedepends=(clang
              lld
              llvm
              ninja
+             # Electron ships a vendored nodejs. Meanwhile the npm dependency pulls in nodejs whith is Arch's freshest version.
+             # Pinning the closest LTS here makes the build environment more consistent with the vendored copy.
+             nodejs-lts-hydrogen
              npm
              patchutils
              pciutils
@@ -47,6 +50,7 @@ makedepends=(clang
              python-pyparsing
              python-requests
              python-six
+             rust
              qt5-base
              wget
              yarn)
@@ -538,6 +542,21 @@ build() {
   if [[ -n ${_system_libs[icu]+set} ]]; then
     _flags+=('icu_use_data_file=false')
   fi
+
+  local _clang_version=$(
+    clang --version | grep -m1 version | sed 's/.* \([0-9]\+\).*/\1/')
+
+  _flags+=(
+    "clang_version=\"$_clang_version\""
+  )
+
+  # Allow the use of nightly features with stable Rust compiler
+  # https://github.com/ungoogled-software/ungoogled-chromium/pull/2696#issuecomment-1918173198
+  export RUSTC_BOOTSTRAP=1
+
+  _flags+=(
+    "rustc_version=\"$(rustc --version)\""
+  )
 
   # Facilitate deterministic builds (taken from build/config/compiler/BUILD.gn)
   CFLAGS+='   -Wno-builtin-macro-redefined'
