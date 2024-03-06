@@ -67,9 +67,9 @@ source=("git+https://github.com/electron/electron.git#tag=v$pkgver"
         REVERT-simplify-blink-NativeValueTraitsBase.patch
         REVERT-use-v8-Array-Iterate-for-converting-script-wrappables.patch
         chromium-constexpr.patch
-        drop-flags-unsupported-by-clang16.patch
         compiler-rt-16.patch
         default_app-icon.patch
+        drop-flags-unsupported-by-clang16.patch
         electron-launcher.sh
         electron.desktop
         jinja-python-3.10.patch
