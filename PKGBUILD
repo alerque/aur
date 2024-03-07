@@ -63,17 +63,16 @@ optdepends=('kde-cli-tools: file deletion support (kioclient5)'
 options=('!lto') # Electron adds its own flags for ThinLTO
 source=("git+https://github.com/electron/electron.git#tag=v$pkgver"
         https://gitlab.com/Matt.Jolly/chromium-patches/-/archive/$_gcc_patches/chromium-patches-$_gcc_patches.tar.bz2
+        # Chromium
         support-ICU-74-in-LazyTextBreakIterator.patch
-        REVERT-simplify-blink-NativeValueTraitsBase.patch
-        REVERT-use-v8-Array-Iterate-for-converting-script-wrappables.patch
-        chromium-constexpr.patch
-        compiler-rt-16.patch
+        drop-flag-unsupported-by-clang17.patch
+        use-system-libraries-in-node.patch
+        compiler-rt-adjust-paths.patch
+        # Electron
         default_app-icon.patch
-        drop-flags-unsupported-by-clang16.patch
+        jinja-python-3.10.patch
         electron-launcher.sh
         electron.desktop
-        jinja-python-3.10.patch
-        use-system-libraries-in-node.patch
         makepkg-source-roller.py
         # BEGIN managed sources
         chromium-mirror::git+https://github.com/chromium/chromium.git#tag=122.0.6261.95
@@ -233,16 +232,13 @@ source=("git+https://github.com/electron/electron.git#tag=v$pkgver"
 sha256sums=('SKIP'
             '7916b80d801bcc5c23cb9dd1ae820d939af3ef640dbcb2a3c8d6780dcf6ba7a3'
             '8c256b2a9498a63706a6e7a55eadbeb8cc814be66a75e49aec3716c6be450c6c'
-            '318df8f8662071cebcdf953698408058e17f59f184500b7e12e01a04a4206b50'
-            '00e06b889e4face0ef41293233ce55bd52064ab040f1fdd84aa19525f8ac3601'
-            'a061f83e2b628927feb4dbc441eb54f8b8c3d81348e447cf3b90755d7cda5f54'
-            '8a2649dcc6ff8d8f24ddbe40dc2a171824f681c6f33c39c4792b645b87c9dcab'
+            '3bd35dab1ded5d9e1befa10d5c6c4555fe0a76d909fb724ac57d0bf10cb666c1'
+            'ff588a8a4fd2f79eb8a4f11cf1aa151298ffb895be566c57cc355d47f161f53f'
+            'b3de01b7df227478687d7517f61a777450dca765756002c80c4915f271e2d961'
             'dd2d248831dd4944d385ebf008426e66efe61d6fdf66f8932c963a12167947b4'
-            '53774fd7f807ad42f77d45cab9e5480cc2bcb0a5c5138110a434407521af9607'
+            '55dbe71dbc1f3ab60bf1fa79f7aea7ef1fe76436b1d7df48728a1f8227d2134e'
             'b0ac3422a6ab04859b40d4d7c0fd5f703c893c9ec145c9894c468fbc0a4d457c'
             '4484200d90b76830b69eea3a471c103999a3ce86bb2c29e6c14c945bf4102bae'
-            '55dbe71dbc1f3ab60bf1fa79f7aea7ef1fe76436b1d7df48728a1f8227d2134e'
-            'ff588a8a4fd2f79eb8a4f11cf1aa151298ffb895be566c57cc355d47f161f53f'
             '3ae82375ba212c31fd4ba6f1fa4e2445eeca8eb8c952176131ad57c0258db224'
             'SKIP'
             'SKIP'
@@ -486,20 +482,11 @@ prepare() {
 
   patch -Np1 -i ../support-ICU-74-in-LazyTextBreakIterator.patch
 
-  # Fix "error: defaulted definition of equality comparison operator cannot
-  # be declared constexpr because it invokes a non-constexpr comparison
-  # function" (patch for Chromium 121 from Fedora, later extended for 122)
-  patch -Np1 -i ../chromium-constexpr.patch
+  # Drop compiler flag that needs newer clang
+  patch -Np1 -i ../drop-flag-unsupported-by-clang17.patch
 
-  # Revert usage of C++20 features which likely need newer clang
-  patch -Rp1 -i ../REVERT-use-v8-Array-Iterate-for-converting-script-wrappables.patch
-  patch -Rp1 -i ../REVERT-simplify-blink-NativeValueTraitsBase.patch
-
-  # Drop compiler flags that need newer clang
-  patch -Np1 -i ../drop-flags-unsupported-by-clang16.patch
-
-  # Allow libclang_rt.builtins from compiler-rt 16 to be used
-  patch -Np1 -i ../compiler-rt-16.patch
+  # Allow libclang_rt.builtins from compiler-rt >= 16 to be used
+  patch -Np1 -i ../compiler-rt-adjust-paths.patch
 
   # Fixes for building with libstdc++ instead of libc++
   patch -Np1 -i ../chromium-patches-*/chromium-114-ruy-include.patch
@@ -549,10 +536,8 @@ build() {
   local _flags=(
     'custom_toolchain="//build/toolchain/linux/unbundle:default"'
     'host_toolchain="//build/toolchain/linux/unbundle:default"'
-    'clang_base_path="/usr"'
-    'clang_use_chrome_plugins=false'
+    'is_official_build=true' # implies is_cfi=true on x86_64
     'symbol_level=0' # sufficient for backtraces on x86(_64)
-    'chrome_pgo_phase=0' # needs newer clang to read the bundled PGO profile
     'treat_warnings_as_errors=false'
     'disable_fieldtrial_testing_config=true'
     'blink_enable_generated_code_formatting=false'
@@ -566,7 +551,6 @@ build() {
     'enable_hangout_services_extension=true'
     'enable_widevine=false'
     'enable_nacl=false'
-    'rust_sysroot_absolute="/usr"'
   )
 
   if [[ -n ${_system_libs[icu]+set} ]]; then
@@ -577,7 +561,10 @@ build() {
     clang --version | grep -m1 version | sed 's/.* \([0-9]\+\).*/\1/')
 
   _flags+=(
+    'clang_base_path="/usr"'
+    'clang_use_chrome_plugins=false'
     "clang_version=\"$_clang_version\""
+    'chrome_pgo_phase=0' # needs newer clang to read the bundled PGO profile
   )
 
   # Allow the use of nightly features with stable Rust compiler
@@ -585,6 +572,7 @@ build() {
   export RUSTC_BOOTSTRAP=1
 
   _flags+=(
+    'rust_sysroot_absolute="/usr"'
     "rustc_version=\"$(rustc --version)\""
   )
 
