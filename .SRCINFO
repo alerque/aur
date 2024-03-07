@@ -84,9 +84,9 @@ pkgbase = electron28
 	options = !lto
 	source = git+https://github.com/electron/electron.git#tag=v28.2.6
 	source = https://gitlab.com/Matt.Jolly/chromium-patches/-/archive/120/chromium-patches-120.tar.bz2
+	source = drop-flag-unsupported-by-clang17.patch
+	source = compiler-rt-adjust-paths.patch
 	source = default_app-icon.patch
-	source = drop-flags-unsupported-by-clang16.patch
-	source = compiler-rt-16.patch
 	source = electron-launcher.sh
 	source = electron.desktop
 	source = icu-74.patch
@@ -246,9 +246,9 @@ pkgbase = electron28
 	source = chromium-mirror_third_party_vulkan-deps_vulkan-validation-layers_src::git+https://chromium.googlesource.com/external/github.com/KhronosGroup/Vulkan-ValidationLayers.git#commit=281e1c1c6b51bb6b33f88c18ed4da58ac3024311
 	sha256sums = SKIP
 	sha256sums = ffee1082fbe3d0c9e79dacb8405d5a0e1aa94d6745089a30b093f647354894d2
+	sha256sums = 3bd35dab1ded5d9e1befa10d5c6c4555fe0a76d909fb724ac57d0bf10cb666c1
+	sha256sums = b3de01b7df227478687d7517f61a777450dca765756002c80c4915f271e2d961
 	sha256sums = dd2d248831dd4944d385ebf008426e66efe61d6fdf66f8932c963a12167947b4
-	sha256sums = 8d1cdf3ddd8ff98f302c90c13953f39cd804b3479b13b69b8ef138ac57c83556
-	sha256sums = 8a2649dcc6ff8d8f24ddbe40dc2a171824f681c6f33c39c4792b645b87c9dcab
 	sha256sums = b0ac3422a6ab04859b40d4d7c0fd5f703c893c9ec145c9894c468fbc0a4d457c
 	sha256sums = 4484200d90b76830b69eea3a471c103999a3ce86bb2c29e6c14c945bf4102bae
 	sha256sums = ff9ebd86b0010e1c604d47303ab209b1d76c3e888c423166779cefbc22de297f
