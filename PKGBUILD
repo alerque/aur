@@ -8,7 +8,7 @@
 # Note: source array can be synced with an Electron release after updating $pkgver with:
 # bash -c 'source PKGBUILD; _update_sources'
 
-pkgver=29.1.2
+pkgver=29.1.3
 _gcc_patches=122-3
 pkgrel=1
 _major_ver=${pkgver%%.*}
