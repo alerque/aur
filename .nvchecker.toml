@@ -1,0 +1,7 @@
+[gitlab-container-registry]
+source = "gitlab"
+gitlab = "gitlab-org/container-registry"
+include_regex = 'v\d+\.\d+\.\d+-gitlab'
+from_pattern = 'v(\d+\.\d+\.\d+)-gitlab'
+to_pattern = '\1'
+use_max_tag = true
