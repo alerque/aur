@@ -1,0 +1,4 @@
+[wacom-utility]
+source = "regex"
+url = 'https://launchpad.net/~hughescih/+archive/ubuntu/ppa/+packages?field.name_filter=wacom-utility&field.status_filter=published&field.series_filter='
+regex = 'wacom-utility_(\d+\.\d+)-\d+_source.changes'
