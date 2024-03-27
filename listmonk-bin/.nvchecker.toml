@@ -1,0 +1,4 @@
+[listmonk-bin]
+source = "github"
+github = "knadh/listmonk"
+use_max_tag = true
