@@ -1,0 +1,5 @@
+[sfnt2woff-zopfli]
+source = "github"
+github = "bramstein/sfnt2woff-zopfli"
+prefix = "v"
+use_max_tag = true
