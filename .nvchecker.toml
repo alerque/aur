@@ -1,0 +1,5 @@
+[nextcloud-app-user-oidc]
+source = "github"
+github = "nextcloud/user_oidc"
+prefix = "v"
+use_max_tag = true
