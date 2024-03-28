@@ -1,0 +1,5 @@
+[ocrs]
+source = "github"
+github = "robertknight/ocrs"
+prefix = "v"
+use_max_tag = true
