@@ -1,0 +1,4 @@
+[python-gflanguages]
+source = "pypi"
+pypi = "gflanguages"
+ignored = '0.8.9 5.0.4'
