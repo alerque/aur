@@ -1,4 +1,5 @@
 [listmonk-bin]
 source = "github"
 github = "knadh/listmonk"
+prefix = "v"
 use_max_tag = true
