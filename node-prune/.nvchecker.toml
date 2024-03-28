@@ -1,0 +1,5 @@
+[node-prune]
+source = "github"
+github = "tj/node-prune"
+prefix = "v"
+use_max_tag = true
