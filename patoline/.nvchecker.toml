@@ -1,0 +1,4 @@
+[patoline]
+source = "github"
+github = "patoline/patoline"
+use_max_tag = true
