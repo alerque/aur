@@ -6,8 +6,8 @@ pkgname=(
   'zed'
   'zq'
 )
-pkgver=1.14.0
-pkgrel=2
+pkgver=1.15.0
+pkgrel=1
 pkgdesc='Tooling for super-structured data'
 arch=('x86_64')
 url='https://zed.brimdata.io/'
@@ -16,7 +16,7 @@ depends=('glibc')
 makedepends=('git' 'go')
 options=('!lto')
 source=("$pkgbase::git+https://github.com/brimdata/zed#tag=v$pkgver")
-sha256sums=('c48145e4239de74fe9864974122d66b3b798715dc85858dd4671f4376788df8f')
+sha256sums=('c48e74d0645b8a3cce8c398ead478747e5bc9c1c226db5bd57d250dfd5ab51dc')
 
 prepare() {
   cd "$pkgbase"
