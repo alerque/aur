@@ -1,7 +1,7 @@
 # Maintainer: Caleb Maclennan <caleb@alerque.com>
 
 pkgname=ocrs
-pkgver=0.3.0
+pkgver=0.4.0
 pkgrel=1
 pkgdesc='a modern OCR engine written in Rust'
 arch=(x86_64)
@@ -11,11 +11,14 @@ depends=(gcc-libs
          glibc)
 makedepends=(cargo)
 _archive="$pkgname-$pkgver"
-source=("$url/archive/v$pkgver/$_archive.tar.gz")
-sha256sums=('330b5534d8d5225e70d6906290b41d379b198a0ed7a19b2186031d16cb35a27e')
+source=("$url/archive/v$pkgver/$_archive.tar.gz"
+        "$url/commit/9f7fdba.patch")
+sha256sums=('7e7bed2fbd7c1812642db74922913de7d5f0aa3e57a8712da4ed37c730a17a6c'
+            'db484038c1cbc6a5173f7006eb0722796d87e846ef03fd30280c3514f0c916ba')
 
 prepare() {
 	cd "$_archive"
+	patch -p1 -i ../9f7fdba.patch
 	cargo fetch --locked --target "$(rustc -vV | sed -n 's/host: //p')"
 }
 
