@@ -5,8 +5,8 @@
 # Contributor: Jiawen Geng
 
 pkgname=github-desktop
-pkgver=3.3.11
-_gitname="release-$pkgver-linux1"
+pkgver=3.3.12
+_gitname="release-$pkgver-linux2"
 pkgrel=1
 pkgdesc='GUI for managing Git and GitHub'
 arch=(x86_64)
@@ -32,7 +32,7 @@ source=("$pkgname::git+https://github.com/shiftkey/desktop.git#tag=$_gitname"
         'git+https://github.com/github/gitignore.git'
         'git+https://github.com/github/choosealicense.com.git'
         "$pkgname.desktop")
-sha256sums=('61f2791f5a65a6977c36bf458703bfd0bd5e8d12e46d6006507257495af8bc30'
+sha256sums=('fc088319ef516508b68dc604691d9391f0944315f6d09784ca096b8081c98f63'
             'SKIP'
             'SKIP'
             'SKIP'
