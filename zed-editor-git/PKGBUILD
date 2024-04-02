@@ -12,9 +12,9 @@ declare -gA _tags=(
 BUILDENV+=(!check)
 
 pkgname=zed-editor-git
-pkgver=0.61.0.r12398.g59bc81d
+pkgver=0.61.0.r12598.g1dbd520
 pkgrel=1
-pkgdesc='high-performance, multiplayer code editor from the creators of Atom and Tree-sitter'
+pkgdesc='A high-performance, multiplayer code editor from the creators of Atom and Tree-sitter'
 arch=(x86_64)
 url=https://zed.dev
 _url="https://github.com/zed-industries/zed"
@@ -23,10 +23,10 @@ depends=(alsa-lib libasound.so
          fontconfig
          gcc-libs # libgcc_s.so libstdc++.so
          glibc # libc.so libm.so
-         libgit2 libgit2.so
-         libxau libXau.so
+         # libgit2 libgit2.so
+         # libxau libXau.so
          libxcb # libxcb-xkb.so
-         libxdmcp libXdmcp.so
+         # libxdmcp libXdmcp.so
          libxkbcommon # libxkbcommon.so
          libxkbcommon-x11 # libxkbcommon-x11.so
          openssl libcrypto.so libssl.so
@@ -37,6 +37,7 @@ depends=(alsa-lib libasound.so
          wayland
          zlib libz.so)
 makedepends=(cargo
+             gendesk
              git
              vulkan-headers
              vulkan-validation-layers)
@@ -52,6 +53,12 @@ prepare() {
 	rm -r crates/live_kit_server/protocol
 	ln -sT "$srcdir/protocol-${_tags[protocol]}" crates/live_kit_server/protocol
 	cargo fetch --locked --target "$(rustc -vV | sed -n 's/host: //p')"
+	gendesk -q -f -n \
+		--name 'Zed' \
+		--exec 'Zed' \
+		--pkgname "${pkgname%-git}" \
+		--pkgdesc "$pkgdesc" \
+		--categories 'Office'
 }
 
 pkgver() {
@@ -81,4 +88,6 @@ check() {
 package() {
 	cd "$pkgname"
 	install -Dm0755 -t "$pkgdir/usr/bin/" "target/release/Zed"
+	install -Dm0644 -t "$pkgdir/usr/share/applications/" "${pkgname%-git}.desktop"
+	install -Dm0644 crates/zed/resources/app-icon.png "$pkgdir/usr/share/icons/${pkgname%-git}.png"
 }
