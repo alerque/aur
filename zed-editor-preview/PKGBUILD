@@ -14,7 +14,7 @@ BUILDENV+=(!check)
 pkgname=zed-editor-preview
 pkgver=0.129.1
 pkgrel=1
-pkgdesc='high-performance, multiplayer code editor from the creators of Atom and Tree-sitter'
+pkgdesc='A high-performance, multiplayer code editor from the creators of Atom and Tree-sitter'
 arch=(x86_64)
 url=https://zed.dev
 _url="https://github.com/zed-industries/zed"
@@ -37,6 +37,7 @@ depends=(alsa-lib libasound.so
          wayland
          zlib libz.so)
 makedepends=(cargo
+             gendesk
              vulkan-headers
              vulkan-validation-layers)
 optdepends=('clang: improved C/C++ language support'
@@ -54,6 +55,12 @@ prepare() {
 	rm -r crates/live_kit_server/protocol
 	ln -sT "$srcdir/protocol-${_tags[protocol]}" crates/live_kit_server/protocol
 	cargo fetch --locked --target "$(rustc -vV | sed -n 's/host: //p')"
+	gendesk -q -f -n \
+		--name 'Zed' \
+		--exec 'Zed' \
+		--pkgname "${pkgname%-preview}" \
+		--pkgdesc "$pkgdesc" \
+		--categories 'Office'
 }
 
 _srcenv() {
@@ -77,4 +84,6 @@ check() {
 package() {
 	cd "$_archive"
 	install -Dm0755 -t "$pkgdir/usr/bin/" "target/release/Zed"
+	install -Dm0644 -t "$pkgdir/usr/share/applications/" "${pkgname%-preview}.desktop"
+	install -Dm0644 crates/zed/resources/app-icon.png "$pkgdir/usr/share/icons/${pkgname%-preview}.png"
 }
