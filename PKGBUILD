@@ -12,7 +12,7 @@ declare -gA _tags=(
 BUILDENV+=(!check)
 
 pkgname=zed-editor-preview
-pkgver=0.129.1
+pkgver=0.130.0
 pkgrel=1
 pkgdesc='A high-performance, multiplayer code editor from the creators of Atom and Tree-sitter'
 arch=(x86_64)
@@ -41,13 +41,14 @@ makedepends=(cargo
              vulkan-headers
              vulkan-validation-layers)
 optdepends=('clang: improved C/C++ language support'
+            'eslint: improved Javascript language support'
             'rust-analyzer: improved Rust language support')
 provides=("${pkgname%-preview}=$pkgver")
 conflicts=("${pkgname%-preview}")
 _archive="zed-$pkgver-pre"
 source=("$_url/archive/v$pkgver-pre/$_archive.tar.gz"
         "https://github.com/livekit/protocol/archive/${_tags[protocol]}/protocol-${_tags[protocol]}.tar.gz")
-sha256sums=('b248969591ba7ca716c1f420d762eb1021751ec0b4474dee8877c0ac80deefc8'
+sha256sums=('f8bdebb6925a425651dd9b5ea58ad4b23feab8e7fb499f1fcc981d059187568c'
             'cd26bc1015fa0b79154c23a385441ae81e9a4385211cf2989eb939ae83d0e414')
 
 prepare() {
