@@ -3,8 +3,8 @@
 # Contributor: Andy Weidenbaum <archbaum at gmail dot com>
 
 pkgname=remarshal
-pkgver=0.17.1
-pkgrel=4
+pkgver=0.18.0
+pkgrel=1
 pkgdesc='Convert between CBOR, JSON, MessagePack, TOML, and YAML'
 arch=(any)
 url="https://github.com/dbohdan/$pkgname"
@@ -21,7 +21,7 @@ conflicts=(haskell-yaml)
 options=('!emptydirs')
 _archive="$pkgname-$pkgver"
 source=("https://files.pythonhosted.org/packages/source/${pkgname::1}/$pkgname/$_archive.tar.gz")
-sha256sums=('826a41d3e3ed9d45422811488d7b28cc146a8d5b2583b18db36302f87091a86d')
+sha256sums=('8fd29ba9d5931f5ee2c54f902b11b26cd3bbca0ad8b3d6f39ca48255284f71dd')
 
 prepare() {
   cd "$_archive"
