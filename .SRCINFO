@@ -1,0 +1,16 @@
+pkgbase = python-funcy
+	pkgdesc = A fancy and practical functional tools
+	pkgver = 2.0
+	pkgrel = 3
+	url = https://github.com/Suor/funcy
+	arch = any
+	license = BSD
+	checkdepends = python-pytest
+	checkdepends = python-whatever
+	makedepends = git
+	makedepends = python-setuptools
+	depends = python
+	source = git+https://github.com/Suor/funcy.git#commit=13fac0037c109a9e4649fc8ee343be17647f7407
+	sha512sums = SKIP
+
+pkgname = python-funcy
