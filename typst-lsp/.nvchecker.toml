@@ -1,5 +1,0 @@
-[typst-lsp]
-source = "github"
-github = "nvarner/typst-lsp"
-prefix = "v"
-use_max_tag = true
