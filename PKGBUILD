@@ -66,7 +66,6 @@ source=("git+https://github.com/electron/electron.git#tag=v$pkgver"
         # Chromium
         support-ICU-74-in-LazyTextBreakIterator.patch
         drop-flag-unsupported-by-clang17.patch
-        use-system-libraries-in-node.patch
         compiler-rt-adjust-paths.patch
         # Electron
         default_app-icon.patch
@@ -74,6 +73,7 @@ source=("git+https://github.com/electron/electron.git#tag=v$pkgver"
         electron.desktop
         jinja-python-3.10.patch
         makepkg-source-roller.py
+        use-system-libraries-in-node.patch
         # BEGIN managed sources
         chromium-mirror::git+https://github.com/chromium/chromium.git#tag=122.0.6261.156
         chromium-mirror_third_party_nan::git+https://github.com/nodejs/nan.git#commit=e14bdcd1f72d62bca1d541b66da43130384ec213
@@ -233,13 +233,13 @@ sha256sums=('14613283f3e194a0636054f82a014a821656e4dcb439a3f26fb6a3adbf6171ac'
             '7916b80d801bcc5c23cb9dd1ae820d939af3ef640dbcb2a3c8d6780dcf6ba7a3'
             '8c256b2a9498a63706a6e7a55eadbeb8cc814be66a75e49aec3716c6be450c6c'
             '3bd35dab1ded5d9e1befa10d5c6c4555fe0a76d909fb724ac57d0bf10cb666c1'
-            'ff588a8a4fd2f79eb8a4f11cf1aa151298ffb895be566c57cc355d47f161f53f'
             'b3de01b7df227478687d7517f61a777450dca765756002c80c4915f271e2d961'
             'dd2d248831dd4944d385ebf008426e66efe61d6fdf66f8932c963a12167947b4'
             'b0ac3422a6ab04859b40d4d7c0fd5f703c893c9ec145c9894c468fbc0a4d457c'
             '4484200d90b76830b69eea3a471c103999a3ce86bb2c29e6c14c945bf4102bae'
             '55dbe71dbc1f3ab60bf1fa79f7aea7ef1fe76436b1d7df48728a1f8227d2134e'
             '3ae82375ba212c31fd4ba6f1fa4e2445eeca8eb8c952176131ad57c0258db224'
+            'ff588a8a4fd2f79eb8a4f11cf1aa151298ffb895be566c57cc355d47f161f53f'
             '3de51be7a535e69910fb5d8c7c8efd4fef48df988128c182f476c1a56d40f8bd'
             '0b7a546ee6913c49519c10c293ac530ff381641a8a465fa2e184d6dbe0fb784d'
             '4781df343cf17fe7647c82219a26e39ca47e6a83d37ecd26ae5a5092a93bd965'
