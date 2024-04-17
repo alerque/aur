@@ -8,7 +8,7 @@
 # Note: source array can be synced with an Electron release after updating $pkgver with:
 # bash -c 'source PKGBUILD; _update_sources'
 
-pkgver=28.3.0
+pkgver=28.3.1
 _gcc_patches=120
 pkgrel=1
 _major_ver=${pkgver%%.*}
@@ -228,7 +228,7 @@ source=("git+https://github.com/electron/electron.git#tag=v$pkgver"
         chromium-mirror_third_party_vulkan-deps_vulkan-validation-layers_src::git+https://chromium.googlesource.com/external/github.com/KhronosGroup/Vulkan-ValidationLayers.git#commit=281e1c1c6b51bb6b33f88c18ed4da58ac3024311
         # END managed sources
        )
-sha256sums=('eaa839d5e2e1196873e0dc5e0c08fb8061c2de4cb0a870a035392060d8da0113'
+sha256sums=('2cf56fd333c232cd5981afca682a8c15174a48dfdcb62aba7dd6ead6b52bc2f2'
             'ffee1082fbe3d0c9e79dacb8405d5a0e1aa94d6745089a30b093f647354894d2'
             '3bd35dab1ded5d9e1befa10d5c6c4555fe0a76d909fb724ac57d0bf10cb666c1'
             'b3de01b7df227478687d7517f61a777450dca765756002c80c4915f271e2d961'
