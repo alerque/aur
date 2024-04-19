@@ -1,5 +1,0 @@
-[praat]
-source = "github"
-github = "praat/praat"
-prefix = "v"
-use_max_tag = true
