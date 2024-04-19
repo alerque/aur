@@ -1,4 +1,0 @@
-[samsung-printers]
-source = "regex"
-url = "https://www.bchemnet.com/suldr/index.html"
-regex = 'Driver version (\d+\.\d+\.\d+)'
