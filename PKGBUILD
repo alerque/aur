@@ -2,7 +2,7 @@
 # Maintainer: Caleb Maclennan <caleb@alerque.com>
 
 pkgname=cargo-mutants
-pkgver=24.3.0
+pkgver=24.4.0
 pkgrel=1
 pkgdesc='Mutation testing for Rust'
 url="https://github.com/sourcefrog/$pkgname"
@@ -10,7 +10,7 @@ arch=("x86_64")
 license=("MIT")
 depends=("cargo")
 source=("$pkgname-$pkgver.tar.gz::https://crates.io/api/v1/crates/$pkgname/$pkgver/download")
-sha256sums=('60552321032fe42bac18f5406e1ec328670ae525eb0d671d7853d30be58a02f7')
+sha256sums=('989081df51e563e71df246d34fcc7088c1a5f9b48733ceb16ca70eb3dc7a13a7')
 
 prepare()
 {
