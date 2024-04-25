@@ -4,7 +4,7 @@
 BUILDENV+=(!check)
 
 pkgname=qsv
-pkgver=0.126.0
+pkgver=0.127.0
 pkgrel=1
 pkgdesc='CSV data-wrangling toolkit (fork of xsv)'
 arch=(x86_64)
@@ -18,7 +18,7 @@ makedepends=(cargo
 _archive="$pkgname-$pkgver"
 options=(!lto)
 source=("$url/archive/$pkgver/$_archive.tar.gz")
-sha256sums=('ee38f1ca972c6bf50ad3e973a0b0fd11b784d9abf8a6eaf97cc5c1a582c9fac1')
+sha256sums=('1accc3d8d0954a83bbffc34530151bb8b7b0549afe01d6157d3a6d4e4edacfcb')
 
 # all_features minus self_update
 _features='feature_capable,apply,fetch,foreach,geocode,luau,polars,python,to,to_parquet'
@@ -37,6 +37,10 @@ _srcenv() {
 
 build() {
 	_srcenv
+	env \
+		CARGO_PROFILE_RELEASE_LTO=true \
+		CARGO_PROFILE_RELEASE_CODEGEN_UNITS=1 \
+		CARGO_PROFILE_RELEASE_DEBUG=2 \
 	cargo build --frozen --release --features "$_features"
 }
 
