@@ -3,7 +3,7 @@
 pkgname=gitlab-container-registry
 _pkgname=container-registry
 pkgver=3.93.0
-pkgrel=1
+pkgrel=2
 pkgdesc='GitLab Container Registry daemon'
 url="https://gitlab.com/gitlab-org/$_pkgname"
 license=(Apache-2.0)
@@ -14,7 +14,7 @@ _archive="$_pkgname-v$pkgver-gitlab"
 source=("$url/-/archive/v$pkgver-gitlab/$_archive.tar.bz2"
         "$pkgname.service")
 sha256sums=('c1f2b02d2b5d3fb563228a63dee15b162e9ac18a0b4d322f1b984f202929e540'
-            '1ecaf5b575d574f203e2a7c67b139ab72734d3e81a5f45fc0702cbb7b806a7b9')
+            '61cd00e2981843bdeffe36767da20f09df1ca47cf814caf95d881c5c703f2004')
 
 build() {
 	cd "$_archive"
