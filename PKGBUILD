@@ -4,7 +4,7 @@
 
 pkgname=remarshal
 pkgver=0.18.0
-pkgrel=1
+pkgrel=2
 pkgdesc='Convert between CBOR, JSON, MessagePack, TOML, and YAML'
 arch=(any)
 url="https://github.com/dbohdan/$pkgname"
@@ -30,14 +30,11 @@ prepare() {
 
 build() {
   cd "$_archive"
-  python -m build --wheel --no-isolation
+  python -m build -wn
 }
 
 package() {
   cd "$_archive"
   python -m installer --destdir="$pkgdir" dist/*.whl
   install -Dm0644 -t "$pkgdir/usr/share/licenses/$pkgname/" LICENSE
-
-  # # remove files owned by haskell-yaml to prevent conflicts
-  # rm "$pkgdir/usr/bin/json2yaml" "$pkgdir/usr/bin/yaml2json"
 }
