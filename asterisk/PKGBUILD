@@ -8,11 +8,11 @@
 
 pkgname=asterisk
 pkgver=21.2.0
-pkgrel=1
+pkgrel=2
 pkgdesc='A complete PBX solution'
 arch=(x86_64 aarch64 armv7h armv6h i686)
 url=https://www.asterisk.org
-license=(GPL)
+license=(GPL-2.0-only)
 depends=(alsa-lib
          curl
          jansson
