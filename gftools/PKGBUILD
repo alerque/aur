@@ -2,41 +2,41 @@
 
 pkgname=gftools
 pkgver=0.9.54
-pkgrel=1
+pkgrel=2
 pkgdesc='Misc tools for working with the Google Fonts library'
 arch=(any)
 url="https://github.com/googlefonts/$pkgname"
-license=(Apache)
-_py_deps=(axisregistry
-          babelfont
-          brotli
-          browserstack-local
-          fontfeatures
-          fontmake
-          fonttools
-          fs # optdepends of fonttols required for [ufo]
-          gflanguages
-          glyphslib
-          glyphsets
-          jinja
-          opentype-sanitizer
-          protobuf
-          pyaml
-          pybrowserstack-screenshots
-          pygit2
-          pygithub
-          requests
-          skia-pathops
-          strictyaml
-          tabulate
-          ufolib2
-          ttfautohint-py
-          unidecode
-          vttlib)
+license=(Apache-2.0)
+_pydeps=(axisregistry
+         babelfont
+         brotli
+         browserstack-local
+         fontfeatures
+         fontmake
+         fonttools
+         fs # optdepends of fonttols required for [ufo]
+         gflanguages
+         glyphslib
+         glyphsets
+         jinja
+         opentype-sanitizer
+         protobuf
+         pyaml
+         pybrowserstack-screenshots
+         pygit2
+         pygithub
+         requests
+         skia-pathops
+         strictyaml
+         tabulate
+         ufolib2
+         ttfautohint-py
+         unidecode
+         vttlib)
 depends=(absl-py
          hyperglot
          python
-         "${_py_deps[@]/#/python-}"
+         "${_pydeps[@]/#/python-}"
          statmake)
 makedepends=(python-{build,installer,wheel}
              python-setuptools-scm)
