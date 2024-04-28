@@ -3,17 +3,17 @@
 
 pkgname=psautohint
 pkgver=2.4.0
-pkgrel=2
+pkgrel=3
 epoch=3
 pkgdesc='A standalone version of AFDKO’s autohinter'
 arch=(x86_64)
 url="https://github.com/adobe-type-tools/$pkgname"
-license=(Apache)
-_py_deps=(fonttools
-          fs
-          lxml)
+license=(Apache-2.0)
+_pydeps=(fonttools
+         fs
+         lxml)
 depends=(python
-         "${_py_deps[@]/#/python-}")
+         "${_pydeps[@]/#/python-}")
 makedepends=(python-{build,installer,wheel}
              python-setuptools-scm)
 _archive="$pkgname-$pkgver"
