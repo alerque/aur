@@ -1,0 +1,6 @@
+[gitbutler]
+source = "github"
+github = "gitbutlerapp/gitbutler"
+prefix = "release/"
+include_regex = 'release/\d+\.\d+\.\d+'
+use_max_tag = true
