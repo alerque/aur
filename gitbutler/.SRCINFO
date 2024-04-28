@@ -1,0 +1,18 @@
+pkgbase = gitbutler
+	pkgdesc = Version control client, backed by Git, powered by Tauri/Rust/Svelte
+	pkgver = 0.11.5
+	pkgrel = 0
+	url = https://github.com/gitbutlerapp/gitbutler
+	arch = x86_64
+	license = LicenseRef-FSL-1.1-MIT
+	makedepends = cargo-nightly
+	makedepends = cargo-tauri
+	makedepends = nodejs
+	makedepends = pnpm
+	depends = gtk3
+	depends = webkit2gtk
+	options = !lto
+	source = https://github.com/gitbutlerapp/gitbutler/archive/release%2F0.11.5/gitbutler-release-0.11.5.tar.gz
+	sha256sums = 95322d136c9e4ea1653c172d4c596a9df0842423670b09dd6e40e1b969914ee5
+
+pkgname = gitbutler
