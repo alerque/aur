@@ -4,11 +4,11 @@
 _pyname=glyphsLib
 pkgname=python-${_pyname,,}
 pkgver=6.7.0
-pkgrel=1
+pkgrel=2
 pkgdesc='A bridge from Glyphs source files (.glyphs) to UFOs'
 arch=(any)
 url="https://github.com/googlefonts/$_pyname"
-license=(Apache)
+license=(Apache-2.0)
 _pydeps=(fonttools
          fs # for fonttools[ufo]
          openstep-plist
