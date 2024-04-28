@@ -4,11 +4,11 @@ _pyname=gflanguages
 pkgname=python-$_pyname
 epoch=1
 pkgver=0.5.17
-pkgrel=1
+pkgrel=2
 pkgdesc='API for evaluating language support in the Google Fonts collection'
 arch=(any)
 url="https://github.com/googlefonts/$_pyname"
-license=(Apache)
+license=(Apache-2.0)
 depends=(python
          python-protobuf)
 makedepends=(python-{build,installer,wheel}
