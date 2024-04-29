@@ -3,10 +3,10 @@
 pkgname=python-dvc-data
 _pkgname=${pkgname#python-}
 pkgver=3.15.1
-pkgrel=1
+pkgrel=2
 pkgdesc='DVC’s data management subsystem'
 arch=(any)
-license=(Apache)
+license=(Apache-2.0)
 url="https://github.com/iterative/$_pkgname"
 _pydeps=(dictdiffer
          dvc-objects
