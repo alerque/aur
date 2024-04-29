@@ -1,7 +1,7 @@
 pkgbase = python-datalad
 	pkgdesc = Keep code, data, containers under control with git and git-annex
 	pkgver = 1.0.2
-	pkgrel = 1
+	pkgrel = 2
 	url = https://github.com/datalad/datalad
 	arch = any
 	license = MIT

@@ -5,7 +5,7 @@
 _pkgname=datalad
 pkgname=python-$_pkgname
 pkgver=1.0.2
-pkgrel=1
+pkgrel=2
 pkgdesc='Keep code, data, containers under control with git and git-annex'
 arch=(any)
 url="https://github.com/datalad/$_pkgname"
