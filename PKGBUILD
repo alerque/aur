@@ -3,8 +3,8 @@
 _pyname=gflanguages
 pkgname=python-$_pyname
 epoch=1
-pkgver=0.5.17
-pkgrel=2
+pkgver=0.6.0
+pkgrel=1
 pkgdesc='API for evaluating language support in the Google Fonts collection'
 arch=(any)
 url="https://github.com/googlefonts/$_pyname"
@@ -19,12 +19,7 @@ checkdepends=(python-pytest
               python-youseedee)
 _archive="$_pyname-$pkgver"
 source=("https://files.pythonhosted.org/packages/source/${_pyname::1}/$_pyname/$_archive.tar.gz")
-sha256sums=('752720450eaeb234aa57416a0f23fe286bc72f4eb095315570ef8c999d8d300b')
-
-prepare() {
-	cd "$_archive"
-	sed -i -e '/setuptools_scm/s/>=4,<6.1//' setup.py
-}
+sha256sums=('91a259d124cdd94ff8bd0ee0e556e93c6bfae1ccebc8af235e6209f7b6e422d0')
 
 build() {
 	cd "$_archive"
