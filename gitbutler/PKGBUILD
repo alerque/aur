@@ -1,8 +1,8 @@
 # Maintainer: Caleb Maclennan <caleb@alerque.com>
 
 pkgname=gitbutler
-pkgver=0.11.5
-pkgrel=0
+pkgver=0.11.7
+pkgrel=1
 url="https://github.com/${pkgname}app/$pkgname"
 pkgdesc='Version control client, backed by Git, powered by Tauri/Rust/Svelte'
 arch=(x86_64)
@@ -16,7 +16,7 @@ makedepends=(cargo-nightly
 options=(!lto)
 _archive="$pkgname-release-$pkgver"
 source=("$url/archive/release%2F$pkgver/$_archive.tar.gz")
-sha256sums=('95322d136c9e4ea1653c172d4c596a9df0842423670b09dd6e40e1b969914ee5')
+sha256sums=('3b80b5ebf46bbfeaf7f060f30b2ff2102bf9641bbeb1cfa3eac4bfc2f0ad31c4')
 
 prepare() {
 	cd "$_archive"
@@ -30,6 +30,7 @@ build() {
 		RUSTUP_TOOLCHAIN=nightly \
 		CARGO_TARGET_DIR=target \
 	cargo build --release
+	# cargo tauri build --bundles deb
 }
 
 package() {
