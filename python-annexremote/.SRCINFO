@@ -1,0 +1,17 @@
+pkgbase = python-annexremote
+	pkgdesc = git annex special remotes made easy
+	pkgver = 1.6.5
+	pkgrel = 1
+	url = https://github.com/Lykos153/AnnexRemote
+	arch = any
+	license = GPL-3.0-or-later
+	makedepends = git
+	makedepends = python-build
+	makedepends = python-installer
+	makedepends = python-wheel
+	makedepends = python-setuptools-scm
+	depends = python
+	source = git+https://github.com/Lykos153/AnnexRemote.git#tag=v1.6.5
+	sha256sums = da3c70d00a7ae75d11a672b1e6a263a1fec01aff664552dba04cdee5e14d2179
+
+pkgname = python-annexremote
