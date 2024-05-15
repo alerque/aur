@@ -49,6 +49,7 @@ makedepends=(clang
              python-httplib2
              python-pyparsing
              python-requests
+	     python-setuptools
              python-six
              qt5-base
              wget
