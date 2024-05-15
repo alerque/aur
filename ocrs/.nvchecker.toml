@@ -1,5 +1,6 @@
 [ocrs]
 source = "github"
 github = "robertknight/ocrs"
-prefix = "v"
+include_regex = 'ocrs-cli-v[\d\.]+'
+prefix = "ocrs-cli-v"
 use_max_tag = true
