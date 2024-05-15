@@ -50,6 +50,7 @@ makedepends=(clang
              python-pyparsing
              python-requests
              python-six
+	     python-setuptools
              rust
              qt5-base
              wget
