@@ -10,7 +10,7 @@
 
 pkgver=29.3.1
 _gcc_patches=122-3
-pkgrel=2
+pkgrel=3
 _major_ver=${pkgver%%.*}
 pkgname="electron${_major_ver}"
 pkgdesc='Build cross platform desktop apps with web technologies'
@@ -49,6 +49,7 @@ makedepends=(clang
              python-httplib2
              python-pyparsing
              python-requests
+	     python-setuptools
              python-six
              rust
              qt5-base
@@ -438,7 +439,6 @@ prepare() {
 
   cp -r chromium-mirror_third_party_depot_tools depot_tools
   export PATH+=":$PWD/depot_tools" DEPOT_TOOLS_UPDATE=0
-  export VPYTHON_BYPASS='manually managed python not supported by chrome operations'
 
   echo "Putting together electron sources"
   # Generate gclient gn args file and prepare-electron-source-tree.sh
@@ -456,8 +456,9 @@ prepare() {
     -s src/third_party/skia --header src/skia/ext/skia_commit_hash.h
   src/build/util/lastchange.py \
     -s src/third_party/dawn --revision src/gpu/webgpu/DAWN_VERSION
-  src/tools/update_pgo_profiles.py --target=linux update \
-    --gs-url-base=chromium-optimization-profiles/pgo_profiles
+  # needs newer clang to read the bundled PGO profile
+  # src/tools/update_pgo_profiles.py --target=linux update \
+  #   --gs-url-base=chromium-optimization-profiles/pgo_profiles
   depot_tools/download_from_google_storage.py --no_resume --extract --no_auth \
     --bucket chromium-nodejs -s src/third_party/node/node_modules.tar.gz.sha1
 
