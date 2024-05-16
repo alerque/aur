@@ -11,7 +11,7 @@
 
 pkgver=23.3.13
 _gcc_patches=110-patchset-4
-pkgrel=6
+pkgrel=7
 
 _major_ver=${pkgver%%.*}
 pkgname="electron${_major_ver}"
@@ -454,7 +454,7 @@ prepare() {
 
   cp -r chromium-mirror_third_party_depot_tools depot_tools
   export PATH+=":$PWD/depot_tools" DEPOT_TOOLS_UPDATE=0
-  export VPYTHON_BYPASS='manually managed python not supported by chrome operations'
+# export VPYTHON_BYPASS='manually managed python not supported by chrome operations'
 
   echo "Putting together electron sources"
   # Generate gclient gn args file and prepare-electron-source-tree.sh
@@ -476,8 +476,9 @@ prepare() {
     -s src/third_party/skia --header src/skia/ext/skia_commit_hash.h
   src/build/util/lastchange.py \
     -s src/third_party/dawn --revision src/gpu/webgpu/DAWN_VERSION
-  src/tools/update_pgo_profiles.py --target=linux update \
-    --gs-url-base=chromium-optimization-profiles/pgo_profiles
+# needs newer clang to read the bundled PGO profile
+# src/tools/update_pgo_profiles.py --target=linux update \
+#   --gs-url-base=chromium-optimization-profiles/pgo_profilessrc/tools/update_pgo_profiles.py --target=linux update \
   depot_tools/download_from_google_storage.py --no_resume --extract --no_auth \
     --bucket chromium-nodejs -s src/third_party/node/node_modules.tar.gz.sha1
   # Create sysmlink to system clang-format
@@ -578,6 +579,22 @@ prepare() {
 
   ./build/linux/unbundle/replace_gn_files.py \
     --system-libraries "${!_system_libs[@]}"
+
+# Port away form imp
+  git cherry-pick -n 9e0c89a3b5638ba2b9b107fea34a01c774aa7805
+  git cherry-pick -n f5f6e361d037c31630661186e7bd7b31d2784cb8
+
+# Port away from six
+  git show b3abd7e4c9467415da3a5e13d9500d2ab3abc2ec -- tools/grit/grit/util.py | git apply -
+
+# Update vendored copy of six
+  pushd third_party/catapult
+  git cherry-pick -n 8cf7c46ad7ea03bf5d5588d0ed63be3df4baaf1f
+  popd
+  
+# Fix build with GCC 14
+  pushd v8
+  git cherry-pick -n 9721082687c9529fe6ae3c5304dcf079158e8a77
 }
 
 build() {
