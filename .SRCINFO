@@ -1,7 +1,7 @@
 pkgbase = electron28
 	pkgdesc = Build cross platform desktop apps with web technologies
 	pkgver = 28.3.1
-	pkgrel = 2
+	pkgrel = 3
 	url = https://electronjs.org
 	arch = x86_64
 	license = MIT
@@ -28,6 +28,7 @@ pkgbase = electron28
 	makedepends = python-pyparsing
 	makedepends = python-requests
 	makedepends = python-six
+	makedepends = python-setuptools
 	makedepends = rust
 	makedepends = qt5-base
 	makedepends = wget
