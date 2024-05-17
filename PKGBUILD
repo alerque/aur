@@ -1,18 +1,13 @@
 # Maintainer: Caleb Maclennan <caleb@alerque.com>
 # Contributor: Marcell Pardavi <marcell.pardavi@gmail.com>
 
-# git submodules with vendored dependencies
-declare -gA _tags=(
-    [protocol]="8645a138fb2ea72c4dab13e739b1f3c9ea29ac84"
-)
-
 # Tests assume access to vulkan video drivers, Wayland window creation,
 # detecting system keymaps, etc. Until their is something sensical for
 # a package to test in the suite, just skip it by default.
 BUILDENV+=(!check)
 
 pkgname=zed-editor-git
-pkgver=0.61.0.r12598.g1dbd520
+pkgver=0.136.2.r48.g70888cf
 pkgrel=1
 pkgdesc='A high-performance, multiplayer code editor from the creators of Atom and Tree-sitter'
 arch=(x86_64)
@@ -43,15 +38,11 @@ makedepends=(cargo
              vulkan-validation-layers)
 provides=("${pkgname%-git}=$pkgver")
 conflicts=("${pkgname%-git}")
-source=("$pkgname::git+$_url.git"
-        "https://github.com/livekit/protocol/archive/${_tags[protocol]}/protocol-${_tags[protocol]}.tar.gz")
-sha256sums=('SKIP'
-            'cd26bc1015fa0b79154c23a385441ae81e9a4385211cf2989eb939ae83d0e414')
+source=("$pkgname::git+$_url.git")
+sha256sums=('SKIP')
 
 prepare() {
 	cd "$pkgname"
-	rm -r crates/live_kit_server/protocol
-	ln -sT "$srcdir/protocol-${_tags[protocol]}" crates/live_kit_server/protocol
 	cargo fetch --locked --target "$(rustc -vV | sed -n 's/host: //p')"
 	gendesk -q -f -n \
 		--name 'Zed' \
@@ -63,8 +54,10 @@ prepare() {
 
 pkgver() {
 	cd "$pkgname"
-	git describe --long --tags --abbrev=7 --match="v*" HEAD |
-		sed 's/^v//;s/\([^-]*-g\)/r\1/;s/-/./g'
+	local lasttag="$(git tag --sort=-v:refname | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+-pre$' | head -1)"
+	echo -n "$(sed 's/^v//;s/-pre$//' <<< "$lasttag")"
+	echo -n ".r$(git rev-list "$(git merge-base HEAD "$lasttag")..HEAD" --count)"
+	echo -n ".g$(git log --pretty=format:'%h' --abbrev=7 -n1 HEAD)"
 }
 
 _srcenv() {
