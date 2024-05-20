@@ -6,8 +6,8 @@
 pkgbase=keybase
 pkgname=(keybase kbfs keybase-gui)
 pkgdesc='CLI tool for GPG with keybase.io'
-pkgver=6.0.2
-pkgrel=4
+pkgver=6.2.8
+pkgrel=1
 arch=(x86_64)
 url=https://keybase.io
 _url=https://github.com/keybase/client
@@ -22,21 +22,16 @@ _electron=electron22
 _archive="$pkgbase-v$pkgver"
 source=("$_url/releases/download/v$pkgver/$_archive.tar.xz"{,.sig}
         keybase-gui.in
-        0001-Don-t-use-electron-to-build.patch
-        https://github.com/keybase/client/commit/fbebbc9f1ba29e21ae6d3ee2edc21a7703d0019f.patch)
-sha256sums=('22e5ae4d1f951ea9f3ffc3cb74de9b9f41b828b2c8a4e5cb6401de6fbccf497b'
+        0001-Don-t-use-electron-to-build.patch)
+sha256sums=('a17f9b987a20753922d1237e28ca6f1147af3e89e9c1d2dd22a11b5b083fdc33'
             'SKIP'
             'f5377a5b154c9ffa3f4da82f8746306660195a4b4fb0cd80664777023bd81b66'
-            'dcff34a5676a929cd8f2cac1b0be98257c26a04e7935435c16e131bde486a1e4'
-            '5a46d9433efb4244509d26fdf04340fb628de1d19a4dff6944510f9bba69d378')
+            'f4a54778a914bbdb7340b9d0349f68e96171763e2a34436bcf8faae7a80b9c11')
 validpgpkeys=('222B85B0F90BE2D24CFEB93F47484E50656D16C7') # Keybase.io Code Signing (v1) <code@keybase.io>
 
 prepare() {
 	ln -sf "${_archive/$pkgbase/client}" "$_archive"
 	cd "$_archive"
-
-	# update API certificate authority key
-	patch -p1 -i ../fbebbc9f1ba29e21ae6d3ee2edc21a7703d0019f.patch
 
 	# Fix paths to run electron /path/to/app (or our minimal wrapper script).
 	# Also wire up "hideWindow" when running as a service or via XDG autostart.

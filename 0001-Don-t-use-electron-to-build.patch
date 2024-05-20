@@ -1,37 +1,55 @@
-From 1e4baf89ac25b9b9dc567acee21c4122d9f457cb Mon Sep 17 00:00:00 2001
+From d7479bc66f1ab73f971a129c439ee886ba17fde2 Mon Sep 17 00:00:00 2001
 From: Eli Schwartz <eschwartz93@gmail.com>
 Date: Thu, 21 Jun 2018 05:00:37 -0400
 Subject: [PATCH] Don't use electron to build
 
 ---
- shared/desktop/package.desktop.tsx   | 4 ++--
- shared/desktop/yarn-helper/index.tsx | 2 --
- 2 files changed, 2 insertions(+), 4 deletions(-)
+ shared/desktop/package.desktop.tsx   | 22 +---------------------
+ shared/desktop/yarn-helper/index.tsx |  2 --
+ 2 files changed, 1 insertion(+), 23 deletions(-)
 
 diff --git a/shared/desktop/package.desktop.tsx b/shared/desktop/package.desktop.tsx
-index 3f94bbeec1..1da64fccfd 100644
+index 5fb8adf4b4..cf3b401f0e 100644
 --- a/shared/desktop/package.desktop.tsx
 +++ b/shared/desktop/package.desktop.tsx
-@@ -133,7 +133,7 @@ function main() {
+@@ -154,14 +154,7 @@ async function main() {
+   }
+ 
    // use the same version as the currently-installed electron
-   console.log('Finding electron version')
-   try {
+-  console.log('Finding electron version')
+-  try {
 -    packagerOpts.electronVersion = require('../package.json').devDependencies.electron
-+    packagerOpts.electronVersion = 'unused string'
-     console.log('Found electron version:', packagerOpts.electronVersion)
+-    console.log('Found electron version:', packagerOpts.electronVersion)
+-  } catch (err) {
+-    console.log("Couldn't parse yarn list to find electron:", err)
+-    process.exit(1)
+-  }
++  console.log('Finding electron version - skipped')
+ 
+   try {
+     await startPack()
+@@ -199,19 +192,6 @@ async function startPack() {
+     fs.removeSync(desktopPath('build/desktop/dist/fonts'))
+ 
+     rimrafSync(desktopPath('release'))
+-
+-    let aps = [[platform, arch]]
+-    await Promise.all(
+-      aps.map(async ([plat, arch]) => {
+-        try {
+-          const appPaths = await pack(plat, arch)
+-          postPack(appPaths, plat, arch)
+-        } catch (err) {
+-          console.error(err)
+-          process.exit(1)
+-        }
+-      })
+-    )
    } catch (err) {
-     console.log("Couldn't parse yarn list to find electron:", err)
-@@ -190,7 +190,7 @@ function startPack() {
-         aps.forEach(([arch, plat]) => {
-           pack(plat, arch).then(postPack(plat, arch)).catch(postPackError)
-         })
--      } else {
-+      } else if (false) {
-         pack(platform, arch).then(postPack(platform, arch)).catch(postPackError)
-       }
-     }
+     console.error(err)
+     process.exit(1)
 diff --git a/shared/desktop/yarn-helper/index.tsx b/shared/desktop/yarn-helper/index.tsx
-index 4f6b96b80e..cc338fe38d 100644
+index 55a4ee8234..c47cde5769 100644
 --- a/shared/desktop/yarn-helper/index.tsx
 +++ b/shared/desktop/yarn-helper/index.tsx
 @@ -1,6 +1,5 @@
@@ -41,7 +59,7 @@ index 4f6b96b80e..cc338fe38d 100644
  import fontCommands from './font'
  import prettierCommands from './prettier'
  import {execSync} from 'child_process'
-@@ -14,7 +13,6 @@ const [, , command, ...rest] = process.argv
+@@ -13,7 +12,6 @@ const [, , command, ...rest] = process.argv
  const commands = {
    ...buildCommands,
    ...fontCommands,
