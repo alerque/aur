@@ -19,7 +19,7 @@ pkgbase = keybase
 	sha256sums = 22e5ae4d1f951ea9f3ffc3cb74de9b9f41b828b2c8a4e5cb6401de6fbccf497b
 	sha256sums = SKIP
 	sha256sums = 7459a6846ff24c2bf7e6ab1ce31880829cf2692f23ffb3bf77e455f4de7ca34e
-	sha256sums = 74fd7a777275bdf2128f121e27f722f692302a50d89c6c1d3ec82df1deaffee3
+	sha256sums = dcff34a5676a929cd8f2cac1b0be98257c26a04e7935435c16e131bde486a1e4
 	sha256sums = 5a46d9433efb4244509d26fdf04340fb628de1d19a4dff6944510f9bba69d378
 
 pkgname = keybase

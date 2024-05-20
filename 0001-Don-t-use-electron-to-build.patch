@@ -1,4 +1,4 @@
-From f13853908947e47a7853125865c98a406cd7772f Mon Sep 17 00:00:00 2001
+From 1e4baf89ac25b9b9dc567acee21c4122d9f457cb Mon Sep 17 00:00:00 2001
 From: Eli Schwartz <eschwartz93@gmail.com>
 Date: Thu, 21 Jun 2018 05:00:37 -0400
 Subject: [PATCH] Don't use electron to build
@@ -6,14 +6,13 @@ Subject: [PATCH] Don't use electron to build
 ---
  shared/desktop/package.desktop.tsx   | 4 ++--
  shared/desktop/yarn-helper/index.tsx | 2 --
- shared/package.json                  | 1 -
- 3 files changed, 2 insertions(+), 5 deletions(-)
+ 2 files changed, 2 insertions(+), 4 deletions(-)
 
 diff --git a/shared/desktop/package.desktop.tsx b/shared/desktop/package.desktop.tsx
-index b10bb10295..f4b5fc3e6a 100644
+index 3f94bbeec1..1da64fccfd 100644
 --- a/shared/desktop/package.desktop.tsx
 +++ b/shared/desktop/package.desktop.tsx
-@@ -133,7 +133,7 @@
+@@ -133,7 +133,7 @@ function main() {
    // use the same version as the currently-installed electron
    console.log('Finding electron version')
    try {
@@ -22,7 +21,7 @@ index b10bb10295..f4b5fc3e6a 100644
      console.log('Found electron version:', packagerOpts.electronVersion)
    } catch (err) {
      console.log("Couldn't parse yarn list to find electron:", err)
-@@ -190,7 +190,7 @@
+@@ -190,7 +190,7 @@ function startPack() {
          aps.forEach(([arch, plat]) => {
            pack(plat, arch).then(postPack(plat, arch)).catch(postPackError)
          })
@@ -32,7 +31,7 @@ index b10bb10295..f4b5fc3e6a 100644
        }
      }
 diff --git a/shared/desktop/yarn-helper/index.tsx b/shared/desktop/yarn-helper/index.tsx
-index c7b04af258..a752ccd8bc 100644
+index 4f6b96b80e..cc338fe38d 100644
 --- a/shared/desktop/yarn-helper/index.tsx
 +++ b/shared/desktop/yarn-helper/index.tsx
 @@ -1,6 +1,5 @@
@@ -50,3 +49,6 @@ index c7b04af258..a752ccd8bc 100644
    ...prettierCommands,
    help: {
      code: () => {
+-- 
+2.45.1
+
