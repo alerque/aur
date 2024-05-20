@@ -1,7 +1,7 @@
 # Maintainer: Caleb Maclennan <caleb@alerque.com>
 
 pkgname=ocrs
-pkgver=0.6.0
+pkgver=0.7.0
 pkgrel=1
 pkgdesc='a modern OCR engine written in Rust'
 arch=(x86_64)
@@ -9,20 +9,21 @@ url="https://github.com/robertknight/$pkgname"
 license=(MIT Apache-2.0)
 depends=(gcc-libs
          glibc)
-makedepends=(cargo)
+makedepends=(cargo-nightly)
 _tag="$pkgname-cli-v$pkgver"
 _archive="$pkgname-$_tag"
 source=("$url/archive/$_tag/$_archive.tar.gz")
-sha256sums=('133327605b99f19bae9080b970eb324a5047e43a7a6117375b2562165604c3f8')
+sha256sums=('fb223ec32fb525f995a711808fb9132266c7e4a12483eeea0e618193b6fab14f')
 
 prepare() {
 	cd "$_archive"
+	rustup default nightly-2024-05-19
 	cargo fetch --locked --target "$(rustc -vV | sed -n 's/host: //p')"
 }
 
 _srcenv() {
 	cd "$_archive"
-	export RUSTUP_TOOLCHAIN=stable
+	export RUSTUP_TOOLCHAIN=nightly
 	export CARGO_TARGET_DIR=target
 	CFLAGS+=" -ffat-lto-objects"
 }
