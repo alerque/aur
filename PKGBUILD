@@ -46,7 +46,7 @@ prepare() {
 	sed -i 's@/opt/keybase/Keybase@/usr/bin/electron22 /usr/share/keybase-app@' \
 		packaging/linux/systemd/keybase.gui.service
 
-    # Don't let desktop launcher automatically start services on boot
+	# Don't let desktop launcher automatically start services on boot
 	sed -i 's/run_keybase/keybase-gui/g' \
 		packaging/linux/keybase.desktop
 
