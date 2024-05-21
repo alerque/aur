@@ -68,10 +68,12 @@ build() {
 	export CGO_LDFLAGS="$LDFLAGS"
 	export GOFLAGS="-buildmode=pie -trimpath -ldflags=-linkmode=external -mod=readonly -modcacherw"
 
-	go build -a -tags production -o ./bin/keybase github.com/keybase/client/go/keybase
-	go build -a -tags production -o ./bin/kbnm github.com/keybase/client/go/kbnm
-	go build -a -tags production -o ./bin/kbfsfuse github.com/keybase/client/go/kbfs/kbfsfuse
-	go build -a -tags production -o ./bin/git-remote-keybase github.com/keybase/client/go/kbfs/kbfsgit/git-remote-keybase
+	go build -a -tags production -o ./bin/ \
+		./keybase \
+		./kbnm \
+		./kbfs/kbfsfuse \
+		./kbfs/kbfsgit/git-remote-keybase \
+		# EOL
 
 	cd ../shared
 	yarn install
