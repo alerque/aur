@@ -37,10 +37,6 @@ prepare() {
 	# update API certificate authority key
 	patch -p1 -i ../fbebbc9f1ba29e21ae6d3ee2edc21a7703d0019f.patch
 
-	export GOPATH="$srcdir/.gopath"
-	mkdir -p "$GOPATH"/src/github.com/keybase
-	ln -sf "$PWD" "$GOPATH"/src/github.com/keybase/client
-
 	# Fix paths to run electron /path/to/app (or our minimal wrapper script).
 	# Also wire up "hideWindow" when running as a service or via XDG autostart.
 	sed -i 's@/opt/keybase/Keybase@/usr/bin/electron22 /usr/share/keybase-app@' \
@@ -72,7 +68,6 @@ build() {
 	export CGO_LDFLAGS="$LDFLAGS"
 	export GOFLAGS="-buildmode=pie -trimpath -ldflags=-linkmode=external -mod=readonly -modcacherw"
 
-	export GOPATH="$srcdir/.gopath"
 	go build -a -tags production -o ./bin/keybase github.com/keybase/client/go/keybase
 	go build -a -tags production -o ./bin/kbnm github.com/keybase/client/go/kbnm
 	go build -a -tags production -o ./bin/kbfsfuse github.com/keybase/client/go/kbfs/kbfsfuse
