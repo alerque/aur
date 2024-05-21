@@ -3,7 +3,7 @@
 
 pkgname=gftools
 pkgver=0.9.58
-pkgrel=2
+pkgrel=3
 pkgdesc='Misc tools for working with the Google Fonts library'
 arch=(any)
 url="https://github.com/googlefonts/$pkgname"
@@ -21,7 +21,6 @@ _pydeps=(axisregistry
          glyphsets
          jinja
          networkx
-         ninja
          opentype-sanitizer
          protobuf
          pyaml
@@ -38,6 +37,7 @@ _pydeps=(axisregistry
          vttlib)
 depends=(absl-py
          hyperglot
+         ninja
          python
          "${_pydeps[@]/#/python-}"
          statmake)
