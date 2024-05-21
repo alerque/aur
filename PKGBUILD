@@ -27,7 +27,7 @@ sha256sums=('22e5ae4d1f951ea9f3ffc3cb74de9b9f41b828b2c8a4e5cb6401de6fbccf497b'
             'SKIP'
             '7459a6846ff24c2bf7e6ab1ce31880829cf2692f23ffb3bf77e455f4de7ca34e'
             '74fd7a777275bdf2128f121e27f722f692302a50d89c6c1d3ec82df1deaffee3'
-            '0059b988777ecf30a07bb982a164546ff83333cc9d869b0756ab3c034065b8a7')
+            '5a46d9433efb4244509d26fdf04340fb628de1d19a4dff6944510f9bba69d378')
 validpgpkeys=('222B85B0F90BE2D24CFEB93F47484E50656D16C7') # Keybase.io Code Signing (v1) <code@keybase.io>
 
 prepare() {
