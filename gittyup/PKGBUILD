@@ -5,13 +5,40 @@
 # Contributor: WaveHack <email@wavehack.net>
 # Contributor: Whovian9369 <Whovian9369@gmail.com>
 # Contributor: Angelo Theodorou <encelo@gmail.com>
+# Contributor: Igor Deyashkin <igor.deyashkin@gmail.com>
 
 pkgname=gittyup
 pkgver=1.3.0
-pkgrel=1
+pkgrel=2
 pkgdesc='Graphical Git client (GitAhead fork)'
 url="https://murmele.github.io/${pkgname^}"
 _url="https://github.com/Murmele/${pkgname^}"
+_archive="Gittyup-${pkgname}_v${pkgver}"
+
+# To get these commit hashes run `git submodule status` in the gittyup repo
+
+# current output of the command (there is some version information)
+#  7861f401ea25e1ceaf7323c1585de4d633e0ec39 dep/libgit2/libgit2 (v0.16.0-11743-g7861f401e)
+#  82b21cd1348366a7dc25d57c6de532968da40541 dep/scintilla/lexilla (rel-4-4-6)
+#  33d0e3433a2046c1077f6b33fc801caf6bfac7a9 dep/scintilla/scintillua (scintillua_4.4.5-2)
+#  96825016edb6e63698ec2314349daeae345ad2fe test/dep/zip (v0.2.5-1-g9682501)
+
+_libgit2_dep_path="dep/libgit2"
+_libgit2_sha="7861f401ea25e1ceaf7323c1585de4d633e0ec39"
+_libgit2_archive="libgit2-${_libgit2_sha}"
+
+_lexilla_dep_path="dep/scintilla/lexilla"
+_lexilla_sha="82b21cd1348366a7dc25d57c6de532968da40541"
+_lexilla_archive="lexilla-${_lexilla_sha}"
+
+_scintillua_dep_path="dep/scintilla/scintillua"
+_scintillua_sha="33d0e3433a2046c1077f6b33fc801caf6bfac7a9"
+_scintillua_archive="scintillua-${_scintillua_sha}"
+
+_zip_dep_path="test/dep/zip"
+_zip_sha="96825016edb6e63698ec2314349daeae345ad2fe"
+_zip_archive="zip-${_zip_sha}"
+
 arch=(x86_64)
 license=(MIT)
 depends=(cmark
@@ -30,30 +57,24 @@ makedepends=(cmake
 optdepends=('git-lfs: git-lfs support'
             'libgnome-keyring: for GNOME Keyring for auth credentials'
             'qt5-translations: translations')
-source=("git+$_url.git#tag=${pkgname}_v$pkgver"
-        "$pkgname-libgit2::git+https://github.com/stinb/libgit2.git" # a fork, not the official upstream!
-        "$pkgname-scintillua::git+https://github.com/orbitalquark/scintillua.git"
-        "$pkgname-lexilla::git+https://github.com/ScintillaOrg/lexilla.git"
-        "$pkgname-zip::git+https://github.com/kuba--/zip.git")
-sha256sums=('SKIP'
-            'SKIP'
-            'SKIP'
-            'SKIP'
-            'SKIP')
+source=("${_url}/archive/refs/tags/${pkgname}_v$pkgver.tar.gz"
+        "$pkgname-${_libgit2_archive}.tar.gz::https://github.com/stinb/libgit2/archive/${_libgit2_sha}.tar.gz"
+		"$pkgname-${_lexilla_archive}.tar.gz::https://github.com/ScintillaOrg/lexilla/archive/${_lexilla_sha}.tar.gz"
+		"$pkgname-${_scintillua_archive}.tar.gz::https://github.com/orbitalquark/scintillua/archive/${_scintillua_sha}.tar.gz"
+		"$pkgname-${_zip_archive}.tar.gz::https://github.com/kuba--/zip/archive/${_zip_sha}.tar.gz")
+sha256sums=('a7cd9610b1af68e7202825522b7641aca83189fa275e95926fbbae457214f16b'
+            '8d53e1debb07f37ae5b326b3cc282d7119393be359be197c53fdeafb3fbd3845'
+            '4bb82032b05f9a7864c515e0f28acdff4606f47d1c26863f62c3471b69bbe522'
+            '12217f2f1a7437ca577e33c458f5290e0dd2ee73185c94cba0a5c4e49636a2e3'
+            '3e36e81ef524b2de8e66c39187e4e5b7384d7227009d927caf417fad8e52ca63')
 
 prepare() {
-	cd "${pkgname^}"
-	git submodule init
-	git config submodule.dep/cmark/cmark.update none
-	git config submodule.dep/git/git.update none
-	git config submodule.dep/hunspell/hunspell.update none
-	git config submodule.dep/libssh2/libssh2.update none
-	git config submodule.dep/openssl/openssl.update none
-	git config submodule.dep/libgit2/libgit2.url "$srcdir/$pkgname-libgit2"
-	git config submodule.dep/scintillua/lexilla.url "$srcdir/$pkgname-lexilla"
-	git config submodule.dep/scintillua/scintillua.url "$srcdir/$pkgname-scintillua"
-	git config submodule.test/dep/zip.url "$srcdir/$pkgname-zip"
-	git -c protocol.file.allow=always submodule update
+	cd "${_archive}"
+
+	pushd dep/libgit2 ; rm -rf libgit2 ; ln -s ../../../${_libgit2_archive} libgit2 ; popd
+	pushd dep/scintilla ; rm -rf lexilla ; ln -s ../../../${_lexilla_archive} lexilla ; popd
+	pushd dep/scintilla ; rm -rf scintillua ; ln -s ../../../${_scintillua_archive} scintillua ; popd
+	pushd test/dep ; rm -rf zip ; ln -s ../../../${_zip_archive} zip ; popd
 }
 
 build() {
@@ -74,7 +95,7 @@ build() {
 		-D USE_SYSTEM_OPENSSL=ON \
 		-D LUA_MODULES_PATH=/usr/lib/lua/5.4 \
 		-B build \
-		-S "${pkgname^}"
+		-S "${_archive}"
 	ninja -C build
 }
 
@@ -83,8 +104,8 @@ check() {
 }
 
 package() {
-	install -Dm0644 "${pkgname^}/LICENSE.md" "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
-	install -Dm0644 "${pkgname^}/rsrc/linux/com.github.Murmele.Gittyup.desktop" "$pkgdir/usr/share/applications/gittyup.desktop"
+	install -Dm0644 "${_archive}/LICENSE.md" "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
+	install -Dm0644 "${_archive}/rsrc/linux/com.github.Murmele.Gittyup.desktop" "$pkgdir/usr/share/applications/gittyup.desktop"
 	DESTDIR="$pkgdir" ninja -C build install
 	pushd "$pkgdir/usr"
 	rm -f lib/libQt*.so.* lib/*.a
