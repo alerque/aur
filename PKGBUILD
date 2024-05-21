@@ -18,14 +18,15 @@ makedepends=(git
              jq
              moreutils
              yarn)
+_electron=electron22
 _archive="$pkgbase-v$pkgver"
 source=("$_url/releases/download/v$pkgver/$_archive.tar.xz"{,.sig}
-        keybase-gui
+        keybase-gui.in
         0001-Don-t-use-electron-to-build.patch
         https://github.com/keybase/client/commit/fbebbc9f1ba29e21ae6d3ee2edc21a7703d0019f.patch)
 sha256sums=('22e5ae4d1f951ea9f3ffc3cb74de9b9f41b828b2c8a4e5cb6401de6fbccf497b'
             'SKIP'
-            '7459a6846ff24c2bf7e6ab1ce31880829cf2692f23ffb3bf77e455f4de7ca34e'
+            '7f5ace6df3ca94b3c0c5eeb46b38cf81fbc8529d610d16a8acd51486eac4be91'
             'dcff34a5676a929cd8f2cac1b0be98257c26a04e7935435c16e131bde486a1e4'
             '5a46d9433efb4244509d26fdf04340fb628de1d19a4dff6944510f9bba69d378')
 validpgpkeys=('222B85B0F90BE2D24CFEB93F47484E50656D16C7') # Keybase.io Code Signing (v1) <code@keybase.io>
@@ -39,8 +40,13 @@ prepare() {
 
 	# Fix paths to run electron /path/to/app (or our minimal wrapper script).
 	# Also wire up "hideWindow" when running as a service or via XDG autostart.
-	sed -i 's@/opt/keybase/Keybase@/usr/bin/electron22 /usr/share/keybase-app@' \
+	sed -i "s@/opt/keybase/Keybase@/usr/bin/${_electron} /usr/share/keybase-app@" \
 		packaging/linux/systemd/keybase.gui.service
+
+	# Single-source electron version
+	sed "s/@electron@/${_electron}/" \
+		"$srcdir/keybase-gui.in" \
+		> "$srcdir/keybase-gui"
 
 	# Don't let desktop launcher automatically start services on boot
 	sed -i 's/run_keybase/keybase-gui/g' \
@@ -111,7 +117,7 @@ package_kbfs() {
 
 package_keybase-gui() {
 	pkgdesc='GUI frontend for GPG with keybase.io'
-	depends=(electron22 keybase kbfs)
+	depends=("$_electron" keybase kbfs)
 
 	cd "$_archive"
 
