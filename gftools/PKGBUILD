@@ -1,8 +1,9 @@
 # Maintainer: Caleb Maclennan <caleb@alerque.com>
+# Contributor: txtsd <aur.archlinux@ihavea.quest>
 
 pkgname=gftools
 pkgver=0.9.58
-pkgrel=1
+pkgrel=2
 pkgdesc='Misc tools for working with the Google Fonts library'
 arch=(any)
 url="https://github.com/googlefonts/$pkgname"
@@ -19,6 +20,8 @@ _pydeps=(axisregistry
          glyphslib
          glyphsets
          jinja
+         networkx
+         ninja
          opentype-sanitizer
          protobuf
          pyaml
