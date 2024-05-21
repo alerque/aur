@@ -15,6 +15,10 @@ fi
 if (( $# )) || systemctl --user is-active --quiet keybase.gui; then
     exec @electron@ /usr/share/keybase-app "$@"
 else
-    systemctl --user import-environment KEYBASE_AUTOSTART
+    if [[ ${KEYBASE_AUTOSTART+set} ]]; then
+        systemctl --user import-environment KEYBASE_AUTOSTART
+    else
+        systemctl --user unset-environment KEYBASE_AUTOSTART
+    fi
     exec systemctl --user start --wait keybase.gui
 fi

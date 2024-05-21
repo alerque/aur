@@ -26,7 +26,7 @@ source=("$_url/releases/download/v$pkgver/$_archive.tar.xz"{,.sig}
         https://github.com/keybase/client/commit/fbebbc9f1ba29e21ae6d3ee2edc21a7703d0019f.patch)
 sha256sums=('22e5ae4d1f951ea9f3ffc3cb74de9b9f41b828b2c8a4e5cb6401de6fbccf497b'
             'SKIP'
-            'cb8688e1e797eb3ad88dfef8231fdaa72fa60cada08f69c1a74b77ce91d41fab'
+            'f5377a5b154c9ffa3f4da82f8746306660195a4b4fb0cd80664777023bd81b66'
             'dcff34a5676a929cd8f2cac1b0be98257c26a04e7935435c16e131bde486a1e4'
             '5a46d9433efb4244509d26fdf04340fb628de1d19a4dff6944510f9bba69d378')
 validpgpkeys=('222B85B0F90BE2D24CFEB93F47484E50656D16C7') # Keybase.io Code Signing (v1) <code@keybase.io>
