@@ -7,7 +7,7 @@
 # Contributor: Angelo Theodorou <encelo@gmail.com>
 
 pkgname=gittyup
-pkgver=1.3.0
+pkgver=1.4.0
 pkgrel=1
 pkgdesc='Graphical Git client (GitAhead fork)'
 url="https://murmele.github.io/${pkgname^}"
@@ -35,7 +35,7 @@ source=("git+$_url.git#tag=${pkgname}_v$pkgver"
         "$pkgname-scintillua::git+https://github.com/orbitalquark/scintillua.git"
         "$pkgname-lexilla::git+https://github.com/ScintillaOrg/lexilla.git"
         "$pkgname-zip::git+https://github.com/kuba--/zip.git")
-sha256sums=('SKIP'
+sha256sums=('06e1d79a3a3062c2ab37ad3a0a8f67d74d0c19210a9defac2b5e9e68e70feb1f'
             'SKIP'
             'SKIP'
             'SKIP'
@@ -43,6 +43,8 @@ sha256sums=('SKIP'
 
 prepare() {
 	cd "${pkgname^}"
+	# https://github.com/Murmele/Gittyup/issues/766
+	git cherry-pick -n d36eba172a01d541945d59427b4f643aaed55da0
 	git submodule init
 	git config submodule.dep/cmark/cmark.update none
 	git config submodule.dep/git/git.update none
@@ -57,22 +59,24 @@ prepare() {
 }
 
 build() {
-	cmake \
-		-G Ninja \
-		-W no-dev \
-		-D CMAKE_BUILD_TYPE=Release \
-		-D CMAKE_INSTALL_PREFIX=/usr \
-		-D CMAKE_INSTALL_DATADIR=share/$pkgname \
-		-D ENABLE_REPRODUCIBLE_BUILDS=ON \
-		-D BUILD_SHARED_LIBS=OFF \
-		-D DEBUG_OUTPUT=OFF \
-		-D USE_SYSTEM_CMARK=ON \
-		-D USE_SYSTEM_GIT=ON \
-		-D USE_SYSTEM_HUNSPELL=ON \
-		-D USE_SYSTEM_LIBSSH2=ON \
-		-D USE_SYSTEM_LUA=ON \
-		-D USE_SYSTEM_OPENSSL=ON \
-		-D LUA_MODULES_PATH=/usr/lib/lua/5.4 \
+	local _flags=(
+		-G Ninja
+		-W no-dev
+		-D CMAKE_BUILD_TYPE=None
+		-D CMAKE_INSTALL_PREFIX=/usr
+		-D CMAKE_INSTALL_DATADIR=share/$pkgname
+		-D ENABLE_REPRODUCIBLE_BUILDS=ON
+		-D BUILD_SHARED_LIBS=OFF
+		-D DEBUG_OUTPUT=OFF
+		-D USE_SYSTEM_CMARK=ON
+		-D USE_SYSTEM_GIT=ON
+		-D USE_SYSTEM_HUNSPELL=ON
+		-D USE_SYSTEM_LIBSSH2=ON
+		-D USE_SYSTEM_LUA=ON
+		-D USE_SYSTEM_OPENSSL=ON
+		-D LUA_MODULES_PATH=/usr/lib/lua/5.4
+	)
+	cmake "${_flags[@]}" \
 		-B build \
 		-S "${pkgname^}"
 	ninja -C build
