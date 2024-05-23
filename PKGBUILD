@@ -8,9 +8,9 @@
 # Note: source array can be synced with an Electron release after updating $pkgver with:
 # bash -c 'source PKGBUILD; _update_sources'
 
-pkgver=29.4.0
+pkgver=29.4.1
 _gcc_patches=122-3
-pkgrel=2
+pkgrel=1
 _major_ver=${pkgver%%.*}
 pkgname="electron${_major_ver}"
 pkgdesc='Build cross platform desktop apps with web technologies'
@@ -230,7 +230,7 @@ source=("git+https://github.com/electron/electron.git#tag=v$pkgver"
         chromium-mirror_third_party_vulkan-deps_vulkan-validation-layers_src::git+https://chromium.googlesource.com/external/github.com/KhronosGroup/Vulkan-ValidationLayers.git#commit=d26b50b03815ff226e6df478b4ddc4b98d8deaee
         # END managed sources
         )
-sha256sums=('6d68eb635b75022fe37f1cd55c5dcb857cb2df7b418f035b4347ac76184c300c'
+sha256sums=('0f58393e0d9d6cc038b5d60323989c8e52fc898ab127c4a39fdb9c88879271e7'
             '7916b80d801bcc5c23cb9dd1ae820d939af3ef640dbcb2a3c8d6780dcf6ba7a3'
             '8c256b2a9498a63706a6e7a55eadbeb8cc814be66a75e49aec3716c6be450c6c'
             '3bd35dab1ded5d9e1befa10d5c6c4555fe0a76d909fb724ac57d0bf10cb666c1'
@@ -464,6 +464,9 @@ prepare() {
 
   src/electron/script/apply_all_patches.py \
       src/electron/patches/config.json
+
+  # https://github.com/nodejs/node/issues/48444
+  export UV_USE_IO_URING=0
 
   pushd src
   pushd electron
