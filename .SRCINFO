@@ -1,6 +1,6 @@
 pkgbase = electron28
 	pkgdesc = Build cross platform desktop apps with web technologies
-	pkgver = 28.3.2
+	pkgver = 28.3.3
 	pkgrel = 1
 	url = https://electronjs.org
 	arch = x86_64
@@ -83,7 +83,7 @@ pkgbase = electron28
 	optdepends = trash-cli: file deletion support (trash-put)
 	optdepends = xdg-utils: open URLs with desktop’s default (xdg-email, xdg-open)
 	options = !lto
-	source = git+https://github.com/electron/electron.git#tag=v28.3.2
+	source = git+https://github.com/electron/electron.git#tag=v28.3.3
 	source = https://gitlab.com/Matt.Jolly/chromium-patches/-/archive/120/chromium-patches-120.tar.bz2
 	source = drop-flag-unsupported-by-clang17.patch
 	source = compiler-rt-adjust-paths.patch
@@ -245,7 +245,7 @@ pkgbase = electron28
 	source = chromium-mirror_third_party_vulkan-deps_vulkan-tools_src::git+https://chromium.googlesource.com/external/github.com/KhronosGroup/Vulkan-Tools.git#commit=f7017f23337b90a2b2ceb65a4e1050e8ad89e065
 	source = chromium-mirror_third_party_vulkan-deps_vulkan-utility-libraries_src::git+https://chromium.googlesource.com/external/github.com/KhronosGroup/Vulkan-Utility-Libraries.git#commit=dcfce25b439a2785f2c90b184e1964898070b4f1
 	source = chromium-mirror_third_party_vulkan-deps_vulkan-validation-layers_src::git+https://chromium.googlesource.com/external/github.com/KhronosGroup/Vulkan-ValidationLayers.git#commit=281e1c1c6b51bb6b33f88c18ed4da58ac3024311
-	sha256sums = ebc4aad8b4d940a8381cbf62285142a5b1aabc57f9cdb3304483191f99d722b9
+	sha256sums = fd9395f4ac1482437612c79c6efccc71abd1f29bc4fbebd027c09eaa94ad5d39
 	sha256sums = ffee1082fbe3d0c9e79dacb8405d5a0e1aa94d6745089a30b093f647354894d2
 	sha256sums = 3bd35dab1ded5d9e1befa10d5c6c4555fe0a76d909fb724ac57d0bf10cb666c1
 	sha256sums = b3de01b7df227478687d7517f61a777450dca765756002c80c4915f271e2d961
