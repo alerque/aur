@@ -11,7 +11,7 @@
 
 pkgver=23.3.13
 _gcc_patches=110-patchset-4
-pkgrel=7
+pkgrel=8
 
 _major_ver=${pkgver%%.*}
 pkgname="electron${_major_ver}"
@@ -49,7 +49,7 @@ makedepends=(clang
              python-httplib2
              python-pyparsing
              python-requests
-	     python-setuptools
+             python-setuptools
              python-six
              qt5-base
              wget
@@ -491,6 +491,9 @@ prepare() {
   ln -sfn /usr/bin/java src/third_party/jdk/current/bin/
   src/electron/script/apply_all_patches.py \
       src/electron/patches/config.json
+
+  # https://github.com/nodejs/node/issues/48444
+  export UV_USE_IO_URING=0
 
   pushd src
   pushd electron
