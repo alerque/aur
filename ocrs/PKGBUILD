@@ -1,7 +1,7 @@
 # Maintainer: Caleb Maclennan <caleb@alerque.com>
 
 pkgname=ocrs
-pkgver=0.7.0
+pkgver=0.8.0
 pkgrel=1
 pkgdesc='a modern OCR engine written in Rust'
 arch=(x86_64)
@@ -13,7 +13,7 @@ makedepends=(cargo-nightly)
 _tag="$pkgname-cli-v$pkgver"
 _archive="$pkgname-$_tag"
 source=("$url/archive/$_tag/$_archive.tar.gz")
-sha256sums=('fb223ec32fb525f995a711808fb9132266c7e4a12483eeea0e618193b6fab14f')
+sha256sums=('a5c9826917eea6ffea215969d448bf8409eff159dc2603bbaee37133d96c5f2a')
 
 prepare() {
 	cd "$_archive"
@@ -25,7 +25,7 @@ _srcenv() {
 	cd "$_archive"
 	export RUSTUP_TOOLCHAIN=nightly
 	export CARGO_TARGET_DIR=target
-	CFLAGS+=" -ffat-lto-objects"
+	CFLAGS+=' -ffat-lto-objects'
 }
 
 build() {
