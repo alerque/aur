@@ -11,7 +11,7 @@
 
 pkgver=23.3.13
 _gcc_patches=110-patchset-4
-pkgrel=8
+pkgrel=9
 
 _major_ver=${pkgver%%.*}
 pkgname="electron${_major_ver}"
@@ -35,6 +35,8 @@ makedepends=(clang
              http-parser
              java-runtime-headless
              libnotify
+             libpulse
+             libva
              lld
              llvm
              ninja
@@ -415,7 +417,7 @@ sha256sums=('0fc3b2f75594191960a3c6703e03ae2dd3d794616ca910c95bfc76d93cac586d'
 declare -gA _system_libs=(
   [brotli]=brotli
   [dav1d]="dav1d libdav1d.so"
-  [ffmpeg]=ffmpeg
+  # [ffmpeg]=ffmpeg
   [flac]="flac libFLAC.so"
   [fontconfig]="fontconfig libfontconfig.so"
   [freetype]="freetype2 libfreetype.so"
