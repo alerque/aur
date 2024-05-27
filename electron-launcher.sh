@@ -20,4 +20,9 @@ for line in "${lines[@]}"; do
     fi
 done
 
+: ${ELECTRON_IS_DEV:=0}
+export ELECTRON_IS_DEV
+: ${ELECTRON_FORCE_IS_PACKAGED:=true}
+export ELECTRON_FORCE_IS_PACKAGED
+
 exec /usr/lib/${name}/electron "${flags[@]}" "$@"
