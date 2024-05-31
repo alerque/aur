@@ -7,7 +7,7 @@
 BUILDENV+=(!check)
 
 pkgname=zed-git
-pkgver=0.136.2.r48.g70888cf
+pkgver=0.138.2.r36.g2cff075
 pkgrel=1
 pkgdesc='A high-performance, multiplayer code editor from the creators of Atom and Tree-sitter'
 arch=(x86_64)

@@ -1,6 +1,6 @@
 pkgbase = zed-git
 	pkgdesc = A high-performance, multiplayer code editor from the creators of Atom and Tree-sitter
-	pkgver = 0.136.2.r48.g70888cf
+	pkgver = 0.138.2.r36.g2cff075
 	pkgrel = 1
 	url = https://zed.dev
 	arch = x86_64
@@ -30,7 +30,7 @@ pkgbase = zed-git
 	depends = wayland
 	depends = zlib
 	depends = libz.so
-	provides = zed=0.136.2.r48.g70888cf
+	provides = zed=0.138.2.r36.g2cff075
 	provides = zed-editor-git
 	conflicts = zed
 	conflicts = zed-editor-git
