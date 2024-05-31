@@ -5,8 +5,8 @@
 # Contributor: Jiawen Geng
 
 pkgname=github-desktop
-pkgver=3.3.12
-_gitname="release-$pkgver-linux2"
+pkgver=3.3.13
+_gitname="release-$pkgver-linux1"
 pkgrel=1
 pkgdesc='GUI for managing Git and GitHub'
 arch=(x86_64)
@@ -32,7 +32,7 @@ source=("$pkgname::git+https://github.com/shiftkey/desktop.git#tag=$_gitname"
         'git+https://github.com/github/gitignore.git'
         'git+https://github.com/github/choosealicense.com.git'
         "$pkgname.desktop")
-sha256sums=('fc088319ef516508b68dc604691d9391f0944315f6d09784ca096b8081c98f63'
+sha256sums=('0717a34c95c7575c4ead3bcbf8ed51da213445d8be3d4434b081b2da4b578596'
             'SKIP'
             'SKIP'
             'SKIP'
@@ -51,6 +51,8 @@ prepare() {
 
 build() {
 	cd "$pkgname"
+	# https://github.com/nodejs/node/issues/48444
+	export UV_USE_IO_URING=0
 	xvfb-run yarn install
 	xvfb-run yarn build:prod
 }
