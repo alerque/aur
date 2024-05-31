@@ -1,4 +1,4 @@
-[zed-editor-preview]
+[zed-preview]
 source = "github"
 github = "zed-industries/zed"
 include_regex = 'v\d+\.\d+\.\d+-pre'

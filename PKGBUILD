@@ -6,7 +6,7 @@
 # a package to test in the suite, just skip it by default.
 BUILDENV+=(!check)
 
-pkgname=zed-editor-preview
+pkgname=zed-preview
 pkgver=0.138.2
 pkgrel=1
 pkgdesc='A high-performance, multiplayer code editor from the creators of Atom and Tree-sitter'
@@ -38,8 +38,9 @@ makedepends=(cargo
 optdepends=('clang: improved C/C++ language support'
             'eslint: improved Javascript language support'
             'rust-analyzer: improved Rust language support')
-provides=("${pkgname%-preview}=$pkgver")
-conflicts=("${pkgname%-preview}")
+replaces=(zed-editor-preview)
+provides=("${pkgname%-preview}=$pkgver" zed-editor-preview)
+conflicts=("${pkgname%-preview}" zed-editor-preview)
 _archive="zed-$pkgver-pre"
 source=("$_url/archive/v$pkgver-pre/$_archive.tar.gz")
 sha256sums=('6ae24e277eba075ff48167dd97fdc4e5c66a7b3b96e2b88c420493b5d925278a')
