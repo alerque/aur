@@ -6,7 +6,7 @@
 # a package to test in the suite, just skip it by default.
 BUILDENV+=(!check)
 
-pkgname=zed-editor-git
+pkgname=zed-git
 pkgver=0.136.2.r48.g70888cf
 pkgrel=1
 pkgdesc='A high-performance, multiplayer code editor from the creators of Atom and Tree-sitter'
@@ -36,8 +36,9 @@ makedepends=(cargo
              git
              vulkan-headers
              vulkan-validation-layers)
-provides=("${pkgname%-git}=$pkgver")
-conflicts=("${pkgname%-git}")
+replaces=(zed-editor-git)
+provides=("${pkgname%-git}=$pkgver" zed-editor-git)
+conflicts=("${pkgname%-git}" zed-editor-git)
 source=("$pkgname::git+$_url.git")
 sha256sums=('SKIP')
 
