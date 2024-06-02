@@ -1,6 +1,6 @@
 pkgbase = github-desktop
 	pkgdesc = GUI for managing Git and GitHub
-	pkgver = 3.3.13
+	pkgver = 3.3.18
 	pkgrel = 1
 	url = https://desktop.github.com
 	arch = x86_64
@@ -19,12 +19,12 @@ pkgbase = github-desktop
 	depends = unzip
 	optdepends = github-cli: CLI interface for GitHub
 	optdepends = hub: CLI interface for GitHub
-	source = github-desktop::git+https://github.com/shiftkey/desktop.git#tag=release-3.3.13-linux1
+	source = github-desktop::git+https://github.com/shiftkey/desktop.git#tag=release-3.3.18-linux1
 	source = git+https://github.com/github/gemoji.git
 	source = git+https://github.com/github/gitignore.git
 	source = git+https://github.com/github/choosealicense.com.git
 	source = github-desktop.desktop
-	sha256sums = 0717a34c95c7575c4ead3bcbf8ed51da213445d8be3d4434b081b2da4b578596
+	sha256sums = a9812d93959fdf4264ddbd8b4ba93ecc4b1140eba0181820d8e737a0287bde0e
 	sha256sums = SKIP
 	sha256sums = SKIP
 	sha256sums = SKIP
