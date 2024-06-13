@@ -25,10 +25,8 @@ pkgbase = gotenberg
 	source = gotenberg-8.6.0.tar.gz::https://github.com/gotenberg/gotenberg/archive/refs/tags/v8.6.0.tar.gz
 	source = gotenberg.env
 	source = gotenberg.service
-	source = gotenberg.sysusers
 	sha256sums = d4b53cfecfefe34b23dc24bf1814cd23fde368c91b08359676ef47c022975913
 	sha256sums = bbdbba24b200b31dfd0580dc244eceae91cababc4851f7489b399276bcc29897
-	sha256sums = efaa1118db90ccee5a1321299708d8d12b1d5fd0d4841b940ecd1e6ceaa41b76
-	sha256sums = 2b553eb173245dfa23c48d827d69bbcd63e4e1bf57d5f227b91e62a82885ae3c
+	sha256sums = 1b3567e2fe374ce104150d198de3fe372724d3b8510aba64716e3dcb3b37c50a
 
 pkgname = gotenberg

@@ -1,14 +1,33 @@
 [Unit]
-Description = Gotenberg Daemon
-Wants = network-online.target
-After = network-online.target
+Description=Gotenberg Daemon
+Wants=network-online.target
+After=network-online.target
 
 [Service]
-User = gotenberg
-Group = gotenberg
-Restart = on-failure
-EnvironmentFile = -/etc/default/gotenberg
-ExecStart = /usr/bin/gotenberg $APPEND_ARGS
+Restart=on-failure
+EnvironmentFile=-/etc/default/gotenberg
+ExecStart=/usr/bin/gotenberg $APPEND_ARGS
+RestartSec=5
+TimeoutStopSec=10
+
+#isolation
+DynamicUser=yes
+LockPersonality=yes
+NoNewPrivileges=yes
+PrivateMounts=yes
+PrivateTmp=yes
+ProtectClock=yes
+ProtectControlGroups=yes
+ProtectHome=yes
+ProtectHostname=yes
+ProtectKernelLogs=yes
+ProtectKernelModules=no
+ProtectKernelTunables=no
+ProtectSystem=yes
+RemoveIPC=yes
+RestrictNamespaces=yes
+RestrictRealtime=yes
+RestrictSUIDSGID=yes
 
 [Install]
-WantedBy = multi-user.target
+WantedBy=multi-user.target

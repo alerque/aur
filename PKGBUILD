@@ -14,12 +14,10 @@ depends=("chromium" "libreoffice-fresh" "pdftk" "perl-image-exiftool" "qpdf" "un
 makedepends=("go")
 source=("${pkgname}-${pkgver}.tar.gz::${url}/archive/refs/tags/v${pkgver}.tar.gz"
         "${pkgname}.env"
-        "${pkgname}.service"
-        "${pkgname}.sysusers")
+        "${pkgname}.service")
 sha256sums=('d4b53cfecfefe34b23dc24bf1814cd23fde368c91b08359676ef47c022975913'
             'bbdbba24b200b31dfd0580dc244eceae91cababc4851f7489b399276bcc29897'
-            'efaa1118db90ccee5a1321299708d8d12b1d5fd0d4841b940ecd1e6ceaa41b76'
-            '2b553eb173245dfa23c48d827d69bbcd63e4e1bf57d5f227b91e62a82885ae3c')
+            '1b3567e2fe374ce104150d198de3fe372724d3b8510aba64716e3dcb3b37c50a')
 
 build() {
     cd "${pkgname}-${pkgver}"
@@ -34,7 +32,6 @@ build() {
 package() {
     install -Dm644 "${pkgname}.env"      "${pkgdir}/etc/default/${pkgname}"
     install -Dm644 "${pkgname}.service"  "${pkgdir}/usr/lib/systemd/system/${pkgname}.service"
-    install -Dm644 "${pkgname}.sysusers" "${pkgdir}/usr/lib/sysusers.d/${pkgname}.conf"
 
     cd "${pkgname}-${pkgver}"
     install -Dm755 "${pkgname}"          "${pkgdir}/usr/bin/${pkgname}"
