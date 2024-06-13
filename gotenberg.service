@@ -1,0 +1,14 @@
+[Unit]
+Description = Gotenberg Daemon
+Wants = network-online.target
+After = network-online.target
+
+[Service]
+User = gotenberg
+Group = gotenberg
+Restart = on-failure
+EnvironmentFile = -/etc/default/gotenberg
+ExecStart = /usr/bin/gotenberg $APPEND_ARGS
+
+[Install]
+WantedBy = multi-user.target
