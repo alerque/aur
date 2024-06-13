@@ -1,6 +1,6 @@
 pkgbase = gitlab-container-registry
 	pkgdesc = GitLab Container Registry daemon
-	pkgver = 4.4.0
+	pkgver = 4.5.0
 	pkgrel = 1
 	url = https://gitlab.com/gitlab-org/container-registry
 	arch = x86_64
@@ -8,9 +8,9 @@ pkgbase = gitlab-container-registry
 	license = Apache-2.0
 	makedepends = go
 	backup = etc/gitlab-container-registry/config.yml
-	source = https://gitlab.com/gitlab-org/container-registry/-/archive/v4.4.0-gitlab/container-registry-v4.4.0-gitlab.tar.bz2
+	source = https://gitlab.com/gitlab-org/container-registry/-/archive/v4.5.0-gitlab/container-registry-v4.5.0-gitlab.tar.bz2
 	source = gitlab-container-registry.service
-	sha256sums = 7378725dddb43a176b1920251b24611f7c2479efb1e52b22e1e37965306051dd
+	sha256sums = 98b75704807eb6a3201d50429c152092d20c64eeb8ae2abb195db9dd01d487be
 	sha256sums = 61cd00e2981843bdeffe36767da20f09df1ca47cf814caf95d881c5c703f2004
 
 pkgname = gitlab-container-registry
