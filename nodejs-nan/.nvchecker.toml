@@ -1,5 +1,0 @@
-[nodejs-nan]
-source = "github"
-github = "rvagg/nan"
-prefix = "v"
-use_max_tag = true
