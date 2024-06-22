@@ -4,7 +4,7 @@
 
 pkgname=remarshal
 pkgver=0.18.0
-pkgrel=2
+pkgrel=3
 pkgdesc='Convert between CBOR, JSON, MessagePack, TOML, and YAML'
 arch=(any)
 url="https://github.com/dbohdan/$pkgname"
@@ -13,7 +13,10 @@ _pydeps=(cbor2
          dateutil
          tomlkit
          u-msgpack
-         yaml)
+         yaml
+         colorama
+         rich-argparse
+         ruamel-yaml)
 depends=(python
          "${_pydeps[@]/#/python-}")
 makedepends=(python-build python-installer python-wheel python-poetry-core)
