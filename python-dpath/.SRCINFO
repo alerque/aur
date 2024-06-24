@@ -1,7 +1,7 @@
 pkgbase = python-dpath
 	pkgdesc = A python library for accessing and searching dictionaries via /slashed/paths ala xpath
-	pkgver = 2.1.6
-	pkgrel = 3
+	pkgver = 2.2.0
+	pkgrel = 1
 	url = https://pypi.org/project/dpath
 	arch = any
 	license = MIT
@@ -10,7 +10,7 @@ pkgbase = python-dpath
 	makedepends = python-wheel
 	makedepends = python-setuptools
 	depends = python
-	source = https://files.pythonhosted.org/packages/source/d/dpath/dpath-2.1.6.tar.gz
-	sha256sums = f1e07c72e8605c6a9e80b64bc8f42714de08a789c7de417e49c3f87a19692e47
+	source = https://files.pythonhosted.org/packages/source/d/dpath/dpath-2.2.0.tar.gz
+	sha256sums = 34f7e630dc55ea3f219e555726f5da4b4b25f2200319c8e6902c394258dd6a3e
 
 pkgname = python-dpath
