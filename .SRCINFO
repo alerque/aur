@@ -1,14 +1,14 @@
 pkgbase = ghostty-git
 	pkgdesc = Fast, native, feature-rich terminal emulator pushing modern features
-	pkgver = r6283.54ccefe8
+	pkgver = r6453.9085f86c
 	pkgrel = 1
 	url = https://github.com/ghostty-org/ghostty
 	arch = x86_64
 	arch = aarch64
 	arch = i686
 	makedepends = git
-	makedepends = zig>=0.12.0
-	makedepends = zig<0.13.0
+	makedepends = zig>=0.13.0
+	makedepends = zig<0.14.0
 	depends = bzip2
 	depends = fontconfig
 	depends = freetype2
