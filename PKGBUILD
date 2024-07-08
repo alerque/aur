@@ -3,7 +3,7 @@
 
 pkgname=zellij-git
 _pkgname=zellij
-pkgver=0.39.2.r55.g65a7fcf
+pkgver=0.40.1.r33.gabe0f87
 pkgrel=1
 pkgdesc="A terminal multiplexer"
 arch=('x86_64' 'i686' 'armv6h' 'armv7h')
@@ -20,6 +20,7 @@ provides=("zellij=$pkgver")
 conflicts=('zellij')
 source=("git+$_url.git")
 sha256sums=('SKIP')
+options=(!lto)
 
 prepare() {
   cd "$_pkgname"
