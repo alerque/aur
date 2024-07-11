@@ -1,6 +1,10 @@
 #!/usr/bin/env bash
 
-XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-"${HOME}/.config"}"
+if
+	test -z "${XDG_CONFIG_HOME}"
+then
+	XDG_CONFIG_HOME="${HOME}/.config"
+fi
 
 CONF_FILE="${XDG_CONFIG_HOME}/brave-flags.conf"
 
@@ -12,9 +16,8 @@ fi
 
 for CONF_LINE in "${CONF_LIST[@]}"
 do
-	if ! [[
-		"${CONF_LINE}" =~ ^[[:space:]]*(#|$)
-	]]
+	if
+		grep -Evq '^[[:space:]]*(#|$)' <<< "${CONF_LINE}"
 	then
 		FLAG_LIST+=("${CONF_LINE}")
 	fi
