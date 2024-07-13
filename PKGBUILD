@@ -30,7 +30,7 @@ build() {
         -X 'github.com/${pkgname}/${pkgname}/v8/cmd.Version=${pkgver}' \
         -extldflags '${LDFLAGS}'
     "
-    go build -o "${pkgname}" -ldflags "$ldflags" "cmd/${pkgname}/main.go"
+    go build -trimpath -o "${pkgname}" -ldflags "$ldflags" "cmd/${pkgname}/main.go"
 }
 
 package() {
