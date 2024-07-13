@@ -20,6 +20,10 @@ sha256sums=('98a60ce1903625eaed69156fc2b9b0d9479a3aec3b1e7c54f92aca5fcf4bd6c9'
             '1b3567e2fe374ce104150d198de3fe372724d3b8510aba64716e3dcb3b37c50a')
 
 build() {
+    export CGO_CPPFLAGS="${CPPFLAGS}"
+    export CGO_CFLAGS="${CFLAGS}"
+    export CGO_CXXFLAGS="${CXXFLAGS}"
+    
     cd "${pkgname}-${pkgver}"
     local ldflags="
         -s -w \
