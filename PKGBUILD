@@ -6,7 +6,7 @@
 pkgbase=keybase
 pkgname=(keybase kbfs keybase-gui)
 pkgdesc='CLI tool for GPG with keybase.io'
-pkgver=6.2.8
+pkgver=6.3.1
 pkgrel=1
 arch=(x86_64)
 url=https://keybase.io
@@ -23,10 +23,10 @@ _archive="$pkgbase-v$pkgver"
 source=("$_url/releases/download/v$pkgver/$_archive.tar.xz"{,.sig}
         keybase-gui.in
         0001-Don-t-use-electron-to-build.patch)
-sha256sums=('a17f9b987a20753922d1237e28ca6f1147af3e89e9c1d2dd22a11b5b083fdc33'
+sha256sums=('3eb8637657f8707e8ef97117ab960beb6bb6903ac198809d074dffa17fb1b3b8'
             'SKIP'
             'f5377a5b154c9ffa3f4da82f8746306660195a4b4fb0cd80664777023bd81b66'
-            'f4a54778a914bbdb7340b9d0349f68e96171763e2a34436bcf8faae7a80b9c11')
+            'd805398390b5f7dfb5056462e3ba5bd4568c6aa3b9e40fd63158f15adc3fc8cd')
 validpgpkeys=('222B85B0F90BE2D24CFEB93F47484E50656D16C7') # Keybase.io Code Signing (v1) <code@keybase.io>
 
 prepare() {
@@ -78,7 +78,9 @@ build() {
 
 	cd ../shared
 	yarn install
-	yarn run package --appVersion=$pkgver
+	# --electronVersion is used to determine JS/ES feature compatibility (see patch),
+	# thus minor or patch versions do not matter
+	yarn run package --appVersion=$pkgver --electronVersion=${_electron#electron}
 }
 
 package_keybase() {

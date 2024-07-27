@@ -1,44 +1,85 @@
-From d7479bc66f1ab73f971a129c439ee886ba17fde2 Mon Sep 17 00:00:00 2001
+From 68c2080117f4495edc431ca34d38d16484f03236 Mon Sep 17 00:00:00 2001
 From: Eli Schwartz <eschwartz93@gmail.com>
 Date: Thu, 21 Jun 2018 05:00:37 -0400
 Subject: [PATCH] Don't use electron to build
 
+[intelfx: now we need Electron version nevertheless for webpack, so
+ accept it as a command-line argument]
 ---
- shared/desktop/package.desktop.tsx   | 22 +---------------------
- shared/desktop/yarn-helper/index.tsx |  2 --
- 2 files changed, 1 insertion(+), 23 deletions(-)
+ shared/desktop/package.desktop.tsx       | 26 ++++++------------------
+ shared/desktop/webpack.config.babel.d.ts |  2 +-
+ shared/desktop/webpack.config.babel.js   |  7 +++----
+ shared/desktop/yarn-helper/index.tsx     |  2 --
+ 4 files changed, 10 insertions(+), 27 deletions(-)
 
 diff --git a/shared/desktop/package.desktop.tsx b/shared/desktop/package.desktop.tsx
-index 5fb8adf4b4..cf3b401f0e 100644
+index 6941dda58b..747d4ddbad 100644
 --- a/shared/desktop/package.desktop.tsx
 +++ b/shared/desktop/package.desktop.tsx
-@@ -154,14 +154,7 @@ async function main() {
-   }
+@@ -6,7 +6,6 @@ import path from 'path'
+ import webpack from 'webpack'
+ import rootConfig from './webpack.config.babel'
+ import {readdir} from 'node:fs/promises'
+-import {electronChecksums} from './electron-sums'
  
-   // use the same version as the currently-installed electron
--  console.log('Finding electron version')
--  try {
--    packagerOpts.electronVersion = require('../package.json').devDependencies.electron
--    console.log('Found electron version:', packagerOpts.electronVersion)
--  } catch (err) {
--    console.log("Couldn't parse yarn list to find electron:", err)
--    process.exit(1)
--  }
-+  console.log('Finding electron version - skipped')
+ const TEMP_SKIP_BUILD: boolean = false
  
+@@ -48,6 +47,7 @@ const getArgs = () => {
+   const args = process.argv.slice(2)
+   const ret = {
+     appVersion: '',
++    electronVersion: '',
+     arch: '',
+     comment: '',
+     icon: '',
+@@ -82,14 +82,13 @@ const shouldUseAsar = false
+ const arch = argv.arch || os.arch()
+ const platform = argv.platform || os.platform()
+ const appVersion = argv.appVersion || '0.0.0'
++const electronVersion = argv.electronVersion || undefined
+ const comment = argv.comment
+ const outDir = argv.outDir
+ const saltpackIcon = argv.saltpackIcon
+ const appCopyright = 'Copyright (c) 2024, Keybase'
+ const companyName = 'Keybase, Inc.'
+-const electronVersion = (require('../package.json') as {devDependencies: {electron: string}}).devDependencies
+-  .electron
+-console.log('Found electron version:', electronVersion)
++console.log('Using electron version:', electronVersion)
+ 
+ const packagerOpts: Options = {
+   appBundleId: 'keybase.Electron',
+@@ -99,8 +98,8 @@ const packagerOpts: Options = {
+   buildVersion: String(appVersion) + String(comment),
+   darwinDarkModeSupport: true,
+   dir: desktopPath('./build'),
+-  download: {checksums: electronChecksums},
+-  electronVersion,
++  download: {checksums: undefined},
++  electronVersion: undefined,
+   // macOS file association to saltpack files
+   extendInfo: {
+     CFBundleDocumentTypes: [
+@@ -185,7 +184,7 @@ async function main() {
+ async function startPack() {
+   console.log('Starting webpack build\nInjecting __VERSION__: ', appVersion)
+   process.env['APP_VERSION'] = appVersion
+-  const webpackConfig = rootConfig(null, {mode: 'production'})
++  const webpackConfig = rootConfig(null, {mode: 'production', targets: {electron: electronVersion}})
    try {
-     await startPack()
-@@ -199,19 +192,6 @@ async function startPack() {
+     if (TEMP_SKIP_BUILD) {
+     } else {
+@@ -210,19 +209,6 @@ async function startPack() {
      fs.removeSync(desktopPath('build/desktop/dist/fonts'))
  
      rimrafSync(desktopPath('release'))
 -
--    let aps = [[platform, arch]]
+-    const aps = [[platform, arch]]
 -    await Promise.all(
 -      aps.map(async ([plat, arch]) => {
 -        try {
--          const appPaths = await pack(plat, arch)
--          postPack(appPaths, plat, arch)
+-          const appPaths = await pack(plat!, arch!)
+-          postPack(appPaths, plat!, arch!)
 -        } catch (err) {
 -          console.error(err)
 -          process.exit(1)
@@ -48,8 +89,55 @@ index 5fb8adf4b4..cf3b401f0e 100644
    } catch (err) {
      console.error(err)
      process.exit(1)
+diff --git a/shared/desktop/webpack.config.babel.d.ts b/shared/desktop/webpack.config.babel.d.ts
+index 2a31c8e755..32f56218e8 100644
+--- a/shared/desktop/webpack.config.babel.d.ts
++++ b/shared/desktop/webpack.config.babel.d.ts
+@@ -1,2 +1,2 @@
+-declare let ignore: (n: null, o: {mode: 'production' | 'development'}) => {[key: string]: unknown}
++declare let ignore: (n: null, o: {mode: 'production' | 'development', targets: unknown}) => {[key: string]: unknown}
+ export default ignore
+diff --git a/shared/desktop/webpack.config.babel.js b/shared/desktop/webpack.config.babel.js
+index 790177201b..c1c6c6947d 100644
+--- a/shared/desktop/webpack.config.babel.js
++++ b/shared/desktop/webpack.config.babel.js
+@@ -11,7 +11,6 @@ import ReactRefreshWebpackPlugin from '@pmmmwh/react-refresh-webpack-plugin'
+ import CircularDependencyPlugin from 'circular-dependency-plugin'
+ 
+ const enableWDYR = require('../util/why-did-you-render-enabled')
+-const elecVersion = require('../package.json').devDependencies.electron
+ // true if you want to debug unused code. This makes single chunks so you can grep for 'unused harmony' in the output in desktop/dist
+ const debugUnusedChunks = false
+ const enableCircularDepCheck = false
+@@ -29,7 +28,7 @@ if (enableWDYR || debugUnusedChunks || enableCircularDepCheck || evalDevtools) {
+ }
+ 
+ // When we start the hot server we want to build the main/dll without hot reloading statically
+-const config = (_, {mode}) => {
++const config = (_, {mode, targets}) => {
+   const isDev = mode !== 'production'
+   const isHot = isDev && !!process.env['HOT']
+   const isProfile = !isDev && !!process.env['PROFILE']
+@@ -42,7 +41,7 @@ const config = (_, {mode}) => {
+   const fileSuffix = isDev ? '.dev' : isProfile ? '.profile' : ''
+ 
+   console.error('Flags: ', {isDev, isHot, isProfile})
+-  console.error('Detected electron from package.json: ', elecVersion)
++  console.error('Targets: ', targets)
+ 
+   const makeRules = nodeThread => {
+     const babelRule = {
+@@ -56,7 +55,7 @@ const config = (_, {mode}) => {
+           ...(isHot && !nodeThread ? ['react-refresh/babel'] : []),
+         ],
+         presets: [
+-          ['@babel/preset-env', {debug: false, modules: false, targets: {electron: elecVersion}}],
++          ['@babel/preset-env', {debug: false, modules: false, targets}],
+           [
+             '@babel/preset-react',
+             {
 diff --git a/shared/desktop/yarn-helper/index.tsx b/shared/desktop/yarn-helper/index.tsx
-index 55a4ee8234..c47cde5769 100644
+index 22785d30d4..9c9e602c61 100644
 --- a/shared/desktop/yarn-helper/index.tsx
 +++ b/shared/desktop/yarn-helper/index.tsx
 @@ -1,6 +1,5 @@
@@ -59,8 +147,8 @@ index 55a4ee8234..c47cde5769 100644
  import fontCommands from './font'
  import prettierCommands from './prettier'
  import {execSync} from 'child_process'
-@@ -13,7 +12,6 @@ const [, , command, ...rest] = process.argv
- const commands = {
+@@ -22,7 +21,6 @@ type Command = {
+ const commands: {[key: string]: Command} = {
    ...buildCommands,
    ...fontCommands,
 -  ...electronComands,
@@ -68,5 +156,5 @@ index 55a4ee8234..c47cde5769 100644
    help: {
      code: () => {
 -- 
-2.45.1
+2.46.0.5.ga2c7344ef8
 
