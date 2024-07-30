@@ -1,5 +1,0 @@
-[serie]
-source = "github"
-github = "lusingander/serie"
-prefix = "v"
-use_max_tag = true
