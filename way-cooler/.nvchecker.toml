@@ -1,5 +1,0 @@
-[way-cooler]
-source = "github"
-github = "way-cooler/way-cooler"
-prefix = "v"
-use_max_tag = true
