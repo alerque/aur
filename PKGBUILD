@@ -80,7 +80,7 @@ build() {
 
 	cd ../shared
 	yarn install
-	yarn run package --appVersion $pkgver
+	yarn run package --appVersion=$pkgver
 }
 
 package_keybase() {
