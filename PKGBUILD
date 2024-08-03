@@ -18,7 +18,7 @@ makedepends=(git
              jq
              moreutils
              yarn)
-_electron=electron30
+_electron=electron31
 _archive="$pkgbase-v$pkgver"
 source=("$_url/releases/download/v$pkgver/$_archive.tar.xz"{,.sig}
         keybase-gui.in
