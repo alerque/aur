@@ -1,0 +1,24 @@
+#!/bin/bash
+
+keybase ctl init
+
+if ! keybase version --assert-matching &>/dev/null; then
+    echo "Keybase was updated, restarting services" >&2
+    set -x
+    systemctl --user daemon-reload
+    systemctl --user restart keybase kbfs
+    { set +x; } &>/dev/null
+else
+    systemctl --user start keybase kbfs
+fi
+
+if (( $# )) || systemctl --user is-active --quiet keybase.gui; then
+    exec @electron@ /usr/share/keybase-app "$@"
+else
+    if [[ ${KEYBASE_AUTOSTART+set} ]]; then
+        systemctl --user import-environment KEYBASE_AUTOSTART
+    else
+        systemctl --user unset-environment KEYBASE_AUTOSTART
+    fi
+    exec systemctl --user start --wait keybase.gui
+fi
