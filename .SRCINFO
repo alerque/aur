@@ -33,6 +33,6 @@ pkgname = kbfs
 
 pkgname = keybase-gui
 	pkgdesc = GUI frontend for GPG with keybase.io
-	depends = electron22
+	depends = electron30
 	depends = keybase
 	depends = kbfs
