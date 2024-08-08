@@ -1,0 +1,4 @@
+[taskfinder]
+source = "git"
+git = "https://codeberg.org/kdwarn/taskfinder.git"
+prefix = "v"
