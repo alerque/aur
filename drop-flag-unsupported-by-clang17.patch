@@ -1,0 +1,26 @@
+--- build/config/compiler/BUILD.gn.orig	2024-06-12 05:08:42.553739979 +0200
++++ build/config/compiler/BUILD.gn	2024-06-12 05:12:42.340270420 +0200
+@@ -568,23 +568,6 @@
+       }
+     }
+ 
+-    # TODO(crbug.com/40283598): This causes binary size growth and potentially
+-    # other problems.
+-    # TODO(crbug.com/40284925): This isn't supported by Cronet's mainline llvm version.
+-    if (default_toolchain != "//build/toolchain/cros:target" &&
+-        !llvm_android_mainline) {
+-      cflags += [
+-        "-mllvm",
+-        "-split-threshold-for-reg-with-hint=0",
+-      ]
+-      if (use_thin_lto && is_a_target_toolchain) {
+-        if (is_win) {
+-          ldflags += [ "-mllvm:-split-threshold-for-reg-with-hint=0" ]
+-        } else {
+-          ldflags += [ "-Wl,-mllvm,-split-threshold-for-reg-with-hint=0" ]
+-        }
+-      }
+-    }
+ 
+     # TODO(crbug.com/40192287): Investigate why/if this should be needed.
+     if (is_win) {
