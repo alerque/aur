@@ -8,7 +8,7 @@
 # Note: source array can be synced with an Electron release after updating $pkgver with:
 # bash -c 'source PKGBUILD; _update_sources'
 
-pkgver=32.0.0
+pkgver=32.0.1
 _gcc_patches=127-1
 pkgrel=1
 _major_ver=${pkgver%%.*}
@@ -67,6 +67,7 @@ source=("git+https://github.com/electron/electron.git#tag=v$pkgver"
         # Chromium
         allow-ANGLEImplementation-kVulkan.patch
         compiler-rt-adjust-paths.patch
+        increase-fortify-level.patch
         blink-fix-missing-stdlib-include.patch
         # Electron
         default_app-icon.patch
@@ -238,10 +239,11 @@ source=("git+https://github.com/electron/electron.git#tag=v$pkgver"
         chromium-mirror_third_party_openscreen_src_third_party_tinycbor_src::git+https://chromium.googlesource.com/external/github.com/intel/tinycbor.git#commit=d393c16f3eb30d0c47e6f9d92db62272f0ec4dc7
         # END managed sources
         )
-sha256sums=('d5e5b6e773e5dac1616d76535d6db9d5ab6da911b69f2b1eb7145bca5a18ef9f'
+sha256sums=('949031dea79ba4d5b90e447259836d50c735fb51f7b8d48aafafb37c2b78df64'
             '3dfc43d901b96273201ba6d6d8b932b07c3661942d42a8bb0aae2c547757c73d'
             '1a5bc75a90abad153c8eb6dbdce138132a5f11190b0a40c925958a72d706b2aa'
             'b3de01b7df227478687d7517f61a777450dca765756002c80c4915f271e2d961'
+            'd634d2ce1fc63da7ac41f432b1e84c59b7cceabf19d510848a7cff40c8025342'
             'a4a822e135b253c93089a80c679842cc470c6936742767ae09d952646889abd6'
             'dd2d248831dd4944d385ebf008426e66efe61d6fdf66f8932c963a12167947b4'
             '13fcf26193f4417fd5dfbc82a3f24e5c7a1cce82f729f6a73f1b1d3a7b580b34'
