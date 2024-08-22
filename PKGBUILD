@@ -1,5 +1,5 @@
 pkgname=clipper2
-pkgver=1.3.0
+pkgver=1.4.0
 pkgrel=1
 pkgdesc="Polygon Clipping and Offsetting"
 arch=('x86_64')
@@ -7,12 +7,7 @@ url="https://github.com/AngusJohnson/Clipper2"
 license=('BSL-1.0')
 depends=('glibc' 'gcc-libs')
 source=("https://github.com/AngusJohnson/Clipper2/archive/refs/tags/Clipper2_${pkgver}.tar.gz")
-sha256sums=('8e537ec320e140afaa8fba1f23120416693cc1d71b0f76ad801d24b88b5e0b3c')
-
-prepare() {
-  cd "$srcdir"/Clipper2-Clipper2_${pkgver}/
-  curl -L https://github.com/AngusJohnson/Clipper2/pull/781.patch | patch -p1
-}
+sha256sums=('b83f71bb6a338f4f82116089c5ae867dbc43a2d651b5441380970dd966edd959')
 
 build () {
   cd "$srcdir"/Clipper2-Clipper2_${pkgver}/CPP
