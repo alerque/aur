@@ -1,6 +1,6 @@
 pkgbase = python-glyphslib
 	pkgdesc = A bridge from Glyphs source files (.glyphs) to UFOs
-	pkgver = 6.8.1
+	pkgver = 6.8.2
 	pkgrel = 1
 	url = https://github.com/googlefonts/glyphsLib
 	arch = any
@@ -23,7 +23,7 @@ pkgbase = python-glyphslib
 	depends = python-unicodedata2
 	optdepends = python-defcon
 	optdepends = python-ufonormalizer
-	source = https://files.pythonhosted.org/packages/source/g/glyphsLib/glyphslib-6.8.1.tar.gz
-	sha256sums = 891a6492c1c5154a1d13c8f54367ad2b146afcab90a05cc233f158b4359b0d30
+	source = https://files.pythonhosted.org/packages/source/g/glyphsLib/glyphslib-6.8.2.tar.gz
+	sha256sums = eacec7167afdba339dff30b1ff248a6a9ca28aa3da2647e00568cf03b6e84b5d
 
 pkgname = python-glyphslib
