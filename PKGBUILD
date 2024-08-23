@@ -50,9 +50,10 @@ makedepends=(clang
              python-pyparsing
              python-requests
              python-six
+             qt5-base
+             rsync
              rust
              rust-bindgen
-             qt5-base
              wget
              yarn)
 optdepends=('kde-cli-tools: file deletion support (kioclient5)'
@@ -478,8 +479,9 @@ prepare() {
   # needs newer clang to read the bundled PGO profile
   # src/tools/update_pgo_profiles.py --target=linux update \
   #   --gs-url-base=chromium-optimization-profiles/pgo_profiles
-  depot_tools/download_from_google_storage.py --no_resume --extract --no_auth \
-    --bucket chromium-nodejs -s src/third_party/node/node_modules.tar.gz.sha1
+
+  # https://gitlab.archlinux.org/archlinux/packaging/packages/electron32/-/issues/1
+  src/third_party/node/update_npm_deps
 
   src/electron/script/apply_all_patches.py \
       src/electron/patches/config.json
