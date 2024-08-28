@@ -1,0 +1,12 @@
+pkgbase = departure-mono-font
+	pkgdesc = a monospaced pixel font with a lo-fi technical vibe
+	pkgver = 1.346
+	pkgrel = 1
+	url = https://departuremono.com
+	arch = any
+	license = OFL
+	provides = departure-mono-font
+	source = https://departuremono.com/assets/DepartureMono-1.346.zip
+	sha256sums = 1e48dac12bf9b0e3edf4031f839667f4020a0d78da3c07bc402814ae81f9bb5c
+
+pkgname = otf-departure-mono
