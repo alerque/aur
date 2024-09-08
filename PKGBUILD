@@ -3,7 +3,7 @@
 _pkgbasename=ghostty
 pkgname=${_pkgbasename}-git
 pkgrel=1
-pkgver=r6453.9085f86c
+pkgver=r7224.45019913
 pkgdesc="Fast, native, feature-rich terminal emulator pushing modern features"
 arch=('x86_64' 'aarch64' 'i686')
 url="https://github.com/ghostty-org/${_pkgbasename}"
@@ -22,7 +22,7 @@ depends=(
 	'pixman'
 	'zlib'
 )
-makedepends=('git' 'zig>=0.13.0' 'zig<0.14.0')
+makedepends=('git' 'zig>=0.13.0' 'zig<0.14.0' 'pandoc')
 source=("git+ssh://git@github.com/ghostty-org/${_pkgbasename}")
 sha256sums=('SKIP')
 
@@ -34,12 +34,12 @@ pkgver() {
 build() {
         cd "${srcdir}/${_pkgbasename}"
 
-        zig build -Doptimize=ReleaseFast -Dstatic=false
+        zig build -Doptimize=ReleaseFast -Demit-docs -Dstatic=false
 }
 
 package() {
 	cd "${srcdir}/${_pkgbasename}"
 
-	zig build -Doptimize=ReleaseFast -Dstatic=false -p "$pkgdir/usr"
+	zig build -Doptimize=ReleaseFast -Demit-docs -Dstatic=false -p "$pkgdir/usr"
 	# install -D -m644 LICENSE "${pkgdir}/usr/share/licenses/$_pkgbasename/LICENSE"
 }
