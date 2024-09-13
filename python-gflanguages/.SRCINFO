@@ -1,6 +1,6 @@
 pkgbase = python-gflanguages
 	pkgdesc = API for evaluating language support in the Google Fonts collection
-	pkgver = 0.6.3
+	pkgver = 0.6.4
 	pkgrel = 1
 	epoch = 1
 	url = https://github.com/googlefonts/gflanguages
@@ -16,7 +16,7 @@ pkgbase = python-gflanguages
 	makedepends = python-setuptools-scm
 	depends = python
 	depends = python-protobuf
-	source = https://files.pythonhosted.org/packages/source/g/gflanguages/gflanguages-0.6.3.tar.gz
-	sha256sums = d744a6703511affdad783c265859a17872e574c80670c83352b7312e16f5ea9d
+	source = https://files.pythonhosted.org/packages/source/g/gflanguages/gflanguages-0.6.4.tar.gz
+	sha256sums = 6be05247674c0bf115be941af401be73ef48a4c79761338a06bf2bf27059ac66
 
 pkgname = python-gflanguages
