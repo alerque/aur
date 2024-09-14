@@ -1,6 +1,6 @@
 pkgbase = ghostty-git
 	pkgdesc = Fast, native, feature-rich terminal emulator pushing modern features
-	pkgver = r7224.45019913
+	pkgver = r7314.4241eac8
 	pkgrel = 1
 	url = https://github.com/ghostty-org/ghostty
 	arch = x86_64
@@ -9,7 +9,7 @@ pkgbase = ghostty-git
 	makedepends = git
 	makedepends = zig>=0.13.0
 	makedepends = zig<0.14.0
-	makedepends = pandoc
+	makedepends = pandoc-cli
 	depends = bzip2
 	depends = fontconfig
 	depends = freetype2

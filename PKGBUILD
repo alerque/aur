@@ -3,7 +3,7 @@
 _pkgbasename=ghostty
 pkgname=${_pkgbasename}-git
 pkgrel=1
-pkgver=r7224.45019913
+pkgver=r7314.4241eac8
 pkgdesc="Fast, native, feature-rich terminal emulator pushing modern features"
 arch=('x86_64' 'aarch64' 'i686')
 url="https://github.com/ghostty-org/${_pkgbasename}"
@@ -22,7 +22,7 @@ depends=(
 	'pixman'
 	'zlib'
 )
-makedepends=('git' 'zig>=0.13.0' 'zig<0.14.0' 'pandoc')
+makedepends=('git' 'zig>=0.13.0' 'zig<0.14.0' 'pandoc-cli')
 source=("git+ssh://git@github.com/ghostty-org/${_pkgbasename}")
 sha256sums=('SKIP')
 
