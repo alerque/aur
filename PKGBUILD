@@ -8,7 +8,7 @@
 # Note: source array can be synced with an Electron release after updating $pkgver with:
 # bash -c 'source PKGBUILD; _update_sources'
 
-pkgver=32.1.0
+pkgver=32.1.1
 _gcc_patches=127-1
 pkgrel=1
 _major_ver=${pkgver%%.*}
@@ -78,7 +78,7 @@ source=("git+https://github.com/electron/electron.git#tag=v$pkgver"
         use-system-libraries-in-node.patch
         makepkg-source-roller.py
         # BEGIN managed sources
-        chromium-mirror::git+https://github.com/chromium/chromium.git#tag=128.0.6613.120
+        chromium-mirror::git+https://github.com/chromium/chromium.git#tag=128.0.6613.137
         chromium-mirror_third_party_nan::git+https://github.com/nodejs/nan.git#commit=e14bdcd1f72d62bca1d541b66da43130384ec213
         chromium-mirror_third_party_electron_node::git+https://github.com/nodejs/node.git#tag=v20.17.0
         chromium-mirror_third_party_engflow-reclient-configs::git+https://github.com/EngFlow/reclient-configs.git#commit=955335c30a752e9ef7bff375baab5e0819b6c00d
@@ -182,7 +182,7 @@ source=("git+https://github.com/electron/electron.git#tag=v$pkgver"
         chromium-mirror_third_party_pywebsocket3_src::git+https://chromium.googlesource.com/external/github.com/GoogleChromeLabs/pywebsocket3.git#commit=50602a14f1b6da17e0b619833a13addc6ea78bc2
         chromium-mirror_third_party_re2_src::git+https://chromium.googlesource.com/external/github.com/google/re2.git#commit=6dcd83d60f7944926bfd308cc13979fc53dd69ca
         chromium-mirror_third_party_ruy_src::git+https://chromium.googlesource.com/external/github.com/google/ruy.git#commit=c08ec529fc91722bde519628d9449258082eb847
-        chromium-mirror_third_party_skia::git+https://skia.googlesource.com/skia.git#commit=8bd493b850f1a75482af8f30cb492cd70645498c
+        chromium-mirror_third_party_skia::git+https://skia.googlesource.com/skia.git#commit=938144dd79c6e3664a3c0bbd019daedddf655ffa
         chromium-mirror_third_party_smhasher_src::git+https://chromium.googlesource.com/external/smhasher.git#commit=e87738e57558e0ec472b2fc3a643b838e5b6e88f
         chromium-mirror_third_party_snappy_src::git+https://chromium.googlesource.com/external/github.com/google/snappy.git#commit=c9f9edf6d75bb065fa47468bf035e051a57bec7c
         chromium-mirror_third_party_sqlite_src::git+https://chromium.googlesource.com/chromium/deps/sqlite.git#commit=9e45bccab2b8de8140c1732b0ec490db0362f730
@@ -214,7 +214,7 @@ source=("git+https://github.com/electron/electron.git#tag=v$pkgver"
         chromium-mirror_third_party_xnnpack_src::git+https://chromium.googlesource.com/external/github.com/google/XNNPACK.git#commit=8df2e765487685757ab5dabd12516cd0a24e3e25
         chromium-mirror_tools_page_cycler_acid3::git+https://chromium.googlesource.com/chromium/deps/acid3.git#commit=a926d0a32e02c4c03ae95bb798e6c780e0e184ba
         chromium-mirror_third_party_zstd_src::git+https://chromium.googlesource.com/external/github.com/facebook/zstd.git#commit=0ff651dd876823b99fa5c5f53292be28381aee9b
-        chromium-mirror_v8::git+https://chromium.googlesource.com/v8/v8.git#commit=12114d5aceeb3b3379b3e1a2140ea1f76dc94ecf
+        chromium-mirror_v8::git+https://chromium.googlesource.com/v8/v8.git#commit=6f774f929205be0a49cf861b8d73a92655e1dd36
         chromium-mirror_third_party_angle_third_party_glmark2_src::git+https://chromium.googlesource.com/external/github.com/glmark2/glmark2.git#commit=ca8de51fedb70bace5351c6b002eb952c747e889
         chromium-mirror_third_party_angle_third_party_rapidjson_src::git+https://chromium.googlesource.com/external/github.com/Tencent/rapidjson.git#commit=781a4e667d84aeedbeb8184b7b62425ea66ec59f
         chromium-mirror_third_party_angle_third_party_VK-GL-CTS_src::git+https://chromium.googlesource.com/external/github.com/KhronosGroup/VK-GL-CTS.git#commit=5b2dfe7c775aa7b7909432944ba3535abcd25fc9
@@ -240,7 +240,7 @@ source=("git+https://github.com/electron/electron.git#tag=v$pkgver"
         chromium-mirror_third_party_openscreen_src_third_party_tinycbor_src::git+https://chromium.googlesource.com/external/github.com/intel/tinycbor.git#commit=d393c16f3eb30d0c47e6f9d92db62272f0ec4dc7
         # END managed sources
         )
-sha256sums=('2233bca0575d962b0e9914348d619cfc9b712bca7d07cc2a9447efe695035593'
+sha256sums=('e2821e47fd14d6aa95a3bc82db77c3220572801ea91f29bfb26b4749e258e486'
             '3dfc43d901b96273201ba6d6d8b932b07c3661942d42a8bb0aae2c547757c73d'
             '1a5bc75a90abad153c8eb6dbdce138132a5f11190b0a40c925958a72d706b2aa'
             'b3de01b7df227478687d7517f61a777450dca765756002c80c4915f271e2d961'
@@ -252,7 +252,7 @@ sha256sums=('2233bca0575d962b0e9914348d619cfc9b712bca7d07cc2a9447efe695035593'
             '55dbe71dbc1f3ab60bf1fa79f7aea7ef1fe76436b1d7df48728a1f8227d2134e'
             'ff588a8a4fd2f79eb8a4f11cf1aa151298ffb895be566c57cc355d47f161f53f'
             '2c8cd28cee0e1df1862e801794f210d2b7cac652f943cf94f43c2abe26f2a2f4'
-            'c26d0054df1726afa0931119f21226fe043dceb61d86def1848aaee9c8912d70'
+            '34efd265c22175f1c7995d36110f1f26b1522f8d6ed3eb725a33239f628f84a6'
             '0b7a546ee6913c49519c10c293ac530ff381641a8a465fa2e184d6dbe0fb784d'
             'f78e8b0297f3bced885588a5a43c7aebca88462cc8ef36e8fad08bd46f98429f'
             '3522166c3ca75316a172b7cc4fe12bba9367e30fed16df8193ede2e236dca8c5'
@@ -337,7 +337,7 @@ sha256sums=('2233bca0575d962b0e9914348d619cfc9b712bca7d07cc2a9447efe695035593'
             '9341676174943fbc5268e023c3e572171289fc4748401723a6dcaef50f793dcd'
             '03f8d2c020a4ee41a4ecc29f8217f16f931719ff2ef8b04572fe1c3092ce066b'
             '7b32c27a5513c451032132fe5dc724de23d3b0738a0609a96bd44deee1d46681'
-            '5ce652e7aca9dbe55c36578f65031d6284dbf352037dfb1dc2500b9ea66839a8'
+            'c06f2a92cd606654ec565c2fa728e755eaaf7e7a41fb7bd217988274a411c320'
             '82003e56072e56ab65267e3366b37a6a75730d846881fe6167965205d1c2549c'
             'e475d42b746955422ff9e905354091d0b17cdb2c8989cc6beb6470e76a4aa1dd'
             'f2aba031573fc4929d2bd9d03e4b18c4385f399fa0b605eca35898567ebdf7b4'
@@ -356,7 +356,7 @@ sha256sums=('2233bca0575d962b0e9914348d619cfc9b712bca7d07cc2a9447efe695035593'
             '599bbbabf9e2dc2006dd9e3e9636c4f648360726173793bf6a5a5414698762c5'
             'b7a7a43eae0f41a9e18f54c2334d5797a547238b76d64d59ede26a4d6621de0d'
             '39d7dd8b6721a427dae2ca577d5f003459563928850757c519be96cb4064e933'
-            '663abf12e6f2a7f7a9467b509358738a6d0276687dcb360ce7ed0a51e42db1f2'
+            'b68a3256a9b3b142b1cb822010e3d042c689a8ca56fad6dc96391dee0b068e8c'
             '3624b28203c972ea54b490342be74fbd99d4b4748123f9e2837a54ca01c8b392'
             'bd724ee01b93651b4ec6ba62ba64d23e153ea7100be760ccaee4a1e6e32787a6'
             'c50e068a3bc153afa8e9579a1d72980fb3cb5e141c75259f3c48cda4c2b525b6'
@@ -388,7 +388,7 @@ sha256sums=('2233bca0575d962b0e9914348d619cfc9b712bca7d07cc2a9447efe695035593'
             '648058c0cd969b5064e13e9be92530130a05f320050b75da77820bb88f193efb'
             '548c8cd89cf822c790e4703eff53756791450eba73d267a84f3bf3eedf60bef5'
             'af3915311c23e78995af5fb491e9e30ad8f0777239136ba26aa6f9b00331480c'
-            '4c26705919d50a5c097eca9636d2ad4fe34947fc4954c6cfb02289fed8ca1877'
+            '3c0e93c97ac116638a871d7b15d1ce978bb7b226fa7472b1c080b01a4fdf4256'
             'e67cdb017c07a7ec72a06f1062dc2f124d97527869604575fe48610ff98b581a'
             '716cc81139f11a2b438802d37f245f885fc9a0c69ef429a11b156145c903a932'
             'ac094f212ff0191d8526c3bd805d7d3430d12a575023901b991d0f206953628b'
@@ -398,7 +398,7 @@ sha256sums=('2233bca0575d962b0e9914348d619cfc9b712bca7d07cc2a9447efe695035593'
             '64633f7373b79cb3e3a7c221f1a8a6033ea6d14fc3234fdb52facc4c1ab2fb24'
             'b48490fbcdad8becc160f2dab2ee4a0f67327f1e9d9ddbd96e44150175c68ca9'
             '0b95ed21612b4f02e65643f2029d8ce5710f49dbe8b229350bbe643167a4b83b'
-            '3af1ffecd3a71f5cfe0f466df9dd76add6f41411b6850c24fd0a2181d22030c5'
+            '9bd1e05f5128b4715c2d354a6895839d01aae4fc9f56b9d0411afc87fb46daf4'
             '3ae63a893b5b585823f04b5a2e604d3df4c7c6e311f5da5b5d5af92a1fd00465'
             'd1bea5be4ca41f2e9f29354bc3bdf12d9bba47778eb6fa6b01db053a831f3b42'
             '63bf4565b1cf6f4a053a1bd710971360c5debdfc6d30d69775a597026e4baff9'
@@ -411,7 +411,7 @@ sha256sums=('2233bca0575d962b0e9914348d619cfc9b712bca7d07cc2a9447efe695035593'
             '868159a9a965cebd40f98f5995d6ac6361869904712c1b62c6b8a67d10dd93b4'
             'bde40f830d8edac53f2682acd50bf7db2632cb31c6ddaa1923a8703a58899e11'
             '37bd9bc812c1bfc471be2eb003f714e475f8425913c42703b21237f2b1c99e57'
-            '7d89448b9cccc0e2309ce34fef37ed85fd08fd2b030422e456fc531ebb1e8f80')
+            'c23fa31250811a76be900554b9ac127f861ebde09c07ac67cd6b82dd214e5686')
 
 # Possible replacements are listed in build/linux/unbundle/replace_gn_files.py
 # Keys are the names in the above script; values are the dependencies in Arch
