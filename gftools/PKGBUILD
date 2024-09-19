@@ -3,40 +3,50 @@
 
 pkgname=gftools
 pkgver=0.9.68
-pkgrel=1
+pkgrel=2
 pkgdesc='Misc tools for working with the Google Fonts library'
 arch=(any)
 url="https://github.com/googlefonts/$pkgname"
 license=(Apache-2.0)
 _pydeps=(axisregistry
          babelfont
+         beautifulsoup4
          brotli
          browserstack-local
+         bumpfontversion
          fontfeatures
          fontmake
          fonttools
          fs # optdepends of fonttols required for [ufo]
          gflanguages
-         glyphslib
+         gfsubsets
          glyphsets
+         glyphslib
          jinja
          networkx
          opentype-sanitizer
+         pillow
          protobuf
          pyaml
          pybrowserstack-screenshots
          pygit2
          pygithub
          requests
+         rich
+         ruamel-yaml
          skia-pathops
          strictyaml
          tabulate
-         ufolib2
          ttfautohint-py
+         typing_extensions
+         ufolib2
          unidecode
+         vharfbuzz
          vttlib)
 depends=(absl-py
+         font-v
          hyperglot
+         nanoemoji
          ninja
          python
          "${_pydeps[@]/#/python-}"
