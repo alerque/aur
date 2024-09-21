@@ -10,7 +10,7 @@
 
 pkgver=32.1.1
 _gcc_patches=127-1
-pkgrel=1
+pkgrel=2
 _major_ver=${pkgver%%.*}
 pkgname="electron${_major_ver}"
 pkgdesc='Build cross platform desktop apps with web technologies'
@@ -429,7 +429,7 @@ declare -gA _system_libs=(
   # [libaom]=aom
   # [libavif]=libavif # libavif.so libavutil.so # needs -DAVIF_ENABLE_EXPERIMENTAL_GAIN_MAP=ON
   [libdrm]=libdrm # libdrm.so
-  [libjpeg]="libjpeg libjpeg.so"
+  [libjpeg]="libjpeg-turbo libjpeg.so"
   [libpng]="libpng libpng16.so"
   # [libvpx]=libvpx
   # [libwebp]="libwebp libwebpdemux.so libwebpmux.so libwebp.so" # //third_party/libavif:libavif_enc needs //third_party/libwebp:libwebp_sharpyuv
