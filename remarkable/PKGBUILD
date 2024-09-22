@@ -1,63 +1,55 @@
-# Maintainer: Mikael Blomstrand <gmail: kmbloms>
+# Maintainer: Caleb Maclennan <caleb@alerque.com>
+# Contributor: Mikael Blomstrand <gmail: kmbloms>
 # Contributor: MaryJaneInChain <gmail.com@maryjaneinchain>
 # Contributor: Michael Goehler <somebody dot here at gmx dot de>
 
 pkgname=remarkable
-pkgver=1.87
-pkgrel=7
-pkgdesc="A free fully featured markdown editor for Linux."
-arch=('any')
-url="http://remarkableapp.github.io"
-license=('MIT')
-depends=('python'
-         'python-cairo'
-         'python-gobject'
-         'python-markdown'
-         'python-beautifulsoup4'
-         'python-lxml'
-         'python-setuptools'
-         'webkit2gtk'
-         'wkhtmltopdf'
-         'gtksourceview3'
-         )
-makedepends=('python')
+pkgver=1.95
+pkgrel=8
+pkgdesc='A free fully featured markdown editor for Linux'
+arch=(any)
+url='http://remarkableapp.github.io'
+license=(MIT)
+_pydeps=(beautifulsoup4
+         cairo
+         gobject
+         markdown)
+depends=(python
+         "${_pydeps[@]/#/python-}"
+         webkit2gtk
+         wkhtmltopdf
+         gtksourceview3)
+makedepends=(python-{build,installer,wheel}
+             python-setuptools)
 optdepends=('python-lxml: export to HTML format support'
             'python-gtkspellcheck: Spellcheck (might cause problems)')
-
-install="remarkable.install"
-source=("https://github.com/jamiemcg/Remarkable/archive/v${pkgver}.tar.gz"
-        "stable.patch::https://github.com/jamiemcg/Remarkable/compare/v1.87...mbloms:stable.patch"
-        "https://patch-diff.githubusercontent.com/raw/jamiemcg/Remarkable/pull/369.patch"
-        "remarkable.install")
-
-sha1sums=('a492dc5d0a276f36846a99287ae93c02e22a5cd8'
-          '8c052787c16a81b9d4c325d2270cdd3412951f6c'
-          '0011947d35909e001e24b13f2f65d3e25061c9c2'
-          'bdbfb750df9e5fb3022f47a46a80555259628cd1')
+# install=remarkable.install
+_archive="${pkgname^}-$pkgver"
+source=("https://github.com/jamiemcg/Remarkable/archive/v$pkgver/$_archive.tar.gz")
+sha256sums=('55f40ff0bc5b9269807e248e0fa849ee4aaf92d32f9b1350ed17bc85ccd3b030')
 
 prepare() {
-    msg2 "Applying patches for webkit2gtk..."
-    cat *.patch | patch -p1 -d "${srcdir}/Remarkable-${pkgver}"
+	cd "$_archive"
+}
+
+build() {
+	cd "$_archive"
+	# python -m build -wn
 }
 
 package() {
-    _python_site=$(python -c 'import site; print(site.getsitepackages()[0]);')
-    [ -z ${_python_site} ] && echo "error: could not identify python site_packages directory" && return 1
-
-    
-    cd "Remarkable-${pkgver}"
-
-    install -Dm644 LICENSE "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
-    
-    install -Dm 755 "bin/remarkable" "${pkgdir}/usr/bin/remarkable"
-    install -D "debian/remarkable.mime" "${pkgdir}/usr/lib/mime/packages/remarkable"
-    install -D "data/media/remarkable.svg" "${pkgdir}/usr/share/icons/hicolor/scalable/apps/remarkable.svg"
-    install -D remarkable.desktop "${pkgdir}/usr/share/applications/remarkable.desktop"
-    
-    mv data/glib-2.0 "${pkgdir}/usr/share/"
-
-    install -d "${pkgdir}/${_python_site}"
-    mv markdown pdfkit remarkable remarkable_lib "${pkgdir}/${_python_site}/"
-
-    mv data "${pkgdir}/usr/share/remarkable/"
+	cd "$_archive"
+	install -Dm0644 -t "$pkgdir/usr/share/licenses/$pkgname/" LICENSE
+	_python_site=$(python -c 'import site; print(site.getsitepackages()[0]);')
+	install -Dm0755 -t "$pkgdir/usr/bin/" "bin/$pkgname"
+	#    install -D "debian/remarkable.mime" "${pkgdir}/usr/lib/mime/packages/remarkable"
+	#    install -D "data/media/remarkable.svg" "${pkgdir}/usr/share/icons/hicolor/scalable/apps/remarkable.svg"
+	#    install -D remarkable.desktop "${pkgdir}/usr/share/applications/remarkable.desktop"
+	#
+	#    mv data/glib-2.0 "${pkgdir}/usr/share/"
+	#
+	#    install -d "${pkgdir}/${_python_site}"
+	#    mv markdown pdfkit remarkable remarkable_lib "${pkgdir}/${_python_site}/"
+	#
+	#    mv data "${pkgdir}/usr/share/remarkable/"
 }
