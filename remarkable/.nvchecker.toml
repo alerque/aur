@@ -1,0 +1,4 @@
+[remarkable]
+source = "git"
+git = "https://github.com/jamiemcg/Remarkable.git"
+prefix = "v"
