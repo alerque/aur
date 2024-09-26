@@ -1,7 +1,7 @@
 pkgbase = gftools
 	pkgdesc = Misc tools for working with the Google Fonts library
-	pkgver = 0.9.68
-	pkgrel = 2
+	pkgver = 0.9.70
+	pkgrel = 1
 	url = https://github.com/googlefonts/gftools
 	arch = any
 	license = Apache-2.0
@@ -51,7 +51,7 @@ pkgbase = gftools
 	depends = python-vharfbuzz
 	depends = python-vttlib
 	depends = statmake
-	source = https://files.pythonhosted.org/packages/source/g/gftools/gftools-0.9.68.tar.gz
-	sha256sums = 5625d36bddaba4c97d60c4bcb0209a6a5f14c8a36b3f479dce69d6f1afcec08e
+	source = https://files.pythonhosted.org/packages/source/g/gftools/gftools-0.9.70.tar.gz
+	sha256sums = eb699b7087c2c9c22ae002559e641f506bf85a5bb5e345f7bb74f1f16efc12a2
 
 pkgname = gftools
