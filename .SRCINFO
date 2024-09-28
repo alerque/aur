@@ -1,0 +1,14 @@
+pkgbase = ruby-ruby-ole
+	pkgdesc = Ruby OLE library.
+	pkgver = 1.2.13.1
+	pkgrel = 1
+	url = https://github.com/aquasync/ruby-ole
+	arch = any
+	license = MIT
+	depends = ruby
+	noextract = ruby-ole-1.2.13.1.gem
+	options = !emptydirs
+	source = https://rubygems.org/downloads/ruby-ole-1.2.13.1.gem
+	sha1sums = 7093d44924fd15c3e6e110f7ea991daf36783ab3
+
+pkgname = ruby-ruby-ole
