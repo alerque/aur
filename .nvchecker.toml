@@ -1,0 +1,3 @@
+[ruby-plist]
+source = "gems"
+gems = "plist"
