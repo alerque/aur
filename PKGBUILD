@@ -493,6 +493,10 @@ prepare() {
   patch -Np1 -i ../chromium-patches-*/chromium-119-at-spi-variable-consumption.patch
   patch -Np1 -i ../chromium-patches-*/chromium-119-clang16.patch
 
+  # Fix Wc++11-narrowing
+  git -C third_party/webrtc cherry-pick -n 267f9bdd53a37d1cbee760d5af07880198e1beef
+  git cherry-pick -n 5e9fb4130a537d1a36ab0f8db705a498abeb5d57
+
   # Link to system tools required by the build
   mkdir -p third_party/node/linux/node-linux-x64/bin
   ln -sfn /usr/bin/node third_party/node/linux/node-linux-x64/bin/
