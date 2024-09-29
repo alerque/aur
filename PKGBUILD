@@ -594,6 +594,11 @@ build() {
   CFLAGS=${CFLAGS/-g }
   CXXFLAGS=${CXXFLAGS/-g }
 
+  # Let Chromium set its own fortify level
+  # https://github.com/chromium/chromium/blob/120.0.6099.291/build/config/compiler/BUILD.gn#L1976-L1992
+  CFLAGS=${CFLAGS/-Wp,-D_FORTIFY_SOURCE=?}
+  CXXFLAGS=${CXXFLAGS/-Wp,-D_FORTIFY_SOURCE=?}
+
   # https://github.com/ungoogled-software/ungoogled-chromium-archlinux/issues/123
   CFLAGS=${CFLAGS/-fexceptions}
   CFLAGS=${CFLAGS/-fcf-protection}
