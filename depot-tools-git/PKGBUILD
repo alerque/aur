@@ -12,7 +12,7 @@
 # Contributor: Rustmilian <Rustmilian@proton.me>
 
 pkgname=depot-tools-git
-pkgver=r9435.249e9a26c
+pkgver=r10928.55d065cc0
 pkgrel=1
 pkgdesc='Tools for working with Chromium development'
 arch=(x86_64)
@@ -37,7 +37,7 @@ package() {
 	# Remove Windows
 	rm -r "${pkgdir}/opt/depot_tools/"{*.bat,win32imports.py,win_toolchain}
 	# Remove Misc
-	rm -r "${pkgdir}/opt/depot_tools/"{bootstrap,infra,testing_support,tests,OWNERS,WATCHLISTS}
+	rm -r "${pkgdir}/opt/depot_tools/"{infra,testing_support,tests,OWNERS,WATCHLISTS}
 
 	# Install license
 	install -d "$pkgdir/usr/share/licenses/$pkgname/"
