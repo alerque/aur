@@ -3,7 +3,7 @@
 _pkgbasename=ghostty
 pkgname=${_pkgbasename}-git
 pkgrel=1
-pkgver=r7827.e26847cc
+pkgver=r7848.569d887d
 pkgdesc="Fast, native, feature-rich terminal emulator pushing modern features"
 arch=('x86_64' 'aarch64' 'i686')
 url="https://github.com/ghostty-org/${_pkgbasename}"
@@ -36,14 +36,13 @@ pkgver() {
 build() {
         cd "${srcdir}/${_pkgbasename}"
 
-	# TODO: Figure out how to link system freetype properly
 	ZIG_GLOBAL_CACHE_DIR="${srcdir}/tmp" ./nix/build-support/fetch-zig-cache.sh
-	zig build --system "${srcdir}/tmp/p" -Doptimize=ReleaseFast -Demit-docs -fno-sys=freetype
+	zig build --system "${srcdir}/tmp/p" -Doptimize=ReleaseFast -Demit-docs
 }
 
 package() {
 	cd "${srcdir}/${_pkgbasename}"
 
-	zig build -p "${pkgdir}"/usr --system "${srcdir}/tmp/p" -Doptimize=ReleaseFast -Demit-docs -fno-sys=freetype
+	zig build -p "${pkgdir}"/usr --system "${srcdir}/tmp/p" -Doptimize=ReleaseFast -Demit-docs
 	# install -D -m644 LICENSE "${pkgdir}/usr/share/licenses/$_pkgbasename/LICENSE"
 }
