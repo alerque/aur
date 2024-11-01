@@ -1,0 +1,4 @@
+[departure-mono-font]
+source = "git"
+git = "https://github.com/rektdeckard/departure-mono.git"
+prefix = "v"
