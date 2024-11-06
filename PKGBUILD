@@ -8,7 +8,7 @@
 # Note: source array can be synced with an Electron release after updating $pkgver with:
 # bash -c 'source PKGBUILD; _update_sources'
 
-pkgver=33.0.2
+pkgver=33.1.0
 _gcc_patches=130
 pkgrel=1
 _major_ver=${pkgver%%.*}
@@ -76,7 +76,7 @@ source=("git+https://github.com/electron/electron.git#tag=v$pkgver"
         use-system-libraries-in-node.patch
         makepkg-source-roller.py
         # BEGIN managed sources
-        chromium-mirror::git+https://github.com/chromium/chromium.git#tag=130.0.6723.59
+        chromium-mirror::git+https://github.com/chromium/chromium.git#tag=130.0.6723.91
         chromium-mirror_third_party_nan::git+https://github.com/nodejs/nan.git#commit=e14bdcd1f72d62bca1d541b66da43130384ec213
         chromium-mirror_third_party_electron_node::git+https://github.com/nodejs/node.git#tag=v20.18.0
         chromium-mirror_third_party_engflow-reclient-configs::git+https://github.com/EngFlow/reclient-configs.git#commit=955335c30a752e9ef7bff375baab5e0819b6c00d
@@ -92,11 +92,11 @@ source=("git+https://github.com/electron/electron.git#tag=v$pkgver"
         chromium-mirror_net_third_party_quiche_src::git+https://quiche.googlesource.com/quiche.git#commit=9808dac40e034f09d7af53d3d79589a02e39c211
         chromium-mirror_testing_libfuzzer_fuzzers_wasm_corpus::git+https://chromium.googlesource.com/v8/fuzzer_wasm_corpus.git#commit=f650ff816f2ef227f61ea2e9f222aa69708ab367
         chromium-mirror_third_party_accessibility_test_framework_src::git+https://chromium.googlesource.com/external/github.com/google/Accessibility-Test-Framework-for-Android.git#commit=4a764c690353ea136c82f1a696a70bf38d1ef5fe
-        chromium-mirror_third_party_angle::git+https://chromium.googlesource.com/angle/angle.git#commit=21e4b689c009a93f66d61989a713d52bceaf2979
+        chromium-mirror_third_party_angle::git+https://chromium.googlesource.com/angle/angle.git#commit=fffbc739779a2df56a464fd6853bbfb24bebb5f6
         chromium-mirror_third_party_anonymous_tokens_src::git+https://chromium.googlesource.com/external/github.com/google/anonymous-tokens.git#commit=6ea6ec78f9e4998d0a7a5677b2aec08f0ac858f8
         chromium-mirror_third_party_content_analysis_sdk_src::git+https://chromium.googlesource.com/external/github.com/chromium/content_analysis_sdk.git#commit=9a408736204513e0e95dd2ab3c08de0d95963efc
         chromium-mirror_third_party_dav1d_libdav1d::git+https://chromium.googlesource.com/external/github.com/videolan/dav1d.git#commit=6b3c489a2ee2c030f351f21987c27611b4cbe725
-        chromium-mirror_third_party_dawn::git+https://dawn.googlesource.com/dawn.git#commit=b1d26bc8d238d4759b5e62aaaa1f62048f92e254
+        chromium-mirror_third_party_dawn::git+https://dawn.googlesource.com/dawn.git#commit=70a01d28c3ecd75b67a87e4643bd4d55fc391ce6
         chromium-mirror_third_party_highway_src::git+https://chromium.googlesource.com/external/github.com/google/highway.git#commit=8295336dd70f1201d42c22ab5b0861de38cf8fbf
         chromium-mirror_third_party_google_benchmark_src::git+https://chromium.googlesource.com/external/github.com/google/benchmark.git#commit=344117638c8ff7e239044fd0fa7085839fc03021
         chromium-mirror_third_party_boringssl_src::git+https://boringssl.googlesource.com/boringssl.git#commit=58f3bc83230d2958bb9710bc910972c4f5d382dc
@@ -113,7 +113,7 @@ source=("git+https://github.com/electron/electron.git#tag=v$pkgver"
         chromium-mirror_third_party_cros_system_api::git+https://chromium.googlesource.com/chromiumos/platform2/system_api.git#commit=2f88f9c4581a9c854604fa23516de8c9c13b227b
         chromium-mirror_third_party_crossbench::git+https://chromium.googlesource.com/crossbench.git#commit=2b812597dd143dbdc560ff2f28d5f8d3adc700d4
         chromium-mirror_third_party_depot_tools::git+https://chromium.googlesource.com/chromium/tools/depot_tools.git#commit=22df6f8e622dc3e8df8dc8b5d3e3503b169af78e
-        chromium-mirror_third_party_devtools-frontend_src::git+https://chromium.googlesource.com/devtools/devtools-frontend.git#commit=b99303161bf24247ed677a5be454dab24ebdced5
+        chromium-mirror_third_party_devtools-frontend_src::git+https://chromium.googlesource.com/devtools/devtools-frontend.git#commit=deee9c11c9f76ef595b7d0b52fcf677d25aac5f2
         chromium-mirror_third_party_dom_distiller_js_dist::git+https://chromium.googlesource.com/chromium/dom-distiller/dist.git#commit=199de96b345ada7c6e7e6ba3d2fa7a6911b8767d
         chromium-mirror_third_party_eigen3_src::git+https://chromium.googlesource.com/external/gitlab.com/libeigen/eigen.git#commit=134b526d6110061469168e7e0511822a8e30bcaf
         chromium-mirror_third_party_farmhash_src::git+https://chromium.googlesource.com/external/github.com/google/farmhash.git#commit=816a4ae622e964763ca0862d9dbd19324a1eaf45
@@ -214,7 +214,7 @@ source=("git+https://github.com/electron/electron.git#tag=v$pkgver"
         chromium-mirror_third_party_xnnpack_src::git+https://chromium.googlesource.com/external/github.com/google/XNNPACK.git#commit=c4a28daf28c98300da9d9b5213c53f762908825e
         chromium-mirror_tools_page_cycler_acid3::git+https://chromium.googlesource.com/chromium/deps/acid3.git#commit=a926d0a32e02c4c03ae95bb798e6c780e0e184ba
         chromium-mirror_third_party_zstd_src::git+https://chromium.googlesource.com/external/github.com/facebook/zstd.git#commit=20707e3718ee14250fb8a44b3bf023ea36bd88df
-        chromium-mirror_v8::git+https://chromium.googlesource.com/v8/v8.git#commit=4c685866b13f6ec453f327f0499379672e5b1751
+        chromium-mirror_v8::git+https://chromium.googlesource.com/v8/v8.git#commit=9ae5f73732808d0b574e8efe88fcdbc72850fbd0
         chromium-mirror_third_party_angle_third_party_glmark2_src::git+https://chromium.googlesource.com/external/github.com/glmark2/glmark2.git#commit=ca8de51fedb70bace5351c6b002eb952c747e889
         chromium-mirror_third_party_angle_third_party_rapidjson_src::git+https://chromium.googlesource.com/external/github.com/Tencent/rapidjson.git#commit=781a4e667d84aeedbeb8184b7b62425ea66ec59f
         chromium-mirror_third_party_angle_third_party_VK-GL-CTS_src::git+https://chromium.googlesource.com/external/github.com/KhronosGroup/VK-GL-CTS.git#commit=1df39e522f4aa358012180fd4cf876af68aff78d
@@ -240,7 +240,7 @@ source=("git+https://github.com/electron/electron.git#tag=v$pkgver"
         chromium-mirror_third_party_openscreen_src_third_party_tinycbor_src::git+https://chromium.googlesource.com/external/github.com/intel/tinycbor.git#commit=d393c16f3eb30d0c47e6f9d92db62272f0ec4dc7
         # END managed sources
         )
-sha256sums=('2e137719836f62273176fe95dc3e2f8ef8537c3a04336beee1d1e4acc3798f2e'
+sha256sums=('36a1b0d2a4edd0ffe642903fe6516cdbd618ac108264ab02a0368972f45d00f6'
             'b5fd4b943ae307680cd5c2050a01f85ef94d3f880a157eef8d17eb9fa23864f5'
             'b3de01b7df227478687d7517f61a777450dca765756002c80c4915f271e2d961'
             'a4a822e135b253c93089a80c679842cc470c6936742767ae09d952646889abd6'
@@ -250,7 +250,7 @@ sha256sums=('2e137719836f62273176fe95dc3e2f8ef8537c3a04336beee1d1e4acc3798f2e'
             '55dbe71dbc1f3ab60bf1fa79f7aea7ef1fe76436b1d7df48728a1f8227d2134e'
             'ff588a8a4fd2f79eb8a4f11cf1aa151298ffb895be566c57cc355d47f161f53f'
             '2c8cd28cee0e1df1862e801794f210d2b7cac652f943cf94f43c2abe26f2a2f4'
-            'de86f612f781b310ca1f724af5a4983996946d3d40516dbc61f6fa50406f1e61'
+            'de45bdbe65396139e2a74e7ff969aa6199c0c6f4ae4304a1df7e3652e70f7d83'
             '0b7a546ee6913c49519c10c293ac530ff381641a8a465fa2e184d6dbe0fb784d'
             '85ec7d68f4ee76d11bd7c47873e9657c102a9588ccfa5c48b7ada4be8a5c38bc'
             '3522166c3ca75316a172b7cc4fe12bba9367e30fed16df8193ede2e236dca8c5'
@@ -266,11 +266,11 @@ sha256sums=('2e137719836f62273176fe95dc3e2f8ef8537c3a04336beee1d1e4acc3798f2e'
             'beb59e8ba1dc0d6ac5d6554aab88241b48e3c4465426e3caba790cddfca18cea'
             'ece1dee7d933f441230b956458bd3c134f31659cf112c85ec276f085391dd106'
             'de6dba1f7c67cb568c5f23e75a994422944ce46c01fc35bddae4ebc023a7145a'
-            '9deaa998d3c9dfab3f314e63197156671e111eab93e09b3ccb29ca2a40591e9f'
+            '7e1ca2ae7b7a926f9d8fff1f9b4ed832b7507a61f1d84ab44b5a6e49ce87e14a'
             '0e3ece6abcb4942e0c027294a23d689ff9dce5aacd8e958fdddc0f20d9873765'
             '89a368f0652d857d38402d6f3c5cded3c1757230ab7abe01df850a7bf8359119'
             'feeb06813819a42266bf6d6780f892b91dc2914d8ec7a00d26f8967fee76c566'
-            '272754566c0dba06eac178ffa77beae44dba4c1513328ce0d21b451fe5821ba7'
+            '6e5e1b3035226c496c1b6139fe8fedde86ba7330fecf97a7860f7546bae3e8ae'
             '48bdb7a462a52e890a9b8536d21924d0a4fe3f0dcb9a90a976fcd7a3e2526899'
             'bd07cc3f0dfa91629028ed53691eec8e0bf9bed7b3a602f4b8e78a7472e4e6fb'
             '9c231ea5f5fa3ade51cd45090c05441e54503a962e43ee4d5e10954197e2fa6e'
@@ -287,7 +287,7 @@ sha256sums=('2e137719836f62273176fe95dc3e2f8ef8537c3a04336beee1d1e4acc3798f2e'
             '987871bdaf2da13274350ab6123c54101835005258e48eb9202620c0504329f1'
             'c61fdfc3c3e59680dc8c0c7bea37624683225c7ee2411c398d80d213c101cb9a'
             'a5f352d1796111fa995f7cffb22682e64aa4f34f2b0a76f6595470647e724e95'
-            '9f7c1eb3a89baeeb47b25df160f370fcb52ea9893790c024a9691483b9ee749a'
+            '1b904747f0017190fd28c4416c51a33bb272b38a2ad97b390f55da5254341bbc'
             '47f3f3d044cc0658274833022db1e7695964b1da8f37cb905882d15457212fba'
             '603f4562aa57be18b5d6b31497013476b2436a17b94ec66c775244157567a9df'
             '6258126c4c354ccacd0ec5f9f82c6970d576359c7aba86e44277b459d1645325'
@@ -388,7 +388,7 @@ sha256sums=('2e137719836f62273176fe95dc3e2f8ef8537c3a04336beee1d1e4acc3798f2e'
             '2e1ca25433ac8176d4e2d719936a90d8cc5aab474a960bb2411fbe123ceab23e'
             '548c8cd89cf822c790e4703eff53756791450eba73d267a84f3bf3eedf60bef5'
             '4518249219bef02aed2859f60f2b3478a42615153d573ee12dec2dca61b145de'
-            'bf252ebe764fb4cabe9f598a49f4f7e3a827248ab1aac8202c9ec04e2dceef6c'
+            '798af8d16ad301dd26e60ff74342008ab0e410cd2fd409c039416440e466b8e8'
             'e67cdb017c07a7ec72a06f1062dc2f124d97527869604575fe48610ff98b581a'
             '716cc81139f11a2b438802d37f245f885fc9a0c69ef429a11b156145c903a932'
             '9904b8fd280616681364b19324b58f2e2b9b31441d98974025a1630cef44a73a'
