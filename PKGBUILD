@@ -2,7 +2,7 @@
 
 pkgname=gitbutler
 pkgver=0.13.11
-pkgrel=1
+pkgrel=2
 url="https://github.com/${pkgname}app/$pkgname"
 pkgdesc='Version control client, backed by Git, powered by Tauri/Rust/Svelte'
 arch=(x86_64)
@@ -27,6 +27,7 @@ prepare() {
 
 build() {
 	cd "$_archive"
+	export RUSTFLAGS+=' --cfg tokio_unstable'
 	env \
 		RUSTUP_TOOLCHAIN=nightly \
 		CARGO_TARGET_DIR=target \
