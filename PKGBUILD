@@ -1,14 +1,14 @@
 # Maintainer: Caleb Maclennan <caleb@alerque.com>
 
 pkgname=gitbutler
-pkgver=0.13.8
+pkgver=0.13.10
 pkgrel=1
 url="https://github.com/${pkgname}app/$pkgname"
 pkgdesc='Version control client, backed by Git, powered by Tauri/Rust/Svelte'
 arch=(x86_64)
 license=(LicenseRef-FSL-1.1-MIT)
-depends=(gtk3
-         webkit2gtk)
+depends=(gtk4
+         webkit2gtk-4.1)
 makedepends=(cargo-nightly
              cargo-tauri
              cmake
@@ -17,7 +17,7 @@ makedepends=(cargo-nightly
 options=(!lto)
 _archive="$pkgname-release-$pkgver"
 source=("$url/archive/release%2F$pkgver/$_archive.tar.gz")
-sha256sums=('2703d4250f720689cbe25d694c907a12ad931338b0d05a9f78dd67b8fe9737b8')
+sha256sums=('340d04d7a70f409bdfed8f343f1f4e941b5185dba8e1b2897c4e02612d113ede')
 
 prepare() {
 	cd "$_archive"
