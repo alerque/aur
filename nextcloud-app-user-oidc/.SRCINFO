@@ -1,6 +1,6 @@
 pkgbase = nextcloud-app-user-oidc
 	pkgdesc = OIDC connect user backend for Nextcloud
-	pkgver = 6.1.1
+	pkgver = 6.1.2
 	pkgrel = 1
 	url = https://github.com/nextcloud/user_oidc
 	arch = x86_64
@@ -10,7 +10,7 @@ pkgbase = nextcloud-app-user-oidc
 	makedepends = npm
 	makedepends = rsync
 	makedepends = yq
-	source = https://github.com/nextcloud/user_oidc/archive/v6.1.1/user_oidc-6.1.1.tar.gz
-	sha256sums = 090c701c0ec5bd344f16eadb02f7793597e3c90f21cfd04f0ba8eae456182e1c
+	source = https://github.com/nextcloud/user_oidc/archive/v6.1.2/user_oidc-6.1.2.tar.gz
+	sha256sums = f25c241379df7bf6b8b40a360f50eb9c2e974ff057d5d60bdbabe3460f058e86
 
 pkgname = nextcloud-app-user-oidc
