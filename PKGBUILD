@@ -3,8 +3,8 @@
 
 _distname=Hash-Merge-Simple
 pkgname=perl-${_distname,,}
-pkgver=0.051
-pkgrel=8
+pkgver=0.052
+pkgrel=0
 pkgdesc='Recursively merge two or more hashes, simply'
 arch=(any)
 url="https://search.cpan.org/dist/$_distname"
@@ -12,8 +12,8 @@ license=(PerlArtistic GPL)
 depends=(perl-clone)
 checkdepends=(perl-test-most)
 options=('!emptydirs')
-source=("https://search.cpan.org/CPAN/authors/id/R/RO/ROKR/$_distname-$pkgver.tar.gz")
-sha256sums=('1c56327873d2f04d5722777f044863d968910466997740d55a754071c6287b73')
+source=("https://search.cpan.org/CPAN/authors/id/H/HA/HAARG/$_distname-$pkgver.tar.gz")
+sha256sums=('c27f20895814a96e0c5bd0ca3315bf901d79706e3bab4ab0d946debc2c429c0b')
 
 build() {
 	cd "$_distname-$pkgver"
