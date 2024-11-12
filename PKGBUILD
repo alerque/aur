@@ -3,14 +3,14 @@
 
 pkgname=cargo-mutants
 pkgver=24.11.0
-pkgrel=1
+pkgrel=2
 pkgdesc='Mutation testing for Rust'
 url="https://github.com/sourcefrog/$pkgname"
 arch=(x86_64)
 license=(MIT)
-depends=(gcc-libs # libgcc_s.so
+depends=(cargo
+         gcc-libs # libgcc_s.so
          glibc) # libc.so libm.so
-makedepends=(cargo)
 _archive="$pkgname-$pkgver"
 source=("$url/archive/v$pkgver/$_archive.tar.gz")
 sha256sums=('1a551bda434aad6a59271bf2b1fe00cbe973bc78e185a048fd56e206124bbab5')
