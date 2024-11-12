@@ -1,11 +1,11 @@
 pkgbase = cargo-mutants
 	pkgdesc = Mutation testing for Rust
 	pkgver = 24.11.0
-	pkgrel = 1
+	pkgrel = 2
 	url = https://github.com/sourcefrog/cargo-mutants
 	arch = x86_64
 	license = MIT
-	makedepends = cargo
+	depends = cargo
 	depends = gcc-libs
 	depends = glibc
 	source = https://github.com/sourcefrog/cargo-mutants/archive/v24.11.0/cargo-mutants-24.11.0.tar.gz
