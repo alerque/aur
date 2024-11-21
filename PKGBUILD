@@ -1,8 +1,8 @@
 # Maintainer: devome <evinedeng@hotmail.com>
 
 pkgname="gotenberg"
-pkgver=8.14.0
-pkgrel=2
+pkgver=8.14.1
+pkgrel=1
 pkgdesc="A developer-friendly API for converting numerous document formats into PDF files, and more!"
 arch=('i686' 'pentium4' 'x86_64' 'arm' 'armv7h' 'armv6h' 'aarch64' 'riscv64')
 url="https://github.com/${pkgname}/${pkgname}"
@@ -15,7 +15,7 @@ makedepends=("go")
 source=("${pkgname}-${pkgver}.tar.gz::${url}/archive/refs/tags/v${pkgver}.tar.gz"
         "${pkgname}.env"
         "${pkgname}.service")
-sha256sums=('6e3696d88dbbfab9712eac690a6c0586d1ceca4a8c80e51c0ec93287b107e8bd'
+sha256sums=('cef0bf0e8268e5cd8222d521d60c560b4d0ddfad66e28cbb3e1cf8507f7c0ca2'
             'd37f7a96701804c07bb08e123dd05e03a84368251fb0088c060c770d08e436ea'
             '1b3567e2fe374ce104150d198de3fe372724d3b8510aba64716e3dcb3b37c50a')
 
