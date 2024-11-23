@@ -2,8 +2,8 @@
 # Maintainer: Caleb Maclennan <caleb@alerque.com>
 
 pkgname=cargo-mutants
-pkgver=24.11.0
-pkgrel=2
+pkgver=24.11.1
+pkgrel=1
 pkgdesc='Mutation testing for Rust'
 url="https://github.com/sourcefrog/$pkgname"
 arch=(x86_64)
@@ -13,7 +13,7 @@ depends=(cargo
          glibc) # libc.so libm.so
 _archive="$pkgname-$pkgver"
 source=("$url/archive/v$pkgver/$_archive.tar.gz")
-sha256sums=('1a551bda434aad6a59271bf2b1fe00cbe973bc78e185a048fd56e206124bbab5')
+sha256sums=('afca69cf27af9c1d698246baca19a1d5d254d15b22bf83051219b5ade03a0597')
 
 prepare() {
     cd "$_archive"
