@@ -1,6 +1,4 @@
 [electron32]
-source = "github"
-github = "electron/electron"
-prefix = "v"
-include_regex = "v32\\.\\d+\\.\\d+"
-use_max_tag = true
+source = "regex"
+url = "https://releases.electronjs.org/"
+regex = 'href="/release/v(32\.\d+\.\d+)"'
