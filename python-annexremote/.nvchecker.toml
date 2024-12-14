@@ -1,0 +1,4 @@
+[python-annexremote]
+source = "git"
+git = "https://github.com/Lykos153/AnnexRemote.git"
+prefix = "v"
