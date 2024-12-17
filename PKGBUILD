@@ -1,7 +1,7 @@
 # Maintainer: Wilken Gottwalt <wilken dot gottwalt at posteo dot net>
 
 pkgname=ollama-git
-pkgver=0.4.8.git+aed1419c
+pkgver=0.5.3.git+2cde4b88
 pkgrel=1
 pkgdesc='Create, run and share large language models (LLMs) with ROCm'
 arch=(aarch64 x86_64)
@@ -36,7 +36,7 @@ build() {
 
   cd ollama
 
-  go generate ./...
+  make dist
   go build .
 }
 
@@ -46,7 +46,7 @@ package() {
 
   install -Dm755 ollama/ollama ${pkgdir}/usr/bin/ollama
   install -Dm644 ollama/LICENSE ${pkgdir}/usr/share/licenses/ollama/LICENSE
-  cp -r ollama/dist/linux-amd64/lib/ollama/runners ${pkgdir}/usr/lib/ollama/
+  cp -r ollama/dist/linux-amd64/lib/ollama/runners/cpu* ${pkgdir}/usr/lib/ollama/runners
 
   install -Dm644 ollama.service ${pkgdir}/usr/lib/systemd/system/ollama.service
   install -Dm644 sysusers.conf ${pkgdir}/usr/lib/sysusers.d/ollama.conf
