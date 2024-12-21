@@ -57,8 +57,6 @@ prepare() {
 
 build() {
 	cd "$pkgname"
-	# 2024-12-20: crown FTBFS with rust 1.83.0
-	export RUSTUP_TOOLCHAIN=1.82.0
 	export CARGO_TARGET_DIR=target
 	# was failing with some error and said to install these componenets
 	# "magically" works after this
