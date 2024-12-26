@@ -9,7 +9,7 @@ arch=('x86_64' 'aarch64' 'i686')
 url="https://github.com/ghostty-org/${_pkgbasename}"
 provides=('ghostty')
 conflicts=('ghostty')
-license=()
+license=('MIT')
 depends=(
 	'bzip2'
 	'fontconfig'
