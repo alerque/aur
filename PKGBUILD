@@ -3,7 +3,7 @@
 _pkgbasename=ghostty
 pkgname=${_pkgbasename}-git
 pkgrel=1
-pkgver=r7848.569d887d
+pkgver=r8469.4b4d4062
 pkgdesc="Fast, native, feature-rich terminal emulator pushing modern features"
 arch=('x86_64' 'aarch64' 'i686')
 url="https://github.com/ghostty-org/${_pkgbasename}"
@@ -23,9 +23,7 @@ depends=(
 	'zlib'
 )
 makedepends=('git' 'zig>=0.13.0' 'zig<0.14.0' 'pandoc-cli')
-# Use Git with SSH to authenticate while ghostty is private.
-# When it's public and has a release tag, use the tarball.
-source=("git+ssh://git@github.com/ghostty-org/${_pkgbasename}")
+source=("git+https://github.com/ghostty-org/${_pkgbasename}")
 sha256sums=('SKIP')
 
 pkgver() {

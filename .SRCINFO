@@ -1,6 +1,6 @@
 pkgbase = ghostty-git
 	pkgdesc = Fast, native, feature-rich terminal emulator pushing modern features
-	pkgver = r7848.569d887d
+	pkgver = r8469.4b4d4062
 	pkgrel = 1
 	url = https://github.com/ghostty-org/ghostty
 	arch = x86_64
@@ -22,7 +22,7 @@ pkgbase = ghostty-git
 	depends = zlib
 	provides = ghostty
 	conflicts = ghostty
-	source = git+ssh://git@github.com/ghostty-org/ghostty
+	source = git+https://github.com/ghostty-org/ghostty
 	sha256sums = SKIP
 
 pkgname = ghostty-git
