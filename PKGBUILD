@@ -5,7 +5,7 @@
 _pkgbase=ghostty
 pkgname=($_pkgbase-git $_pkgbase-shell-integration-git $_pkgbase-terminfo-git)
 pkgrel=1
-pkgver=1.0.1.r379.g918ccdb
+pkgver=1.0.1.r399.ga244535
 pkgdesc="Fast, native, feature-rich terminal emulator pushing modern features"
 arch=(x86_64 aarch64 i686)
 url="https://github.com/ghostty-org/$_pkgbase"
@@ -27,7 +27,6 @@ depends=(bzip2
          zlib)
 makedepends=(git
              pandoc-cli
-             wayland-protocols
              zig)
 source=("git+$url.git")
 sha256sums=('SKIP')

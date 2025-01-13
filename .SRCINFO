@@ -1,6 +1,6 @@
 pkgbase = ghostty-git
 	pkgdesc = Fast, native, feature-rich terminal emulator pushing modern features
-	pkgver = 1.0.1.r379.g918ccdb
+	pkgver = 1.0.1.r399.ga244535
 	pkgrel = 1
 	url = https://github.com/ghostty-org/ghostty
 	arch = x86_64
@@ -9,7 +9,6 @@ pkgbase = ghostty-git
 	license = MIT
 	makedepends = git
 	makedepends = pandoc-cli
-	makedepends = wayland-protocols
 	makedepends = zig
 	depends = bzip2
 	depends = fontconfig
@@ -39,17 +38,17 @@ pkgbase = ghostty-git
 	sha256sums = SKIP
 
 pkgname = ghostty-git
-	provides = ghostty=1.0.1.r379.g918ccdb
+	provides = ghostty=1.0.1.r399.ga244535
 	conflicts = ghostty
 
 pkgname = ghostty-shell-integration-git
 	pkgdesc = Shell integration scripts for ghostty
 	depends = 
-	provides = ghostty-shell-integration=1.0.1.r379.g918ccdb
+	provides = ghostty-shell-integration=1.0.1.r399.ga244535
 	conflicts = ghostty-shell-integration
 
 pkgname = ghostty-terminfo-git
 	pkgdesc = Terminfo for ghostty
 	depends = 
-	provides = ghostty-terminfo=1.0.1.r379.g918ccdb
+	provides = ghostty-terminfo=1.0.1.r399.ga244535
 	conflicts = ghostty-terminfo
