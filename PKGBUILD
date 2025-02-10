@@ -2,7 +2,7 @@
 
 pkgname=ollama-git
 pkgver=0.5.8.git+1f766c36
-pkgrel=1
+pkgrel=2
 pkgdesc='Create, run and share large language models (LLMs) with ROCm'
 arch=(aarch64 x86_64)
 url='https://github.com/ollama/ollama'
@@ -39,12 +39,6 @@ prepare() {
 }
 
 build() {
-  #export CFLAGS="$CFLAGS -fcf-protection=none" CXXFLAGS="$CXXFLAGS -fcf-protection=none"
-  #export CGO_CFLAGS="$CFLAGS" CGO_CPPFLAGS="$CPPFLAGS" CGO_CXXFLAGS="$CXXFLAGS" CGO_LDFLAGS="$LDFLAGS"
-  #if [ "$CARCH" = "aarch64" ]; then
-  #  export GOARM64=v8.2
-  #fi
-  #export GOFLAGS="-buildmode=pie -mod=readonly -modcacherw '-gcflags=-l' '-ldflags=-w -s'"
   export CMAKE_CUDA_COMPILER=/tmp
   export CMAKE_HIP_COMPILER=/tmp
 
@@ -60,7 +54,11 @@ package() {
   install -dm755 ${pkgdir}/usr/{bin,lib/ollama}
   install -Dm644 ollama/LICENSE ${pkgdir}/usr/share/licenses/ollama/LICENSE
   install -Dm755 ollama/ollama ${pkgdir}/usr/bin/ollama
-  install -Dm755 ollama/build/lib/ollama/* ${pkgdir}/usr/lib/ollama
+  if [ "$CARCH" = "aarch64" ]; then
+    install -Dm755 ollama/build/lib/ollama/*base* ${pkgdir}/usr/lib/ollama
+  else
+    install -Dm755 ollama/build/lib/ollama/* ${pkgdir}/usr/lib/ollama
+  fi
   install -Dm644 ollama.service ${pkgdir}/usr/lib/systemd/system/ollama.service
   install -Dm644 sysusers.conf ${pkgdir}/usr/lib/sysusers.d/ollama.conf
   install -Dm644 tmpfiles.d ${pkgdir}/usr/lib/tmpfiles.d/ollama.conf
