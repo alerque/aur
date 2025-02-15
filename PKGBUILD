@@ -8,9 +8,9 @@
 # Note: source array can be synced with an Electron release after updating $pkgver with:
 # bash -c 'source PKGBUILD; _update_sources'
 
-pkgver=33.4.0
+pkgver=33.4.1
 _gcc_patches=130
-pkgrel=2
+pkgrel=1
 _major_ver=${pkgver%%.*}
 pkgname="electron${_major_ver}"
 pkgdesc='Build cross platform desktop apps with web technologies'
@@ -30,7 +30,7 @@ makedepends=(clang
              git
              gn
              gperf
-             # harfbuzz-icu
+             harfbuzz-icu
              http-parser
              java-runtime-headless
              libnotify
@@ -240,7 +240,7 @@ source=("git+https://github.com/electron/electron.git#tag=v$pkgver"
         chromium-mirror_third_party_openscreen_src_third_party_tinycbor_src::git+https://chromium.googlesource.com/external/github.com/intel/tinycbor.git#commit=d393c16f3eb30d0c47e6f9d92db62272f0ec4dc7
         # END managed sources
         )
-sha256sums=('43c9f6f074a13487db6e4b2d23a75091c3748c955c44a2ab63f12edd2833a648'
+sha256sums=('5c538a212f1a85729ad376417444268c3eb91e36e69f06e97148d9dbe5a4160b'
             'b5fd4b943ae307680cd5c2050a01f85ef94d3f880a157eef8d17eb9fa23864f5'
             'b3de01b7df227478687d7517f61a777450dca765756002c80c4915f271e2d961'
             'a4a822e135b253c93089a80c679842cc470c6936742767ae09d952646889abd6'
@@ -424,7 +424,7 @@ declare -gA _system_libs=(
   [fontconfig]="fontconfig libfontconfig.so"
   [freetype]="freetype2 libfreetype.so"
   [harfbuzz-ng]="harfbuzz libharfbuzz.so libharfbuzz-subset.so"
-  # [icu]="icu libicui18n.so libicuuc.so" # disabled because ICU 76 not supported yet
+  [icu]="icu libicui18n.so libicuuc.so"
   # [jsoncpp]="jsoncpp libjsoncpp.so"  # needs libstdc++
   # [libaom]=aom
   # [libavif]=libavif # libavif.so libavutil.so # needs -DAVIF_ENABLE_EXPERIMENTAL_GAIN_MAP=ON

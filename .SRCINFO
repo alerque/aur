@@ -1,7 +1,7 @@
 pkgbase = electron33
 	pkgdesc = Build cross platform desktop apps with web technologies
-	pkgver = 33.4.0
-	pkgrel = 2
+	pkgver = 33.4.1
+	pkgrel = 1
 	url = https://electronjs.org
 	arch = x86_64
 	license = MIT
@@ -10,6 +10,7 @@ pkgbase = electron33
 	makedepends = git
 	makedepends = gn
 	makedepends = gperf
+	makedepends = harfbuzz-icu
 	makedepends = http-parser
 	makedepends = java-runtime-headless
 	makedepends = libnotify
@@ -51,6 +52,9 @@ pkgbase = electron33
 	depends = brotli
 	depends = libjpeg-turbo
 	depends = libjpeg.so
+	depends = icu
+	depends = libicui18n.so
+	depends = libicuuc.so
 	depends = flac
 	depends = libFLAC.so
 	depends = libdrm
@@ -75,7 +79,7 @@ pkgbase = electron33
 	optdepends = trash-cli: file deletion support (trash-put)
 	optdepends = xdg-utils: open URLs with desktop’s default (xdg-email, xdg-open)
 	options = !lto
-	source = git+https://github.com/electron/electron.git#tag=v33.4.0
+	source = git+https://github.com/electron/electron.git#tag=v33.4.1
 	source = https://gitlab.com/Matt.Jolly/chromium-patches/-/archive/130/chromium-patches-130.tar.bz2
 	source = compiler-rt-adjust-paths.patch
 	source = blink-fix-missing-stdlib-include.patch
@@ -247,7 +251,7 @@ pkgbase = electron33
 	source = chromium-mirror_third_party_dawn_third_party_langsvr::git+https://github.com/google/langsvr.git#commit=303c526231a90049a3e384549720f3fbd453cf66
 	source = chromium-mirror_third_party_dawn_third_party_partition_alloc::git+https://chromium.googlesource.com/chromium/src/base/allocator/partition_allocator.git#commit=2e6b2efb6f435aa3dd400cb3bdcead2a601f8f9a
 	source = chromium-mirror_third_party_openscreen_src_third_party_tinycbor_src::git+https://chromium.googlesource.com/external/github.com/intel/tinycbor.git#commit=d393c16f3eb30d0c47e6f9d92db62272f0ec4dc7
-	sha256sums = 43c9f6f074a13487db6e4b2d23a75091c3748c955c44a2ab63f12edd2833a648
+	sha256sums = 5c538a212f1a85729ad376417444268c3eb91e36e69f06e97148d9dbe5a4160b
 	sha256sums = b5fd4b943ae307680cd5c2050a01f85ef94d3f880a157eef8d17eb9fa23864f5
 	sha256sums = b3de01b7df227478687d7517f61a777450dca765756002c80c4915f271e2d961
 	sha256sums = a4a822e135b253c93089a80c679842cc470c6936742767ae09d952646889abd6
