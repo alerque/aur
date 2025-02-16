@@ -10,7 +10,7 @@
 
 pkgver=30.5.1
 _gcc_patches=124
-pkgrel=3
+pkgrel=4
 _major_ver=${pkgver%%.*}
 pkgname="electron${_major_ver}"
 pkgdesc='Build cross platform desktop apps with web technologies'
@@ -30,7 +30,7 @@ makedepends=(clang
              git
              gn
              gperf
-             harfbuzz-icu
+             # harfbuzz-icu # disabled because ICU 76 not supported yet
              http-parser
              java-runtime-headless
              libnotify
@@ -66,6 +66,7 @@ source=("git+https://github.com/electron/electron.git#tag=v$pkgver"
         # Chromium
         drop-flag-unsupported-by-clang17.patch
         compiler-rt-adjust-paths.patch
+        clang-19.patch
         # Electron
         default_app-icon.patch
         electron-launcher.sh
@@ -236,6 +237,7 @@ sha256sums=('aaf19eb1c3baa169df8e3b9b891daac734c6e3158e5e5cc2d7dae49cdd30f775'
             'c2bc4e65ed2a4e23528dd10d5c15bf99f880b7bbb789cc720d451b78098a7e12'
             '3bd35dab1ded5d9e1befa10d5c6c4555fe0a76d909fb724ac57d0bf10cb666c1'
             'b3de01b7df227478687d7517f61a777450dca765756002c80c4915f271e2d961'
+            '74cdb496274646f1cfadb0991bf890786975afc92cb926e40b504729a3afa705'
             'dd2d248831dd4944d385ebf008426e66efe61d6fdf66f8932c963a12167947b4'
             '13fcf26193f4417fd5dfbc82a3f24e5c7a1cce82f729f6a73f1b1d3a7b580b34'
             '4484200d90b76830b69eea3a471c103999a3ce86bb2c29e6c14c945bf4102bae'
@@ -410,7 +412,7 @@ declare -gA _system_libs=(
   [fontconfig]="fontconfig libfontconfig.so"
   [freetype]="freetype2 libfreetype.so"
   [harfbuzz-ng]="harfbuzz libharfbuzz.so libharfbuzz-subset.so"
-  [icu]="icu libicui18n.so libicuuc.so"
+  # [icu]="icu libicui18n.so libicuuc.so" # disabled because ICU 76 not supported yet
   # [jsoncpp]="jsoncpp libjsoncpp.so"  # needs libstdc++
   # [libaom]=aom
   # [libavif]=libavif # libavif.so libavutil.so # needs https://github.com/AOMediaCodec/libavif/commit/5410b23f76
@@ -498,6 +500,9 @@ prepare() {
 
   # Fixes for building with libstdc++ instead of libc++
   patch -Np1 -i ../chromium-patches-*/chromium-117-material-color-include.patch
+
+  # Fix buils with clang 19
+  patch -Np1 -i ../clang-19.patch
 
   # Link to system tools required by the build
   mkdir -p third_party/node/linux/node-linux-x64/bin
@@ -591,6 +596,7 @@ build() {
   # Do not warn about unknown warning options
   CFLAGS+='   -Wno-unknown-warning-option'
   CXXFLAGS+=' -Wno-unknown-warning-option'
+  CXXFLAGS+=' -Wno-missing-template-arg-list-after-template-kw -Wno-invalid-constexpr'
 
   # Let Chromium set its own symbol level
   CFLAGS=${CFLAGS/-g }
