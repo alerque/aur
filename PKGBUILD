@@ -12,7 +12,16 @@ pkgdesc='Graphical Wacom tablet configuration utility. (Does not work for newer 
 arch=('any')
 url='https://www.linux-apps.com/content/show.php/Wacom+Control+Panel?content=104309'
 license=('GPL-2.0-or-later')
-depends=('gtk2' 'python2' 'pygtk' 'xf86-input-wacom' 'gksu')
+depends=(
+  'bash'
+  'gksu'
+  'gtk2'
+  'python2'
+  'python2-cairo'
+  'python2-gobject2'
+  'pygtk'
+  'xf86-input-wacom'
+)
 source=("http://ppa.launchpad.net/hughescih/ppa/ubuntu/pool/main/w/${pkgname}/${pkgname}_${pkgver}-${_uprel}.tar.gz"
         'wacom-utility.sh'
         'wacom-utility.desktop')
