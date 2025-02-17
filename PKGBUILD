@@ -7,9 +7,9 @@
 pkgname=wacom-utility
 pkgver=1.21
 _uprel=3
-pkgrel=8
+pkgrel=9
 pkgdesc='Graphical Wacom tablet configuration utility. (Does not work for newer wacom tablets; latest update was in 2011.)'
-arch=('i686' 'x86_64')
+arch=('any')
 url='https://www.linux-apps.com/content/show.php/Wacom+Control+Panel?content=104309'
 license=('GPL-2.0-or-later')
 depends=('gtk2' 'python2' 'pygtk' 'xf86-input-wacom' 'gksu')

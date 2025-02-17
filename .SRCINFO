@@ -1,10 +1,9 @@
 pkgbase = wacom-utility
 	pkgdesc = Graphical Wacom tablet configuration utility. (Does not work for newer wacom tablets; latest update was in 2011.)
 	pkgver = 1.21
-	pkgrel = 8
+	pkgrel = 9
 	url = https://www.linux-apps.com/content/show.php/Wacom+Control+Panel?content=104309
-	arch = i686
-	arch = x86_64
+	arch = any
 	license = GPL-2.0-or-later
 	depends = gtk2
 	depends = python2
