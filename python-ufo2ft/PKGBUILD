@@ -24,6 +24,7 @@ checkdepends=(python-compreffor
               python-fontmath
               python-pytest
               python-skia-pathops
+	      python-syrupy
               python-ufolib2)
 optdepends=(python-compreffor
             python-skia-pathops)
