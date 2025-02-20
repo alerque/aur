@@ -4,7 +4,7 @@
 pkgname=python-ufo2ft
 _pyname=${pkgname#python-}
 pkgver=3.4.2
-pkgrel=1
+pkgrel=2
 pkgdesc='A bridge from UFOs to FontTools objects'
 arch=(any)
 url="https://github.com/googlefonts/$_pyname"
@@ -24,6 +24,7 @@ checkdepends=(python-compreffor
               python-fontmath
               python-pytest
               python-skia-pathops
+          python-syrupy
               python-ufolib2)
 optdepends=(python-compreffor
             python-skia-pathops)
