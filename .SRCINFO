@@ -1,7 +1,7 @@
 pkgbase = electron33
 	pkgdesc = Build cross platform desktop apps with web technologies
-	pkgver = 33.4.1
-	pkgrel = 3
+	pkgver = 33.4.2
+	pkgrel = 1
 	url = https://electronjs.org
 	arch = x86_64
 	license = MIT
@@ -75,7 +75,7 @@ pkgbase = electron33
 	optdepends = trash-cli: file deletion support (trash-put)
 	optdepends = xdg-utils: open URLs with desktop’s default (xdg-email, xdg-open)
 	options = !lto
-	source = git+https://github.com/electron/electron.git#tag=v33.4.1
+	source = git+https://github.com/electron/electron.git#tag=v33.4.2
 	source = https://gitlab.com/Matt.Jolly/chromium-patches/-/archive/130/chromium-patches-130.tar.bz2
 	source = compiler-rt-adjust-paths.patch
 	source = blink-fix-missing-stdlib-include.patch
@@ -87,7 +87,7 @@ pkgbase = electron33
 	source = makepkg-source-roller.py
 	source = chromium-mirror::git+https://github.com/chromium/chromium.git#tag=130.0.6723.191
 	source = chromium-mirror_third_party_nan::git+https://github.com/nodejs/nan.git#commit=e14bdcd1f72d62bca1d541b66da43130384ec213
-	source = chromium-mirror_third_party_electron_node::git+https://github.com/nodejs/node.git#tag=v20.18.1
+	source = chromium-mirror_third_party_electron_node::git+https://github.com/nodejs/node.git#tag=v20.18.3
 	source = chromium-mirror_third_party_engflow-reclient-configs::git+https://github.com/EngFlow/reclient-configs.git#commit=955335c30a752e9ef7bff375baab5e0819b6c00d
 	source = chromium-mirror_third_party_clang-format_script::git+https://chromium.googlesource.com/external/github.com/llvm/llvm-project/clang/tools/clang-format.git#commit=3c0acd2d4e73dd911309d9e970ba09d58bf23a62
 	source = chromium-mirror_third_party_libc++_src::git+https://chromium.googlesource.com/external/github.com/llvm/llvm-project/libcxx.git#commit=50ab693ecb611942ce4440d8c9ed707ee65ed5e8
@@ -247,7 +247,7 @@ pkgbase = electron33
 	source = chromium-mirror_third_party_dawn_third_party_langsvr::git+https://github.com/google/langsvr.git#commit=303c526231a90049a3e384549720f3fbd453cf66
 	source = chromium-mirror_third_party_dawn_third_party_partition_alloc::git+https://chromium.googlesource.com/chromium/src/base/allocator/partition_allocator.git#commit=2e6b2efb6f435aa3dd400cb3bdcead2a601f8f9a
 	source = chromium-mirror_third_party_openscreen_src_third_party_tinycbor_src::git+https://chromium.googlesource.com/external/github.com/intel/tinycbor.git#commit=d393c16f3eb30d0c47e6f9d92db62272f0ec4dc7
-	sha256sums = 5c538a212f1a85729ad376417444268c3eb91e36e69f06e97148d9dbe5a4160b
+	sha256sums = d1d94572b1d07e348accbf35aa86abbdedf9e4343d34e2986a3e91c83026a05d
 	sha256sums = b5fd4b943ae307680cd5c2050a01f85ef94d3f880a157eef8d17eb9fa23864f5
 	sha256sums = b3de01b7df227478687d7517f61a777450dca765756002c80c4915f271e2d961
 	sha256sums = a4a822e135b253c93089a80c679842cc470c6936742767ae09d952646889abd6
@@ -259,7 +259,7 @@ pkgbase = electron33
 	sha256sums = 2c8cd28cee0e1df1862e801794f210d2b7cac652f943cf94f43c2abe26f2a2f4
 	sha256sums = add3d20ad7f8014d3a34cb229f7f5fefcea485afd381c34361f71d521c210641
 	sha256sums = 0b7a546ee6913c49519c10c293ac530ff381641a8a465fa2e184d6dbe0fb784d
-	sha256sums = 07dc86368ae75c7605ef15ab9b95db07bdb53840b7ff5ccf8dc6014e13dcafcf
+	sha256sums = 69afd4d3bf3cb220799bb2c495eaa50fd9cfd0090650b66ece5ce1aebe83c29f
 	sha256sums = 3522166c3ca75316a172b7cc4fe12bba9367e30fed16df8193ede2e236dca8c5
 	sha256sums = b7ab26b28122102827dbbefa54a38f9d59729bbdab889dcc6dba672141590717
 	sha256sums = 7b41bbe296d8db54365e8c88b57e91445c43dce0015e02e98746535e0fa9e691

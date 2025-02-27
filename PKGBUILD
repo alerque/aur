@@ -8,9 +8,9 @@
 # Note: source array can be synced with an Electron release after updating $pkgver with:
 # bash -c 'source PKGBUILD; _update_sources'
 
-pkgver=33.4.1
+pkgver=33.4.2
 _gcc_patches=130
-pkgrel=3
+pkgrel=1
 _major_ver=${pkgver%%.*}
 pkgname="electron${_major_ver}"
 pkgdesc='Build cross platform desktop apps with web technologies'
@@ -78,7 +78,7 @@ source=("git+https://github.com/electron/electron.git#tag=v$pkgver"
         # BEGIN managed sources
         chromium-mirror::git+https://github.com/chromium/chromium.git#tag=130.0.6723.191
         chromium-mirror_third_party_nan::git+https://github.com/nodejs/nan.git#commit=e14bdcd1f72d62bca1d541b66da43130384ec213
-        chromium-mirror_third_party_electron_node::git+https://github.com/nodejs/node.git#tag=v20.18.1
+        chromium-mirror_third_party_electron_node::git+https://github.com/nodejs/node.git#tag=v20.18.3
         chromium-mirror_third_party_engflow-reclient-configs::git+https://github.com/EngFlow/reclient-configs.git#commit=955335c30a752e9ef7bff375baab5e0819b6c00d
         chromium-mirror_third_party_clang-format_script::git+https://chromium.googlesource.com/external/github.com/llvm/llvm-project/clang/tools/clang-format.git#commit=3c0acd2d4e73dd911309d9e970ba09d58bf23a62
         chromium-mirror_third_party_libc++_src::git+https://chromium.googlesource.com/external/github.com/llvm/llvm-project/libcxx.git#commit=50ab693ecb611942ce4440d8c9ed707ee65ed5e8
@@ -240,7 +240,7 @@ source=("git+https://github.com/electron/electron.git#tag=v$pkgver"
         chromium-mirror_third_party_openscreen_src_third_party_tinycbor_src::git+https://chromium.googlesource.com/external/github.com/intel/tinycbor.git#commit=d393c16f3eb30d0c47e6f9d92db62272f0ec4dc7
         # END managed sources
         )
-sha256sums=('5c538a212f1a85729ad376417444268c3eb91e36e69f06e97148d9dbe5a4160b'
+sha256sums=('d1d94572b1d07e348accbf35aa86abbdedf9e4343d34e2986a3e91c83026a05d'
             'b5fd4b943ae307680cd5c2050a01f85ef94d3f880a157eef8d17eb9fa23864f5'
             'b3de01b7df227478687d7517f61a777450dca765756002c80c4915f271e2d961'
             'a4a822e135b253c93089a80c679842cc470c6936742767ae09d952646889abd6'
@@ -252,7 +252,7 @@ sha256sums=('5c538a212f1a85729ad376417444268c3eb91e36e69f06e97148d9dbe5a4160b'
             '2c8cd28cee0e1df1862e801794f210d2b7cac652f943cf94f43c2abe26f2a2f4'
             'add3d20ad7f8014d3a34cb229f7f5fefcea485afd381c34361f71d521c210641'
             '0b7a546ee6913c49519c10c293ac530ff381641a8a465fa2e184d6dbe0fb784d'
-            '07dc86368ae75c7605ef15ab9b95db07bdb53840b7ff5ccf8dc6014e13dcafcf'
+            '69afd4d3bf3cb220799bb2c495eaa50fd9cfd0090650b66ece5ce1aebe83c29f'
             '3522166c3ca75316a172b7cc4fe12bba9367e30fed16df8193ede2e236dca8c5'
             'b7ab26b28122102827dbbefa54a38f9d59729bbdab889dcc6dba672141590717'
             '7b41bbe296d8db54365e8c88b57e91445c43dce0015e02e98746535e0fa9e691'
