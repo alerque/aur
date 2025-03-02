@@ -1,16 +1,17 @@
 # Maintainer: Orhun Parmaksız <orhun@archlinux.org>
 
 pkgname=tdf
-pkgver=0.1.0
+pkgver=0.3.0
 pkgrel=1
 pkgdesc="A TUI-based PDF viewer"
 arch=('x86_64')
 url="https://github.com/itsjunetime/tdf"
 license=('MPL-2.0')
 depends=('gcc-libs' 'glib2' 'cairo' 'poppler' 'poppler-glib')
-makedepends=('cargo-nightly')
+makedepends=('cargo-nightly' 'clang')
 source=("$pkgname-$pkgver.tar.gz::$url/archive/v$pkgver.tar.gz")
-sha256sums=('650827334786782ae1929055fb12a0da82ea72929f132bd427299a5ecc431d86')
+sha256sums=('97dda80e0725a5b93c54704cf2e00798a0c8c85eb67bf9779a83e162c48545cb')
+options=('!lto')
 
 prepare() {
   cd "$pkgname-$pkgver"
