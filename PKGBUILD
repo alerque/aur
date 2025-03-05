@@ -177,7 +177,7 @@ source=("git+https://github.com/electron/electron.git#tag=v$pkgver"
         chromium-mirror_third_party_pdfium::git+https://pdfium.googlesource.com/pdfium.git#commit=2b675cf15ab4b68bf1ed4e0511ba2479e11f1605
         chromium-mirror_third_party_perfetto::git+https://android.googlesource.com/platform/external/perfetto.git#commit=9170899ab284db894f14439e561f02f83a04d88e
         chromium-mirror_third_party_protobuf-javascript_src::git+https://chromium.googlesource.com/external/github.com/protocolbuffers/protobuf-javascript.git#commit=e34549db516f8712f678fcd4bc411613b5cc5295
-        chromium-mirror_third_party_pthreadpool_src::git+https://chromium.googlesource.com/external/github.com/Maratyszcza/pthreadpool.git#commit=560c60d342a76076f0557a3946924c6478470044
+        chromium-mirror_third_party_pthreadpool_src::git+https://chromium.googlesource.com/external/github.com/google/pthreadpool.git#commit=560c60d342a76076f0557a3946924c6478470044
         chromium-mirror_third_party_pyelftools::git+https://chromium.googlesource.com/chromiumos/third_party/pyelftools.git#commit=19b3e610c86fcadb837d252c794cb5e8008826ae
         chromium-mirror_third_party_quic_trace_src::git+https://chromium.googlesource.com/external/github.com/google/quic-trace.git#commit=caa0a6eaba816ecb737f9a70782b7c80b8ac8dbc
         chromium-mirror_third_party_pywebsocket3_src::git+https://chromium.googlesource.com/external/github.com/GoogleChromeLabs/pywebsocket3.git#commit=50602a14f1b6da17e0b619833a13addc6ea78bc2
@@ -252,7 +252,7 @@ sha256sums=('1186647175bd6173c46d6baf610910c66f76465b2769725aa3d5ba32bf6c039e'
             '4484200d90b76830b69eea3a471c103999a3ce86bb2c29e6c14c945bf4102bae'
             '55dbe71dbc1f3ab60bf1fa79f7aea7ef1fe76436b1d7df48728a1f8227d2134e'
             'ff588a8a4fd2f79eb8a4f11cf1aa151298ffb895be566c57cc355d47f161f53f'
-            '2c8cd28cee0e1df1862e801794f210d2b7cac652f943cf94f43c2abe26f2a2f4'
+            'c75dbcb394a56065909e0bc4480e0d60461369403797945de0ec11da20b7780a'
             'add3d20ad7f8014d3a34cb229f7f5fefcea485afd381c34361f71d521c210641'
             '0b7a546ee6913c49519c10c293ac530ff381641a8a465fa2e184d6dbe0fb784d'
             '69afd4d3bf3cb220799bb2c495eaa50fd9cfd0090650b66ece5ce1aebe83c29f'
