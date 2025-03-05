@@ -3,19 +3,19 @@
 
 pkgname=python-skia
 _pkgname=skia-python
-pkgver=87.6
+pkgver=134.0b12
 pkgrel=1
 pkgdesc='Python binding to Skia Graphics Library (wheel)'
 arch=(x86_64)
 url="https://github.com/kyamagu/$_pkgname"
 license=(BSD-3-Clause)
 depends=(fontconfig opengl-driver python)
-makedepends=(python-pip)
+makedepends=(python-installer)
 options=(!strip)
-_py=cp312
-_wheel="${_pkgname/-/_}-$pkgver-$_py-$_py-manylinux_2_17_x86_64.manylinux2014_x86_64.whl"
+_py=cp313
+_wheel="${_pkgname/-/_}-$pkgver-$_py-$_py-manylinux_2_28_x86_64.whl"
 source=("https://files.pythonhosted.org/packages/$_py/${_pkgname::1}/$_pkgname/$_wheel")
-sha256sums=('b4797d81f053c9147e8c5006192083ad265d17f5f093b9bac5f0f0c166a78c0c')
+sha256sums=('b7a6bf4f3cd458159f7d9c69a9473e70ceba0622ab9eb44333119413fd599ed8')
 
 # If anybody wants to muck around with the Chromium tree and figure out how to
 # build skia from source on Arch I'm open to patches, but even after mucking
@@ -24,7 +24,6 @@ sha256sums=('b4797d81f053c9147e8c5006192083ad265d17f5f093b9bac5f0f0c166a78c0c')
 # the AUR page if you have ideas.
 
 package() {
-	export PIP_CONFIG_FILE=/dev/null
-	pip install --isolated --root="$pkgdir" --ignore-installed --no-deps $_wheel
+	python -m installer --destdir="$pkgdir" $_wheel
 	python -O -m compileall "$pkgdir"
 }
