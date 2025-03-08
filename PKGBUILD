@@ -1,7 +1,7 @@
 # Maintainer: Wilken Gottwalt <wilken dot gottwalt at posteo dot net>
 
 pkgname=ollama-git
-pkgver=0.5.13.git+bebb6823
+pkgver=0.5.14.git+4100ed7b
 pkgrel=1
 pkgdesc='Create, run and share large language models (LLMs) with ROCm'
 arch=(aarch64 x86_64)
