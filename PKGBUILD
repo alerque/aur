@@ -8,8 +8,8 @@
 # Note: source array can be synced with an Electron release after updating $pkgver with:
 # bash -c 'source PKGBUILD; _update_sources'
 
-pkgver=33.4.3
-_gcc_patches=130
+pkgver=33.4.8
+_gcc_patches=130-2
 pkgrel=1
 _major_ver=${pkgver%%.*}
 pkgname="electron${_major_ver}"
@@ -66,8 +66,10 @@ options=('!lto') # Electron adds its own flags for ThinLTO
 source=("git+https://github.com/electron/electron.git#tag=v$pkgver"
         https://gitlab.com/Matt.Jolly/chromium-patches/-/archive/$_gcc_patches/chromium-patches-$_gcc_patches.tar.bz2
         # Chromium
+        add-more-CFI-suppressions-for-inline-PipeWire-functions.patch
         compiler-rt-adjust-paths.patch
         blink-fix-missing-stdlib-include.patch
+        webrtc-fix-build-with-pipewire-1.4.patch
         # Electron
         default_app-icon.patch
         electron-launcher.sh
@@ -240,10 +242,12 @@ source=("git+https://github.com/electron/electron.git#tag=v$pkgver"
         chromium-mirror_third_party_openscreen_src_third_party_tinycbor_src::git+https://chromium.googlesource.com/external/github.com/intel/tinycbor.git#commit=d393c16f3eb30d0c47e6f9d92db62272f0ec4dc7
         # END managed sources
         )
-sha256sums=('03caa782c29cf52078458b7ac9341668d3dbb6a874239b19cacc29acfb0086f3'
-            'b5fd4b943ae307680cd5c2050a01f85ef94d3f880a157eef8d17eb9fa23864f5'
+sha256sums=('1186647175bd6173c46d6baf610910c66f76465b2769725aa3d5ba32bf6c039e'
+            'c966110d60dbefe048c2cd854e847ff3cae0a66e474d68535fec23947d292a20'
+            'd3dd9b4132c9748b824f3dcf730ec998c0087438db902bc358b3c391658bebf5'
             'b3de01b7df227478687d7517f61a777450dca765756002c80c4915f271e2d961'
             'a4a822e135b253c93089a80c679842cc470c6936742767ae09d952646889abd6'
+            '74a2d428f7f09132c4a923e816a5a9333803f842003d650cd4a95a35e5457253'
             'dd2d248831dd4944d385ebf008426e66efe61d6fdf66f8932c963a12167947b4'
             '13fcf26193f4417fd5dfbc82a3f24e5c7a1cce82f729f6a73f1b1d3a7b580b34'
             '4484200d90b76830b69eea3a471c103999a3ce86bb2c29e6c14c945bf4102bae'
@@ -505,13 +509,15 @@ prepare() {
   patch -Np0 -i ../blink-fix-missing-stdlib-include.patch
 
   ## Upstream fixes
+  patch -Np1 -d third_party/webrtc <../webrtc-fix-build-with-pipewire-1.4.patch
+  patch -Np1 -i ../add-more-CFI-suppressions-for-inline-PipeWire-functions.patch
 
   # Allow libclang_rt.builtins from compiler-rt >= 16 to be used
   patch -Np1 -i ../compiler-rt-adjust-paths.patch
 
   # Fixes for building with libstdc++ instead of libc++
-  patch -Np1 -i ../chromium-patches-*/chromium-128-compiler.patch
   patch -Np1 -i ../chromium-patches-*/chromium-130-interference-size.patch
+  patch -Np1 -i ../chromium-patches-*/chromium-131-compiler.patch
 
   # Link to system tools required by the build
   mkdir -p third_party/node/linux/node-linux-x64/bin
