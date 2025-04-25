@@ -10,7 +10,7 @@
 
 pkgver=32.3.1
 _gcc_patches=127-1
-pkgrel=3
+pkgrel=4
 _major_ver=${pkgver%%.*}
 pkgname="electron${_major_ver}"
 pkgdesc='Build cross platform desktop apps with web technologies'
@@ -70,6 +70,7 @@ source=("git+https://github.com/electron/electron.git#tag=v$pkgver"
         compiler-rt-adjust-paths.patch
         increase-fortify-level.patch
         blink-fix-missing-stdlib-include.patch
+        pipewire-1.4.patch
         # Electron
         default_app-icon.patch
         electron-launcher.sh
@@ -246,6 +247,7 @@ sha256sums=('972f660d271365efc1cbe0e6ff90d7e1aec9fb431001f4737011860f44a44297'
             'b3de01b7df227478687d7517f61a777450dca765756002c80c4915f271e2d961'
             'd634d2ce1fc63da7ac41f432b1e84c59b7cceabf19d510848a7cff40c8025342'
             'a4a822e135b253c93089a80c679842cc470c6936742767ae09d952646889abd6'
+            'ff1dc78176479ac0d2de28dd19e74400ad9f8d8261886672a15157d4a5e574b2'
             'dd2d248831dd4944d385ebf008426e66efe61d6fdf66f8932c963a12167947b4'
             '13fcf26193f4417fd5dfbc82a3f24e5c7a1cce82f729f6a73f1b1d3a7b580b34'
             '4484200d90b76830b69eea3a471c103999a3ce86bb2c29e6c14c945bf4102bae'
@@ -509,6 +511,12 @@ prepare() {
 
   # Allow libclang_rt.builtins from compiler-rt >= 16 to be used
   patch -Np1 -i ../compiler-rt-adjust-paths.patch
+
+  # Rust replaced libadler with libadler2
+  sed -i 's/"adler"/"adler2"/' build/rust/std/BUILD.gn
+
+  # Fix build with pipewire 1.4
+  patch -d third_party/webrtc -Np1 < ../pipewire-1.4.patch
 
   # Increase _FORTIFY_SOURCE level to match Arch's default flags
   patch -Np1 -i ../increase-fortify-level.patch
