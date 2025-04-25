@@ -225,8 +225,6 @@ def generate_fragment(rev):
 preferred_url_map = {
     # Replace with github mirror
     "https://chromium.googlesource.com/chromium/src.git": "https://github.com/chromium/chromium.git",
-    # Maintain pkgsrc interchangability with newer Electron builds
-    "https://chromium.googlesource.com/external/github.com/Maratyszcza/pthreadpool.git": "https://chromium.googlesource.com/external/github.com/google/pthreadpool.git"
 }
 
 

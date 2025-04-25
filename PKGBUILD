@@ -8,9 +8,9 @@
 # Note: source array can be synced with an Electron release after updating $pkgver with:
 # bash -c 'source PKGBUILD; _update_sources'
 
-pkgver=33.4.8
+pkgver=33.4.10
 _gcc_patches=130-2
-pkgrel=2
+pkgrel=1
 _major_ver=${pkgver%%.*}
 pkgname="electron${_major_ver}"
 pkgdesc='Build cross platform desktop apps with web technologies'
@@ -177,7 +177,7 @@ source=("git+https://github.com/electron/electron.git#tag=v$pkgver"
         chromium-mirror_third_party_pdfium::git+https://pdfium.googlesource.com/pdfium.git#commit=2b675cf15ab4b68bf1ed4e0511ba2479e11f1605
         chromium-mirror_third_party_perfetto::git+https://android.googlesource.com/platform/external/perfetto.git#commit=9170899ab284db894f14439e561f02f83a04d88e
         chromium-mirror_third_party_protobuf-javascript_src::git+https://chromium.googlesource.com/external/github.com/protocolbuffers/protobuf-javascript.git#commit=e34549db516f8712f678fcd4bc411613b5cc5295
-        chromium-mirror_third_party_pthreadpool_src::git+https://chromium.googlesource.com/external/github.com/google/pthreadpool.git#commit=560c60d342a76076f0557a3946924c6478470044
+        chromium-mirror_third_party_pthreadpool_src::git+https://chromium.googlesource.com/external/github.com/Maratyszcza/pthreadpool.git#commit=560c60d342a76076f0557a3946924c6478470044
         chromium-mirror_third_party_pyelftools::git+https://chromium.googlesource.com/chromiumos/third_party/pyelftools.git#commit=19b3e610c86fcadb837d252c794cb5e8008826ae
         chromium-mirror_third_party_quic_trace_src::git+https://chromium.googlesource.com/external/github.com/google/quic-trace.git#commit=caa0a6eaba816ecb737f9a70782b7c80b8ac8dbc
         chromium-mirror_third_party_pywebsocket3_src::git+https://chromium.googlesource.com/external/github.com/GoogleChromeLabs/pywebsocket3.git#commit=50602a14f1b6da17e0b619833a13addc6ea78bc2
@@ -241,7 +241,7 @@ source=("git+https://github.com/electron/electron.git#tag=v$pkgver"
         chromium-mirror_third_party_openscreen_src_third_party_tinycbor_src::git+https://chromium.googlesource.com/external/github.com/intel/tinycbor.git#commit=d393c16f3eb30d0c47e6f9d92db62272f0ec4dc7
         # END managed sources
         )
-sha256sums=('1186647175bd6173c46d6baf610910c66f76465b2769725aa3d5ba32bf6c039e'
+sha256sums=('1287d9f31ff33df4d1da3cae574be4fe6894954d93b98420e70e82e52e14324f'
             'c966110d60dbefe048c2cd854e847ff3cae0a66e474d68535fec23947d292a20'
             'd3dd9b4132c9748b824f3dcf730ec998c0087438db902bc358b3c391658bebf5'
             'b3de01b7df227478687d7517f61a777450dca765756002c80c4915f271e2d961'
@@ -252,7 +252,7 @@ sha256sums=('1186647175bd6173c46d6baf610910c66f76465b2769725aa3d5ba32bf6c039e'
             '4484200d90b76830b69eea3a471c103999a3ce86bb2c29e6c14c945bf4102bae'
             '55dbe71dbc1f3ab60bf1fa79f7aea7ef1fe76436b1d7df48728a1f8227d2134e'
             'ff588a8a4fd2f79eb8a4f11cf1aa151298ffb895be566c57cc355d47f161f53f'
-            'c75dbcb394a56065909e0bc4480e0d60461369403797945de0ec11da20b7780a'
+            'b7d75c9d9c176db2de7cb162b4e6106af28605a0374a20c20104d5e4c6b0030c'
             'add3d20ad7f8014d3a34cb229f7f5fefcea485afd381c34361f71d521c210641'
             '0b7a546ee6913c49519c10c293ac530ff381641a8a465fa2e184d6dbe0fb784d'
             '69afd4d3bf3cb220799bb2c495eaa50fd9cfd0090650b66ece5ce1aebe83c29f'
@@ -513,6 +513,9 @@ prepare() {
 
   # Allow libclang_rt.builtins from compiler-rt >= 16 to be used
   patch -Np1 -i ../compiler-rt-adjust-paths.patch
+
+  # Rust replaced libadler with libadler2
+  sed -i 's/"adler"/"adler2"/' build/rust/std/BUILD.gn
 
   # Fixes for building with libstdc++ instead of libc++
   patch -Np1 -i ../chromium-patches-*/chromium-130-interference-size.patch
