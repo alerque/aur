@@ -8,9 +8,9 @@
 # Note: source array can be synced with an Electron release after updating $pkgver with:
 # bash -c 'source PKGBUILD; _update_sources'
 
-pkgver=32.3.1
+pkgver=32.3.3
 _gcc_patches=127-1
-pkgrel=4
+pkgrel=1
 _major_ver=${pkgver%%.*}
 pkgname="electron${_major_ver}"
 pkgdesc='Build cross platform desktop apps with web technologies'
@@ -77,6 +77,7 @@ source=("git+https://github.com/electron/electron.git#tag=v$pkgver"
         jinja-python-3.10.patch
         use-system-libraries-in-node.patch
         makepkg-source-roller.py
+        electron-32.3.3-adjust-context-for-fix_osr_stutter_in_both_cpu_and_gpu_capture_when_page_has_animation.patch
         # BEGIN managed sources
         chromium-mirror::git+https://github.com/chromium/chromium.git#tag=128.0.6613.186
         chromium-mirror_third_party_nan::git+https://github.com/nodejs/nan.git#commit=e14bdcd1f72d62bca1d541b66da43130384ec213
@@ -240,7 +241,7 @@ source=("git+https://github.com/electron/electron.git#tag=v$pkgver"
         chromium-mirror_third_party_openscreen_src_third_party_tinycbor_src::git+https://chromium.googlesource.com/external/github.com/intel/tinycbor.git#commit=d393c16f3eb30d0c47e6f9d92db62272f0ec4dc7
         # END managed sources
         )
-sha256sums=('972f660d271365efc1cbe0e6ff90d7e1aec9fb431001f4737011860f44a44297'
+sha256sums=('82ff388174d8218c4cb7b1ae1123d67795e50e2a4a1d1bb464c485a4c1e643c1'
             '3dfc43d901b96273201ba6d6d8b932b07c3661942d42a8bb0aae2c547757c73d'
             '1a5bc75a90abad153c8eb6dbdce138132a5f11190b0a40c925958a72d706b2aa'
             'b3de01b7df227478687d7517f61a777450dca765756002c80c4915f271e2d961'
@@ -253,6 +254,7 @@ sha256sums=('972f660d271365efc1cbe0e6ff90d7e1aec9fb431001f4737011860f44a44297'
             '55dbe71dbc1f3ab60bf1fa79f7aea7ef1fe76436b1d7df48728a1f8227d2134e'
             'ff588a8a4fd2f79eb8a4f11cf1aa151298ffb895be566c57cc355d47f161f53f'
             '2c8cd28cee0e1df1862e801794f210d2b7cac652f943cf94f43c2abe26f2a2f4'
+            '1af61405291e2fe6e8d7e66ea8f260da4e09f60be84c25bf5bb335c7a5b03150'
             'baa35155ba83c8c0ae5faf1f82a92a7ed5fa6b4e61c7c5369fee8fc068e75dec'
             '0b7a546ee6913c49519c10c293ac530ff381641a8a465fa2e184d6dbe0fb784d'
             '07dc86368ae75c7605ef15ab9b95db07bdb53840b7ff5ccf8dc6014e13dcafcf'
@@ -466,6 +468,9 @@ prepare() {
   python makepkg-source-roller.py generate electron/DEPS $pkgname
   rbash prepare-electron-source-tree.sh "$CARCH"
   mv electron src/electron
+
+  patch -Np1 -d src/electron \
+    -i "${srcdir}"/electron-32.3.3-adjust-context-for-fix_osr_stutter_in_both_cpu_and_gpu_capture_when_page_has_animation.patch
 
   echo "Running hooks..."
   # depot_tools/gclient.py runhooks
