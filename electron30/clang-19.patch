@@ -1,0 +1,60 @@
+From 23646607e16c63231ae9f49ce5355c270145cf30 Mon Sep 17 00:00:00 2001
+From: Hans Wennborg <hans@chromium.org>
+Date: Fri, 03 May 2024 18:41:14 +0000
+Subject: [PATCH] Fix NoDestructor::PlacementStorage::get() const
+
+It was trying to call a storage() method, which doesn't exist in
+PlacementStorage. This was uncovered by a recent Clang change:
+https://github.com/llvm/llvm-project/pull/90152
+
+Bug: 338536260
+Change-Id: I74d06f46891f92645cee52a224379091e66a9627
+Reviewed-on: https://chromium-review.googlesource.com/c/chromium/src/+/5515154
+Auto-Submit: Hans Wennborg <hans@chromium.org>
+Commit-Queue: Daniel Cheng <dcheng@chromium.org>
+Reviewed-by: Daniel Cheng <dcheng@chromium.org>
+Commit-Queue: Hans Wennborg <hans@chromium.org>
+Cr-Commit-Position: refs/heads/main@{#1296238}
+---
+
+diff --git a/base/allocator/partition_allocator/src/partition_alloc/partition_alloc_base/no_destructor.h b/base/allocator/partition_allocator/src/partition_alloc/partition_alloc_base/no_destructor.h
+index 5bea83e..2daa62cee 100644
+--- a/base/allocator/partition_allocator/src/partition_alloc/partition_alloc_base/no_destructor.h
++++ b/base/allocator/partition_allocator/src/partition_alloc/partition_alloc_base/no_destructor.h
+@@ -122,9 +122,7 @@
+       new (storage_) T(std::forward<Args>(args)...);
+     }
+ 
+-    const T* get() const {
+-      return const_cast<PlacementStorage*>(this)->storage();
+-    }
++    const T* get() const { return const_cast<PlacementStorage*>(this)->get(); }
+     T* get() { return reinterpret_cast<T*>(storage_); }
+ 
+    private:
+--- a/base/containers/id_map.h
++++ b/base/containers/id_map.h
+@@ -179,6 +179,6 @@
+ 
+     const Iterator& operator=(const Iterator& iter) {
+-      map_ = iter.map;
+-      iter_ = iter.iter;
++      map_ = iter.map_;
++      iter_ = iter.iter_;
+       Init();
+       return *this;
+--- a/net/third_party/quiche/src/quiche/quic/core/quic_interval_deque.h
++++ b/net/third_party/quiche/src/quiche/quic/core/quic_interval_deque.h
+@@ -199,10 +199,10 @@
+       Iterator copy = *this;
+       copy.index_ += amount;
+-      QUICHE_DCHECK(copy.index_ < copy.deque_->size());
++      QUICHE_DCHECK(copy.index_ < copy.deque_->Size());
+       return copy;
+     }
+     Iterator& operator+=(difference_type amount) {
+       index_ += amount;
+-      QUICHE_DCHECK(index_ < deque_->size());
++      QUICHE_DCHECK(index_ < deque_->Size());
+       return *this;
+     }
