@@ -1,4 +1,4 @@
 [electron32]
 source = "regex"
-url = "https://releases.electronjs.org/"
-regex = 'href="/release/v(32\.\d+\.\d+)"'
+url = "https://releases.electronjs.org/release?channel=stable&major=v32"
+regex = 'href="/release/v(\d+\.\d+\.\d+)"'
