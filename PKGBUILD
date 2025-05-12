@@ -1,14 +1,14 @@
 # Maintainer: Wilken Gottwalt <wilken dot gottwalt at posteo dot net>
 
 pkgname=ollama-git
-pkgver=0.6.8.git+7e5c8eee5
+pkgver=0.6.8.r30.g82a9e94
 pkgrel=1
 pkgdesc='Create, run and share large language models (LLMs) with ROCm'
 arch=(aarch64 x86_64)
 url='https://github.com/ollama/ollama'
 license=(MIT)
-provides=(ollama)
 conflicts=(ollama)
+provides=("ollama=${pkgver%%.r*}")
 depends=(gcc-libs)
 makedepends=(git gcc-libs "go>=1.23")
 source=(git+$url#branch=main
@@ -22,10 +22,7 @@ b2sums=('SKIP'
 
 pkgver() {
   cd ollama
-  local _tag="$(git describe --tags --abbrev=0)"
-  local _hash="$(git rev-parse --short HEAD)"
-  _tag="${_tag%-*}"
-  echo "${_tag##v}.git+${_hash}"
+  git describe --long --tags --abbrev=7 | sed 's/v//;s/\([^-]*-g\)/r\1/;s/-/./g'
 }
 
 prepare() {
