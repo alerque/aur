@@ -1,6 +1,6 @@
 pkgbase = ollama-git
 	pkgdesc = Create, run and share large language models (LLMs) with ROCm
-	pkgver = 0.6.8.r30.g82a9e94
+	pkgver = 0.7.0.r9.g7edfdd2
 	pkgrel = 1
 	url = https://github.com/ollama/ollama
 	arch = aarch64
@@ -10,7 +10,7 @@ pkgbase = ollama-git
 	makedepends = gcc-libs
 	makedepends = go>=1.23
 	depends = gcc-libs
-	provides = ollama=0.6.8
+	provides = ollama=0.7.0
 	conflicts = ollama
 	source = git+https://github.com/ollama/ollama#branch=main
 	source = ollama.service
