@@ -1,5 +1,5 @@
-[diff-pdf]
+[lukaj]
 source = "github"
-github = "vslavik/diff-pdf"
+github = "adamws/lukaj"
 prefix = "v"
 use_max_tag = true

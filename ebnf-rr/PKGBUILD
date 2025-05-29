@@ -2,7 +2,7 @@
 
 pkgname=ebnf-rr
 _pkgname=${pkgname##*-}
-pkgver=2.2
+pkgver=2.5
 pkgrel=1
 pkgdesc='a railroad diagram generator for W3C-style EBNF grammars'
 arch=(any)
@@ -14,7 +14,7 @@ makedepends=(gradle
              java-environment)
 _archive="$_pkgname-$pkgver"
 source=("$url/archive/v$pkgver/$_archive.tar.gz")
-sha256sums=('f4c0da653f2c71517450eaaa96f37995dae93019c30ada1bdca9f7264a679af8')
+sha256sums=('028d4b5e97e8910667dc8296902e25867554e1cd3b9b4ea3239640743fac70bd')
 
 build() {
 	cd "$_archive"

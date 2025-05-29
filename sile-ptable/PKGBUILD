@@ -2,21 +2,21 @@
 
 _rockname=ptable.sile
 pkgname=("sile-${_rockname%.sile}")
-pkgver=3.1.1
+pkgver=4.1.0
 _rockrel=1
 pkgrel=1
 pkgdesc='Paragraph boxes, framed boxes and table packages for the SILE typesetting system'
 arch=(any)
 url="https://github.com/Omikhleia/$_rockname"
 license=(MIT)
-_siledeps=(silex)
-depends=(sile
-         "${_siledeps[@]/#/sile-}")
+_luadeps=(grail)
+depends=("${_luadeps[@]/#/lua51-}"
+         sile)
 makedepends=(lua51
              luarocks)
 _archive="$_rockname-$pkgver"
 source=("$url/archive/v$pkgver/$_archive.tar.gz")
-sha256sums=('c5d56c5ffbf6950634bb71806bce5e0c18fbf45f2c9cc109dca2f736ac290b51')
+sha256sums=('db0759368d1900ee58ed5bf457d79629fd69427ff19fab203f36fb4d652cdba9')
 
 package() {
 	cd "$_archive"

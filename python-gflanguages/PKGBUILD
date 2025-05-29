@@ -3,7 +3,7 @@
 _pyname=gflanguages
 pkgname=python-$_pyname
 epoch=1
-pkgver=0.7.3
+pkgver=0.7.5
 pkgrel=1
 pkgdesc='API for evaluating language support in the Google Fonts collection'
 arch=(any)
@@ -13,16 +13,20 @@ depends=(python
          python-protobuf)
 makedepends=(python-{build,installer,wheel}
              python-setuptools-scm)
-checkdepends=(python-pytest
-              python-filelock
+checkdepends=(python-filelock
+              python-pytest
+              python-regex
               python-uharfbuzz
               python-youseedee)
 _archive="$_pyname-$pkgver"
 source=("https://files.pythonhosted.org/packages/source/${_pyname::1}/$_pyname/$_archive.tar.gz")
-sha256sums=('0516cf0fad6a6f5fc204f86ffe31a688b0dd77698716a0ae821603b9a781a39e')
+sha256sums=('8dce3c0ca529dda8ba03172f7b2bd1ed317cd309952d67c6e7c5b6c51fc722c1')
 
 build() {
 	cd "$_archive"
+	pushd Lib/gflanguages
+	protoc --proto_path=. --proto_path=data --python_out=. languages_public.proto
+	popd
 	python -m build -wn
 }
 

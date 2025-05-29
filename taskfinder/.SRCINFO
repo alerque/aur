@@ -1,6 +1,6 @@
 pkgbase = taskfinder
 	pkgdesc = A terminal user interface that extracts and displays tasks from notes files
-	pkgver = 2.5.1
+	pkgver = 2.9.0
 	pkgrel = 1
 	url = https://codeberg.org/kdwarn/taskfinder
 	arch = x86_64
@@ -8,7 +8,7 @@ pkgbase = taskfinder
 	makedepends = cargo
 	depends = gcc-libs
 	depends = glibc
-	source = taskfinder-2.5.1.tar.gz::https://codeberg.org/kdwarn/taskfinder/archive/v2.5.1.tar.gz
-	sha256sums = 6acc53cda79a273fd458f51bf3ad596f0880a0b33e318016647adb926ffa8d35
+	source = taskfinder-2.9.0.tar.gz::https://codeberg.org/kdwarn/taskfinder/archive/v2.9.0.tar.gz
+	sha256sums = 599715644bf5948c688d44d63d6c6a405f8420c50e4a8a9a454b842aadc63c46
 
 pkgname = taskfinder

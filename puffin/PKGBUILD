@@ -1,7 +1,7 @@
 # Maintainer: Caleb Maclennan <caleb@alerque.com>
 
 pkgname=puffin
-pkgver=2.1.1
+pkgver=2.1.5
 pkgrel=1
 pkgdesc='TUI for hledger to manage personal finances'
 arch=(x86_64)
@@ -13,7 +13,7 @@ depends=(glibc
 makedepends=(go)
 _archive="$pkgname-$pkgver"
 source=("$url/archive/v$pkgver/$_archive.tar.gz")
-sha256sums=('67bcc870bc6321f534996d9ca6983ee425e8bc4f40e28fe42f2063930f2b31b7')
+sha256sums=('cfcb3306d55b81725808f83b973f08823d3ec74cf56ca42b309da8d661641c26')
 
 build() {
 	cd "$_archive"
