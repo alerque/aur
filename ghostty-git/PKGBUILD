@@ -5,7 +5,7 @@
 _pkgbase=ghostty
 pkgname=($_pkgbase-git $_pkgbase-shell-integration-git $_pkgbase-terminfo-git)
 pkgrel=1
-pkgver=1.1.2.r262.gefc1b10
+pkgver=1.1.2.r1185.gd0f116d
 pkgdesc="Fast, native, feature-rich terminal emulator pushing modern features"
 arch=(x86_64 aarch64 i686)
 url="https://github.com/ghostty-org/$_pkgbase"
@@ -17,6 +17,7 @@ depends=(bzip2
          glibc # libc.so libm.so
          glib2 libglib-2.0.so libgio-2.0.so libgobject-2.0.so
          gtk4 libgtk-4.so
+         gtk4-layer-shell
          libx11 # libX11.so
          harfbuzz libharfbuzz.so
          libadwaita libadwaita-1.so

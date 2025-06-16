@@ -1,6 +1,6 @@
 pkgbase = ghostty-git
 	pkgdesc = Fast, native, feature-rich terminal emulator pushing modern features
-	pkgver = 1.1.2.r262.gefc1b10
+	pkgver = 1.1.2.r1185.gd0f116d
 	pkgrel = 1
 	url = https://github.com/ghostty-org/ghostty
 	arch = x86_64
@@ -24,6 +24,7 @@ pkgbase = ghostty-git
 	depends = libgobject-2.0.so
 	depends = gtk4
 	depends = libgtk-4.so
+	depends = gtk4-layer-shell
 	depends = libx11
 	depends = harfbuzz
 	depends = libharfbuzz.so
@@ -39,17 +40,17 @@ pkgbase = ghostty-git
 	sha256sums = SKIP
 
 pkgname = ghostty-git
-	provides = ghostty=1.1.2.r262.gefc1b10
+	provides = ghostty=1.1.2.r1185.gd0f116d
 	conflicts = ghostty
 
 pkgname = ghostty-shell-integration-git
 	pkgdesc = Shell integration scripts for ghostty
 	depends = 
-	provides = ghostty-shell-integration=1.1.2.r262.gefc1b10
+	provides = ghostty-shell-integration=1.1.2.r1185.gd0f116d
 	conflicts = ghostty-shell-integration
 
 pkgname = ghostty-terminfo-git
 	pkgdesc = Terminfo for ghostty
 	depends = 
-	provides = ghostty-terminfo=1.1.2.r262.gefc1b10
+	provides = ghostty-terminfo=1.1.2.r1185.gd0f116d
 	conflicts = ghostty-terminfo
