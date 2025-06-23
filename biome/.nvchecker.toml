@@ -1,6 +1,0 @@
-[biome]
-source = "github"
-github = "biomejs/biome"
-include_regex = '@biomejs/biome@\d+\.\d+\.\d+'
-prefix = "@biomejs/biome@"
-use_max_tag = true
