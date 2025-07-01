@@ -1,7 +1,7 @@
 # Maintainer: Wilken Gottwalt <wilken dot gottwalt at posteo dot net>
 
 pkgname=ollama-git
-pkgver=0.9.2.r2.g8bcb312
+pkgver=0.9.4.rc3.r0.g44b17d2bfa00
 pkgrel=1
 pkgdesc='Create, run and share large language models (LLMs) with ROCm'
 arch=(aarch64 x86_64)
@@ -22,7 +22,7 @@ b2sums=('SKIP'
 
 pkgver() {
   cd ollama
-  git describe --long --tags --abbrev=7 | sed 's/v//;s/\([^-]*-g\)/r\1/;s/-/./g'
+  git describe --long --tags --abbrev=12 | sed 's/v//;s/\([^-]*-g\)/r\1/;s/-/./g'
 }
 
 prepare() {
@@ -35,6 +35,12 @@ prepare() {
 build() {
   export CMAKE_CUDA_COMPILER=/tmp
   export CMAKE_HIP_COMPILER=/tmp
+  export CGO_CPPFLAGS="${CPPFLAGS}"
+  export CGO_CFLAGS="${CFLAGS}"
+  export CGO_CXXFLAGS="${CXXFLAGS}"
+  export CGO_LDFLAGS="${LDFLAGS}"
+  export GOPATH="${srcdir}"
+  export GOFLAGS="-buildmode=pie -mod=readonly -modcacherw '-ldflags=-linkmode=external -X=github.com/ollama/ollama/version.Version=${pkgver} -X=github.com/ollama/ollama/server.mode=release'"
 
   cd ollama
 
