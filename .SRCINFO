@@ -1,6 +1,6 @@
 pkgbase = python-datalad
 	pkgdesc = Keep code, data, containers under control with git and git-annex
-	pkgver = 1.2.0
+	pkgver = 1.2.1
 	pkgrel = 1
 	url = https://github.com/datalad/datalad
 	arch = any
@@ -40,7 +40,7 @@ pkgbase = python-datalad
 	optdepends = python-dateutil: support for more date formats
 	optdepends = python-requests-ftp: extra downloaders
 	optdepends = python-pyperclip: clipboard manipulations
-	source = https://github.com/datalad/datalad/archive/1.2.0/datalad-1.2.0.tar.gz
-	sha256sums = 12318ad58fff6807eb69ead16e6b0347d6af47b6d021fcdff21e23c308b1a565
+	source = https://github.com/datalad/datalad/archive/1.2.1/datalad-1.2.1.tar.gz
+	sha256sums = 274dac5039375a915d5485291dd1590b1ea6f0cdc85143bbba600f26eba75d49
 
 pkgname = python-datalad
