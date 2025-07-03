@@ -5,7 +5,7 @@
 _pkgbase=ghostty
 pkgname=($_pkgbase-git $_pkgbase-shell-integration-git $_pkgbase-terminfo-git)
 pkgrel=1
-pkgver=1.1.2.r1185.gd0f116d
+pkgver=1.1.2.r1500.gf1f9d5e
 pkgdesc="Fast, native, feature-rich terminal emulator pushing modern features"
 arch=(x86_64 aarch64 i686)
 url="https://github.com/ghostty-org/$_pkgbase"
@@ -60,6 +60,7 @@ build() {
 }
 
 package_ghostty-git() {
+	depends+=("${_pkgbase}"-shell-integration-git "${_pkgbase}"-terminfo-git)
 	provides=("${pkgname%-git}=$pkgver")
 	conflicts=(${pkgname%-git})
 	cd "$_pkgbase"
