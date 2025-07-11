@@ -1,7 +1,7 @@
 # Maintainer: Wilken Gottwalt <wilken dot gottwalt at posteo dot net>
 
 pkgname=ollama-git
-pkgver=0.9.4.rc3.r0.g44b17d2bfa00
+pkgver=0.9.7.rc0.r0.g35fda7b4af55
 pkgrel=1
 pkgdesc='Create, run and share large language models (LLMs) with ROCm'
 arch=(aarch64 x86_64)
@@ -33,8 +33,6 @@ prepare() {
 }
 
 build() {
-  export CMAKE_CUDA_COMPILER=/tmp
-  export CMAKE_HIP_COMPILER=/tmp
   export CGO_CPPFLAGS="${CPPFLAGS}"
   export CGO_CFLAGS="${CFLAGS}"
   export CGO_CXXFLAGS="${CXXFLAGS}"
