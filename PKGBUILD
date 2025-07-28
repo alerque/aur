@@ -5,9 +5,9 @@
 
 pkgname=janus-gateway
 pkgver=1.3.2
-pkgrel=1
+pkgrel=2
 pkgdesc='An open source, general purpose, WebRTC server'
-arch=(x86_64 i686)
+arch=(x86_64 i686 aarch64)
 url='https://janus.conf.meetecho.com'
 license=(GPL-3.0-only)
 depends=(glib2
