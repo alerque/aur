@@ -1,7 +1,7 @@
 # Maintainer: Wilken Gottwalt <wilken dot gottwalt at posteo dot net>
 
 pkgname=ollama-git
-pkgver=0.9.7.rc0.r0.g35fda7b4af55
+pkgver=0.10.0.r0.g8afa6e83f2ca
 pkgrel=1
 pkgdesc='Create, run and share large language models (LLMs) with ROCm'
 arch=(aarch64 x86_64)
@@ -10,7 +10,7 @@ license=(MIT)
 conflicts=(ollama)
 provides=("ollama=${pkgver%%.r*}")
 depends=(gcc-libs)
-makedepends=(git gcc-libs "go>=1.23")
+makedepends=(cmake git gcc-libs "go>=1.23")
 source=(git+$url#branch=main
         ollama.service
         sysusers.conf
