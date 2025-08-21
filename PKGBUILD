@@ -1,5 +1,5 @@
 pkgname=dgop
-pkgver=0.0.7
+pkgver=0.0.8
 pkgrel=1
 pkgdesc="System monitoring CLI + REST API"
 arch=('x86_64' 'aarch64')
