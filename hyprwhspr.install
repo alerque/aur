@@ -10,7 +10,9 @@ post_install() {
         ./scripts/install-omarchy.sh
         echo ""
         echo "✅ HyprWhspr setup completed successfully!"
-        echo "Use Super+Alt+D to start dictation!"
+        echo ""
+        echo "⚠️ IMPORTANT: Log out and back in to ensure proper permissions"
+        echo "   Then use Super+Alt+D to start dictation!"
     else
         echo "❌ Installation script not found. Please run manually:"
         echo "   /opt/hyprwhspr/scripts/install-omarchy.sh"
