@@ -40,19 +40,13 @@ sha256sums=(
 )
 
 package() {
+    cd "${srcdir}/${pkgname}-${pkgver}"
+    
     # Create installation directory
     install -dm755 "${pkgdir}/opt/${pkgname}"
     
-    # Copy all source files to /opt/hyprwhspr from the correct source directory
-    # Use explicit file list to avoid copying hidden files and ensure we only copy what we need
-    cp -r "${srcdir}/${pkgname}-${pkgver}/bin" "${pkgdir}/opt/${pkgname}/"
-    cp -r "${srcdir}/${pkgname}-${pkgver}/config" "${pkgdir}/opt/${pkgname}/"
-    cp -r "${srcdir}/${pkgname}-${pkgver}/lib" "${pkgdir}/opt/${pkgname}/"
-    cp -r "${srcdir}/${pkgname}-${pkgver}/scripts" "${pkgdir}/opt/${pkgname}/"
-    cp -r "${srcdir}/${pkgname}-${pkgver}/share" "${pkgdir}/opt/${pkgname}/"
-    cp "${srcdir}/${pkgname}-${pkgver}/requirements.txt" "${pkgdir}/opt/${pkgname}/"
-    cp "${srcdir}/${pkgname}-${pkgver}/README.md" "${pkgdir}/opt/${pkgname}/"
-    cp "${srcdir}/${pkgname}-${pkgver}/LICENSE" "${pkgdir}/opt/${pkgname}/"
+    # Copy all source files to /opt/hyprwhspr
+    cp -r . "${pkgdir}/opt/${pkgname}/"
     
     # Make scripts executable
     chmod +x "${pkgdir}/opt/${pkgname}/scripts/"*.sh
