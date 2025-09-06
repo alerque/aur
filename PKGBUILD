@@ -2,7 +2,7 @@
 
 pkgname=hyprwhspr
 pkgver=1.2.0
-pkgrel=3
+pkgrel=4
 pkgdesc="Native Whisper speech-to-text for Arch/Omarchy with Waybar integration"
 arch=('x86_64')
 url="https://github.com/goodroot/hyprwhspr"
@@ -50,6 +50,31 @@ package() {
     
     # Make scripts executable
     chmod +x "${pkgdir}/opt/${pkgname}/scripts/"*.sh
+    chmod +x "${pkgdir}/opt/${pkgname}/bin/hyprwhspr"
+    
+    # Fix the launcher script to use venv python directly
+    cat > "${pkgdir}/opt/${pkgname}/bin/hyprwhspr" << 'EOF'
+#!/bin/bash
+
+# HyprWhspr - Hyprland-optimized voice dictation application
+# Main launcher script
+
+# Get the directory where this script is located
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+PACKAGE_ROOT="$(dirname "$SCRIPT_DIR")"
+
+# Set environment variables
+export HYPRWHSPR_ROOT="$PACKAGE_ROOT"
+export PYTHONPATH="$PACKAGE_ROOT/lib:$PYTHONPATH"
+
+# Use virtual environment's python directly if it exists
+if [ -f "$PACKAGE_ROOT/venv/bin/python" ]; then
+    exec "$PACKAGE_ROOT/venv/bin/python" "$PACKAGE_ROOT/lib/main.py" "$@"
+else
+    # Fallback to system python
+    exec python3 "$PACKAGE_ROOT/lib/main.py" "$@"
+fi
+EOF
     chmod +x "${pkgdir}/opt/${pkgname}/bin/hyprwhspr"
     
     # Create Python virtual environment and install pip-only dependencies
