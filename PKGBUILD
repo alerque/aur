@@ -1,7 +1,7 @@
 # Maintainer: goodroot <hyprwhspr@goodroot.ca>
 
 pkgname=hyprwhspr
-pkgver=1.1.0
+pkgver=1.2.0
 pkgrel=1
 pkgdesc="Native Whisper speech-to-text for Arch/Omarchy with Waybar integration"
 arch=('x86_64')
@@ -9,6 +9,13 @@ url="https://github.com/goodroot/hyprwhspr"
 license=('MIT')
 depends=(
     'python'
+    'python-evdev'
+    'python-numpy'
+    'python-scipy'
+    'python-pyperclip'
+    'python-psutil'
+    'python-rich'
+    'python-json5'
     'ydotool'
     'pipewire'
     'pipewire-alsa'
@@ -29,7 +36,7 @@ source=(
     "${pkgname}-${pkgver}.tar.gz::https://github.com/goodroot/${pkgname}/archive/v${pkgver}.tar.gz"
 )
 sha256sums=(
-    '60e704c87894f488f32a434e037c0ded22f3dfdbbf056c8a7e5ca32a74790156'
+    'ac063f5c43da89e89b65230b5a7e70533019ae9274c118c37b62c636ef63cf92'
 )
 
 package() {
@@ -44,6 +51,13 @@ package() {
     # Make scripts executable
     chmod +x "${pkgdir}/opt/${pkgname}/scripts/"*.sh
     chmod +x "${pkgdir}/opt/${pkgname}/bin/hyprwhspr"
+    
+    # Create Python virtual environment and install pip-only dependencies
+    cd "${pkgdir}/opt/${pkgname}"
+    python -m venv venv
+    source venv/bin/activate
+    pip install --upgrade pip
+    pip install sounddevice  # Only dependency not available in Arch repos
     
     # Create symlink for easy access
     install -dm755 "${pkgdir}/usr/bin"
