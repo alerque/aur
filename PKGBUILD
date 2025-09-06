@@ -2,7 +2,7 @@
 
 pkgname=hyprwhspr
 pkgver=1.2.0
-pkgrel=1
+pkgrel=2
 pkgdesc="Native Whisper speech-to-text for Arch/Omarchy with Waybar integration"
 arch=('x86_64')
 url="https://github.com/goodroot/hyprwhspr"
@@ -40,19 +40,7 @@ sha256sums=(
 )
 
 package() {
-    # Debug: Show current directory and what we're trying to cd to
-    echo "Current directory: $(pwd)"
-    echo "Trying to cd to: ${srcdir}/${pkgname}-${pkgver}"
-    echo "Source directory exists: $(test -d "${srcdir}/${pkgname}-${pkgver}" && echo "YES" || echo "NO")"
-    
-    cd "${srcdir}/${pkgname}-${pkgver}" || {
-        echo "ERROR: Failed to change to source directory: ${srcdir}/${pkgname}-${pkgver}"
-        echo "Current directory: $(pwd)"
-        exit 1
-    }
-    
-    echo "After cd, current directory: $(pwd)"
-    echo "Contents of current directory: $(ls -la)"
+    cd "${srcdir}/${pkgname}-${pkgver}"
     
     # Create installation directory
     install -dm755 "${pkgdir}/opt/${pkgname}"
