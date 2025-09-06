@@ -40,25 +40,20 @@ sha256sums=(
 )
 
 package() {
-    # Ensure we're in the correct source directory
-    cd "${srcdir}/${pkgname}-${pkgver}" || {
-        echo "ERROR: Failed to change to source directory: ${srcdir}/${pkgname}-${pkgver}"
-        exit 1
-    }
-    
-    # Verify we're in the right place
-    if [ ! -f "PKGBUILD" ] || [ ! -d "lib" ]; then
-        echo "ERROR: Source directory doesn't contain expected files"
-        echo "Current directory: $(pwd)"
-        echo "Contents: $(ls -la)"
-        exit 1
-    fi
-    
     # Create installation directory
     install -dm755 "${pkgdir}/opt/${pkgname}"
     
-    # Copy all source files to /opt/hyprwhspr
-    cp -r . "${pkgdir}/opt/${pkgname}/"
+    # Copy all source files to /opt/hyprwhspr from the correct source directory
+    # Use explicit file list to avoid copying hidden files and ensure we only copy what we need
+    cp -r "${srcdir}/${pkgname}-${pkgver}/bin" \
+          "${srcdir}/${pkgname}-${pkgver}/config" \
+          "${srcdir}/${pkgname}-${pkgver}/lib" \
+          "${srcdir}/${pkgname}-${pkgver}/scripts" \
+          "${srcdir}/${pkgname}-${pkgver}/share" \
+          "${srcdir}/${pkgname}-${pkgver}/requirements.txt" \
+          "${srcdir}/${pkgname}-${pkgver}/README.md" \
+          "${srcdir}/${pkgname}-${pkgver}/LICENSE" \
+          "${pkgdir}/opt/${pkgname}/"
     
     # Make scripts executable
     chmod +x "${pkgdir}/opt/${pkgname}/scripts/"*.sh
