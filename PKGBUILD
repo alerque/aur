@@ -77,12 +77,13 @@ fi
 EOF
     chmod +x "${pkgdir}/opt/${pkgname}/bin/hyprwhspr"
     
-    # Create Python virtual environment and install pip-only dependencies
+    # Create Python virtual environment and install ALL dependencies
     cd "${pkgdir}/opt/${pkgname}"
     python -m venv venv
     # Use the venv's python directly to avoid path issues
     ./venv/bin/python -m pip install --upgrade pip
-    ./venv/bin/python -m pip install sounddevice  # Only dependency not available in Arch repos
+    # Install all Python dependencies in venv for self-contained environment
+    ./venv/bin/python -m pip install numpy scipy pyperclip psutil rich json5 sounddevice
     
     # Create symlink for easy access
     install -dm755 "${pkgdir}/usr/bin"
