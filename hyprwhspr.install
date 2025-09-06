@@ -1,18 +1,14 @@
 post_install() {
     echo "HyprWhspr has been installed to /opt/hyprwhspr/"
     echo ""
-    echo "To complete setup, run:"
-    echo "   /opt/hyprwhspr/scripts/install-omarchy.sh"
-    echo ""
-    echo "This will configure permissions and services for your user."
-    echo ""
-    echo "For more information, see: /usr/share/doc/hyprwhspr/README.md"
+    echo "See GitHub for more information."
+    echo "   https://github.com/goodroot/hyprwhspr/"
 }
 
 post_upgrade() {
     echo "HyprWhspr has been upgraded successfully!"
     echo ""
-    echo "To update your configuration, run:"
-    echo "   /opt/hyprwhspr/scripts/install-omarchy.sh"
+    echo "See GitHub for more information."
+    echo "   https://github.com/goodroot/hyprwhspr/"
 }
 

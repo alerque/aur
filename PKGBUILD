@@ -83,7 +83,7 @@ EOF
     # Use the venv's python directly to avoid path issues
     ./venv/bin/python -m pip install --upgrade pip
     # Install all Python dependencies in venv for self-contained environment
-    ./venv/bin/python -m pip install numpy scipy pyperclip psutil rich json5 sounddevice
+    ./venv/bin/python -m pip install numpy scipy pyperclip psutil rich json5 sounddevice evdev
     
     # Create symlink for easy access
     install -dm755 "${pkgdir}/usr/bin"
