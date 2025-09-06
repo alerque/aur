@@ -1,4 +1,4 @@
-alsold;post_install() {
+post_install() {
     echo "HyprWhspr has been installed to /opt/hyprwhspr/"
     echo ""
     echo "To complete setup, run:"
