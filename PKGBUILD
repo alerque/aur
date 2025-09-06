@@ -45,8 +45,8 @@ package() {
     # Create installation directory
     install -dm755 "${pkgdir}/opt/${pkgname}"
     
-    # Copy only the source files (exclude system files)
-    cp -r bin config lib scripts share requirements.txt README.md LICENSE "${pkgdir}/opt/${pkgname}/"
+    # Copy all source files to /opt/hyprwhspr
+    cp -r . "${pkgdir}/opt/${pkgname}/"
     
     # Make scripts executable
     chmod +x "${pkgdir}/opt/${pkgname}/scripts/"*.sh
