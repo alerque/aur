@@ -40,7 +40,19 @@ sha256sums=(
 )
 
 package() {
-    cd "${srcdir}/${pkgname}-${pkgver}"
+    # Ensure we're in the correct source directory
+    cd "${srcdir}/${pkgname}-${pkgver}" || {
+        echo "ERROR: Failed to change to source directory: ${srcdir}/${pkgname}-${pkgver}"
+        exit 1
+    }
+    
+    # Verify we're in the right place
+    if [ ! -f "PKGBUILD" ] || [ ! -d "lib" ]; then
+        echo "ERROR: Source directory doesn't contain expected files"
+        echo "Current directory: $(pwd)"
+        echo "Contents: $(ls -la)"
+        exit 1
+    fi
     
     # Create installation directory
     install -dm755 "${pkgdir}/opt/${pkgname}"
