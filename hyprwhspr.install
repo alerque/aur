@@ -1,23 +1,10 @@
 alsold;post_install() {
     echo "HyprWhspr has been installed to /opt/hyprwhspr/"
     echo ""
-    echo "Running automatic setup..."
-    
-    # Run the installation script automatically
-    if [ -f "/opt/hyprwhspr/scripts/install-omarchy.sh" ]; then
-        echo "Executing installation script..."
-        cd /opt/hyprwhspr
-        ./scripts/install-omarchy.sh
-        echo ""
-        echo "✅ HyprWhspr setup completed successfully!"
-        echo ""
-        echo "⚠️ IMPORTANT: Log out and back in to ensure proper permissions"
-        echo "   Then use Super+Alt+D to start dictation!"
-    else
-        echo "❌ Installation script not found. Please run manually:"
-        echo "   /opt/hyprwhspr/scripts/install-omarchy.sh"
-    fi
-    
+    echo "To complete setup, run:"
+    echo "   /opt/hyprwhspr/scripts/install-omarchy.sh"
+    echo ""
+    echo "This will configure permissions and services for your user."
     echo ""
     echo "For more information, see: /usr/share/doc/hyprwhspr/README.md"
 }
@@ -25,20 +12,7 @@ alsold;post_install() {
 post_upgrade() {
     echo "HyprWhspr has been upgraded successfully!"
     echo ""
-    echo "Running automatic setup update..."
-    
-    # Re-run the installation script to update components
-    if [ -f "/opt/hyprwhspr/scripts/install-omarchy.sh" ]; then
-        echo "Updating whisper.cpp and dependencies..."
-        cd /opt/hyprwhspr
-        ./scripts/install-omarchy.sh
-        echo ""
-        echo "✅ HyprWhspr update completed successfully!"
-        echo ""
-        echo "⚠️  IMPORTANT: Log out and back in to ensure proper permissions"
-    else
-        echo "❌ Installation script not found. Please run manually:"
-        echo "   /opt/hyprwhspr/scripts/install-omarchy.sh"
-    fi
+    echo "To update your configuration, run:"
+    echo "   /opt/hyprwhspr/scripts/install-omarchy.sh"
 }
 
