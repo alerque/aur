@@ -40,7 +40,19 @@ sha256sums=(
 )
 
 package() {
-    cd "${srcdir}/${pkgname}-${pkgver}"
+    # Debug: Show current directory and what we're trying to cd to
+    echo "Current directory: $(pwd)"
+    echo "Trying to cd to: ${srcdir}/${pkgname}-${pkgver}"
+    echo "Source directory exists: $(test -d "${srcdir}/${pkgname}-${pkgver}" && echo "YES" || echo "NO")"
+    
+    cd "${srcdir}/${pkgname}-${pkgver}" || {
+        echo "ERROR: Failed to change to source directory: ${srcdir}/${pkgname}-${pkgver}"
+        echo "Current directory: $(pwd)"
+        exit 1
+    }
+    
+    echo "After cd, current directory: $(pwd)"
+    echo "Contents of current directory: $(ls -la)"
     
     # Create installation directory
     install -dm755 "${pkgdir}/opt/${pkgname}"
