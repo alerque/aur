@@ -2,7 +2,7 @@
 
 pkgname=hyprwhspr
 pkgver=1.2.0
-pkgrel=2
+pkgrel=3
 pkgdesc="Native Whisper speech-to-text for Arch/Omarchy with Waybar integration"
 arch=('x86_64')
 url="https://github.com/goodroot/hyprwhspr"
@@ -55,9 +55,9 @@ package() {
     # Create Python virtual environment and install pip-only dependencies
     cd "${pkgdir}/opt/${pkgname}"
     python -m venv venv
-    source venv/bin/activate
-    pip install --upgrade pip
-    pip install sounddevice  # Only dependency not available in Arch repos
+    # Use the venv's python directly to avoid path issues
+    ./venv/bin/python -m pip install --upgrade pip
+    ./venv/bin/python -m pip install sounddevice  # Only dependency not available in Arch repos
     
     # Create symlink for easy access
     install -dm755 "${pkgdir}/usr/bin"
