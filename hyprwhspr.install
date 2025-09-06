@@ -1,24 +1,20 @@
-post_install() {
+alsold;post_install() {
     echo "HyprWhspr has been installed to /opt/hyprwhspr/"
     echo ""
-    echo "Running setup script to configure permissions and services..."
+    echo "Running automatic setup..."
     
-    # Run the installation script as the installing user
+    # Run the installation script automatically
     if [ -f "/opt/hyprwhspr/scripts/install-omarchy.sh" ]; then
-        INSTALLING_USER="${SUDO_USER:-$USER}"
-        echo "Executing setup as user: $INSTALLING_USER"
-        
-        # Run the script as the user (it will use sudo internally when needed)
-        # Set environment variable to make it non-interactive for AUR
-        sudo -u "$INSTALLING_USER" env HYPRWHSPR_AUR_INSTALL=1 /opt/hyprwhspr/scripts/install-omarchy.sh
-        
+        echo "Executing installation script..."
+        cd /opt/hyprwhspr
+        ./scripts/install-omarchy.sh
         echo ""
         echo "✅ HyprWhspr setup completed successfully!"
         echo ""
-        echo "⚠️ IMPORTANT: Log out and back in for group changes to take effect"
+        echo "⚠️ IMPORTANT: Log out and back in to ensure proper permissions"
         echo "   Then use Super+Alt+D to start dictation!"
     else
-        echo "❌ Setup script not found. Please run manually:"
+        echo "❌ Installation script not found. Please run manually:"
         echo "   /opt/hyprwhspr/scripts/install-omarchy.sh"
     fi
     
@@ -29,27 +25,20 @@ post_install() {
 post_upgrade() {
     echo "HyprWhspr has been upgraded successfully!"
     echo ""
-    echo "Re-running setup to update configuration..."
+    echo "Running automatic setup update..."
     
     # Re-run the installation script to update components
     if [ -f "/opt/hyprwhspr/scripts/install-omarchy.sh" ]; then
-        INSTALLING_USER="${SUDO_USER:-$USER}"
-        sudo -u "$INSTALLING_USER" env HYPRWHSPR_AUR_INSTALL=1 /opt/hyprwhspr/scripts/install-omarchy.sh
+        echo "Updating whisper.cpp and dependencies..."
+        cd /opt/hyprwhspr
+        ./scripts/install-omarchy.sh
         echo ""
         echo "✅ HyprWhspr update completed successfully!"
+        echo ""
+        echo "⚠️  IMPORTANT: Log out and back in to ensure proper permissions"
     else
-        echo "❌ Setup script not found. Please run manually:"
+        echo "❌ Installation script not found. Please run manually:"
         echo "   /opt/hyprwhspr/scripts/install-omarchy.sh"
     fi
 }
 
-pre_remove() {
-    echo "Stopping HyprWhspr services..."
-    
-    # Stop services gracefully
-    INSTALLING_USER="${SUDO_USER:-$USER}"
-    sudo -u "$INSTALLING_USER" systemctl --user stop hyprwhspr.service 2>/dev/null || true
-    sudo -u "$INSTALLING_USER" systemctl --user stop ydotoold.service 2>/dev/null || true
-    
-    echo "✅ Services stopped"
-}
