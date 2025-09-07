@@ -97,4 +97,5 @@ EOF
   # Docs & license
   install -d "$pkgdir/usr/share/doc/$pkgname" "$pkgdir/usr/share/licenses/$pkgname"
   install -m644 README.md "$pkgdir/usr/share/doc/$pkgname/README.md"
-  install -m644 LICENSE "$pkgdi
+  install -m644 LICENSE "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
+}
