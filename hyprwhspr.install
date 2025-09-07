@@ -3,18 +3,14 @@ post_install() {
 
 HyprWhspr installed.
 
-Finish setup (runs your same installer, AUR-safe):
+Finish setup:
   hyprwhspr-setup
 
 Enable the user services:
   systemctl --user enable --now ydotoold.service
   systemctl --user enable --now hyprwhspr.service
 
-Notes:
-  • ydotoold runs as a user service here. Your installer also adds a udev rule
-    and input/audio groups so it can run unprivileged.
-
-Waybar (optional; NOT auto-edited in AUR mode):
+Waybar (optional):
   • Tray script: /usr/lib/hyprwhspr/config/hyprland/hyprwhspr-tray.sh
   • To auto-edit Waybar (opt-in), run:
       HYPRWHSPR_WAYBAR_AUTO=1 hyprwhspr-setup
