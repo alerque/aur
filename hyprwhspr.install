@@ -1,47 +1,57 @@
 post_install() {
-    echo "HyprWhspr has been installed to /opt/hyprwhspr/"
-    echo ""
-    echo "Running automatic setup..."
-    
-    # Run the installation script automatically
-    if [ -f "/opt/hyprwhspr/scripts/install-omarchy.sh" ]; then
-        echo "Executing installation script..."
-        cd /opt/hyprwhspr
-        ./scripts/install-omarchy.sh
-        echo ""
-        echo "✅ HyprWhspr setup completed successfully!"
-        echo ""
-        echo "⚠️ IMPORTANT: Log out and back in to ensure proper permissions"
-        echo "   Then use Super+Alt+D to start dictation!"
-    else
-        echo "❌ Installation script not found. Please run manually:"
-        echo "   /opt/hyprwhspr/scripts/install-omarchy.sh"
-    fi
-    
-    echo ""
-    echo "See GitHub for more information."
-    echo "   https://github.com/goodroot/hyprwhspr/"
+  cat <<'EOF'
+
+HyprWhspr installed.
+
+Finish setup (runs your same installer, AUR-safe):
+  hyprwhspr-setup
+
+Enable the user services:
+  systemctl --user enable --now ydotoold.service
+  systemctl --user enable --now hyprwhspr.service
+
+Notes:
+  • ydotoold runs as a user service here. Your installer also adds a udev rule
+    and input/audio groups so it can run unprivileged.
+
+Waybar (optional; NOT auto-edited in AUR mode):
+  • Tray script: /usr/lib/hyprwhspr/config/hyprland/hyprwhspr-tray.sh
+  • To auto-edit Waybar (opt-in), run:
+      HYPRWHSPR_WAYBAR_AUTO=1 hyprwhspr-setup
+
+Config:
+  The setup will create/update:
+    ~/.config/hyprwhspr/config.json
+
+Troubleshooting:
+  journalctl --user -u ydotoold.service
+  journalctl --user -u hyprwhspr.service
+
+EOF
 }
 
 post_upgrade() {
-    echo "HyprWhspr has been upgraded successfully!"
-    echo ""
-    echo "Re-running setup to update configuration..."
-    
-    # Re-run the installation script to update components
-    if [ -f "/opt/hyprwhspr/scripts/install-omarchy.sh" ]; then
-        echo "Updating whisper.cpp and dependencies..."
-        cd /opt/hyprwhspr
-        ./scripts/install-omarchy.sh
-        echo ""
-        echo "✅ HyprWhspr update completed successfully!"
-    else
-        echo "❌ Installation script not found. Please run manually:"
-        echo "   /opt/hyprwhspr/scripts/install-omarchy.sh"
-    fi
-    
-    echo ""
-    echo "See GitHub for more information."
-    echo "   https://github.com/goodroot/hyprwhspr/"
+  cat <<'EOF'
+
+HyprWhspr upgraded.
+
+If needed, re-run setup (idempotent):
+  hyprwhspr-setup
+
+Service status:
+  systemctl --user status ydotoold.service
+  systemctl --user status hyprwhspr.service
+
+EOF
 }
 
+post_remove() {
+  cat <<'EOF'
+
+HyprWhspr removed.
+
+Note: user data remains (remove manually if desired):
+  ~/.config/hyprwhspr
+
+EOF
+}
