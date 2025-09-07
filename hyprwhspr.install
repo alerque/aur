@@ -5,15 +5,12 @@ hyprwhspr installed.
 
 Finish setup:
   hyprwhspr-setup
+  • To auto-edit Waybar (opt-in), run:
+    HYPRWHSPR_WAYBAR_AUTO=1 hyprwhspr-setup
 
 Enable the user services:
   systemctl --user enable --now ydotoold.service
   systemctl --user enable --now hyprwhspr.service
-
-Waybar (optional):
-  • Tray script: /usr/lib/hyprwhspr/config/hyprwhspr-tray.sh
-  • To auto-edit Waybar (opt-in), run:
-      HYPRWHSPR_WAYBAR_AUTO=1 hyprwhspr-setup
 
 Config:
   The setup will create/update:
