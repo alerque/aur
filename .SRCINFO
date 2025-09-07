@@ -1,6 +1,6 @@
 pkgbase = hyprwhspr
 	pkgdesc = Native Whisper speech-to-text for Arch/Omarchy with Waybar integration
-	pkgver = 1.2.2
+	pkgver = 1.2.3
 	pkgrel = 1
 	url = https://github.com/goodroot/hyprwhspr
 	install = hyprwhspr.install
@@ -22,7 +22,7 @@ pkgbase = hyprwhspr
 	optdepends = cuda: For GPU acceleration
 	optdepends = waybar: For tray/status
 	optdepends = whisper.cpp: Use system build instead of building locally in setup step
-	source = hyprwhspr-1.2.2.tar.gz::https://github.com/goodroot/hyprwhspr/archive/refs/tags/v1.2.2.tar.gz
-	sha256sums = 6a509484426d9cab003d7757620e149f90a8f309f041a79930b54cedc02f0da5
+	source = hyprwhspr-1.2.3.tar.gz::https://github.com/goodroot/hyprwhspr/archive/refs/tags/v1.2.3.tar.gz
+	sha256sums = 62b2f4431a827c37730aa22b9057d94698321ac2a894accfc048f80eb4759a3a
 
 pkgname = hyprwhspr

@@ -1,7 +1,7 @@
 post_install() {
   cat <<'EOF'
 
-HyprWhspr installed.
+hyprwhspr installed.
 
 Finish setup:
   hyprwhspr-setup
@@ -11,7 +11,7 @@ Enable the user services:
   systemctl --user enable --now hyprwhspr.service
 
 Waybar (optional):
-  • Tray script: /usr/lib/hyprwhspr/config/hyprland/hyprwhspr-tray.sh
+  • Tray script: /usr/lib/hyprwhspr/config/hyprwhspr-tray.sh
   • To auto-edit Waybar (opt-in), run:
       HYPRWHSPR_WAYBAR_AUTO=1 hyprwhspr-setup
 
@@ -29,7 +29,7 @@ EOF
 post_upgrade() {
   cat <<'EOF'
 
-HyprWhspr upgraded.
+hyprwhspr upgraded.
 
 If needed, re-run setup (idempotent):
   hyprwhspr-setup
@@ -44,10 +44,11 @@ EOF
 post_remove() {
   cat <<'EOF'
 
-HyprWhspr removed.
+hyprwhspr removed.
 
 Note: user data remains (remove manually if desired):
   ~/.config/hyprwhspr
+  ~/.local/share/hyprwhspr
 
 EOF
 }
