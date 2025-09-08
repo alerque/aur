@@ -1,18 +1,18 @@
 pkgbase = dgop
 	pkgdesc = System monitoring CLI + REST API
 	pkgver = 0.1.2
-	pkgrel = 1
+	pkgrel = 2
 	url = https://github.com/AvengeMedia/dgop
 	arch = x86_64
 	arch = aarch64
 	license = MIT
 	depends = glibc
-	source_x86_64 = dgop-0.1.2-linux-amd64::https://github.com/AvengeMedia/dgop/releases/download/v0.1.2/dgop-v0.1.2-linux-amd64
-	source_x86_64 = dgop-0.1.2-linux-amd64.sha256::https://github.com/AvengeMedia/dgop/releases/download/v0.1.2/dgop-v0.1.2-linux-amd64.sha256
+	source_x86_64 = dgop-linux-amd64.gz::https://github.com/AvengeMedia/dgop/releases/download/v0.1.2/dgop-linux-amd64.gz
+	source_x86_64 = dgop-linux-amd64.gz.sha256::https://github.com/AvengeMedia/dgop/releases/download/v0.1.2/dgop-linux-amd64.gz.sha256
 	sha256sums_x86_64 = SKIP
 	sha256sums_x86_64 = SKIP
-	source_aarch64 = dgop-0.1.2-linux-arm64::https://github.com/AvengeMedia/dgop/releases/download/v0.1.2/dgop-v0.1.2-linux-arm64
-	source_aarch64 = dgop-0.1.2-linux-arm64.sha256::https://github.com/AvengeMedia/dgop/releases/download/v0.1.2/dgop-v0.1.2-linux-arm64.sha256
+	source_aarch64 = dgop-linux-arm64.gz::https://github.com/AvengeMedia/dgop/releases/download/v0.1.2/dgop-linux-arm64.gz
+	source_aarch64 = dgop-linux-arm64.gz.sha256::https://github.com/AvengeMedia/dgop/releases/download/v0.1.2/dgop-linux-arm64.gz.sha256
 	sha256sums_aarch64 = SKIP
 	sha256sums_aarch64 = SKIP
 
