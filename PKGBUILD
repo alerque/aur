@@ -1,7 +1,7 @@
 # Maintainer: Your Name <you@example.com>
 pkgname=dms-shell-git
-pkgver=0.0.5.107.gb8bffe9
-pkgrel=2
+pkgver=0.0.7.3.g2395274
+pkgrel=1
 pkgdesc='A Quickshell-based desktop shell with Material 3 design principles'
 arch=('x86_64' 'aarch64')
 url='https://github.com/AvengeMedia/DankMaterialShell'
@@ -33,12 +33,12 @@ source=(
 sha256sums=('SKIP' 'SKIP')
 
 pkgver() {
-    cd "${srcdir}/${pkgname}"
-    if git describe --tags --long 2>/dev/null | grep -q .; then
-        git describe --tags --long | sed 's/^v//; s/-/./g'
-    else
-        printf "r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short=7 HEAD)"
-    fi
+  cd "$srcdir/$pkgname"
+  if git describe --tags --long >/dev/null 2>&1; then
+    git describe --tags --long | sed 's/^v//; s/-/./g'
+  else
+    printf "r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
+  fi
 }
 
 build() {
