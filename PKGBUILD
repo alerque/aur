@@ -1,6 +1,6 @@
 # Maintainer: Your Name <you@example.com>
 pkgname=dms-shell
-pkgver=0.0.6
+pkgver=0.0.7
 pkgrel=1
 pkgdesc='A Quickshell-based desktop shell with Material 3 design principles'
 arch=('x86_64' 'aarch64')
