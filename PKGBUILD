@@ -1,7 +1,7 @@
 # Maintainer: goodroot <hyprwhspr@goodroot.ca>
 
 pkgname=hyprwhspr
-pkgver=1.2.8
+pkgver=1.2.9
 pkgrel=1
 pkgdesc="Native Whisper speech-to-text for Arch/Omarchy with Waybar integration"
 arch=('x86_64')
@@ -15,8 +15,15 @@ depends=(
   'python-psutil'
   'python-rich'
   'python-json5'
+  'python-sounddevice'
+  'python-evdev'
   'ydotool'
   'pipewire' 'pipewire-alsa' 'pipewire-pulse' 'pipewire-jack'
+  'cmake'
+  'make'
+  'git'
+  'base-devel'
+  'curl'
 )
 optdepends=(
   'nvidia-utils: For GPU acceleration'
@@ -26,7 +33,7 @@ optdepends=(
 )
 install=$pkgname.install
 source=("$pkgname-$pkgver.tar.gz::https://github.com/goodroot/$pkgname/archive/refs/tags/v$pkgver.tar.gz")
-sha256sums=('d77ebb21866a8e6088b6831c36ac1661b017d5eadbb1f57cdd6ca586a9d0720d')
+sha256sums=('fe6dca68145588b41c527dacb42075b98e58374c5d98b61ccb32d7f7f8d4ce87')
 
 build() {
   cd "$srcdir/$pkgname-$pkgver"
@@ -38,7 +45,7 @@ package() {
 
   # Payload into /usr/lib keeps repo layout intact for your installer
   install -d "$pkgdir/usr/lib/$pkgname"
-  cp -r lib bin scripts config README.md LICENSE requirements.txt "$pkgdir/usr/lib/$pkgname"
+  cp -r lib bin scripts config share README.md LICENSE requirements.txt "$pkgdir/usr/lib/$pkgname"
 
   # Runtime launcher: prefers user venv + user whisper.cpp bin
   install -d "$pkgdir/usr/bin"

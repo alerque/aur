@@ -1,23 +1,23 @@
 post_install() {
+  # Run setup with Waybar integration enabled by default
+  HYPRWHSPR_WAYBAR_AUTO=1 hyprwhspr-setup
+  
   cat <<'EOF'
 
-hyprwhspr installed.
+hyprwhspr installed and configured!
 
-Finish setup:
-  hyprwhspr-setup
-  • To auto-edit Waybar (opt-in), run:
-    HYPRWHSPR_WAYBAR_AUTO=1 hyprwhspr-setup
+Services running: ydotoold.service, hyprwhspr.service
+Waybar integration configured
+Whisper models downloaded
+User configuration created
 
-Enable the user services:
-  systemctl --user enable --now ydotoold.service
-  systemctl --user enable --now hyprwhspr.service
+IMPORTANT: Log out and log back in for permissions to take effect
+(Required for /dev/uinput access)
 
-Config:
-  The setup will create/update:
-    ~/.config/hyprwhspr/config.json
+Check status:
+  systemctl --user status hyprwhspr.service
 
-Troubleshooting:
-  journalctl --user -u ydotoold.service
+Logs:
   journalctl --user -u hyprwhspr.service
 
 EOF
