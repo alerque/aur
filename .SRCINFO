@@ -1,7 +1,7 @@
 pkgbase = hyprwhspr
 	pkgdesc = Native Whisper speech-to-text for Arch/Omarchy with Waybar integration
 	pkgver = 1.2.9
-	pkgrel = 1
+	pkgrel = 2
 	url = https://github.com/goodroot/hyprwhspr
 	install = hyprwhspr.install
 	arch = x86_64
@@ -15,6 +15,7 @@ pkgbase = hyprwhspr
 	depends = python-json5
 	depends = python-sounddevice
 	depends = python-evdev
+	depends = python-requests
 	depends = ydotool
 	depends = pipewire
 	depends = pipewire-alsa
