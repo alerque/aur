@@ -17,6 +17,7 @@ depends=(
   'python-json5'
   'python-sounddevice'
   'python-evdev'
+  'python-requests'
   'ydotool'
   'pipewire' 'pipewire-alsa' 'pipewire-pulse' 'pipewire-jack'
   'cmake'
