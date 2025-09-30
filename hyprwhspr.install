@@ -6,12 +6,6 @@ hyprwhspr installed successfully!
 To complete setup:
   hyprwhspr-setup
 
-Check status:
-  systemctl --user status hyprwhspr.service
-
-Logs:
-  journalctl --user -u hyprwhspr.service
-
 EOF
 }
 
