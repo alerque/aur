@@ -2,7 +2,7 @@
 
 pkgname=hyprwhspr
 pkgver=1.2.9
-pkgrel=6
+pkgrel=7
 pkgdesc="Native Whisper speech-to-text for Arch/Omarchy with Waybar integration"
 arch=('x86_64')
 url="https://github.com/goodroot/hyprwhspr"
@@ -90,22 +90,7 @@ exec /usr/lib/hyprwhspr/scripts/install-omarchy.sh "$@"
 EOF
   chmod 755 "$pkgdir/usr/bin/hyprwhspr-setup"
 
-  # AUR-friendly user units so users can enable them directly
-  install -d "$pkgdir/usr/lib/systemd/user"
-  if [[ -f "$srcdir/$pkgname-$pkgver/packaging/systemd/hyprwhspr.service" ]]; then
-    install -m644 "$srcdir/$pkgname-$pkgver/packaging/systemd/hyprwhspr.service" \
-      "$pkgdir/usr/lib/systemd/user/hyprwhspr.service"
-  else
-    install -m644 "$srcdir/$pkgname-$pkgver/config/systemd/hyprwhspr.service" \
-      "$pkgdir/usr/lib/systemd/user/hyprwhspr.service"
-  fi
-  if [[ -f "$srcdir/$pkgname-$pkgver/packaging/systemd/ydotoold.service" ]]; then
-    install -m644 "$srcdir/$pkgname-$pkgver/packaging/systemd/ydotoold.service" \
-      "$pkgdir/usr/lib/systemd/user/ydotoold.service"
-  elif [[ -f "$srcdir/$pkgname-$pkgver/config/systemd/ydotoold.service" ]]; then
-    install -m644 "$srcdir/$pkgname-$pkgver/config/systemd/ydotoold.service" \
-      "$pkgdir/usr/lib/systemd/user/ydotoold.service"
-  fi
+  # Service files are handled by the install script, not installed by package
 
   # Docs & license
   install -d "$pkgdir/usr/share/doc/$pkgname" "$pkgdir/usr/share/licenses/$pkgname"
