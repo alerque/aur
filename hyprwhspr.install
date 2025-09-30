@@ -6,12 +6,6 @@ hyprwhspr installed successfully!
 To complete setup:
   hyprwhspr-setup
 
-To enable services:
-  systemctl --user enable --now ydotoold.service hyprwhspr.service
-
-IMPORTANT: Log out and log back in for permissions to take effect
-(Required for /dev/uinput access)
-
 Check status:
   systemctl --user status hyprwhspr.service
 
