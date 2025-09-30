@@ -1,8 +1,8 @@
 # Maintainer: goodroot <hyprwhspr@goodroot.ca>
 
 pkgname=hyprwhspr
-pkgver=1.2.9
-pkgrel=7
+pkgver=1.3.0
+pkgrel=1
 pkgdesc="Native Whisper speech-to-text for Arch/Omarchy with Waybar integration"
 arch=('x86_64')
 url="https://github.com/goodroot/hyprwhspr"
@@ -34,7 +34,7 @@ optdepends=(
 )
 install=$pkgname.install
 source=("$pkgname-$pkgver.tar.gz::https://github.com/goodroot/$pkgname/archive/refs/tags/v$pkgver.tar.gz")
-sha256sums=('fe6dca68145588b41c527dacb42075b98e58374c5d98b61ccb32d7f7f8d4ce87')
+sha256sums=('1558bd7bc836934c1b77bf7186b20541e525944e4537b1d5091c37a68c62b1db')
 
 build() {
   cd "$srcdir/$pkgname-$pkgver"
