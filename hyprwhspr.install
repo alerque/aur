@@ -9,15 +9,13 @@ post_install() {
   
   if [ -n "$ACTUAL_USER" ] && [ "$ACTUAL_USER" != "root" ]; then
     # Run setup as the actual user
-    sudo -u "$ACTUAL_USER" bash -c 'HYPRWHSPR_WAYBAR_AUTO=1 hyprwhspr-setup' || {
+    sudo -u "$ACTUAL_USER" bash -c 'hyprwhspr-setup' || {
       echo "Warning: Could not run setup as user $ACTUAL_USER. Please run manually:"
       echo "  hyprwhspr-setup"
-      echo "  HYPRWHSPR_WAYBAR_AUTO=1 hyprwhspr-setup"
     }
   else
     echo "Warning: Could not determine user. Please run setup manually:"
     echo "  hyprwhspr-setup"
-    echo "  HYPRWHSPR_WAYBAR_AUTO=1 hyprwhspr-setup"
   fi
   
   cat <<'EOF'
