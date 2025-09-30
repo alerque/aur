@@ -1,31 +1,13 @@
 post_install() {
-  # Detect the actual user (not root)
-  if [ -n "$SUDO_USER" ]; then
-    ACTUAL_USER="$SUDO_USER"
-  else
-    # Fallback: find first non-root user
-    ACTUAL_USER=$(stat -c '%U' /home 2>/dev/null | head -1 || echo "")
-  fi
-  
-  if [ -n "$ACTUAL_USER" ] && [ "$ACTUAL_USER" != "root" ]; then
-    # Run setup as the actual user
-    sudo -u "$ACTUAL_USER" bash -c 'hyprwhspr-setup' || {
-      echo "Warning: Could not run setup as user $ACTUAL_USER. Please run manually:"
-      echo "  hyprwhspr-setup"
-    }
-  else
-    echo "Warning: Could not determine user. Please run setup manually:"
-    echo "  hyprwhspr-setup"
-  fi
-  
   cat <<'EOF'
 
-hyprwhspr installed and configured!
+hyprwhspr installed successfully!
 
-Services running: ydotoold.service, hyprwhspr.service
-Waybar integration configured
-Whisper models downloaded
-User configuration created
+To complete setup:
+  hyprwhspr-setup
+
+To enable services:
+  systemctl --user enable --now ydotoold.service hyprwhspr.service
 
 IMPORTANT: Log out and log back in for permissions to take effect
 (Required for /dev/uinput access)
