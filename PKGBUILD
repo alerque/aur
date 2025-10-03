@@ -1,7 +1,7 @@
 # Maintainer: goodroot <hyprwhspr@goodroot.ca>
 
 pkgname=hyprwhspr
-pkgver=1.3.3
+pkgver=1.3.4
 pkgrel=1
 pkgdesc="Native Whisper speech-to-text for Arch/Omarchy with Waybar integration"
 arch=('x86_64')
@@ -33,7 +33,7 @@ optdepends=(
 )
 install=$pkgname.install
 source=("$pkgname-$pkgver.tar.gz::https://github.com/goodroot/$pkgname/archive/refs/tags/v$pkgver.tar.gz")
-sha256sums=('91939635a911f20927548edfeab9179cfadee1fedc2d62a748c212c95632db35')
+sha256sums=('5a027d9fdbe89cc213f913ae153ab27dcfc5e4bac03da31a22d2a21495373017')
 
 build() {
   cd "$srcdir/$pkgname-$pkgver"
@@ -53,13 +53,9 @@ package() {
 #!/usr/bin/env bash
 # hyprwhspr launcher
 
-# Get the directory where this script is located
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-PACKAGE_ROOT="$(dirname "$SCRIPT_DIR")"
-
 # Set environment variables
-export HYPRWHSPR_ROOT="$PACKAGE_ROOT"
-export PYTHONPATH="$PACKAGE_ROOT/lib:$PYTHONPATH"
+export HYPRWHSPR_ROOT="/usr/lib/hyprwhspr"
+export PYTHONPATH="/usr/lib/hyprwhspr/lib:$PYTHONPATH"
 
 # Activate virtual environment in user space
 USER_VENV="${XDG_DATA_HOME:-$HOME/.local/share}/hyprwhspr/venv"
@@ -72,7 +68,7 @@ else
 fi
 
 # Run the main application
-exec python3 "$PACKAGE_ROOT/lib/main.py" "$@"
+exec python3 "/usr/lib/hyprwhspr/lib/main.py" "$@"
 EOF
   chmod 755 "$pkgdir/usr/bin/$pkgname"
 
