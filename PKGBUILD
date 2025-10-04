@@ -5,7 +5,7 @@
 
 pkgname=janus-gateway
 pkgver=1.3.2
-pkgrel=2
+pkgrel=3
 pkgdesc='An open source, general purpose, WebRTC server'
 arch=(x86_64 i686 aarch64)
 url='https://janus.conf.meetecho.com'
@@ -69,10 +69,18 @@ backup=(etc/janus/janus.eventhandler.gelfevh.jcfg
 _archive="$pkgname-$pkgver"
 source=("https://github.com/meetecho/janus-gateway/archive/v$pkgver/$_archive.tar.gz"
         janus.conf
-        janus.service)
+        janus.service
+        0001-fix-avcodec-close-compile-errors.patch)
 sha256sums=('87345c06fbe5f7db91036fa694dfa49221883010e0a9746af5a5a940626dd182'
             'bd6d7615e722adb64816fae3c5323f6aeb1b9561c39f1652568ed494ffdaa191'
-            'cf2b6c8fdcd60ccfa179c4cd207a23ee7edfee90588c2c3847aa6cda418bed7f')
+            'cf2b6c8fdcd60ccfa179c4cd207a23ee7edfee90588c2c3847aa6cda418bed7f'
+            '9027feafc37281f4d811bf6fcc4efadf7df414dbb8bc28aaa17c0524a04bfac6')
+
+
+prepare() {
+	cd "$pkgname-$pkgver"
+	patch -p1 -i "$srcdir/0001-fix-avcodec-close-compile-errors.patch"
+}
 
 build() {
 	cd "$_archive"
