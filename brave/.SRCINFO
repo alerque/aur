@@ -1,6 +1,6 @@
 pkgbase = brave
 	pkgdesc = Web browser that blocks ads and trackers by default
-	pkgver = 1.52.129
+	pkgver = 1.57.49
 	pkgrel = 1
 	url = https://www.brave.com/download
 	arch = x86_64
@@ -42,7 +42,6 @@ pkgbase = brave
 	depends = hicolor-icon-theme
 	depends = fontconfig
 	depends = woff2
-	depends = brotli
 	depends = libjpeg
 	depends = icu
 	depends = dav1d
@@ -65,16 +64,14 @@ pkgbase = brave
 	optdepends = org.freedesktop.secrets: password storage backend on GNOME / Xfce
 	optdepends = kwallet: support for storing passwords in KWallet on Plasma
 	options = !lto
-	source = brave-browser::git+https://github.com/brave/brave-browser.git#tag=v1.52.129
-	source = brave::git+https://github.com/brave/brave-core.git#tag=v1.52.129
-	source = chromium-mirror::git+https://github.com/chromium/chromium.git#tag=114.0.5735.198
+	source = brave-browser::git+https://github.com/brave/brave-browser.git#tag=v1.57.49
+	source = brave::git+https://github.com/brave/brave-core.git#tag=v1.57.49
+	source = chromium-mirror::git+https://github.com/chromium/chromium.git#tag=116.0.5845.96
 	source = depot_tools::git+https://chromium.googlesource.com/chromium/tools/depot_tools.git
+	source = https://github.com/stha09/chromium-patches/releases/download/chromium-116-patchset-2/chromium-116-patchset-2.tar.xz
 	source = https://github.com/foutrelis/chromium-launcher/archive/refs/tags/v8/chromium-launcher-8.tar.gz
 	source = chromium-launcher-electron-app.patch
 	source = chromium-launcher-vendor.patch
-	source = system-rust-utils.patch
-	source = 0001-Fix-Rust-linking-on-component-and-debug-Windows-builds.patch
-	source = 0002-Remove-the-prebuilt-toolchain-from-the-Android-team.patch
 	source = brave-1.19-BUILD.gn.patch
 	source = brave-1.43-bitcoin-core_remove-serialize.h.patch
 	source = brave-1.43-debounce-debounce_navigation_throttle_fix.patch
@@ -84,23 +81,17 @@ pkgbase = brave
 	source = brave-1.52-bitints-libstdcxx-bypass.patch
 	source = brave-1.52-missing-includes.patch
 	source = brave-1.52-playlist-user-agent-only-constructor.patch
-	source = https://gitlab.archlinux.org/archlinux/packaging/packages/chromium/-/raw/fa08adba87b6222bdf9ba31aaa41579e634ec444/add-some-typename-s-that-are-required-in-C-17.patch
-	source = https://gitlab.archlinux.org/archlinux/packaging/packages/chromium/-/raw/fa08adba87b6222bdf9ba31aaa41579e634ec444/REVERT-disable-autoupgrading-debug-info.patch
-	source = https://gitlab.archlinux.org/archlinux/packaging/packages/chromium/-/raw/fa08adba87b6222bdf9ba31aaa41579e634ec444/download-bubble-typename.patch
-	source = https://gitlab.archlinux.org/archlinux/packaging/packages/chromium/-/raw/fa08adba87b6222bdf9ba31aaa41579e634ec444/webauthn-variant.patch
-	source = https://gitlab.archlinux.org/archlinux/packaging/packages/chromium/-/raw/fa08adba87b6222bdf9ba31aaa41579e634ec444/random-fixes-for-gcc13.patch
-	source = https://gitlab.archlinux.org/archlinux/packaging/packages/chromium/-/raw/fa08adba87b6222bdf9ba31aaa41579e634ec444/disable-GlobalMediaControlsCastStartStop.patch
-	source = https://gitlab.archlinux.org/archlinux/packaging/packages/chromium/-/raw/fa08adba87b6222bdf9ba31aaa41579e634ec444/use-oauth2-client-switches-as-default.patch
+	source = https://gitlab.archlinux.org/archlinux/packaging/packages/chromium/-/raw/116.0.5845.96-1/REVERT-disable-autoupgrading-debug-info.patch
+	source = https://gitlab.archlinux.org/archlinux/packaging/packages/chromium/-/raw/116.0.5845.96-1/random-build-fixes.patch
+	source = https://gitlab.archlinux.org/archlinux/packaging/packages/chromium/-/raw/116.0.5845.96-1/use-oauth2-client-switches-as-default.patch
 	sha256sums = SKIP
 	sha256sums = SKIP
 	sha256sums = SKIP
 	sha256sums = SKIP
+	sha256sums = 25ad7c1a5e0b7332f80ed15ccf07d7e871d8ffb4af64df7c8fef325a527859b0
 	sha256sums = 213e50f48b67feb4441078d50b0fd431df34323be15be97c55302d3fdac4483a
 	sha256sums = 9235485adc4acbfaf303605f4428a6995a7b0b3b5a95181b185afbcb9f1f6ae5
 	sha256sums = 404bf09df39310a1e374c5e7eb9c7311239798adf4e8cd85b7ff04fc79647f88
-	sha256sums = dcaf12a8b2ba15cefafd6e3c053b2ec490b1b8e1c89a3309e41133c0cd183ed3
-	sha256sums = dfb5ca39abe7dd449729d3af3724fe27208d8cda76ecc4916cc57a4ad9c8e1b1
-	sha256sums = 01a809e8bf7eeed6e263bc7118d6e40395dca7ac8463dbe230303e13d17d673e
 	sha256sums = 12a3d37ffca4c0fa25f89f02efdf79d24f6412ee29ec35e8a00f9086dba4e822
 	sha256sums = 984bb0257ed6fe4af543c3fb803ed81bddc97ff367ccd93620404be60cb78eb3
 	sha256sums = 30a6a9ca2a6dd965cb2d9f02639079130948bf45d483f0c629f2cf8394a1c22f
@@ -110,12 +101,8 @@ pkgbase = brave
 	sha256sums = f781d6315e4147b775350d7a36481c3ce43b582eee5ee228768e42c30d9dd9ca
 	sha256sums = 1654fa922d10a591d5c28159a6d22d1183bcbd3448f175d7f3e2e11879588ddd
 	sha256sums = 7cf8569ff905666889842c36e82d51c08d482745cd2f71e48fa1296824f09839
-	sha256sums = 621ed210d75d0e846192c1571bb30db988721224a41572c27769c0288d361c11
 	sha256sums = 1b782b0f6d4f645e4e0daa8a4852d63f0c972aa0473319216ff04613a0592a69
-	sha256sums = d464eed4be4e9bf6187b4c40a759c523b7befefa25ba34ad6401b2a07649ca2a
-	sha256sums = 590fabbb26270947cb477378b53a9dcd17855739076b4af9983e1e54dfcab6d7
-	sha256sums = ba4dd0a25a4fc3267ed19ccb39f28b28176ca3f97f53a4e9f5e9215280040ea0
-	sha256sums = 7f3b1b22d6a271431c1f9fc92b6eb49c6d80b8b3f868bdee07a6a1a16630a302
+	sha256sums = e938c6ee7087eed8f0de83ffb0ca89e328575808fafa4fe3950aeb1bc58b9411
 	sha256sums = e393174d7695d0bafed69e868c5fbfecf07aa6969f3b64596d0bae8b067e1711
 
 pkgname = brave
