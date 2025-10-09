@@ -5,7 +5,7 @@ _pkg1=DankMaterialShell
 _pkg2=danklinux
 pkgname=($pkgbase $pkgbase-hyprland $pkgbase-niri)
 pkgver=0.1.7
-pkgrel=1
+pkgrel=2
 pkgdesc='A Quickshell-based desktop shell with Material 3 design principles'
 arch=(x86_64 aarch64)
 url="https://github.com/AvengeMedia/$_pkg1"
@@ -43,6 +43,8 @@ build() {
 
 package_dms-shell() {
 	depends+=(dms-shell-compositor)
+	optdepneds+=('dms-shell-hyprland: Hyprland specific dependencies')
+	optdepneds+=('dms-shell-niri: Niri specific dependencies')
 	install -Dm0755 -t "$pkgdir/usr/bin/" "$_archive2/dms"
 	install -dm0755 "$pkgdir/etc/xdg/quickshell/dms"
 	cp -r "$_archive1/"* "$pkgdir/etc/xdg/quickshell/dms/"
@@ -53,7 +55,8 @@ package_dms-shell() {
 package_dms-shell-hyprland() {
 	pkgdesc+=" (for Hyprland)"
 	provides=(dms-shell-compositor)
-	depends=(hyprland)
+	depends=(dms-shell
+	         hyprland)
 	optdepends=()
 }
 
@@ -61,5 +64,7 @@ package_dms-shell-niri() {
 	pkgdesc+=" (for Niri)"
 	provides=(dms-shell-compositor)
 	depends=(niri)
+	depends=(dms-shell
+	         niri)
 	optdepends=()
 }

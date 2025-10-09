@@ -1,7 +1,7 @@
 pkgbase = dms-shell
 	pkgdesc = A Quickshell-based desktop shell with Material 3 design principles
 	pkgver = 0.1.7
-	pkgrel = 1
+	pkgrel = 2
 	url = https://github.com/AvengeMedia/DankMaterialShell
 	arch = x86_64
 	arch = aarch64
@@ -35,12 +35,14 @@ pkgname = dms-shell
 
 pkgname = dms-shell-hyprland
 	pkgdesc = A Quickshell-based desktop shell with Material 3 design principles (for Hyprland)
+	depends = dms-shell
 	depends = hyprland
 	optdepends = 
 	provides = dms-shell-compositor
 
 pkgname = dms-shell-niri
 	pkgdesc = A Quickshell-based desktop shell with Material 3 design principles (for Niri)
+	depends = dms-shell
 	depends = niri
 	optdepends = 
 	provides = dms-shell-compositor
