@@ -1,7 +1,7 @@
 pkgbase = dgop
 	pkgdesc = System monitoring CLI + REST API
 	pkgver = 0.1.4
-	pkgrel = 1
+	pkgrel = 2
 	url = https://github.com/AvengeMedia/dgop
 	arch = x86_64
 	arch = aarch64
