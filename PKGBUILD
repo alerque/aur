@@ -2,21 +2,13 @@
 
 pkgname=hyprwhspr
 pkgver=1.4.0
-pkgrel=2
+pkgrel=3
 pkgdesc="Native Whisper speech-to-text for Arch/Omarchy with Waybar integration"
 arch=('x86_64')
 url="https://github.com/goodroot/hyprwhspr"
 license=('MIT')
 depends=(
   'python'
-  'python-numpy'
-  'python-scipy'
-  'python-pyperclip'
-  'python-psutil'
-  'python-rich'
-  'python-sounddevice'
-  'python-evdev'
-  'python-requests'
   'ydotool'
   'pipewire' 'pipewire-alsa' 'pipewire-pulse' 'pipewire-jack'
   'cmake'
@@ -30,7 +22,7 @@ optdepends=(
   'nvidia-utils: For GPU acceleration'
   'cuda: For GPU acceleration'
   'whisper.cpp: Use system build instead of building locally in setup step'
-  'python-pywhispercpp: For pywhispercpp backend (installed automatically by setup)'
+  'python-pip: Required for Python dependencies (installed automatically)'
 )
 install=$pkgname.install
 source=("$pkgname-$pkgver.tar.gz::https://github.com/goodroot/$pkgname/archive/refs/tags/v$pkgver.tar.gz")
