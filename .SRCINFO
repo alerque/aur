@@ -6,14 +6,9 @@ pkgbase = dgop
 	arch = x86_64
 	arch = aarch64
 	license = MIT
+	makedepends = go
 	depends = glibc
-	source_x86_64 = dgop-linux-amd64.gz::https://github.com/AvengeMedia/dgop/releases/download/v0.1.4/dgop-linux-amd64.gz
-	source_x86_64 = dgop-linux-amd64.gz.sha256::https://github.com/AvengeMedia/dgop/releases/download/v0.1.4/dgop-linux-amd64.gz.sha256
-	sha256sums_x86_64 = SKIP
-	sha256sums_x86_64 = SKIP
-	source_aarch64 = dgop-linux-arm64.gz::https://github.com/AvengeMedia/dgop/releases/download/v0.1.4/dgop-linux-arm64.gz
-	source_aarch64 = dgop-linux-arm64.gz.sha256::https://github.com/AvengeMedia/dgop/releases/download/v0.1.4/dgop-linux-arm64.gz.sha256
-	sha256sums_aarch64 = SKIP
-	sha256sums_aarch64 = SKIP
+	source = https://github.com/AvengeMedia/dgop/archive/v0.1.4/dgop-0.1.4.tar.gz
+	sha256sums = 37be37b01ba45a9cb7bbd8fbaae985a0f441102d46767054c5b5ff4bf67ffe30
 
 pkgname = dgop
