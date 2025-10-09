@@ -5,7 +5,7 @@ _pkg1=DankMaterialShell
 _pkg2=danklinux
 pkgname=($pkgbase $pkgbase-hyprland $pkgbase-niri)
 pkgver=0.1.7
-pkgrel=2
+pkgrel=3
 pkgdesc='A Quickshell-based desktop shell with Material 3 design principles'
 arch=(x86_64 aarch64)
 url="https://github.com/AvengeMedia/$_pkg1"
@@ -16,7 +16,7 @@ depends=(dgop
          ttf-fira-code
          ttf-material-symbols-variable-git)
 optdepends=('networkmanager: Required for network management'
-            'matugen-bin: Dynamic wallpaper-based theming'
+            'matugen: Dynamic wallpaper-based theming'
             'brightnessctl: Laptop display brightness control'
             'wl-clipboard: Copy functionality for PIDs and other elements'
             'cliphist: Clipboard history functionality'
