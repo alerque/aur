@@ -2,7 +2,7 @@
 
 pkgname=dgop
 pkgver=0.1.4
-pkgrel=1
+pkgrel=2
 pkgdesc='System monitoring CLI + REST API'
 arch=(x86_64 aarch64)
 url="https://github.com/AvengeMedia/$pkgname"
