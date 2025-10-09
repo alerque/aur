@@ -1,0 +1,4 @@
+[dms-shell]
+source = "git"
+git = "https://github.com/AvengeMedia/DankMaterialShell.git"
+prefix = "v"

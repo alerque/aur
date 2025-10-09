@@ -1,99 +1,65 @@
-# Maintainer: Your Name <you@example.com>
-pkgname=dms-shell
-pkgver=0.0.29
+# Maintainer: Caleb Maclennan <caleb@alerque.com>
+
+pkgbase=dms-shell
+_pkg1=DankMaterialShell
+_pkg2=danklinux
+pkgname=($pkgbase $pkgbase-hyprland $pkgbase-niri)
+pkgver=0.1.7
 pkgrel=1
 pkgdesc='A Quickshell-based desktop shell with Material 3 design principles'
-arch=('x86_64' 'aarch64')
-url='https://github.com/AvengeMedia/DankMaterialShell'
-license=('GPL-3.0-only')
-depends=(
-    'quickshell'
-    'dgop'
-    'ttf-material-symbols-variable-git'
-    'inter-font'
-    'ttf-fira-code'
-)
-optdepends=(
-    'networkmanager: Required for network management'
-    'matugen-bin: Dynamic wallpaper-based theming'
-    'brightnessctl: Laptop display brightness control'
-    'wl-clipboard: Copy functionality for PIDs and other elements'
-    'cliphist: Clipboard history functionality'
-    'cava: Audio visualizer'
-    'qt5ct: Qt5 application theming'
-    'qt6ct: Qt6 application theming'
-)
-makedepends=('git')
-provides=('dms')
-conflicts=('dms-shell-git' 'dms-git')
+arch=(x86_64 aarch64)
+url="https://github.com/AvengeMedia/$_pkg1"
+license=(GPL-3.0-only)
+depends=(dgop
+         inter-font
+         quickshell
+         ttf-fira-code
+         ttf-material-symbols-variable-git)
+optdepends=('networkmanager: Required for network management'
+            'matugen-bin: Dynamic wallpaper-based theming'
+            'brightnessctl: Laptop display brightness control'
+            'wl-clipboard: Copy functionality for PIDs and other elements'
+            'cliphist: Clipboard history functionality'
+            'cava: Audio visualizer'
+            'qt5ct: Qt5 application theming'
+            'qt6ct: Qt6 application theming')
+makedepends=(go)
+_archive1="$_pkg1-$pkgver"
+_archive2="$_pkg2-$pkgver"
+source=("$url/archive/v$pkgver/$_archive1.tar.gz"
+        "${url/$_pkg1/$_pkg2}/archive/v$pkgver/$_archive2.tar.gz")
+sha256sums=('1dfe0296350bb91093ea82002537001af7f748fba8f70a9ceb359ebd7c7bdb30'
+            'e3b5490c34c1d9324c2c23fdb6a8f0ad1d610baff4e7bb4c40954c06ee532229')
 
-# Version for the dms CLI binary from danklinux
-_dms_cli_ver='v0.0.1'
-
-# Map architecture names
-_get_arch() {
-    case "$1" in
-        x86_64)
-            echo "amd64"
-            ;;
-        aarch64)
-            echo "arm64"
-            ;;
-        *)
-            echo "unsupported"
-            ;;
-    esac
+build() {
+	cd "$_archive2"
+	export CGO_CPPFLAGS="${CPPFLAGS}"
+	export CGO_CFLAGS="${CFLAGS}"
+	export CGO_CXXFLAGS="${CXXFLAGS}"
+	export CGO_LDFLAGS="${LDFLAGS}"
+	export GOFLAGS="-buildmode=pie -trimpath -ldflags=-linkmode=external -mod=readonly -modcacherw"
+	go build -o dms ./cmd/dms
 }
 
-# Sources for each architecture
-source_x86_64=(
-    "$pkgname-$pkgver.tar.gz::$url/archive/refs/tags/v$pkgver.tar.gz"
-    "dms-${_dms_cli_ver}-amd64.gz::https://github.com/AvengeMedia/danklinux/releases/download/${_dms_cli_ver}/dms-amd64.gz"
-)
-source_aarch64=(
-    "$pkgname-$pkgver.tar.gz::$url/archive/refs/tags/v$pkgver.tar.gz"
-    "dms-${_dms_cli_ver}-arm64.gz::https://github.com/AvengeMedia/danklinux/releases/download/${_dms_cli_ver}/dms-arm64.gz"
-)
-
-# Checksums - replace SKIP with actual checksums using 'makepkg -g'
-sha256sums_x86_64=(
-    'SKIP'  # DankMaterialShell tarball
-    'SKIP'  # dms binary for amd64
-)
-sha256sums_aarch64=(
-    'SKIP'  # DankMaterialShell tarball
-    'SKIP'  # dms binary for arm64
-)
-
-prepare() {
-    # Extract the dms binary
-    local _arch=$(_get_arch "${CARCH}")
-    cd "${srcdir}"
-    
-    if [ -f "dms-${_dms_cli_ver}-${_arch}.gz" ]; then
-        gunzip -f "dms-${_dms_cli_ver}-${_arch}.gz"
-    fi
+package_dms-shell() {
+	depends+=(dms-shell-compositor)
+	install -Dm0755 -t "$pkgdir/usr/bin/" "$_archive2/dms"
+	install -dm0755 "$pkgdir/etc/xdg/quickshell/dms"
+	cp -r "$_archive1/"* "$pkgdir/etc/xdg/quickshell/dms/"
+	install -Dm0644 -t "$pkgdir/usr/share/doc/$pkgname/" "$_archive1/README.md"
+	cp -r "$_archive1/docs/"* "$pkgdir/usr/share/doc/$pkgname/"
 }
 
-package() {
-    # Install the dms binary
-    local _arch=$(_get_arch "${CARCH}")
-    install -Dm755 "${srcdir}/dms-${_dms_cli_ver}-${_arch}" "$pkgdir/usr/bin/dms"
-    
-    # Install shell files from DankMaterialShell
-    cd "${srcdir}/DankMaterialShell-${pkgver}"
-    
-    # Install shell files to quickshell config directory
-    install -dm755 "$pkgdir/etc/xdg/quickshell/dms"
-    cp -r ./* "$pkgdir/etc/xdg/quickshell/dms/"
-    
-    # Install documentation
-    install -Dm644 README.md "$pkgdir/usr/share/doc/dms/README.md"
-    if [ -d "./docs" ]; then
-        install -dm755 "$pkgdir/usr/share/doc/dms/"
-        cp -r ./docs/* "$pkgdir/usr/share/doc/dms/"
-    fi
-    
-    # Remove any git files that might be in the tarball
-    rm -rf "$pkgdir/etc/xdg/quickshell/dms/.git"*
+package_dms-shell-hyprland() {
+	pkgdesc+=" (for Hyprland)"
+	provides=(dms-shell-compositor)
+	depends=(hyprland)
+	optdepends=()
+}
+
+package_dms-shell-niri() {
+	pkgdesc+=" (for Niri)"
+	provides=(dms-shell-compositor)
+	depends=(niri)
+	optdepends=()
 }
