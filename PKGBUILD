@@ -1,7 +1,7 @@
 # Maintainer: goodroot <hyprwhspr@goodroot.ca>
 
 pkgname=hyprwhspr
-pkgver=1.4.2
+pkgver=1.4.3
 pkgrel=1
 pkgdesc="Native Whisper speech-to-text for Arch/Omarchy with Waybar integration"
 arch=('x86_64')
@@ -26,7 +26,7 @@ optdepends=(
 )
 install=$pkgname.install
 source=("$pkgname-$pkgver.tar.gz::https://github.com/goodroot/$pkgname/archive/refs/tags/v$pkgver.tar.gz")
-sha256sums=('1edbc1cb7ed369f315883a2e9c605b74554bf43a400a4a9456458bbeaba7467c')
+sha256sums=('d10390c3764d54a23dc6300f46d7c57d8b43a7066f568d56ab6964d43d24d60f')
 
 build() {
   cd "$srcdir/$pkgname-$pkgver"
@@ -39,6 +39,16 @@ package() {
   # Payload into /usr/lib keeps repo layout intact for your installer
   install -d "$pkgdir/usr/lib/$pkgname"
   cp -r lib bin scripts config share README.md LICENSE requirements.txt "$pkgdir/usr/lib/$pkgname"
+
+  # Install whisper binary if it exists in user space
+  USER_WHISPER_BIN="${XDG_DATA_HOME:-$HOME/.local/share}/hyprwhspr/whisper.cpp/build/bin/whisper-cli"
+  if [ -f "$USER_WHISPER_BIN" ]; then
+    install -d "$pkgdir/usr/lib/$pkgname/bin"
+    install -m755 "$USER_WHISPER_BIN" "$pkgdir/usr/lib/$pkgname/bin/whisper"
+    echo "Installed whisper binary from user space"
+  else
+    echo "Warning: whisper binary not found in user space. User should run hyprwhspr-setup first."
+  fi
 
   # Runtime launcher: unified approach - always uses user-space venv
   install -d "$pkgdir/usr/bin"
