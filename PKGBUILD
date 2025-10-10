@@ -15,12 +15,12 @@ depends=(dgop
          quickshell
          ttf-fira-code
          ttf-material-symbols-variable-git)
-optdepends=('networkmanager: Required for network management'
-            'matugen: Dynamic wallpaper-based theming'
-            'brightnessctl: Laptop display brightness control'
-            'wl-clipboard: Copy functionality for PIDs and other elements'
-            'cliphist: Clipboard history functionality'
+optdepends=('brightnessctl: Laptop display brightness control'
             'cava: Audio visualizer'
+            'cliphist: Clipboard history functionality'
+            'matugen: Dynamic wallpaper-based theming'
+            'networkmanager: Required for network management'
+            'wl-clipboard: Copy functionality for PIDs and other elements'
             'qt5ct: Qt5 application theming'
             'qt6ct: Qt6 application theming')
 makedepends=(go)
@@ -33,10 +33,10 @@ sha256sums=('1dfe0296350bb91093ea82002537001af7f748fba8f70a9ceb359ebd7c7bdb30'
 
 build() {
 	cd "$_archive2"
-	export CGO_CPPFLAGS="${CPPFLAGS}"
-	export CGO_CFLAGS="${CFLAGS}"
-	export CGO_CXXFLAGS="${CXXFLAGS}"
-	export CGO_LDFLAGS="${LDFLAGS}"
+	export CGO_CPPFLAGS="$CPPFLAGS"
+	export CGO_CFLAGS="$CFLAGS"
+	export CGO_CXXFLAGS="$CXXFLAGS"
+	export CGO_LDFLAGS="$LDFLAGS"
 	export GOFLAGS="-buildmode=pie -trimpath -ldflags=-linkmode=external -mod=readonly -modcacherw"
 	go build -o dms ./cmd/dms
 }
