@@ -4,8 +4,8 @@ pkgbase=dms-shell
 _pkg1=DankMaterialShell
 _pkg2=danklinux
 pkgname=($pkgbase $pkgbase-hyprland $pkgbase-niri)
-pkgver=0.1.7
-pkgrel=3
+pkgver=0.1.9
+pkgrel=1
 pkgdesc='A Quickshell-based desktop shell with Material 3 design principles'
 arch=(x86_64 aarch64)
 url="https://github.com/AvengeMedia/$_pkg1"
@@ -28,8 +28,8 @@ _archive1="$_pkg1-$pkgver"
 _archive2="$_pkg2-$pkgver"
 source=("$url/archive/v$pkgver/$_archive1.tar.gz"
         "${url/$_pkg1/$_pkg2}/archive/v$pkgver/$_archive2.tar.gz")
-sha256sums=('1dfe0296350bb91093ea82002537001af7f748fba8f70a9ceb359ebd7c7bdb30'
-            'e3b5490c34c1d9324c2c23fdb6a8f0ad1d610baff4e7bb4c40954c06ee532229')
+sha256sums=('18600e62dd059ccdf4a1252cc2fcc54bf6b03935d0c7c8f7f187ceeaa6cbe408'
+            '6e24e1addfde7bc16d907b254d3321428ed8ca8508ed2729ac775fbff70ecc97')
 
 build() {
 	cd "$_archive2"
