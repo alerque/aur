@@ -2,7 +2,7 @@
 # Maintainer: Caleb Maclennan <caleb@alerque.com>
 
 pkgname=dms-shell-git
-pkgver=0.0.7.3.g2395274
+pkgver=0.1.8.r3.gabe5515
 pkgrel=1
 pkgdesc='A Quickshell-based desktop shell with Material 3 design principles'
 arch=(x86_64 aarch64)
@@ -30,11 +30,8 @@ sha256sums=(SKIP SKIP)
 
 pkgver() {
 	cd "$pkgname"
-	if git describe --tags --long >/dev/null 2>&1; then
-		git describe --tags --long | sed 's/^v//; s/-/./g'
-	else
-		printf "r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
-	fi
+	git describe --long --tags --abbrev=7 --match="v*" HEAD |
+		sed 's/^v//;s/\([^-]*-g\)/r\1/;s/-/./g'
 }
 
 build() {

@@ -1,6 +1,6 @@
 pkgbase = dms-shell-git
 	pkgdesc = A Quickshell-based desktop shell with Material 3 design principles
-	pkgver = 0.0.7.3.g2395274
+	pkgver = 0.1.8.r3.gabe5515
 	pkgrel = 1
 	url = https://github.com/AvengeMedia/DankMaterialShell
 	arch = x86_64
