@@ -5,6 +5,7 @@ pkgbase = dgop
 	url = https://github.com/AvengeMedia/dgop
 	arch = x86_64
 	arch = aarch64
+	arch = armv7h
 	license = MIT
 	makedepends = go
 	depends = glibc

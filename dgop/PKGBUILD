@@ -4,7 +4,7 @@ pkgname=dgop
 pkgver=0.1.6
 pkgrel=1
 pkgdesc='System monitoring CLI + REST API'
-arch=(x86_64 aarch64)
+arch=(x86_64 aarch64 armv7h)
 url="https://github.com/AvengeMedia/$pkgname"
 license=(MIT)
 depends=(glibc)
@@ -26,4 +26,5 @@ prepare() {
 package() {
 	cd "$_archive"
 	install -Dm0755 -t "$pkgdir/usr/bin/" "$pkgname"
+	install -Dm0644 -t "$pkgdir/usr/share/licenses/$pkgname/" LICENSE
 }
