@@ -1,0 +1,53 @@
+pkgbase = dms-shell-git
+	pkgdesc = A Quickshell-based desktop shell with Material 3 design principles
+	pkgver = 0.1.8.r3.gabe5515
+	pkgrel = 1
+	url = https://github.com/AvengeMedia/DankMaterialShell
+	arch = x86_64
+	arch = aarch64
+	license = GPL-3.0-only
+	makedepends = git
+	makedepends = go
+	depends = dgop
+	depends = inter-font
+	depends = quickshell
+	depends = ttf-fira-code
+	depends = ttf-material-symbols-variable-git
+	optdepends = brightnessctl: Laptop display brightness control
+	optdepends = cava: Audio visualizer
+	optdepends = cliphist: Clipboard history functionality
+	optdepends = matugen: Dynamic wallpaper-based theming
+	optdepends = networkmanager: Required for network management
+	optdepends = qt5ct: Qt5 application theming
+	optdepends = qt6ct: Qt6 application theming
+	optdepends = wl-clipboard: Copy functionality for PIDs and other elements
+	provides = dms-shell=0.1.8.r3.gabe5515
+	conflicts = dms-shell
+	source = git+https://github.com/AvengeMedia/DankMaterialShell.git
+	source = git+https://github.com/AvengeMedia/danklinux.git
+	sha256sums = SKIP
+	sha256sums = SKIP
+
+pkgname = dms-shell-git
+	depends = dgop
+	depends = inter-font
+	depends = quickshell
+	depends = ttf-fira-code
+	depends = ttf-material-symbols-variable-git
+	depends = dms-shell-compositor-git
+
+pkgname = dms-shell-hyprland-git
+	pkgdesc = A Quickshell-based desktop shell with Material 3 design principles (for Hyprland)
+	depends = dms-shell-git
+	depends = hyprland
+	optdepends = 
+	provides = dms-shell-compositor-git
+	conflicts = dms-shell-hyprland
+
+pkgname = dms-shell-niri-git
+	pkgdesc = A Quickshell-based desktop shell with Material 3 design principles (for Niri)
+	depends = dms-shell-git
+	depends = niri
+	optdepends = 
+	provides = dms-shell-compositor-git
+	conflicts = dms-shell-niri
