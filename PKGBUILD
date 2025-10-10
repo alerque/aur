@@ -1,54 +1,56 @@
+# Maintainer: Caleb Maclennan <caleb@alerque.com>
+
 pkgname=dgop-git
-pkgver=r4.45a60f1
+_pkgname=${pkgname%-git}
+pkgver=0.1.6.r0.g0e85650
 pkgrel=1
-pkgdesc="System monitoring CLI + REST API (git snapshot)"
-arch=('x86_64' 'aarch64' 'armv7h')
-url="https://github.com/AvengeMedia/dgop"
-license=('MIT')
-provides=('dgop')
-conflicts=('dgop')
-depends=()
-makedepends=('git' 'go')
-source=("$pkgname::git+$url.git")
+pkgdesc='System monitoring CLI + REST API (git snapshot)'
+arch=(x86_64 aarch64 armv7h)
+url="https://github.com/AvengeMedia/$_pkgname"
+license=(MIT)
+depends=(glibc)
+makedepends=(git
+             go)
+provides=("dgop=$pkgver")
+conflicts=(dgop)
+source=("git+$url.git")
 sha256sums=('SKIP')
 
 pkgver() {
-  cd "$srcdir/$pkgname"
-  if git describe --tags --long >/dev/null 2>&1; then
-    git describe --tags --long | sed 's/^v//; s/-/./g'
-  else
-    printf "r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
-  fi
+	cd "$_pkgname"
+	git describe --long --tags --abbrev=7 --match="v*" HEAD |
+		sed 's/^v//;s/\([^-]*-g\)/r\1/;s/-/./g'
 }
 
 prepare() {
-  cd "$srcdir/$pkgname"
-  # keep caches in the build dir
-  export GOMODCACHE="$srcdir/gomodcache"
-  mkdir -p "$GOMODCACHE"
+  mkdir -p gomodcache
 }
 
 build() {
-  cd "$srcdir/$pkgname"
-  export CGO_ENABLED=0
-  export GOMODCACHE="$srcdir/gomodcache"
-
-  # Put common flags in GOFLAGS so tests use them too
-  export GOFLAGS="-buildmode=pie -trimpath -mod=readonly -modcacherw"
-
-  go build -ldflags "-s -w" -o build/dgop ./cmd/cli
+	cd "$_pkgname"
+	export GOMODCACHE="$srcdir/gomodcache"
+	export CGO_CPPFLAGS="$CPPFLAGS"
+	export CGO_CFLAGS="$CFLAGS"
+	export CGO_CXXFLAGS="$CXXFLAGS"
+	export CGO_LDFLAGS="$LDFLAGS"
+	export GOFLAGS="-buildmode=pie -trimpath -ldflags=-linkmode=external -mod=readonly -modcacherw"
+	go build -o $_pkgname ./cmd/cli
 }
 
 check() {
-  cd "$srcdir/$pkgname"
-  export CGO_ENABLED=0
-  export GOMODCACHE="$srcdir/gomodcache"
-  # don't fail the package on WIP tests, but still run with writable mod cache
-  go test ./... || true
+	cd "$_pkgname"
+	export GOMODCACHE="$srcdir/gomodcache"
+	export CGO_CPPFLAGS="$CPPFLAGS"
+	export CGO_CFLAGS="$CFLAGS"
+	export CGO_CXXFLAGS="$CXXFLAGS"
+	export CGO_LDFLAGS="$LDFLAGS"
+	export GOFLAGS="-buildmode=pie -trimpath -ldflags=-linkmode=external -mod=readonly -modcacherw"
+	# don't fail the package on WIP tests, but still run with writable mod cache
+	go test ./... || true
 }
 
 package() {
-  cd "$srcdir/$pkgname"
-  install -Dm755 build/dgop "$pkgdir/usr/bin/dgop"
-  install -Dm644 LICENSE "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
+	cd "$_pkgname"
+	install -Dm0755 -t "$pkgdir/usr/bin/" "$_pkgname"
+	install -Dm0644 -t "$pkgdir/usr/share/licenses/$pkgname/" LICENSE
 }
