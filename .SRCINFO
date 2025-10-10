@@ -21,10 +21,8 @@ pkgbase = dms-shell-git
 	optdepends = qt5ct: Qt5 application theming
 	optdepends = qt6ct: Qt6 application theming
 	optdepends = wl-clipboard: Copy functionality for PIDs and other elements
-	provides = dms-shell
-	provides = dms
+	provides = dms-shell=0.1.8.r3.gabe5515
 	conflicts = dms-shell
-	conflicts = dms
 	source = dms-shell-git::git+https://github.com/AvengeMedia/DankMaterialShell.git
 	source = danklinux::git+https://github.com/AvengeMedia/danklinux.git
 	sha256sums = SKIP

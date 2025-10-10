@@ -21,12 +21,14 @@ optdepends=('brightnessctl: Laptop display brightness control'
             'qt5ct: Qt5 application theming'
             'qt6ct: Qt6 application theming'
             'wl-clipboard: Copy functionality for PIDs and other elements')
-makedepends=(git go)
-provides=(dms-shell dms)
-conflicts=(dms-shell dms)
+makedepends=(git
+             go)
+provides=("dms-shell=$pkgver")
+conflicts=("dms-shell")
 source=("$pkgname::git+$url.git"
         "danklinux::git+https://github.com/AvengeMedia/danklinux.git")
-sha256sums=(SKIP SKIP)
+sha256sums=('SKIP'
+            'SKIP')
 
 pkgver() {
 	cd "$pkgname"
