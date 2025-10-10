@@ -1,12 +1,16 @@
 # Maintainer: Your Name <you@example.com>
 # Maintainer: Caleb Maclennan <caleb@alerque.com>
 
-pkgname=dms-shell-git
+pkgbase=dms-shell-git
+_pkgbase=${pkgbase%-git}
+_pkg1=DankMaterialShell
+_pkg2=danklinux
+pkgname=($_pkgbase-git $_pkgbase-hyprland-git $_pkgbase-niri-git)
 pkgver=0.1.8.r3.gabe5515
 pkgrel=1
 pkgdesc='A Quickshell-based desktop shell with Material 3 design principles'
 arch=(x86_64 aarch64)
-url='https://github.com/AvengeMedia/DankMaterialShell'
+url="https://github.com/AvengeMedia/$_pkg1"
 license=(GPL-3.0-only)
 depends=(dgop
          inter-font
@@ -23,21 +27,21 @@ optdepends=('brightnessctl: Laptop display brightness control'
             'wl-clipboard: Copy functionality for PIDs and other elements')
 makedepends=(git
              go)
-provides=("dms-shell=$pkgver")
+provides=("$_pkgbase=$pkgver")
 conflicts=("dms-shell")
-source=("$pkgname::git+$url.git"
-        "danklinux::git+https://github.com/AvengeMedia/danklinux.git")
+source=("git+$url.git"
+        "git+${url/$_pkg1/$_pkg2}.git")
 sha256sums=('SKIP'
             'SKIP')
 
 pkgver() {
-	cd "$pkgname"
+	cd "$_pkg2"
 	git describe --long --tags --abbrev=7 --match="v*" HEAD |
 		sed 's/^v//;s/\([^-]*-g\)/r\1/;s/-/./g'
 }
 
 build() {
-	cd "danklinux"
+	cd "$_pkg2"
 	export CGO_CPPFLAGS="$CPPFLAGS"
 	export CGO_CFLAGS="$CFLAGS"
 	export CGO_CXXFLAGS="$CXXFLAGS"
@@ -46,14 +50,33 @@ build() {
 	go build -o dms ./cmd/dms
 }
 
-package() {
-	install -Dm0755 -t "$pkgdir/usr/bin/" "danklinux/dms"
-	
-	cd "$${pkgname}"
+package_dms-shell-git() {
+	depends+=(dms-shell-compositor-git)
+	optdepneds+=('dms-shell-hyprland: Hyprland specific dependencies')
+	optdepneds+=('dms-shell-niri: Niri specific dependencies')
+	install -Dm0755 -t "$pkgdir/usr/bin/" "$_pkg2/dms"
 	install -dm0755 "$pkgdir/etc/xdg/quickshell/dms"
-	cp -r ./* "$pkgdir/etc/xdg/quickshell/dms/"
-	install -Dm0644 -t "$pkgdir/usr/share/doc/dms/" README.md
-	install -dm755 "$pkgdir/usr/share/doc/dms"
-	cp -r ./docs/* "$pkgdir/usr/share/doc/dms/"
+	cp -r "$_pkg1"/* "$pkgdir/etc/xdg/quickshell/dms/"
+	install -Dm0644 -t "$pkgdir/usr/share/doc/$pkgname/" "$_pkg1/README.md"
+	cp -r "$_pkg1/docs/"* "$pkgdir/usr/share/doc/$pkgname/"
 	rm -rf "$pkgdir/etc/xdg/quickshell/dms/.git"*
+}
+
+package_dms-shell-hyprland-git() {
+	pkgdesc+=" (for Hyprland)"
+	provides=(dms-shell-compositor-git)
+	conflicts=("${pkgname%-git}")
+	depends=(dms-shell-git
+	         hyprland)
+	optdepends=()
+}
+
+package_dms-shell-niri-git() {
+	pkgdesc+=" (for Niri)"
+	provides=(dms-shell-compositor-git)
+	conflicts=("${pkgname%-git}")
+	depends=(niri)
+	depends=(dms-shell-git
+	         niri)
+	optdepends=()
 }
