@@ -20,7 +20,7 @@ depends=(dgop
 optdepends=('brightnessctl: Laptop display brightness control'
             'cava: Audio visualizer'
             'cliphist: Clipboard history functionality'
-            'matugen-bin: Dynamic wallpaper-based theming'
+            'matugen: Dynamic wallpaper-based theming'
             'networkmanager: Required for network management'
             'qt5ct: Qt5 application theming'
             'qt6ct: Qt6 application theming'
