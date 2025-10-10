@@ -20,9 +20,9 @@ optdepends=('brightnessctl: Laptop display brightness control'
             'cliphist: Clipboard history functionality'
             'matugen: Dynamic wallpaper-based theming'
             'networkmanager: Required for network management'
-            'wl-clipboard: Copy functionality for PIDs and other elements'
             'qt5ct: Qt5 application theming'
-            'qt6ct: Qt6 application theming')
+            'qt6ct: Qt6 application theming'
+            'wl-clipboard: Copy functionality for PIDs and other elements')
 makedepends=(go)
 _archive1="$_pkg1-$pkgver"
 _archive2="$_pkg2-$pkgver"
