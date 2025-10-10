@@ -1,0 +1,18 @@
+pkgbase = dgop-git
+	pkgdesc = System monitoring CLI + REST API (git snapshot)
+	pkgver = 0.1.6.r0.g0e85650
+	pkgrel = 1
+	url = https://github.com/AvengeMedia/dgop
+	arch = x86_64
+	arch = aarch64
+	arch = armv7h
+	license = MIT
+	makedepends = git
+	makedepends = go
+	depends = glibc
+	provides = dgop=0.1.6.r0.g0e85650
+	conflicts = dgop
+	source = git+https://github.com/AvengeMedia/dgop.git
+	sha256sums = SKIP
+
+pkgname = dgop-git
