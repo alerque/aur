@@ -1,6 +1,6 @@
 pkgbase = dms-shell
 	pkgdesc = A Quickshell-based desktop shell with Material 3 design principles
-	pkgver = 0.1.15
+	pkgver = 0.1.17
 	pkgrel = 1
 	url = https://github.com/AvengeMedia/DankMaterialShell
 	arch = x86_64
@@ -20,10 +20,10 @@ pkgbase = dms-shell
 	optdepends = qt5ct: Qt5 application theming
 	optdepends = qt6ct: Qt6 application theming
 	optdepends = wl-clipboard: Copy functionality for PIDs and other elements
-	source = https://github.com/AvengeMedia/DankMaterialShell/archive/v0.1.15/DankMaterialShell-0.1.15.tar.gz
-	source = https://github.com/AvengeMedia/danklinux/archive/v0.1.15/danklinux-0.1.15.tar.gz
-	sha256sums = e9e3ed71f30bbc63d9bc7e023896b952c780cc5c58f9ebce1a15d7beae6cb6ea
-	sha256sums = 47c980a642b6aa38d0ceb01656bbfb8dd87e3d4f2ffe6710ee81a7cb756d8db8
+	source = https://github.com/AvengeMedia/DankMaterialShell/archive/v0.1.17/DankMaterialShell-0.1.17.tar.gz
+	source = https://github.com/AvengeMedia/danklinux/archive/v0.1.17/danklinux-0.1.17.tar.gz
+	sha256sums = 6358c3a62571371a4efa912c1bc7d6cac3223b6ab279c462af728a9f40772731
+	sha256sums = 372e6c9963b72e72e1d5fd887202f5c55724c9181d7169ab594046b3ab5be4a8
 
 pkgname = dms-shell
 	depends = dgop
