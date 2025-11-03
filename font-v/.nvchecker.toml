@@ -1,5 +1,0 @@
-[font-v]
-source = "github"
-github = "source-foundry/font-v"
-prefix = "v"
-use_max_tag = true
