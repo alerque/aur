@@ -1,7 +1,7 @@
 pkgbase = dms-shell
 	pkgdesc = A Quickshell-based desktop shell with Material 3 design principles
 	pkgver = 0.3.2
-	pkgrel = 1
+	pkgrel = 2
 	url = https://github.com/AvengeMedia/DankMaterialShell
 	arch = x86_64
 	arch = aarch64
@@ -11,7 +11,7 @@ pkgbase = dms-shell
 	depends = inter-font
 	depends = quickshell
 	depends = ttf-fira-code
-	depends = ttf-material-symbols-variable-git
+	depends = ttf-material-symbols-variable
 	optdepends = brightnessctl: Laptop display brightness control
 	optdepends = cava: Audio visualizer
 	optdepends = cliphist: Clipboard history functionality
@@ -30,7 +30,7 @@ pkgname = dms-shell
 	depends = inter-font
 	depends = quickshell
 	depends = ttf-fira-code
-	depends = ttf-material-symbols-variable-git
+	depends = ttf-material-symbols-variable
 	depends = dms-shell-compositor
 
 pkgname = dms-shell-hyprland
