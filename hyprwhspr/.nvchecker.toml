@@ -1,0 +1,4 @@
+[hyprwhspr]
+source = "git"
+git = "https://github.com/goodroot/hyprwhspr.git"
+prefix = "v"
