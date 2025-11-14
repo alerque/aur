@@ -2,9 +2,8 @@
 
 pkgbase=dms-shell
 _pkg1=DankMaterialShell
-_pkg2=danklinux
 pkgname=($pkgbase $pkgbase-hyprland $pkgbase-niri)
-pkgver=0.4.3
+pkgver=0.5.1
 pkgrel=1
 pkgdesc='A Quickshell-based desktop shell with Material 3 design principles'
 arch=(x86_64 aarch64)
@@ -24,15 +23,12 @@ optdepends=('brightnessctl: Laptop display brightness control'
             'qt6ct: Qt6 application theming'
             'wl-clipboard: Copy functionality for PIDs and other elements')
 makedepends=(go)
-_archive1="$_pkg1-$pkgver"
-_archive2="$_pkg2-$pkgver"
-source=("$url/archive/v$pkgver/$_archive1.tar.gz"
-        "${url/$_pkg1/$_pkg2}/archive/v$pkgver/$_archive2.tar.gz")
-sha256sums=('35c1e26220331328357e5fc85188126a2ff4d18650d8c5aa8b7aca7500bb419b'
-            'ff3ab7a61b120d5d8ed87c154758de75614fb097ce882ba4ad8a09fd795e97f9')
+_archive="$_pkg1-$pkgver"
+source=("$url/archive/v$pkgver/$_archive.tar.gz")
+sha256sums=('09e2a3d4806ebbb064d9ef9b9db5f5517a3b0f6b11374dbf5c102b82187f34e7')
 
 build() {
-	cd "$_archive2"
+	cd "$_archive/core"
 	export CGO_CPPFLAGS="$CPPFLAGS"
 	export CGO_CFLAGS="$CFLAGS"
 	export CGO_CXXFLAGS="$CXXFLAGS"
@@ -42,18 +38,19 @@ build() {
 }
 
 package_dms-shell() {
+	cd "$_archive"
 	depends+=(dms-shell-compositor)
 	optdepneds+=('dms-shell-hyprland: Hyprland specific dependencies')
 	optdepneds+=('dms-shell-niri: Niri specific dependencies')
-	install -Dm0755 -t "$pkgdir/usr/bin/" "$_archive2/dms"
+	install -Dm0755 -t "$pkgdir/usr/bin/" core/dms
 	install -dm0755 "$pkgdir/etc/xdg/quickshell/dms"
-	cp -r "$_archive1/"* "$pkgdir/etc/xdg/quickshell/dms/"
-	install -Dm0644 -t "$pkgdir/usr/share/doc/$pkgname/" "$_archive1/README.md"
-	cp -r "$_archive1/docs/"* "$pkgdir/usr/share/doc/$pkgname/"
+	cp -r "quickshell/"* "$pkgdir/etc/xdg/quickshell/dms/"
+	install -Dm0644 -t "$pkgdir/usr/share/doc/$pkgname/" README.md
+	cp -r "docs/"* "$pkgdir/usr/share/doc/$pkgname/"
 }
 
 package_dms-shell-hyprland() {
-	pkgdesc+=" (for Hyprland)"
+	pkgdesc+=' (for Hyprland)'
 	provides=(dms-shell-compositor)
 	depends=(dms-shell
 	         hyprland)
@@ -61,7 +58,7 @@ package_dms-shell-hyprland() {
 }
 
 package_dms-shell-niri() {
-	pkgdesc+=" (for Niri)"
+	pkgdesc+=' (for Niri)'
 	provides=(dms-shell-compositor)
 	depends=(niri)
 	depends=(dms-shell
