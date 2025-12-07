@@ -9,20 +9,21 @@ url="https://github.com/goodroot/hyprwhspr"
 license=('MIT')
 depends=(
   'python'
+  'python-sounddevice'
+  'python-numpy'
+  'python-scipy'
+  'python-evdev'
+  'python-pyperclip'
+  'python-requests'
+  'python-psutil'
+  'python-rich'
   'ydotool'
   'pipewire' 'pipewire-alsa' 'pipewire-pulse' 'pipewire-jack'
-  'cmake'
-  'make'
-  'git'
-  'base-devel'
-  'curl'
-  'waybar'
 )
 optdepends=(
-  'nvidia-utils: For GPU acceleration'
-  'cuda: For GPU acceleration'
-  'whisper.cpp: Use system build instead of building locally in setup step'
-  'python-pip: Required for Python dependencies (installed automatically)'
+  'python-pywhispercpp-cpu: local whisper.cpp backend (CPU)'
+  'python-pywhispercpp-cuda: local whisper.cpp backend (NVIDIA GPU)'
+  'python-pywhispercpp-rocm: local whisper.cpp backend (AMD GPU)'
 )
 install=$pkgname.install
 source=("$pkgname-$pkgver.tar.gz::https://github.com/goodroot/$pkgname/archive/refs/tags/v$pkgver.tar.gz")
@@ -30,57 +31,45 @@ sha256sums=('dcf158cdf5b7c178c09e94145b9e64131779b38cb4d50d2a1bab2d2e13fdc57a')
 
 build() {
   cd "$srcdir/$pkgname-$pkgver"
-  # nothing to build; user runs hyprwhspr-setup post-install
+  # nothing to build; user runs 'hyprwhspr setup' post-install
 }
 
 package() {
   cd "$srcdir/$pkgname-$pkgver"
 
-  # Payload into /usr/lib keeps repo layout intact for your installer
+  # Payload into /usr/lib keeps repo layout intact
   install -d "$pkgdir/usr/lib/$pkgname"
-  cp -r lib bin scripts config share README.md LICENSE requirements.txt "$pkgdir/usr/lib/$pkgname"
+  cp -r lib bin config share README.md LICENSE requirements.txt "$pkgdir/usr/lib/$pkgname"
+  # Note: scripts directory removed - functionality moved to CLI commands
 
-  # Install whisper binary if it exists in user space
-  USER_WHISPER_BIN="${XDG_DATA_HOME:-$HOME/.local/share}/hyprwhspr/whisper.cpp/build/bin/whisper-cli"
-  if [ -f "$USER_WHISPER_BIN" ]; then
-    install -d "$pkgdir/usr/lib/$pkgname/bin"
-    install -m755 "$USER_WHISPER_BIN" "$pkgdir/usr/lib/$pkgname/bin/whisper"
-    echo "Installed whisper binary from user space"
-  else
-    echo "Warning: whisper binary not found in user space. User should run hyprwhspr-setup first."
+  # Make sure main launcher is executable
+  if [ -f "$pkgdir/usr/lib/$pkgname/bin/hyprwhspr" ]; then
+    chmod 755 "$pkgdir/usr/lib/$pkgname/bin/hyprwhspr"
   fi
 
-  # Runtime launcher: unified approach - always uses user-space venv
+  # Install systemd user service
+  install -Dm644 "config/systemd/hyprwhspr.service" \
+    "$pkgdir/usr/lib/systemd/user/hyprwhspr.service"
+
+  # Runtime launcher: supports both CLI commands and app execution
   install -d "$pkgdir/usr/bin"
   cat > "$pkgdir/usr/bin/$pkgname" << 'EOF'
 #!/usr/bin/env bash
-# hyprwhspr launcher
+# hyprwhspr launcher - routes CLI commands or runs application
 
-# Set environment variables
-export HYPRWHSPR_ROOT="/usr/lib/hyprwhspr"
-export PYTHONPATH="/usr/lib/hyprwhspr/lib:$PYTHONPATH"
-
-# Activate virtual environment in user space
-USER_VENV="${XDG_DATA_HOME:-$HOME/.local/share}/hyprwhspr/venv"
-if [ -f "$USER_VENV/bin/activate" ]; then
-    source "$USER_VENV/bin/activate"
+# If first arg is -h/--help or a subcommand, route to CLI
+if [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] || [[ "$1" =~ ^(setup|config|waybar|systemd|status|model|validate)$ ]]; then
+    export HYPRWHSPR_ROOT="/usr/lib/hyprwhspr"
+    export PYTHONPATH="/usr/lib/hyprwhspr/lib:$PYTHONPATH"
+    exec python3 /usr/lib/hyprwhspr/lib/cli.py "$@"
 else
-    echo "Error: Virtual environment not found at $USER_VENV"
-    echo "Please run hyprwhspr-setup to set up hyprwhspr"
-    exit 1
+    # Run the main application
+    export HYPRWHSPR_ROOT="/usr/lib/hyprwhspr"
+    export PYTHONPATH="/usr/lib/hyprwhspr/lib:$PYTHONPATH"
+    exec python3 /usr/lib/hyprwhspr/lib/main.py "$@"
 fi
-
-# Run the main application
-exec python3 "/usr/lib/hyprwhspr/lib/main.py" "$@"
 EOF
   chmod 755 "$pkgdir/usr/bin/$pkgname"
-
-  # Setup wrapper - unified approach
-  cat > "$pkgdir/usr/bin/hyprwhspr-setup" << 'EOF'
-#!/usr/bin/env bash
-exec /usr/lib/hyprwhspr/scripts/install-omarchy.sh "$@"
-EOF
-  chmod 755 "$pkgdir/usr/bin/hyprwhspr-setup"
 
   # Docs & license
   install -d "$pkgdir/usr/share/doc/$pkgname" "$pkgdir/usr/share/licenses/$pkgname"
