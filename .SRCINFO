@@ -1,6 +1,6 @@
 pkgbase = hyprwhspr
 	pkgdesc = Native Whisper speech-to-text for Arch/Omarchy with Waybar integration
-	pkgver = 1.8.5
+	pkgver = 1.8.6
 	pkgrel = 1
 	url = https://github.com/goodroot/hyprwhspr
 	install = hyprwhspr.install
@@ -20,7 +20,7 @@ pkgbase = hyprwhspr
 	depends = pipewire-alsa
 	depends = pipewire-pulse
 	depends = pipewire-jack
-	source = hyprwhspr-1.8.5.tar.gz::https://github.com/goodroot/hyprwhspr/archive/refs/tags/v1.8.5.tar.gz
+	source = hyprwhspr-1.8.6.tar.gz::https://github.com/goodroot/hyprwhspr/archive/refs/tags/v1.8.6.tar.gz
 	sha256sums = d5558cd419c8d46bdc958064cb97f963d1ea793866414c025906ec15033512ed
 
 pkgname = hyprwhspr
