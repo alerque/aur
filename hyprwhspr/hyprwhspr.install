@@ -4,7 +4,8 @@ post_install() {
 hyprwhspr installed successfully!
 
 To complete setup:
-  hyprwhspr-setup
+
+  hyprwhspr setup
 
 EOF
 }
@@ -12,14 +13,11 @@ EOF
 post_upgrade() {
   cat <<'EOF'
 
-hyprwhspr upgraded.
+hyprwhspr upgraded!
 
 If needed, re-run setup (idempotent):
-  hyprwhspr-setup
 
-Service status:
-  systemctl --user status ydotoold.service
-  systemctl --user status hyprwhspr.service
+  hyprwhspr setup
 
 EOF
 }
