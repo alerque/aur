@@ -4,6 +4,7 @@ post_install() {
 hyprwhspr installed successfully!
 
 To complete setup:
+
   hyprwhspr setup
 
 EOF
@@ -15,11 +16,8 @@ post_upgrade() {
 hyprwhspr upgraded!
 
 If needed, re-run setup (idempotent):
-  hyprwhspr setup
 
-Service status:
-  systemctl --user status ydotool.service
-  systemctl --user status hyprwhspr.service
+  hyprwhspr setup
 
 EOF
 }

@@ -1,7 +1,7 @@
 # Maintainer: goodroot <hyprwhspr@goodroot.ca>
 
 pkgname=hyprwhspr
-pkgver=1.8.3
+pkgver=1.8.4
 pkgrel=1
 pkgdesc="Native Whisper speech-to-text for Arch/Omarchy with Waybar integration"
 arch=('x86_64')
@@ -20,14 +20,10 @@ depends=(
   'ydotool'
   'pipewire' 'pipewire-alsa' 'pipewire-pulse' 'pipewire-jack'
 )
-optdepends=(
-  'python-pywhispercpp-cpu: local whisper.cpp backend (CPU)'
-  'python-pywhispercpp-cuda: local whisper.cpp backend (NVIDIA GPU)'
-  'python-pywhispercpp-rocm: local whisper.cpp backend (AMD GPU)'
-)
+
 install=$pkgname.install
 source=("$pkgname-$pkgver.tar.gz::https://github.com/goodroot/$pkgname/archive/refs/tags/v$pkgver.tar.gz")
-sha256sums=('e5fbe17a81eefd94d1c0543140dd3f738c190f2d6c0292859c11de95cec3fa2b')
+sha256sums=('bcebbe87e81fde9d1f22ca92b5c0e8e200028193d735b91996070fcd13ac199e')
 
 build() {
   cd "$srcdir/$pkgname-$pkgver"
