@@ -1,7 +1,7 @@
 # Maintainer: goodroot <hyprwhspr@goodroot.ca>
 
 pkgname=hyprwhspr
-pkgver=1.9.7
+pkgver=1.9.8
 pkgrel=1
 pkgdesc="Native Whisper speech-to-text for Arch/Omarchy with Waybar integration"
 arch=('x86_64')
@@ -24,7 +24,7 @@ depends=(
 
 install=$pkgname.install
 source=("$pkgname-$pkgver.tar.gz::https://github.com/goodroot/$pkgname/archive/refs/tags/v$pkgver.tar.gz")
-sha256sums=('418c1a9bb917d49fd74ceb314459a3a0b688c75054401bba35a79905aaf1f806')
+sha256sums=('04635cd8e48f164e6222d2d2ba82c8acc06cdd1e246dec731023c92e76ace385')
 
 build() {
   cd "$srcdir/$pkgname-$pkgver"
@@ -58,12 +58,12 @@ package() {
 if [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] || [[ "$1" =~ ^(setup|config|waybar|systemd|status|model|validate)$ ]]; then
     export HYPRWHSPR_ROOT="/usr/lib/hyprwhspr"
     export PYTHONPATH="/usr/lib/hyprwhspr/lib:$PYTHONPATH"
-    exec python3 /usr/lib/hyprwhspr/lib/cli.py "$@"
+    exec python /usr/lib/hyprwhspr/lib/cli.py "$@"
 else
     # Run the main application
     export HYPRWHSPR_ROOT="/usr/lib/hyprwhspr"
     export PYTHONPATH="/usr/lib/hyprwhspr/lib:$PYTHONPATH"
-    exec python3 /usr/lib/hyprwhspr/lib/main.py "$@"
+    exec python /usr/lib/hyprwhspr/lib/main.py "$@"
 fi
 EOF
   chmod 755 "$pkgdir/usr/bin/$pkgname"
