@@ -2,7 +2,7 @@
 
 pkgname=hyprwhspr
 pkgver=1.9.16
-pkgrel=1
+pkgrel=2
 pkgdesc="Native Whisper speech-to-text for Arch/Omarchy with Waybar integration"
 arch=('x86_64')
 url="https://github.com/goodroot/hyprwhspr"
@@ -10,6 +10,7 @@ license=('MIT')
 makedepends=('python-setuptools')
 depends=(
   'python'
+  'python-pip'
   'python-sounddevice'
   'python-numpy'
   'python-scipy'
