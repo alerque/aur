@@ -1,0 +1,13 @@
+pkgbase = clipper2
+	pkgdesc = Polygon Clipping and Offsetting
+	pkgver = 1.5.4
+	pkgrel = 1
+	url = https://github.com/AngusJohnson/Clipper2
+	arch = x86_64
+	license = BSL-1.0
+	depends = glibc
+	depends = gcc-libs
+	source = https://github.com/AngusJohnson/Clipper2/archive/refs/tags/Clipper2_1.5.4.tar.gz
+	sha256sums = 9d8a35a29d04cd1b7b45f542c0ba48015feece1210036ea9e4efaad3140af4b0
+
+pkgname = clipper2
