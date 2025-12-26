@@ -1,6 +1,6 @@
 pkgbase = hyprwhspr
 	pkgdesc = Fast, local speech-to-text for Arch/Omarchy
-	pkgver = 1.11.4
+	pkgver = 1.12.0
 	pkgrel = 2
 	url = https://github.com/goodroot/hyprwhspr
 	install = hyprwhspr.install
@@ -21,7 +21,7 @@ pkgbase = hyprwhspr
 	depends = pipewire
 	depends = pipewire-alsa
 	depends = pipewire-pulse
-	source = hyprwhspr-1.11.4.tar.gz::https://github.com/goodroot/hyprwhspr/archive/refs/tags/v1.11.4.tar.gz
-	sha256sums = 719f317d548eb87a4ab7ac229ccc02aa35a7b1ff90b8d743ca5c113f0248b336
+	source = hyprwhspr-1.12.0.tar.gz::https://github.com/goodroot/hyprwhspr/archive/refs/tags/v1.12.0.tar.gz
+	sha256sums = a43537d8832da10c2568bf4e6e0cb922ed1515281c44624e1e32d7ec30d6ad1b
 
 pkgname = hyprwhspr
