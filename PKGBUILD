@@ -1,8 +1,8 @@
 # Maintainer: goodroot <hyprwhspr@goodroot.ca>
 
 pkgname=hyprwhspr
-pkgver=1.12.0
-pkgrel=2
+pkgver=1.13.0
+pkgrel=1
 pkgdesc="Fast, local speech-to-text for Arch/Omarchy"
 arch=('x86_64')
 url="https://github.com/goodroot/hyprwhspr"
@@ -19,6 +19,7 @@ depends=(
   'python-pyperclip'
   'python-requests'
   'python-psutil'
+  'python-pyudev'
   'python-rich'
   'ydotool'
   'pipewire' 'pipewire-alsa' 'pipewire-pulse'
@@ -26,7 +27,7 @@ depends=(
 
 install=$pkgname.install
 source=("$pkgname-$pkgver.tar.gz::https://github.com/goodroot/$pkgname/archive/refs/tags/v$pkgver.tar.gz")
-sha256sums=('a43537d8832da10c2568bf4e6e0cb922ed1515281c44624e1e32d7ec30d6ad1b')
+sha256sums=('3f993299a13166fe87649c5980df9239a970aedc126f0c62fb83d6f05b848105')
 
 build() {
   cd "$srcdir/$pkgname-$pkgver"
