@@ -1,7 +1,7 @@
 pkgbase = hyprwhspr
 	pkgdesc = Fast, local speech-to-text for Arch/Omarchy
-	pkgver = 1.11.4
-	pkgrel = 2
+	pkgver = 1.13.0
+	pkgrel = 1
 	url = https://github.com/goodroot/hyprwhspr
 	install = hyprwhspr.install
 	arch = x86_64
@@ -16,12 +16,13 @@ pkgbase = hyprwhspr
 	depends = python-pyperclip
 	depends = python-requests
 	depends = python-psutil
+	depends = python-pyudev
 	depends = python-rich
 	depends = ydotool
 	depends = pipewire
 	depends = pipewire-alsa
 	depends = pipewire-pulse
-	source = hyprwhspr-1.11.4.tar.gz::https://github.com/goodroot/hyprwhspr/archive/refs/tags/v1.11.4.tar.gz
-	sha256sums = 719f317d548eb87a4ab7ac229ccc02aa35a7b1ff90b8d743ca5c113f0248b336
+	source = hyprwhspr-1.13.0.tar.gz::https://github.com/goodroot/hyprwhspr/archive/refs/tags/v1.13.0.tar.gz
+	sha256sums = 3f993299a13166fe87649c5980df9239a970aedc126f0c62fb83d6f05b848105
 
 pkgname = hyprwhspr
