@@ -1,8 +1,8 @@
 # Maintainer: goodroot <hyprwhspr@goodroot.ca>
 
 pkgname=hyprwhspr
-pkgver=1.13.0
-pkgrel=2
+pkgver=1.14.0
+pkgrel=1
 pkgdesc="Fast, local speech-to-text for Arch/Omarchy"
 arch=('x86_64')
 url="https://github.com/goodroot/hyprwhspr"
@@ -32,7 +32,7 @@ depends=(
 
 install=$pkgname.install
 source=("$pkgname-$pkgver.tar.gz::https://github.com/goodroot/$pkgname/archive/refs/tags/v$pkgver.tar.gz")
-sha256sums=('3f993299a13166fe87649c5980df9239a970aedc126f0c62fb83d6f05b848105')
+sha256sums=('65206c191b7a1ee3b2bdd8d6678a6f8e56b76adfdf289488ad5da6aace53dbc6')
 
 build() {
   cd "$srcdir/$pkgname-$pkgver"
