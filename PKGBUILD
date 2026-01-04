@@ -2,7 +2,7 @@
 
 pkgname=hyprwhspr
 pkgver=1.13.0
-pkgrel=1
+pkgrel=2
 pkgdesc="Fast, local speech-to-text for Arch/Omarchy"
 arch=('x86_64')
 url="https://github.com/goodroot/hyprwhspr"
