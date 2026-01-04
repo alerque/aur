@@ -9,6 +9,8 @@ url="https://github.com/goodroot/hyprwhspr"
 license=('MIT')
 makedepends=()
 depends=(
+  'cmake'
+  'git'
   'python'
   'python-pip'
   'python-setuptools'
@@ -21,6 +23,9 @@ depends=(
   'python-psutil'
   'python-pyudev'
   'python-rich'
+  'python-gobject'
+  'python-pulsectl'
+  'python-dbus'
   'ydotool'
   'pipewire' 'pipewire-alsa' 'pipewire-pulse'
 )
