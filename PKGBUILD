@@ -1,7 +1,7 @@
 # Maintainer: goodroot <hyprwhspr@goodroot.ca>
 
 pkgname=hyprwhspr
-pkgver=1.14.1
+pkgver=1.15.0
 pkgrel=1
 pkgdesc="Fast, local speech-to-text for Arch/Omarchy"
 arch=('x86_64')
@@ -33,7 +33,7 @@ optdepends=('gtk4-layer-shell: for themed Mic-OSD visualization')
 
 install=$pkgname.install
 source=("$pkgname-$pkgver.tar.gz::https://github.com/goodroot/$pkgname/archive/refs/tags/v$pkgver.tar.gz")
-sha256sums=('3979427a474fb11793cf33f4b96b43af128e933a6ac453197e4c1d72db97390c')
+sha256sums=('8d729efe144afe54813dc3cbdca45241074adebe05f1ebbac342a89f21f1f0bf')
 
 build() {
   cd "$srcdir/$pkgname-$pkgver"
@@ -57,24 +57,10 @@ package() {
   install -Dm644 "config/systemd/hyprwhspr.service" \
     "$pkgdir/usr/lib/systemd/user/hyprwhspr.service"
 
-  # Runtime launcher: supports both CLI commands and app execution
+  # Create wrapper that uses the repo's bin/hyprwhspr with fixed paths
   install -d "$pkgdir/usr/bin"
-  cat > "$pkgdir/usr/bin/$pkgname" << 'EOF'
-#!/usr/bin/env bash
-# hyprwhspr launcher - routes CLI commands or runs application
-
-# If first arg is -h/--help or a subcommand, route to CLI
-if [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] || [[ "$1" =~ ^(setup|config|waybar|systemd|status|model|validate)$ ]]; then
-    export HYPRWHSPR_ROOT="/usr/lib/hyprwhspr"
-    export PYTHONPATH="/usr/lib/hyprwhspr/lib:$PYTHONPATH"
-    exec python /usr/lib/hyprwhspr/lib/cli.py "$@"
-else
-    # Run the main application
-    export HYPRWHSPR_ROOT="/usr/lib/hyprwhspr"
-    export PYTHONPATH="/usr/lib/hyprwhspr/lib:$PYTHONPATH"
-    exec python /usr/lib/hyprwhspr/lib/main.py "$@"
-fi
-EOF
+  sed 's|PACKAGE_ROOT="$(dirname "$SCRIPT_DIR")"|PACKAGE_ROOT="/usr/lib/hyprwhspr"|' \
+    "$srcdir/$pkgname-$pkgver/bin/$pkgname" > "$pkgdir/usr/bin/$pkgname"
   chmod 755 "$pkgdir/usr/bin/$pkgname"
 
   # Docs & license
