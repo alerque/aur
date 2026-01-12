@@ -1,7 +1,7 @@
 # Maintainer: goodroot <hyprwhspr@goodroot.ca>
 
 pkgname=hyprwhspr
-pkgver=1.13.0
+pkgver=1.17.0
 pkgrel=1
 pkgdesc="Fast, local speech-to-text for Arch/Omarchy"
 arch=('x86_64')
@@ -9,6 +9,8 @@ url="https://github.com/goodroot/hyprwhspr"
 license=('MIT')
 makedepends=()
 depends=(
+  'cmake'
+  'git'
   'python'
   'python-pip'
   'python-setuptools'
@@ -21,13 +23,17 @@ depends=(
   'python-psutil'
   'python-pyudev'
   'python-rich'
+  'python-gobject'
+  'python-pulsectl'
+  'python-dbus'
   'ydotool'
   'pipewire' 'pipewire-alsa' 'pipewire-pulse'
 )
+optdepends=('gtk4-layer-shell: for themed Mic-OSD visualization')
 
 install=$pkgname.install
 source=("$pkgname-$pkgver.tar.gz::https://github.com/goodroot/$pkgname/archive/refs/tags/v$pkgver.tar.gz")
-sha256sums=('3f993299a13166fe87649c5980df9239a970aedc126f0c62fb83d6f05b848105')
+sha256sums=('7b7aa1d0840c9a4863ea4a13f2644bb8e81484e544541417b5b0b22a719c233e')
 
 build() {
   cd "$srcdir/$pkgname-$pkgver"
@@ -51,24 +57,10 @@ package() {
   install -Dm644 "config/systemd/hyprwhspr.service" \
     "$pkgdir/usr/lib/systemd/user/hyprwhspr.service"
 
-  # Runtime launcher: supports both CLI commands and app execution
+  # Create wrapper that uses the repo's bin/hyprwhspr with fixed paths
   install -d "$pkgdir/usr/bin"
-  cat > "$pkgdir/usr/bin/$pkgname" << 'EOF'
-#!/usr/bin/env bash
-# hyprwhspr launcher - routes CLI commands or runs application
-
-# If first arg is -h/--help or a subcommand, route to CLI
-if [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] || [[ "$1" =~ ^(setup|config|waybar|systemd|status|model|validate)$ ]]; then
-    export HYPRWHSPR_ROOT="/usr/lib/hyprwhspr"
-    export PYTHONPATH="/usr/lib/hyprwhspr/lib:$PYTHONPATH"
-    exec python /usr/lib/hyprwhspr/lib/cli.py "$@"
-else
-    # Run the main application
-    export HYPRWHSPR_ROOT="/usr/lib/hyprwhspr"
-    export PYTHONPATH="/usr/lib/hyprwhspr/lib:$PYTHONPATH"
-    exec python /usr/lib/hyprwhspr/lib/main.py "$@"
-fi
-EOF
+  sed 's|PACKAGE_ROOT="$(dirname "$SCRIPT_DIR")"|PACKAGE_ROOT="/usr/lib/hyprwhspr"|' \
+    "$srcdir/$pkgname-$pkgver/bin/$pkgname" > "$pkgdir/usr/bin/$pkgname"
   chmod 755 "$pkgdir/usr/bin/$pkgname"
 
   # Docs & license
