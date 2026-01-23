@@ -1,10 +1,10 @@
 pkgbase = ghcid
 	pkgdesc = GHCi based bare bones IDE
-	pkgver = 0.8.7
-	pkgrel = 3
+	pkgver = 0.8.9
+	pkgrel = 1
 	url = https://github.com/ndmitchell/ghcid
 	arch = x86_64
-	license = BSD
+	license = BSD-3-Clause
 	makedepends = ghc
 	makedepends = haskell-tasty
 	makedepends = haskell-tasty-hunit
@@ -14,7 +14,7 @@ pkgbase = ghcid
 	depends = haskell-extra
 	depends = haskell-fsnotify
 	depends = haskell-terminal-size
-	source = https://hackage.haskell.org/packages/archive/ghcid/0.8.7/ghcid-0.8.7.tar.gz
-	sha512sums = 69748c115db36d4b41dafdbbfaeedc80be3a3bdadf15b16386e36138193fcc8c89d84b2990fb69175acedbb5cab62251387405ccbb2e7bcc8d04f5370effab8a
+	source = https://hackage.haskell.org/packages/archive/ghcid/0.8.9/ghcid-0.8.9.tar.gz
+	sha512sums = 25082de985f29430dc7d4577a7a9e0c5ff2dc78ae229f5c6728d19f573dc05b3d88400de7afaa7588cf11e11b341453a23fbeccf7f3c75130741b0078621d1eb
 
 pkgname = ghcid
