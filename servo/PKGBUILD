@@ -47,7 +47,7 @@ prepare() {
 
 build() {
 	cd "$pkgname"
-	# export RUSTUP_TOOLCHAIN=stable
+	export RUSTUP_TOOLCHAIN=stable
 	export CARGO_TARGET_DIR=target
 	./mach build --release
 }
