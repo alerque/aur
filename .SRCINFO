@@ -44,15 +44,6 @@ pkgname = ollama-rocm-git
 	provides = ollama-rocm=0.15.1.rc0.r0.gf3b476c59280
 	conflicts = ollama-rocm
 
-pkgname = ollama-cuda-git
-	pkgdesc = Create, run and share large language models (LLMs) with CUDA
-	depends = gcc-libs
-	depends = glibc
-	depends = ollama
-	depends = cuda
-	provides = ollama-cuda=0.15.1.rc0.r0.gf3b476c59280
-	conflicts = ollama-cuda
-
 pkgname = ollama-vulkan-git
 	pkgdesc = Create, run and share large language models (LLMs) with Vulkan
 	depends = ollama

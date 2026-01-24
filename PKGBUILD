@@ -2,7 +2,7 @@
 # Contributor: Wilken Gottwalt <wilken dot gottwalt at posteo dot net>
 
 pkgbase=ollama-git
-pkgname=(ollama-git ollama-rocm-git ollama-cuda-git ollama-vulkan-git ollama-docs-git)
+pkgname=(ollama-git ollama-rocm-git ollama-vulkan-git ollama-docs-git) # ollama-cuda-git
 pkgver=0.15.1.rc0.r0.gf3b476c59280
 pkgrel=1
 pkgdesc='Create, run and share large language models (LLMs) with ROCm'
