@@ -1,7 +1,7 @@
 # Maintainer: goodroot <hyprwhspr@goodroot.ca>
 
 pkgname=hyprwhspr
-pkgver=1.18.6
+pkgver=1.18.7
 pkgrel=1
 pkgdesc="Fast, local speech-to-text for Arch/Omarchy"
 arch=('x86_64')
@@ -33,7 +33,7 @@ optdepends=('gtk4-layer-shell: for themed Mic-OSD visualization')
 
 install=$pkgname.install
 source=("$pkgname-$pkgver.tar.gz::https://github.com/goodroot/$pkgname/archive/refs/tags/v$pkgver.tar.gz")
-sha256sums=('c4acac048b8b070476c007674e06635c172407fa29467698e6a345148ca8dc58')
+sha256sums=('01a3585a513274b3fb12f83bb4afd369239da5e9e592a87a129390ab144ebe4c')
 
 build() {
   cd "$srcdir/$pkgname-$pkgver"
