@@ -1,7 +1,7 @@
 # Maintainer: Oktana Coop <team@oktana.dev>
 pkgname=v2-bin
 _pkgname=v2
-pkgver=0.11.7
+pkgver=0.11.8
 pkgrel=1
 pkgdesc="A local-first rich text editor with Git-style version control, true privacy, and complete control over your data"
 arch=('x86_64' 'aarch64')
@@ -12,17 +12,13 @@ optdepends=('libappindicator-gtk3: tray icon support')
 provides=('v2')
 conflicts=('v2')
 options=('!strip' '!debug')
-source_x86_64=("https://github.com/oktana-coop/v2/releases/download/v${pkgver}/v2-${pkgver}-x64.AppImage")
-source_aarch64=("https://github.com/oktana-coop/v2/releases/download/v${pkgver}/v2-${pkgver}-arm64.AppImage")
-sha256sums_x86_64=('2b76a1775089860f7d4923573853d2dbeb7dd3ce4f86e710fc91de5a5b869d12')
-sha256sums_aarch64=('650600609a26bde77a8f89f5cbba744a5673142890b243343f56e7781d85292f')
+source_x86_64=("v2-${pkgver}.AppImage::https://github.com/oktana-coop/v2/releases/download/v${pkgver}/v2-${pkgver}-x86_64.AppImage")
+source_aarch64=("v2-${pkgver}.AppImage::https://github.com/oktana-coop/v2/releases/download/v${pkgver}/v2-${pkgver}-arm64.AppImage")
+sha256sums_x86_64=('9088535fe3ddeb81e74b3b527fafe1bea15caa01c0d75055db19422ed90772f5')
+sha256sums_aarch64=('1b05ce17ebf9f586987dfd9bd2b6b17fcb889becd548550c46d4c7890386602a')
 
 prepare() {
-    if [[ "$CARCH" == "x86_64" ]]; then
-        _appimage="v2-${pkgver}.AppImage"
-    else
-        _appimage="v2-${pkgver}-arm64.AppImage"
-    fi
+    _appimage="v2-${pkgver}.AppImage"
     chmod +x "${srcdir}/${_appimage}"
     "${srcdir}/${_appimage}" --appimage-extract
 }
