@@ -1,0 +1,19 @@
+pkgbase = codeberg-cli
+	pkgdesc = CLI Tool for Codeberg similar to gh and glab
+	pkgver = 0.5.4
+	pkgrel = 2
+	url = https://codeberg.org/Aviac/codeberg-cli
+	arch = x86_64
+	license = AGPL-3.0-only
+	makedepends = cargo
+	depends = gcc-libs
+	depends = glibc
+	depends = openssl
+	depends = libcrypto.so
+	depends = libssl.so
+	depends = zlib
+	depends = libz.so
+	source = codeberg-cli-0.5.4.tar.gz::https://codeberg.org/Aviac/codeberg-cli/archive/v0.5.4.tar.gz
+	sha256sums = f32857642fb8c9c810f3b7f6ec59934b3ce11bca39912f349dba96a7fb1e9ccc
+
+pkgname = codeberg-cli
