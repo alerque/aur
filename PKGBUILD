@@ -3,8 +3,8 @@
 # Contributor: George Rawlinson <grawlinson@archlinux.org>
 
 pkgname=codeberg-cli
-pkgver=0.5.4
-pkgrel=2
+pkgver=0.5.5
+pkgrel=1
 pkgdesc='CLI Tool for Codeberg similar to gh and glab'
 arch=(x86_64)
 url="https://codeberg.org/Aviac/$pkgname"
@@ -17,27 +17,27 @@ makedepends=(cargo)
 _archive="$pkgname-$pkgver"
 # source=("$_archive.tar.gz::https://static.crates.io/crates/$pkgname/$_archive.crate")
 source=("$_archive.tar.gz::$url/archive/v$pkgver.tar.gz")
-sha256sums=('f32857642fb8c9c810f3b7f6ec59934b3ce11bca39912f349dba96a7fb1e9ccc')
+sha256sums=('09902e3511c24316e9aab4cbd51492d00eb978ee81429e873de80bc9a485c549')
 
 prepare() {
-	cd "$_archive"
+	cd "$pkgname"
 	cargo fetch --locked --target host-tuple
 }
 
 build() {
-	cd "$_archive"
+	cd "$pkgname"
 	export OPENSSL_NO_VENDOR=true
 	CFLAGS+=' -ffat-lto-objects'
 	cargo build --frozen --release --all-features
 }
 
 check() {
-	cd "$_archive"
+	cd "$pkgname"
 	cargo test --frozen --release --all-features
 }
 
 package() {
-	cd "$_archive"
+	cd "$pkgname"
 	local _bin=berg
 	local bin="target/release/$_bin"
 	install -Dm0755 -t "$pkgdir/usr/bin/" "$bin"
