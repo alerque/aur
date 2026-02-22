@@ -1,6 +1,6 @@
 pkgbase = v2-bin
 	pkgdesc = A local-first rich text editor with Git-style version control, true privacy, and complete control over your data
-	pkgver = 0.11.10
+	pkgver = 0.11.11
 	pkgrel = 1
 	url = https://oktana.dev
 	arch = x86_64
@@ -20,9 +20,9 @@ pkgbase = v2-bin
 	conflicts = v2
 	options = !strip
 	options = !debug
-	source_x86_64 = v2-0.11.10.AppImage::https://github.com/oktana-coop/v2/releases/download/v0.11.10/v2-0.11.10-x86_64.AppImage
-	sha256sums_x86_64 = bc8e5b67de40121f52893f0daedd2903bd5b9764f2cfe2921de88b3fdd5885ee
-	source_aarch64 = v2-0.11.10.AppImage::https://github.com/oktana-coop/v2/releases/download/v0.11.10/v2-0.11.10-arm64.AppImage
-	sha256sums_aarch64 = da7704ac5ec28a24f2cf988d757e4907b1a814ac2960b3e130b20a1977f752cf
+	source_x86_64 = v2-0.11.11.AppImage::https://github.com/oktana-coop/v2/releases/download/v0.11.11/v2-0.11.11-x86_64.AppImage
+	sha256sums_x86_64 = 46a5403e82a6d01ccb1d3a72bce6401585ad7989a2015cacd4bef360199f53a0
+	source_aarch64 = v2-0.11.11.AppImage::https://github.com/oktana-coop/v2/releases/download/v0.11.11/v2-0.11.11-arm64.AppImage
+	sha256sums_aarch64 = 101ad7a3cfe889f2ae91fbefa3367c291f420b7f4ba6441abe4a8ddeaf2218fb
 
 pkgname = v2-bin
