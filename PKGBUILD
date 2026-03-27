@@ -4,12 +4,12 @@
 
 pkgname=codeberg-cli
 pkgver=0.5.5
-pkgrel=1
+pkgrel=2
 pkgdesc='CLI Tool for Codeberg similar to gh and glab'
 arch=(x86_64)
 url="https://codeberg.org/Aviac/$pkgname"
 license=(AGPL-3.0-only)
-depends=(gcc-libs # libgcc_s.so
+depends=(libgcc # libgcc_s.so
          glibc # libc.so libm.so ld-linux-x86-64
          openssl libcrypto.so libssl.so
          zlib libz.so)
