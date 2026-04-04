@@ -1,0 +1,4 @@
+[codeberg-cli]
+source = "git"
+git = "https://codeberg.org/Aviac/codeberg-cli.git"
+prefix = "v"
