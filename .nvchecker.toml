@@ -1,0 +1,4 @@
+[midivisualizer]
+source = "git"
+git = "https://github.com/kosua20/MIDIVisualizer.git"
+prefix = "v"
