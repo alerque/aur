@@ -33,7 +33,7 @@ optdepends=('gtk4-layer-shell: for themed Mic-OSD visualization')
 
 install=$pkgname.install
 source=("$pkgname-$pkgver.tar.gz::https://github.com/goodroot/$pkgname/archive/refs/tags/v$pkgver.tar.gz")
-sha256sums=('9a725a5dcf094058d69f832c0d5045a50983809ce396c0f9d138cc6bbd1c05bc')
+sha256sums=('8db348e4fb04aff463f50ca380a81493077cb66946c9eae414d0a4d24bce92d4')
 
 build() {
   cd "$srcdir/$pkgname-$pkgver"
