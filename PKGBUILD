@@ -1,7 +1,7 @@
 # Maintainer: Oktana Coop <team@oktana.dev>
 pkgname=v2-bin
 _pkgname=v2
-pkgver=0.13.1
+pkgver=0.15.0
 pkgrel=1
 pkgdesc="A local-first rich text editor with Git-style version control, true privacy, and complete control over your data"
 arch=('x86_64' 'aarch64')
@@ -14,8 +14,8 @@ conflicts=('v2')
 options=('!strip' '!debug')
 source_x86_64=("v2-${pkgver}.AppImage::https://github.com/oktana-coop/v2/releases/download/v${pkgver}/v2-${pkgver}-x86_64.AppImage")
 source_aarch64=("v2-${pkgver}.AppImage::https://github.com/oktana-coop/v2/releases/download/v${pkgver}/v2-${pkgver}-arm64.AppImage")
-sha256sums_x86_64=('a0ff9b47da0457ebfd7b6bb972c8cd29e06ffa52407995f6ae97aefaf670396d')
-sha256sums_aarch64=('78c0eb6057b990f098df9b7354ad45f63c52aff6f59263f81039ee916d52722f')
+sha256sums_x86_64=('e7d8fed2ef77564a5152ed61c0cb466ae7e597d8423913d9be9ebce16a130950')
+sha256sums_aarch64=('33cadd2c73cde9e1184a8b187775a60b1a1ce5c7a7fe9b23c4133595821c9d73')
 
 prepare() {
     _appimage="v2-${pkgver}.AppImage"
