@@ -5,7 +5,7 @@
 _pkgname=datalad
 pkgname=python-$_pkgname
 pkgver=1.6.0
-pkgrel=1
+pkgrel=2
 pkgdesc='Keep code, data, containers under control with git and git-annex'
 arch=(any)
 url="https://github.com/datalad/$_pkgname"
@@ -19,6 +19,7 @@ depends=(git-annex
          python-distro
          python-fasteners
          python-gitlab
+         python-giturlparse
          python-humanize
          python-iso8601
          python-keyring
@@ -41,11 +42,12 @@ checkdepends=(mypy
 optdepends=('python-argcomplete: optional CLI completion'
             'python-datalad-next: extension for new and improved functionality and user experience'
             'python-dateutil: support for more date formats'
+            'python-psutil: open-file detection for datalad.save.skip-openfiles'
             'python-requests-ftp: extra downloaders'
             'python-pyperclip: clipboard manipulations')
 _archive="$_pkgname-$pkgver"
 source=("$url/archive/$pkgver/$_archive.tar.gz")
-sha256sums=('3c2bdf82a9606b184a90c3874ec50f0cfe09f0c7d7cc5c7f523e9e7d8d738bed')
+sha256sums=('53d96dc6520fb26f4c8345b350b4fd401a3b83ef8d932f20653a0a535f524b4d')
 
 build() {
 	cd "$_archive"
