@@ -1,6 +1,6 @@
 pkgbase = hyprwhspr
 	pkgdesc = Fast, local speech-to-text for Arch/Omarchy
-	pkgver = 1.32.1
+	pkgver = 1.33.0
 	pkgrel = 1
 	url = https://github.com/goodroot/hyprwhspr
 	install = hyprwhspr.install
@@ -29,7 +29,7 @@ pkgbase = hyprwhspr
 	depends = pipewire-alsa
 	depends = pipewire-pulse
 	optdepends = gtk4-layer-shell: for themed Mic-OSD visualization
-	source = hyprwhspr-1.32.1.tar.gz::https://github.com/goodroot/hyprwhspr/archive/refs/tags/v1.32.1.tar.gz
-	sha256sums = a0a8671ba92e79355ebc88cde441be01965b40d771ef5c78d569121375dc43e1
+	source = hyprwhspr-1.33.0.tar.gz::https://github.com/goodroot/hyprwhspr/archive/refs/tags/v1.33.0.tar.gz
+	sha256sums = 04955954226c73746d446f30376b5d0ad621a644d4169d991ad4d54da7e3ef58
 
 pkgname = hyprwhspr
