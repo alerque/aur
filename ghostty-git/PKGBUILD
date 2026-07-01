@@ -49,7 +49,6 @@ build() {
 	DESTDIR=build zig build \
 		--summary all \
 		--prefix "/usr" \
-		--system "$srcdir/zig-global-cache/p" \
 		-Doptimize=ReleaseFast \
 		-Dgtk-wayland=true \
 		-Dgtk-x11=true \
