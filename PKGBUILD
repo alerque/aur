@@ -2,7 +2,7 @@
 
 pkgname=hyprwhspr
 pkgver=1.37.1
-pkgrel=1
+pkgrel=2
 pkgdesc="Fast, local speech-to-text for Arch/Omarchy"
 arch=('x86_64')
 url="https://github.com/goodroot/hyprwhspr"
@@ -12,15 +12,12 @@ depends=(
   'cmake'
   'git'
   'python'
-  'python-pip'
-  'python-setuptools'
   'python-sounddevice'
   'python-numpy'
   'python-scipy'
   'python-evdev'
   'python-pyperclip'
   'python-requests'
-  'python-psutil'
   'python-pyudev'
   'python-rich'
   'python-gobject'
