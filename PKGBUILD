@@ -2,8 +2,8 @@
 
 pkgname=hyprwhspr
 pkgver=1.38.0
-pkgrel=2
-pkgdesc="Fast, local speech-to-text for Arch/Omarchy"
+pkgrel=3
+pkgdesc="System-wide speech-to-text for Linux desktops"
 arch=('x86_64')
 url="https://github.com/goodroot/hyprwhspr"
 license=('MIT')
@@ -23,8 +23,12 @@ depends=(
   'python-gobject'
   'python-pulsectl'
   'python-dbus'
+  'wtype'
   'ydotool'
   'wl-clipboard'
+  'xclip'
+  'xdotool'
+  'xorg-xprop'
   'pipewire' 'pipewire-alsa' 'pipewire-pulse'
 )
 optdepends=('gtk4-layer-shell: for themed Mic-OSD visualization')
