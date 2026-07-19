@@ -2,7 +2,7 @@
 
 pkgname=hyprwhspr
 pkgver=1.38.0
-pkgrel=3
+pkgrel=4
 pkgdesc="System-wide speech-to-text for Linux desktops"
 arch=('x86_64')
 url="https://github.com/goodroot/hyprwhspr"
@@ -47,7 +47,7 @@ package() {
 
   # Payload into /usr/lib keeps repo layout intact
   install -d "$pkgdir/usr/lib/$pkgname"
-  cp -r lib bin config share README.md LICENSE requirements.txt "$pkgdir/usr/lib/$pkgname"
+  cp -r lib bin config share README.md LICENSE requirements*.txt "$pkgdir/usr/lib/$pkgname"
   # Note: scripts directory removed - functionality moved to CLI commands
 
   # Make sure main launcher is executable

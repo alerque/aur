@@ -1,7 +1,7 @@
 pkgbase = hyprwhspr
 	pkgdesc = System-wide speech-to-text for Linux desktops
 	pkgver = 1.38.0
-	pkgrel = 3
+	pkgrel = 4
 	url = https://github.com/goodroot/hyprwhspr
 	install = hyprwhspr.install
 	arch = x86_64
