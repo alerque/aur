@@ -1,6 +1,6 @@
 pkgbase = hyprwhspr
 	pkgdesc = System-wide speech-to-text for Linux desktops
-	pkgver = 1.38.0
+	pkgver = 1.38.1
 	pkgrel = 4
 	url = https://github.com/goodroot/hyprwhspr
 	install = hyprwhspr.install
@@ -30,7 +30,7 @@ pkgbase = hyprwhspr
 	depends = pipewire-alsa
 	depends = pipewire-pulse
 	optdepends = gtk4-layer-shell: for themed Mic-OSD visualization
-	source = hyprwhspr-1.38.0.tar.gz::https://github.com/goodroot/hyprwhspr/archive/refs/tags/v1.38.0.tar.gz
-	sha256sums = 4048d387bf0fbb3bae53aefae83708c6aea0cf3cec3ca28284469bce50d3bd0e
+	source = hyprwhspr-1.38.1.tar.gz::https://github.com/goodroot/hyprwhspr/archive/refs/tags/v1.38.1.tar.gz
+	sha256sums = 41533510807f4c35c279727256263e2df2b0db4173f420fed5cb8f813e259601
 
 pkgname = hyprwhspr
