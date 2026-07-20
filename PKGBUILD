@@ -2,27 +2,22 @@
 
 pkgname=hyprwhspr
 pkgver=1.38.1
-pkgrel=4
+pkgrel=5
 pkgdesc="System-wide speech-to-text for Linux desktops"
 arch=('x86_64')
 url="https://github.com/goodroot/hyprwhspr"
 license=('MIT')
 makedepends=()
 depends=(
-  'cmake'
-  'git'
   'python'
   'python-sounddevice'
   'python-numpy'
-  'python-scipy'
+  'python-soxr'
   'python-evdev'
   'python-pyperclip'
-  'python-requests'
   'python-pyudev'
   'python-rich'
-  'python-gobject'
   'python-pulsectl'
-  'python-dbus'
   'wtype'
   'ydotool'
   'wl-clipboard'
@@ -31,7 +26,14 @@ depends=(
   'xorg-xprop'
   'pipewire' 'pipewire-alsa' 'pipewire-pulse'
 )
-optdepends=('gtk4-layer-shell: for themed Mic-OSD visualization')
+optdepends=(
+  'python-dbus: suspend/resume monitoring'
+  'python-gobject: suspend monitoring, AT-SPI detection, and Mic-OSD support'
+  'gtk4-layer-shell: themed Mic-OSD visualization'
+  'cmake: accelerated pywhispercpp source builds'
+  'git: accelerated pywhispercpp source builds'
+  'base-devel: accelerated pywhispercpp source builds'
+)
 
 install=$pkgname.install
 source=("$pkgname-$pkgver.tar.gz::https://github.com/goodroot/$pkgname/archive/refs/tags/v$pkgver.tar.gz")
@@ -48,6 +50,7 @@ package() {
   # Payload into /usr/lib keeps repo layout intact
   install -d "$pkgdir/usr/lib/$pkgname"
   cp -r lib bin config share README.md LICENSE requirements*.txt "$pkgdir/usr/lib/$pkgname"
+  python scripts/validate-package-payload.py "$pkgdir/usr/lib/$pkgname"
   # Note: scripts directory removed - functionality moved to CLI commands
 
   # Make sure main launcher is executable
