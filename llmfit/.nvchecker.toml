@@ -1,4 +1,0 @@
-[llmfit]
-source = "git"
-git = "https://github.com/AlexsJones/llmfit.git"
-prefix = "v"
