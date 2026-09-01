@@ -93,7 +93,7 @@ package_ghostty-terminfo-git() {
 	conflicts=(${pkgname%-git})
 	cd "$_pkgbase"
 	mkdir -p "$pkgdir/usr/share/terminfo"
-	cp -r build/usr/share/terminfo/* "$pkgdir/usr/share/terminfo/"
+	cp -r build/usr/share/terminfo/x "$pkgdir/usr/share/terminfo/"
 }
 
 package_ghostty-nautilus-git() {
