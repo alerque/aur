@@ -4,8 +4,8 @@
 
 _pkgbase=ghostty
 pkgname=($_pkgbase-git $_pkgbase-shell-integration-git $_pkgbase-terminfo-git $_pkgbase-nautilus-git)
-pkgrel=2
-pkgver=1.3.1.r1209.gd560c64
+pkgrel=1
+pkgver=1.3.1.r2385.gd4d8f62
 pkgdesc="Fast, native, feature-rich terminal emulator pushing modern features"
 arch=(x86_64 aarch64 i686)
 url="https://github.com/ghostty-org/$_pkgbase"
@@ -28,17 +28,17 @@ depends=(bzip2
 makedepends=(blueprint-compiler
              git
              pandoc-cli
-             'zig<0.16.0')
+             zig)
 source=("git+$url.git"
         ghostty-llvm.patch)
 sha256sums=('SKIP'
-            '1df55089c6539501eab6c59b24625c016cd11c12f12d2181d72a5fb5b080502b')
+            '86e23ba8b82398856f02e6280832fe24440dc0308877942e9daef2958c1ea925')
 
 prepare() {
 	cd "$_pkgbase"
-	# https://github.com/ghostty-org/ghostty/discussions/11993#discussioncomment-17336660
-	patch -p1 -i ../ghostty-llvm.patch
+	git apply ../ghostty-llvm.patch
 	ZIG_GLOBAL_CACHE_DIR="$srcdir/zig-global-cache/" ./nix/build-support/fetch-zig-cache.sh
+	ZIG_GLOBAL_CACHE_DIR="$srcdir/zig-global-cache/" zig build --fetch
 }
 
 pkgver() {
@@ -52,7 +52,7 @@ build() {
 	DESTDIR=build zig build \
 		--summary all \
 		--prefix "/usr" \
-		--system "$srcdir/zig-global-cache/p" \
+		--system "$srcdir/$_pkgbase/zig-pkg" \
 		-Doptimize=ReleaseFast \
 		-Dgtk-x11=true \
 		-Dcpu=baseline \
