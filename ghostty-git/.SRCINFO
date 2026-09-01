@@ -38,7 +38,7 @@ pkgbase = ghostty-git
 	source = git+https://github.com/ghostty-org/ghostty.git
 	source = ghostty-llvm.patch
 	sha256sums = SKIP
-	sha256sums = 86e23ba8b82398856f02e6280832fe24440dc0308877942e9daef2958c1ea925
+	sha256sums = 43c9f2eb7e4634ac4d3707d0bbc994c15799ac11fa69e5fa5328636851c71ec5
 
 pkgname = ghostty-git
 	depends = bzip2

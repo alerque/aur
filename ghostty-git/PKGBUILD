@@ -32,11 +32,11 @@ makedepends=(blueprint-compiler
 source=("git+$url.git"
         ghostty-llvm.patch)
 sha256sums=('SKIP'
-            '86e23ba8b82398856f02e6280832fe24440dc0308877942e9daef2958c1ea925')
+            '43c9f2eb7e4634ac4d3707d0bbc994c15799ac11fa69e5fa5328636851c71ec5')
 
 prepare() {
 	cd "$_pkgbase"
-	git apply ../ghostty-llvm.patch
+	patch -Np1 -i ../ghostty-llvm.patch
 	ZIG_GLOBAL_CACHE_DIR="$srcdir/zig-global-cache/" ./nix/build-support/fetch-zig-cache.sh
 	ZIG_GLOBAL_CACHE_DIR="$srcdir/zig-global-cache/" zig build --fetch
 }
