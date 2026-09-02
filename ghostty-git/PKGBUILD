@@ -36,8 +36,10 @@ sha256sums=('SKIP'
 
 prepare() {
 	cd "$_pkgbase"
-	patch -Np1 -i ../ghostty-llvm.patch
+	# https://github.com/ghostty-org/ghostty/discussions/11993#discussioncomment-17336660
+	patch -p1 -i ../ghostty-llvm.patch
 	ZIG_GLOBAL_CACHE_DIR="$srcdir/zig-global-cache/" ./nix/build-support/fetch-zig-cache.sh
+	# The script above downloads package archives; this unpacks them into zig-pkg for --system.
 	ZIG_GLOBAL_CACHE_DIR="$srcdir/zig-global-cache/" zig build --fetch
 }
 
