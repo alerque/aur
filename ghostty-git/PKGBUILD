@@ -4,8 +4,8 @@
 
 _pkgbase=ghostty
 pkgname=($_pkgbase-git $_pkgbase-shell-integration-git $_pkgbase-terminfo-git $_pkgbase-nautilus-git)
-pkgrel=2
-pkgver=1.3.1.r1209.gd560c64
+pkgrel=1
+pkgver=1.3.1.r2385.gd4d8f62
 pkgdesc="Fast, native, feature-rich terminal emulator pushing modern features"
 arch=(x86_64 aarch64 i686)
 url="https://github.com/ghostty-org/$_pkgbase"
@@ -28,17 +28,19 @@ depends=(bzip2
 makedepends=(blueprint-compiler
              git
              pandoc-cli
-             'zig<0.16.0')
+             zig)
 source=("git+$url.git"
         ghostty-llvm.patch)
 sha256sums=('SKIP'
-            '1df55089c6539501eab6c59b24625c016cd11c12f12d2181d72a5fb5b080502b')
+            '43c9f2eb7e4634ac4d3707d0bbc994c15799ac11fa69e5fa5328636851c71ec5')
 
 prepare() {
 	cd "$_pkgbase"
 	# https://github.com/ghostty-org/ghostty/discussions/11993#discussioncomment-17336660
 	patch -p1 -i ../ghostty-llvm.patch
 	ZIG_GLOBAL_CACHE_DIR="$srcdir/zig-global-cache/" ./nix/build-support/fetch-zig-cache.sh
+	# The script above downloads package archives; this unpacks them into zig-pkg for --system.
+	ZIG_GLOBAL_CACHE_DIR="$srcdir/zig-global-cache/" zig build --fetch
 }
 
 pkgver() {
@@ -52,7 +54,7 @@ build() {
 	DESTDIR=build zig build \
 		--summary all \
 		--prefix "/usr" \
-		--system "$srcdir/zig-global-cache/p" \
+		--system "$srcdir/$_pkgbase/zig-pkg" \
 		-Doptimize=ReleaseFast \
 		-Dgtk-x11=true \
 		-Dcpu=baseline \
@@ -73,6 +75,7 @@ package_ghostty-git() {
 	install -Dm0644 -t "${pkgdir}/usr/share/licenses/$pkgname/" LICENSE
 	rm -r "$pkgdir"/usr/share/terminfo
 	rm -r "$pkgdir"/usr/share/ghostty/shell-integration
+	rm -r "$pkgdir"/usr/share/nautilus-python/
 }
 
 package_ghostty-shell-integration-git() {
@@ -92,7 +95,7 @@ package_ghostty-terminfo-git() {
 	conflicts=(${pkgname%-git})
 	cd "$_pkgbase"
 	mkdir -p "$pkgdir/usr/share/terminfo"
-	cp -r build/usr/share/terminfo/* "$pkgdir/usr/share/terminfo/"
+	cp -r build/usr/share/terminfo/x "$pkgdir/usr/share/terminfo/"
 }
 
 package_ghostty-nautilus-git() {
