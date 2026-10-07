@@ -1,8 +1,8 @@
 # Maintainer: Caleb Maclennan <caleb@alerque.com>
 
-pkgname=printcraft-git
+pkgname=pdfcraft-git
 _pkgname=${pkgname%-git}
-pkgver=0.2.1.r35.g1c78ff4
+pkgver=0.2.1.r36.gd3db998
 pkgrel=1
 url="https://getartcraft.com/apps/$_pkgname"
 _url="https://github.com/storytold/$_pkgname"
@@ -14,8 +14,9 @@ depends=(glibc # libc.so libm.so
          libgcc)
 makedepends=(cargo
              git)
-provides=("$_pkgname=$pkgver")
-conflicts=("$_pkgname")
+provides=("$_pkgname=$pkgver" printcraft-git printcraft)
+conflicts=("$_pkgname" printcraft-git printcraft)
+replaces=(printcraft-git)
 source=("git+$_url.git")
 sha256sums=('SKIP')
 

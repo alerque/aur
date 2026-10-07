@@ -1,8 +1,8 @@
-pkgbase = printcraft-git
+pkgbase = pdfcraft-git
 	pkgdesc = vibe coded clean-room reimplementation of Adobe Acrobat (Git HEAD)
-	pkgver = 0.2.1.r35.g1c78ff4
+	pkgver = 0.2.1.r36.gd3db998
 	pkgrel = 1
-	url = https://getartcraft.com/apps/printcraft
+	url = https://getartcraft.com/apps/pdfcraft
 	arch = x86_64
 	license = MIT
 	license = Apache-2.0
@@ -11,12 +11,17 @@ pkgbase = printcraft-git
 	depends = glibc
 	depends = hicolor-icon-theme
 	depends = libgcc
-	provides = printcraft=0.2.1.r35.g1c78ff4
+	provides = pdfcraft=0.2.1.r36.gd3db998
+	provides = printcraft-git
+	provides = printcraft
+	conflicts = pdfcraft
+	conflicts = printcraft-git
 	conflicts = printcraft
-	source = git+https://github.com/storytold/printcraft.git
+	replaces = printcraft-git
+	source = git+https://github.com/storytold/pdfcraft.git
 	sha256sums = SKIP
 
-pkgname = printcraft-git
+pkgname = pdfcraft-git
 	depends = glibc
 	depends = hicolor-icon-theme
 	depends = libgcc
