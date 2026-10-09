@@ -1,0 +1,16 @@
+--- a/packages/desktop/src/main/globalSetting.ts
++++ b/packages/desktop/src/main/globalSetting.ts
+@@ -5,4 +5,9 @@ import { setLocalesDirectory } from 'common/i18n'
+-// A packaged app keeps `static/` beside the executable's resources; every other
+-// run — the dev server, `electron-vite preview`, the e2e suite — reads it from
+-// the app directory.
+-const staticPath = path.join(app.isPackaged ? process.resourcesPath : app.getAppPath(), 'static')
++// A packaged app keeps `static/` beside `app.asar` (electron-builder's
++// extraResources). Resolving it from the asar path rather than
++// `process.resourcesPath` also works when a system-Electron wrapper points
++// resourcesPath at Electron's own directory. Every other run — the dev
++// server, `electron-vite preview`, the e2e suite — reads it from the app
++// directory.
++const appPath = app.getAppPath()
++const basePath = appPath.endsWith('.asar') ? path.dirname(appPath) : appPath
++const staticPath = path.join(basePath, 'static')
