@@ -48,5 +48,9 @@ package() {
 	install -Dm0755 -t "$pkgdir/usr/bin/" "target/release/$pkgname"{,-cli}
 	install -Dm0644 -t "$pkgdir/usr/share/applications/" "assets/platforms/linux/ai.storyteller.$pkgname.desktop"
 	install -Dm0644 -t "$pkgdir/usr/share/mime/packages/" "assets/platforms/linux/ai.storyteller.$pkgname.mime.xml"
+	local _icon
+	for _icon in assets/icons/app/linux/exports/hicolor/*/apps/ai.storyteller.$pkgname.png; do
+		install -Dm0644 "$_icon" "$pkgdir/usr/share/icons/${_icon#assets/icons/app/linux/exports/}"
+	done
 	install -Dm0644 -t "$pkgdir/usr/share/licenses/$pkgname/" LICENSE-{APACHE,MIT}
 }
