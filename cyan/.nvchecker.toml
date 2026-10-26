@@ -1,5 +1,0 @@
-[cyan]
-source = "github"
-github = "teal-language/cyan"
-prefix = "v"
-use_max_tag = true
