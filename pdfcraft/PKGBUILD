@@ -1,13 +1,13 @@
 # Maintainer: Caleb Maclennan <caleb@alerque.com>
 
 pkgname=pdfcraft
-pkgver=0.14.0
+pkgver=0.15.0
 pkgrel=1
 url="https://getartcraft.com/apps/$pkgname"
 _url="https://github.com/storytold/$pkgname"
 pkgdesc='vibe coded clean-room reimplementation of Adobe Acrobat'
 arch=(x86_64)
-license=(MIT Apache-2.0)
+license=(MIT Apache-2.0 CC-BY-SA-4.0)
 depends=(glibc # libc.so libm.so
          hicolor-icon-theme
          libgcc)
@@ -16,8 +16,13 @@ provides=(printcraft)
 conflicts=(printcraft)
 replaces=(printcraft)
 _archive="$pkgname-$pkgver"
-source=("$_url/archive/refs/tags/v$pkgver/$_archive.tar.gz")
-sha256sums=('68405d6c694fb4fc14e583d9e3726e36f28719857ec96b9c5a225da711a4f2b4')
+_models="https://ocrs-models.s3-accelerate.amazonaws.com"
+source=("$_url/archive/refs/tags/v$pkgver/$_archive.tar.gz"
+        "$_models/text-detection.onnx"
+        "$_models/text-recognition.onnx")
+sha256sums=('0e20c8675238a7576883587db144fdccfb968504101d79f82be436a593188536'
+            'a917b23dbd9524b465df7e922641b3ff2981623df4ded5a0234004ef2fee7cfe'
+            '86c145c2edb96c8caed5b1ebb8f44d706408922211451c309c625157dd6061c5')
 
 _srcenv() {
 	cd "$_archive"
@@ -60,4 +65,6 @@ package() {
 		install -Dm0644 -t "$pkgdir/usr/share/icons/hicolor/$dim/apps/" assets/app-icon/hicolor/$dim/apps/ai.storyteller.$pkgname.png
 	done
 	install -Dm0644 -t "$pkgdir/usr/share/licenses/$pkgname/" LICENSE-{APACHE,MIT}
+	# the app looks for OCR models in ../share/pdfcraft/models relative to its binary
+	install -Dm0644 -t "$pkgdir/usr/share/$pkgname/models/" "$srcdir"/text-{detection,recognition}.onnx
 }
