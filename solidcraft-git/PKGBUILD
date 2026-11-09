@@ -58,11 +58,11 @@ package() {
 	depends+=(libgcc_s.so)
 	cd "$_pkgname"
 	install -Dm0755 -t "$pkgdir/usr/bin/" "target/release/$_pkgname"{,-cli}
-	install -Dm0644 -t "$pkgdir/usr/share/applications/" "assets/platforms/linux/ai.storyteller.$_pkgname.desktop"
-	install -Dm0644 -t "$pkgdir/usr/share/mime/packages/" "assets/platforms/linux/ai.storyteller.$_pkgname.mime.xml"
+	install -Dm0644 -t "$pkgdir/usr/share/applications/" "assets/platforms/linux/io.tangencylabs.$_pkgname.desktop"
+	install -Dm0644 -t "$pkgdir/usr/share/mime/packages/" "assets/platforms/linux/io.tangencylabs.$_pkgname.mime.xml"
 	for s in ${_icons[@]}; do
 		local dim="${s}x${s}"
-		install -Dm0644 -t "$pkgdir/usr/share/icons/hicolor/$dim/apps/" assets/icons/app/linux/exports/hicolor/$dim/apps/ai.storyteller.$_pkgname.png
+		install -Dm0644 -t "$pkgdir/usr/share/icons/hicolor/$dim/apps/" assets/icons/app/linux/exports/hicolor/$dim/apps/io.tangencylabs.$_pkgname.png
 	done
 	install -Dm0644 -t "$pkgdir/usr/share/licenses/$pkgname/" LICENSE-{APACHE,MIT}
 }
