@@ -10,7 +10,6 @@ pkgbase = zellij-git
 	license = MIT
 	makedepends = cargo
 	makedepends = git
-	makedepends = mandown
 	depends = curl
 	depends = libcurl.so
 	depends = gcc-libs
