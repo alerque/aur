@@ -1,19 +1,27 @@
-pkgbase = lua-lcmark-git
+pkgbase = lcmark-git
 	pkgdesc = A higher level Lua interface exposing lua-cmark features
-	pkgver = 0.29.0.5.r0.g320a347
-	pkgrel = 2
+	pkgver = 0.31.1.1.r0.gdebdae3
+	pkgrel = 1
 	url = https://github.com/jgm/lcmark
 	arch = x86_64
 	arch = i686
 	license = BSD
 	makedepends = git
 	makedepends = lua
+	makedepends = lua54
 	makedepends = lua53
 	makedepends = lua52
 	makedepends = lua51
 	makedepends = luarocks
 	source = git+https://github.com/jgm/lcmark.git#branch=master
 	sha256sums = SKIP
+
+pkgname = lcmark-git
+	pkgdesc = CLI interface for lua-lcmark
+	depends = lua
+	depends = lcmark-git
+	provides = lcmark
+	conflicts = lcmark
 
 pkgname = lua-lcmark-git
 	depends = lua
@@ -23,6 +31,15 @@ pkgname = lua-lcmark-git
 	depends = lua-yaml
 	provides = lua-lcmark
 	conflicts = lua-lcmark
+
+pkgname = lua54-lcmark-git
+	depends = lua54
+	depends = lua54-cmark-git
+	depends = lua54-lpeg
+	depends = lua54-optparse
+	depends = lua54-yaml
+	provides = lua54-lcmark
+	conflicts = lua54-lcmark
 
 pkgname = lua53-lcmark-git
 	depends = lua53
@@ -50,11 +67,3 @@ pkgname = lua51-lcmark-git
 	depends = lua51-yaml
 	provides = lua51-lcmark
 	conflicts = lua51-lcmark
-
-pkgname = lcmark-git
-	pkgdesc = CLI interface for lua-lcmark
-	depends = lua
-	depends = lua-lcmark-git
-	provides = lcmark
-	conflicts = lcmark
-
