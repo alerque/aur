@@ -2,16 +2,16 @@
 
 _rockname=lcmark
 _project=$_rockname
-pkgname=("lua-$_rockname" "lua53-$_rockname" "lua52-$_rockname" "lua51-$_rockname" "$_rockname")
+pkgname=("$_rockname" "lua-$_rockname" "lua54-$_rockname" "lua53-$_rockname" "lua52-$_rockname" "lua51-$_rockname")
 pkgver=0.30.2
 _rockrel=1
-pkgrel=1
+pkgrel=2
 pkgdesc='A higher level Lua interface exposing lua-cmark features'
 arch=('x86_64' 'i686')
 url="https://github.com/jgm/$_project"
 license=('BSD')
 _lua_deps=('cmark' 'lpeg' 'optparse' 'yaml')
-makedepends=('lua' 'lua53' 'lua52' 'lua51' 'luarocks')
+makedepends=('lua' 'lua54' 'lua53' 'lua52' 'lua51' 'luarocks')
 source=("$_rockname-$pkgver-$_rockrel.tar.gz::$url/archive/$pkgver-$_rockrel.tar.gz")
 sha256sums=('141aedbba8afc46258e2b80223c789326f11f506e297e2e4d70971dd4c15968f')
 
@@ -20,7 +20,8 @@ prepare() {
   cp -a "$_project-$pkgver-$_rockrel"{,-5.2}
   cp -a "$_project-$pkgver-$_rockrel"{,-5.3}
   cp -a "$_project-$pkgver-$_rockrel"{,-5.4}
-  cp -a "$_project-$pkgver-$_rockrel"{,-5.4cli}
+  cp -a "$_project-$pkgver-$_rockrel"{,-5.5}
+  cp -a "$_project-$pkgver-$_rockrel"{,-5.5cli}
 }
 
 _package_helper() {
@@ -34,8 +35,19 @@ _package_helper() {
   esac
 }
 
+package_lcmark() {
+  pkgdesc="CLI interface for lua-lcmark"
+  depends=('lua' "$pkgbase")
+  _package_helper 5.5 cli
+}
+
 package_lua-lcmark() {
   depends=('lua' "${_lua_deps[@]/#/lua-}")
+  _package_helper 5.5
+}
+
+package_lua54-lcmark() {
+  depends=('lua54' "${_lua_deps[@]/#/lua54-}")
   _package_helper 5.4
 }
 
@@ -52,10 +64,4 @@ package_lua52-lcmark() {
 package_lua51-lcmark() {
   depends=('lua51' "${_lua_deps[@]/#/lua51-}")
   _package_helper 5.1
-}
-
-package_lcmark() {
-  pkgdesc="CLI interface for lua-lcmark"
-  depends=('lua' "$pkgbase")
-  _package_helper 5.4 cli
 }
